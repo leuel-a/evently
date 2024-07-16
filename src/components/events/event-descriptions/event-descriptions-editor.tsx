@@ -1,40 +1,42 @@
 'use client'
 
-import { Extension } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
-import Heading from '@tiptap/extension-heading'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import { useEditor, EditorContent, FloatingMenu, BubbleMenu, EditorProvider } from '@tiptap/react'
+import Underline from '@tiptap/extension-underline'
+import { EditorContent, EditorProvider, useEditor } from '@tiptap/react'
+
 import EditorToolbar from './editor-toolbar'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 type EventDescriptionsEditorProps = {
   content: string
+  setContent: (value: string) => void
 }
 
-const extensions: Extension[] = [StarterKit]
-
-export default function EventDescriptionsEditor({ content }: EventDescriptionsEditorProps) {
+export default function EventDescriptionsEditor({
+  content,
+  setContent
+}: EventDescriptionsEditorProps) {
   const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Document,
-      Paragraph,
-      Heading.configure({ levels: [1, 2, 3, 4, 5, 6] })
-    ],
-    content
+    extensions: [StarterKit, Underline],
+    content,
+    onUpdate: ({ editor }) => setContent(editor.getHTML()),
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm prose-headings:m-0 prose-p:m-0 p-4 !max-w-none focus:outline-none'
+      }
+    }
   })
 
+  // may be make this logic to anyone that will consume the editor
+  // but this one is a simple one I think one place the whole think works like magic
+  if (!editor) return null
+
   return (
-    <div className="prose prose-sm prose-headings:text-md prose-headings:m-0 m-0 focus:outline-none">
-      <EditorProvider
-        slotBefore={<EditorToolbar />}
-        content={content}
-        extensions={extensions}
-        onUpdate={({ editor }) => {
-          console.log(editor.getHTML())
-        }}
-      ></EditorProvider>
-    </div>
+    <>
+      <EditorToolbar editor={editor} />
+      <ScrollArea className="h-[250px] rounded border focus-within:ring-2 focus-within:ring-indigo-700">
+        <EditorContent editor={editor} />
+      </ScrollArea>{' '}
+    </>
   )
 }
