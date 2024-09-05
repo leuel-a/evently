@@ -33,7 +33,8 @@ export default function Header() {
       <nav className="flex-1">
         <ul
           className={cn(
-            'fixed bottom-0 left-1/3 right-0 top-0 z-20 flex flex-col gap-20 bg-white px-8 py-28 transition-transform duration-500 ease-out md:static md:flex-row md:items-center md:justify-between md:py-0',
+            'fixed bottom-0 left-1/3 right-0 top-0 z-20 flex flex-col gap-20 bg-white px-8 py-28 md:static md:flex-row md:items-center md:justify-between md:py-0',
+            isMobile && 'transition-transform duration-500 ease-out',
             isMobile && !expanded && 'translate-x-full',
             isMobile && expanded && 'translate-x-0',
           )}
