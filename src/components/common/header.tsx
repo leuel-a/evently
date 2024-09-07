@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link'
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -13,12 +14,13 @@ export default function Header() {
 
   return (
     <header className="flex px-4 py-4">
-      <div>
-        <h1 className="text-3xl font-semibold">evently</h1>
-      </div>
+      <h1 className="select-none text-3xl font-semibold">evently</h1>
 
       {isMobile && expanded && (
-        <div className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-black/30"></div>
+        <div
+          onClick={() => setExpanded((prev) => !prev)}
+          className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-black/30"
+        ></div>
       )}
 
       <button
@@ -40,8 +42,12 @@ export default function Header() {
           )}
         >
           <div className="flex flex-col gap-6 md:flex-row">
-            <li>Home</li>
-            <li>Events</li>
+            <li>
+              <Link onClick={() => setExpanded(false)} href="/">Home</Link>
+            </li>
+            <li>
+              <Link onClick={() => setExpanded(false)} href="/events">Events</Link>
+            </li>
           </div>
 
           <div className="flex flex-col gap-4 md:flex-row md:justify-between">

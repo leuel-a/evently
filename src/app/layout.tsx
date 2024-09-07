@@ -55,7 +55,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} font-epilogue bg-white text-rich-green`}
+        className={`${barlow.variable} ${epilogue.variable} bg-white font-epilogue text-rich-green`}
       >
         {children}
       </body>
