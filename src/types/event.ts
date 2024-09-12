@@ -4,8 +4,9 @@ export interface Event {
   imageUrl?: string 
   description: string | null
   location: string
-  startTime: Date
-  endTime: Date
+  startTime: string
+  endTime: string 
+  date: Date
   category: string
   createdBy: string
   

@@ -79,6 +79,7 @@ const config = {
       fontFamily: {
         barlow: ['var(--ff-barlow)', 'sans'],
         epilogue: ['var(--ff-epilogue)', 'sans'],
+        'barlow-cond': ['var(--ff-barlow-cond)', 'sans'],
       },
       backgroundColor: {
         'rich-green': '#0C1618',
@@ -88,7 +89,7 @@ const config = {
       backgroundImage: {
         'menu-close': 'url("../../public/images/menu-close.svg")',
         'menu-burger': "url('../../public/images/menu-burger.svg')",
-      }
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

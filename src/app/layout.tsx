@@ -34,6 +34,32 @@ const barlow = localFont({
   variable: '--ff-barlow',
 });
 
+const barlowCondensed = localFont({
+  src: [
+    {
+      path: './assets/fonts/barlow_condensed/BarlowCondensed-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './assets/fonts/barlow_condensed/BarlowCondensed-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './assets/fonts/barlow_condensed/BarlowCondensed-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: './assets/fonts/barlow_condensed/BarlowCondensed-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--ff-barlow-cond',
+});
+
 const epilogue = localFont({
   src: './assets/fonts/epilogue/Epilogue-VariableFont_wght.ttf',
   variable: '--ff-epilogue',
@@ -55,7 +81,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} bg-white font-epilogue text-rich-green`}
+        className={`${barlow.variable} ${epilogue.variable} ${barlowCondensed.variable} h-screen bg-white font-epilogue text-rich-green`}
       >
         {children}
       </body>

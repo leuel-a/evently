@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ export default function Header() {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   return (
-    <header className="flex px-4 py-4">
+    <header className="flex px-4 py-6 xl:px-0">
       <h1 className="select-none text-3xl font-semibold">evently</h1>
 
       {isMobile && expanded && (
@@ -26,7 +26,7 @@ export default function Header() {
       <button
         onClick={() => setExpanded((prev) => !prev)}
         className={cn(
-          'absolute right-4 top-4 z-50 aspect-square w-8 bg-cover bg-center bg-no-repeat md:hidden',
+          'absolute right-4 top-6 z-50 aspect-square w-8 bg-cover bg-center bg-no-repeat md:hidden',
           isMobile && !expanded && 'bg-menu-burger',
           isMobile && expanded && 'bg-menu-close',
         )}
@@ -43,25 +43,37 @@ export default function Header() {
         >
           <div className="flex flex-col gap-6 md:flex-row">
             <li>
-              <Link onClick={() => setExpanded(false)} href="/">Home</Link>
+              <Link onClick={() => setExpanded(false)} href="/">
+                Home
+              </Link>
             </li>
             <li>
-              <Link onClick={() => setExpanded(false)} href="/events">Events</Link>
+              <Link onClick={() => setExpanded(false)} href="/events">
+                Events
+              </Link>
             </li>
           </div>
 
           <div className="flex flex-col gap-4 md:flex-row md:justify-between">
             <li className="flex-grow">
-              <Button className="w-full bg-brunswick-green hover:bg-brunswick-green/90">
-                Login
+              <Button
+                asChild
+                className="w-full bg-brunswick-green hover:bg-brunswick-green/90"
+              >
+                <Link href="/auth/login" onClick={() => setExpanded(false)}>
+                  Login
+                </Link>
               </Button>
             </li>
             <li className="flex-grow">
               <Button
+                asChild
                 variant="outline"
                 className="w-full border border-rich-green"
               >
-                Sign Up
+                <Link href="/auth/signup" onClick={() => setExpanded(false)}>
+                  SignUp
+                </Link>
               </Button>
             </li>
           </div>
