@@ -1,12 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useSession, signOut } from 'next-auth/react'
+import { Button } from '@/components/ui/button'
+import UserButton from '@/components/user-button'
+
 
 export default function Header() {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(false)
+
+  const session = useSession()
+  const user = session?.data?.user
 
   return (
     <header className="flex px-4 py-4 xl:px-0">
@@ -15,7 +21,7 @@ export default function Header() {
       {expanded && (
         <div
           onClick={() => setExpanded((prev) => !prev)}
-          className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-black/30"
+          className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-black/30 md:hidden"
         ></div>
       )}
 
@@ -30,8 +36,8 @@ export default function Header() {
       <nav className="flex-1">
         <ul
           className={cn(
-            'fixed bottom-0 right-0 top-0 z-20 flex flex-col gap-20 bg-white px-8 py-28 transition-transform duration-500 ease-out md:static md:flex-row md:items-center md:justify-between md:py-0',
-            expanded ? 'translate-x-0 left-1/3' : 'translate-x-full',
+            'fixed bottom-0 left-1/3 right-0 top-0 z-20 flex flex-col gap-20 bg-white px-8 py-28 transition-transform duration-500 ease-out md:static md:translate-x-0 md:flex-row md:items-center md:justify-between md:py-0',
+            expanded ? 'translate-x-0' : 'translate-x-full',
           )}
         >
           <div className="flex flex-col gap-6 md:flex-row">
@@ -46,32 +52,42 @@ export default function Header() {
               </Link>
             </li>
           </div>
+          <div>
+            <li>
+              {user && (
+                <div>
+                  <div className="space-y-2 md:hidden">
+                    <Button className="w-full" variant="default" asChild>
+                      <Link href="/dashboard">Dashboard</Link>
+                    </Button>
+                    <Button
+                      onClick={() => signOut({ callbackUrl: '/' })}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      Sign Out
+                    </Button>
+                  </div>
 
-          <div className="flex flex-col gap-4 md:flex-row md:justify-between">
-            <li className="flex-grow">
-              <Button
-                asChild
-                className="w-full bg-brunswick-green hover:bg-brunswick-green/90"
-              >
-                <Link onClick={() => setExpanded(false)} href="/auth/login">
-                  Login
-                </Link>
-              </Button>
-            </li>
-            <li className="flex-grow">
-              <Button
-                asChild
-                variant="outline"
-                className="w-full border border-rich-green"
-              >
-                <Link onClick={() => setExpanded(false)} href="/auth/signup">
-                  Sign Up
-                </Link>
-              </Button>
+                  <div className="hidden md:block">
+                    <UserButton user={user} />
+                  </div>
+                </div>
+              )}
+              {!user && session.status !== 'loading' && (
+                <Button
+                  asChild
+                  className="w-full border border-rich-green bg-brunswick-green text-white hover:bg-brunswick-green/90"
+                >
+                  <Link onClick={() => setExpanded(false)} href="/auth/login">
+                    Sign In
+                  </Link>
+                </Button>
+              )}
             </li>
           </div>
         </ul>
       </nav>
     </header>
-  );
+  )
 }

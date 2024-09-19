@@ -1,8 +1,11 @@
-import NextAuth from 'next-auth';
-import GitHub from 'next-auth/providers/github';
+import prisma from '@/lib/db'
+import NextAuth from 'next-auth'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import { Adapter } from 'next-auth/adapters'
+import authConfig from '@/auth.config'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
-});
-
-export const runtime = 'edge';
+  adapter: PrismaAdapter(prisma) as Adapter,
+  session: { strategy: 'jwt' },
+  ...authConfig,
+})

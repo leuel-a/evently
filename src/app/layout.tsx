@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
-import localFont from 'next/font/local';
-import { Barlow } from 'next/font/google';
-import './globals.css';
+import type { Metadata } from 'next'
+import localFont from 'next/font/local'
+import { SessionProvider } from 'next-auth/react'
+import { Toaster } from '@/components/ui/toaster';
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Evently',
   description: 'A very effective and simple event listing application.',
-};
+}
 
 const barlow = localFont({
   src: [
@@ -32,7 +33,7 @@ const barlow = localFont({
     },
   ],
   variable: '--ff-barlow',
-});
+})
 
 const barlowCond = localFont({
   src: [
@@ -58,12 +59,12 @@ const barlowCond = localFont({
     },
   ],
   variable: '--ff-barlow-cond',
-});
+})
 
 const epilogue = localFont({
   src: './assets/fonts/epilogue/Epilogue-VariableFont_wght.ttf',
   variable: '--ff-epilogue',
-});
+})
 
 // TODO: use google fonts on production enviroment
 // const barlow = Barlow({
@@ -75,7 +76,7 @@ const epilogue = localFont({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -83,8 +84,9 @@ export default function RootLayout({
         suppressHydrationWarning={true}
         className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white font-epilogue text-rich-green`}
       >
-        {children}
+        <SessionProvider>{children}</SessionProvider>
+        <Toaster/>
       </body>
     </html>
-  );
+  )
 }
