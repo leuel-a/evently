@@ -10,8 +10,6 @@ const env = cleanEnv(process.env, {
   POSTGRES_URL_NON_POOLING: str(),
   POSTGRES_PRISMA_URL: str(),
   AUTH_SECRET: str(),
-  AUTH_GITHUB_ID: str(),
-  AUTH_GITHUB_SECRET: str(),
   AUTH_GOOGLE_ID: str(),
   AUTH_GOOGLE_SECRET: str(),
   SALT_ROUNDS: num(),

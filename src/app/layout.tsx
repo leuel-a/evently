@@ -66,12 +66,19 @@ const epilogue = localFont({
   variable: '--ff-epilogue',
 })
 
-// TODO: use google fonts on production enviroment
-// const barlow = Barlow({
-//   subsets: ["latin"],
-//   weight: ["400", "600", "700"],
-//   variable: "--ff-barlow",
-// });
+const dmSans = localFont({
+  src: [
+    {
+      path: './assets/fonts/dm_sans/DMSans.ttf',
+      style: 'normal',
+    },
+    {
+      path: './assets/fonts/dm_sans/DMSans-Italic.ttf',
+      style: 'normal',
+    },
+  ],
+  variable: '--ff-dm-sans',
+})
 
 export default function RootLayout({
   children,
@@ -82,10 +89,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white font-epilogue text-rich-green`}
+        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} ${dmSans.variable} h-screen bg-white font-epilogue text-rich-green`}
       >
         <SessionProvider>{children}</SessionProvider>
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   )

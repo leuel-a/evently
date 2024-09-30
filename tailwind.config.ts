@@ -79,7 +79,8 @@ const config = {
       fontFamily: {
         barlow: ['var(--ff-barlow)', 'sans'],
         epilogue: ['var(--ff-epilogue)', 'sans'],
-        'barlow-cond': ['var(--ff-barlow-cond)', 'sans']
+        'barlow-cond': ['var(--ff-barlow-cond)', 'sans'],
+        'dm-sans': ['var(--ff-dm-sans)', 'sans']
       },
       backgroundColor: {
         'rich-green': '#0C1618',

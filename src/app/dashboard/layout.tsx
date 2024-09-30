@@ -1,10 +1,12 @@
-export default function DashboardLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+import { LayoutDashboard } from 'lucide-react'
+import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar'
+import { PropsWithChildren } from 'react'
+
+export default function DashboardLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <div>
-      <div>Dashboard Layout</div>
+    <div className="flex">
+      <DashboardSidebar />
       {children}
     </div>
-  );
+  )
 }
