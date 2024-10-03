@@ -4,9 +4,11 @@ import { PropsWithChildren } from 'react'
 
 export default function DashboardLayout({ children }: Readonly<PropsWithChildren>) {
   return (
-    <div className="flex">
+    <div className="flex h-full">
       <DashboardSidebar />
-      {children}
+      <div className="w-full px-8 py-6">
+        {children}
+      </div>
     </div>
   )
 }

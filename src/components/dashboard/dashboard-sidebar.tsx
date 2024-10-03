@@ -12,7 +12,7 @@ export const DashboardSidebar = () => {
         href="/dashboard"
         active={pathname === '/dashboard'}
         icon={<LayoutDashboard />}
-        text="Dashbard"
+        text="Dashboard"
       />
       <SidebarItem
         href="/dashboard/events"
