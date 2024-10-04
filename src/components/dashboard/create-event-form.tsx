@@ -1,3 +1,11 @@
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
+import { createEvent } from '@/app/dashboard/actions'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createEventSchema, CreateEventType } from '@/schemas/event'
+
+// components
 import {
   Form,
   FormControl,
@@ -7,19 +15,18 @@ import {
   FormMessage,
   FormDescription,
 } from '@/components/ui/form'
-import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { DatePicker } from '@/components/common/date-picker'
 import { SelectTime } from '@/components/dashboard/select-time'
-import { createEventSchema, CreateEventType } from '@/schemas/event'
 import { SelectEventCategory } from '@/components/dashboard/select-event-category'
-import { createEvent } from '@/app/dashboard/actions'
 
 export const CreateEventForm = () => {
+  const router = useRouter()
+  const { toast } = useToast()
+
   const form = useForm<CreateEventType>({
     resolver: zodResolver(createEventSchema),
     defaultValues: {
@@ -37,7 +44,7 @@ export const CreateEventForm = () => {
 
   const handleSubmit = async (values: CreateEventType) => {
     const formData = new FormData()
-    
+
     // append the values for the form
     formData.append('title', values.title)
     formData.append('description', values.description)
@@ -48,11 +55,27 @@ export const CreateEventForm = () => {
     formData.append('endTime', values.endTime ?? '')
     formData.append('location', values.location ?? '')
     formData.append('virtual', String(values.virtual))
+
+    const { errors } = await createEvent(formData)
+
+    if (errors) {
+      toast({
+        variant: 'destructive',
+        description: 'There was an error creating the event',
+      })
+    } else {
+      toast({
+        variant: 'default',
+        description: 'Event created successfully',
+      })
+
+      router.push(`/dashboard/events`)
+    }
   }
 
   return (
     <Form {...form}>
-      <form action="" className="space-y-8">
+      <form onSubmit={form.handleSubmit(handleSubmit)} action="" className="space-y-8">
         <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           <FormField
             control={form.control}
@@ -76,6 +99,7 @@ export const CreateEventForm = () => {
                 <FormControl>
                   <Textarea placeholder="Event description..." {...field} rows={10} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -139,7 +163,11 @@ export const CreateEventForm = () => {
             render={({ field }) => (
               <FormItem className="mt-6 flex items-center gap-4">
                 <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                  <Checkbox
+                    disabled={form.getValues('location') !== ''}
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
                 </FormControl>
                 <div className="space-y-1 leading-none">
                   <FormLabel>Virtual Event</FormLabel>
@@ -147,6 +175,7 @@ export const CreateEventForm = () => {
                     If your event is virtual, no need to add location.
                   </FormDescription>
                 </div>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -157,7 +186,11 @@ export const CreateEventForm = () => {
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter event location" />
+                  <Input
+                    {...location}
+                    disabled={form.getValues('virtual') === true}
+                    placeholder="Enter event location"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

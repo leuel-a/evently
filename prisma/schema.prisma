@@ -71,9 +71,9 @@ model Event {
   imageUrl    String?
   date        DateTime
   startTime   String
-  endTime     String
-  location    String
-  virtual     Boolean?
+  endTime     String?
+  location    String?
+  virtual     Boolean
   category    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

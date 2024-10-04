@@ -11,6 +11,7 @@ import {
 import { useSidebarContext, SidebarContext } from '@/app/dashboard/context'
 import avatarPlaceholder from '@/app/assets/images/avatar_placeholder.png'
 import { useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 export interface SidebarProps extends PropsWithChildren {}
 
@@ -21,11 +22,14 @@ export const Sidebar = ({ children }: SidebarProps) => {
     <aside className="h-screen">
       <nav className="flex h-full flex-col border-r bg-white shadow-sm">
         <div className="flex items-center justify-between p-4 pb-2">
-          <img
-            src="https://img.logoipsum.com/243.svg"
-            className={`overflow-hidden transition-all ${expanded ? 'w-32' : 'w-0'}`}
-            alt=""
-          />
+          <h1
+            className={cn(
+              'overflow-hidden text-2xl font-semibold transition-all',
+              expanded ? 'w-32' : 'w-0',
+            )}
+          >
+            evently
+          </h1>
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="rounded-lg bg-gray-50 p-1.5 hover:bg-gray-100"

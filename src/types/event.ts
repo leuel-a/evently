@@ -1,14 +1,15 @@
 export interface Event {
   id: number 
   title: string
-  imageUrl?: string 
+  imageUrl?: string  | null
   description: string | null
-  location: string
+  location: string | null
   startTime: string
-  endTime: string 
+  endTime?: string | null
   date: Date
   category: string
   createdBy: string
+  virtual: boolean
   
   // timestamps
   createdAt: Date
