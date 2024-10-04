@@ -1,4 +1,4 @@
-import { cleanEnv, str, num } from 'envalid'
+import { cleanEnv, str, num, bool } from 'envalid'
 
 const env = cleanEnv(process.env, {
   POSTGRES_USER: str(),
@@ -13,6 +13,7 @@ const env = cleanEnv(process.env, {
   AUTH_GOOGLE_ID: str(),
   AUTH_GOOGLE_SECRET: str(),
   SALT_ROUNDS: num(),
+  AUTH_TRUST_HOST: bool()
 })
 
 export default env

@@ -24,14 +24,14 @@ export default {
         if (!user) {
           return null
         }
-        const isValid = await comparePassword(password as string, user.password)
+        const isValid = await comparePassword(password as string, user.password as string)
 
         if (isValid) {
-          console.log('Is a valid password hence')
-          return user
+          return {
+            ...user,
+            password: user.password || '',
+          }
         }
-
-        console.log('Is not a valid password hence')
         return null
       },
     }),

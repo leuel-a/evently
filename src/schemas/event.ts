@@ -10,7 +10,7 @@ export const createEventSchema = z
         message: 'Event description is required',
       })
       .min(100, { message: 'Event description must be a min of 100 characters ' })
-      .max(650, { message: 'Event description can not exceed 650 characters' }),
+      .max(1000, { message: 'Event description can not exceed 1000 characters' }),
     imageUrl: z.string().optional(),
     date: z.date({ message: 'Event date is required' }),
     startTime: z.string().min(1, { message: 'Event start time is required.' }),

@@ -21,6 +21,8 @@ const errorMap = {
   ),
 }
 
+// TODO: check this page out about useSearchParams: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+// TODO: use a suspense boundary when using the useSearchParams() function
 const Page: NextPage = () => {
   const search = useSearchParams()
   const error = search.get('error') as Error

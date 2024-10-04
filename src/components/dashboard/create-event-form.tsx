@@ -197,7 +197,9 @@ export const CreateEventForm = () => {
             )}
           />
         </div>
-        <Button className="w-80">Submit</Button>
+        <Button disabled={form.formState.isSubmitting} className="w-80">
+          Submit
+        </Button>
       </form>
     </Form>
   )
