@@ -19,11 +19,11 @@ export const SelectEventCategory = ({ placeholder, onChange, value }: SelectEven
   return (
     <Select defaultValue={value} onValueChange={onChange}>
       <SelectTrigger>
-        <SelectValue placeholder="Select your event category" />
+        <SelectValue placeholder={placeholder || 'Select your event category'} />
       </SelectTrigger>
       <SelectContent>
         {categoryEntries.map(([key, value]) => (
-          <SelectItem value={key}>{value}</SelectItem>
+          <SelectItem key={key} value={key}>{value}</SelectItem>
         ))}
       </SelectContent>
     </Select>

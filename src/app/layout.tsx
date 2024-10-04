@@ -1,3 +1,4 @@
+import React from 'react'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { SessionProvider } from 'next-auth/react'
@@ -66,20 +67,6 @@ const epilogue = localFont({
   variable: '--ff-epilogue',
 })
 
-const dmSans = localFont({
-  src: [
-    {
-      path: './assets/fonts/dm_sans/DMSans.ttf',
-      style: 'normal',
-    },
-    {
-      path: './assets/fonts/dm_sans/DMSans-Italic.ttf',
-      style: 'normal',
-    },
-  ],
-  variable: '--ff-dm-sans',
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -89,7 +76,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} ${dmSans.variable} h-screen bg-white font-epilogue`}
+        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white font-epilogue`}
       >
         <SessionProvider>{children}</SessionProvider>
         <Toaster />

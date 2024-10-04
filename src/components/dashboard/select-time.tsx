@@ -35,18 +35,21 @@ export const SelectTime = ({ placeholder, value, onChange }: SelectTimeProps) =>
       <FormControl>
         <SelectTrigger>
           {/*TODO: change the color of the placeholder text for this select trigger*/}
-          <SelectValue className="placeholder:text-muted-foreground" placeholder={placeholder ?? 'Select a time'} />
+          <SelectValue
+            className="placeholder:text-muted-foreground"
+            placeholder={placeholder ?? 'Select a time'}
+          />
         </SelectTrigger>
       </FormControl>
       <SelectContent>
         {/* AM times */}
         {times.map((time) => (
-          <SelectItem value={`${time} AM`}>{`${time} AM`}</SelectItem>
+          <SelectItem key={`${time} AM`} value={`${time} AM`}>{`${time} AM`}</SelectItem>
         ))}
 
         {/* PM times */}
         {times.map((time) => (
-          <SelectItem value={`${time} PM`}>{`${time} PM`}</SelectItem>
+          <SelectItem key={`${time} PM`} value={`${time} PM`}>{`${time} PM`}</SelectItem>
         ))}
       </SelectContent>
     </Select>
