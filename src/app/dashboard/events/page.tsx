@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { auth } from '@/auth'
-import prisma from '@/lib/db'
+import { getEvents } from '@/app/dashboard/actions'
 
 // components
 import { Button } from '@/components/ui/button'
@@ -9,17 +9,22 @@ import { EventList } from '@/components/dashboard/event-list'
 export default async function Page() {
   const session = await auth()
   const user = session?.user
+  const userEmail = user?.email === null ? undefined : user?.email
 
-  const events = await prisma.event.findMany({ where: { createdBy: user?.email as string } })
+  const { data: events, errors } = await getEvents(userEmail)
+  if (errors) {
+    return <div>{errors[0].message}</div>
+  }
+
   return (
     <>
-      <div className="flex flex-row items-center justify-between mb-6">
+      <div className="mb-6 flex flex-row items-center justify-between">
         <h1 className="text-2xl font-semibold">Events</h1>
         <Button asChild>
           <Link href="/dashboard/events/new">Create Event</Link>
         </Button>
       </div>
-      <EventList events={events} />
+      <EventList events={events ?? []} />
     </>
   )
 }

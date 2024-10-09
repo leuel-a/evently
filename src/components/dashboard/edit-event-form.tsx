@@ -1,9 +1,13 @@
-import { useForm } from 'react-hook-form'
+'use client'
+
+import { Event } from '@/types/event'
+import { revalidatePath } from 'next/cache'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 import { useToast } from '@/hooks/use-toast'
-import { createEvent } from '@/app/dashboard/actions'
+import { updateEvent } from '@/app/dashboard/actions'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createEventSchema, CreateEventType } from '@/schemas/event'
+import { updateEventSchema, UpdateEventType } from '@/schemas/event'
 
 // components
 import {
@@ -23,53 +27,52 @@ import { DatePicker } from '@/components/common/date-picker'
 import { SelectTime } from '@/components/dashboard/select-time'
 import { SelectEventCategory } from '@/components/dashboard/select-event-category'
 
-export const CreateEventForm = () => {
+export interface EventFormProps {
+  event: Event
+}
+
+export const EventForm = ({
+  event: { id, title, description, date, startTime, endTime, location, virtual, category },
+}: EventFormProps) => {
   const router = useRouter()
   const { toast } = useToast()
-
-  const form = useForm<CreateEventType>({
-    resolver: zodResolver(createEventSchema),
+  const form = useForm<UpdateEventType>({
+    resolver: zodResolver(updateEventSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      category: '',
-      imageUrl: undefined,
-      date: undefined,
-      startTime: '',
-      endTime: '',
-      location: '',
-      virtual: false,
+      title,
+      description,
+      date,
+      startTime,
+      endTime: endTime !== null ? endTime : undefined,
+      location: location !== null ? location : undefined,
+      virtual,
+      category,
     },
   })
 
-  const handleSubmit = async (values: CreateEventType) => {
-    const createEventFormData = new FormData()
+  const handleSubmit = async (values: UpdateEventType) => {
+    const updateEventFormData = new FormData()
 
     // append the values for the form
-    createEventFormData.append('title', values.title)
-    createEventFormData.append('description', values.description)
-    createEventFormData.append('category', values.category)
-    createEventFormData.append('imageUrl', values.imageUrl ?? '')
-    createEventFormData.append('date', values.date.toString())
-    createEventFormData.append('startTime', values.startTime)
-    createEventFormData.append('endTime', values.endTime ?? '')
-    createEventFormData.append('location', values.location ?? '')
-    createEventFormData.append('virtual', String(values.virtual))
+    updateEventFormData.append('id', id.toString())
+    updateEventFormData.append('title', values.title)
+    updateEventFormData.append('description', values.description)
+    updateEventFormData.append('category', values.category)
+    updateEventFormData.append('imageUrl', values.imageUrl ?? '')
+    updateEventFormData.append('date', values.date.toString())
+    updateEventFormData.append('startTime', values.startTime)
+    updateEventFormData.append('endTime', values.endTime ?? '')
+    updateEventFormData.append('location', values.location ?? '')
+    updateEventFormData.append('virtual', String(values.virtual))
 
-    const { errors } = await createEvent(createEventFormData)
-
+    const { errors } = await updateEvent(updateEventFormData)
     if (errors) {
       toast({
         variant: 'destructive',
-        description: 'There was an error creating the event',
+        description: 'An error occurred while updating the event',
       })
     } else {
-      toast({
-        variant: 'default',
-        description: 'Event created successfully',
-      })
-
-      router.push(`/dashboard/events`)
+      router.refresh()
     }
   }
 
@@ -187,7 +190,8 @@ export const CreateEventForm = () => {
                 <FormLabel>Location</FormLabel>
                 <FormControl>
                   <Input
-                    {...location}
+                    onChange={field.onChange}
+                    value={field.value}
                     disabled={form.getValues('virtual') === true}
                     placeholder="Enter event location"
                   />

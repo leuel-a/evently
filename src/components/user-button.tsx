@@ -23,8 +23,6 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ user }: UserButtonProps) => {
-  console.log(user);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -1,8 +1,8 @@
 export interface Event {
-  id: number 
+  id: number
   title: string
-  imageUrl?: string  | null
-  description: string | null
+  imageUrl?: string | null
+  description: string
   location: string | null
   startTime: string
   endTime?: string | null
@@ -10,7 +10,7 @@ export interface Event {
   category: string
   createdBy: string
   virtual: boolean
-  
+
   // timestamps
   createdAt: Date
   updatedAt: Date

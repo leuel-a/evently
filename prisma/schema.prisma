@@ -67,7 +67,7 @@ model VerificationToken {
 model Event {
   id          Int      @id @default(autoincrement())
   title       String
-  description String?
+  description String
   imageUrl    String?
   date        DateTime
   startTime   String

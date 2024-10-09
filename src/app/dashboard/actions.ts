@@ -4,13 +4,33 @@ import { z } from 'zod'
 import { auth } from '@/auth'
 import prisma from '@/lib/db'
 import { Event } from '@/types/event'
-import { transformZodErrors, CustomZodErrors } from '@/utils/zod'
-import { createEventSchema } from '@/schemas/event'
+import { transformZodErrors, CustomErrors } from '@/utils/zod'
+import { createEventSchema, updateEventSchema } from '@/schemas/event'
+import { revalidatePath } from 'next/cache'
+
+export const getEvents = async (
+  email?: string,
+): Promise<{ errors: CustomErrors[] | null; data: Event[] | null }> => {
+  try {
+    const events = await prisma.event.findMany({
+      where: { createdBy: email },
+    })
+    return {
+      errors: null,
+      data: events,
+    }
+  } catch (error) {
+    return {
+      errors: [{ message: 'An unexpected error occurred. Could not fetch events.' }],
+      data: null,
+    }
+  }
+}
 
 export const createEvent = async (
   data: FormData,
 ): Promise<{
-  errors: null | CustomZodErrors[]
+  errors: null | CustomErrors[]
   data: Event | null
 }> => {
   const session = await auth()
@@ -18,11 +38,7 @@ export const createEvent = async (
 
   if (!user) {
     return {
-      errors: [
-        {
-          message: 'Unauthorized',
-        },
-      ],
+      errors: [{ message: 'Unauthorized' }],
       data: null,
     }
   }
@@ -42,7 +58,7 @@ export const createEvent = async (
 
     // validate the object here on the server too
     const validEvent = createEventSchema.parse(validatedFields)
-    
+
     // create the event on the database
     const event = await prisma.event.create({
       data: {
@@ -50,13 +66,12 @@ export const createEvent = async (
         createdBy: user.email as string,
       },
     })
-    
+
     return {
       errors: null,
-      data: event
+      data: event,
     }
   } catch (error: any) {
-    console.log(error)
     if (error instanceof z.ZodError) {
       return {
         errors: transformZodErrors(error),
@@ -64,12 +79,63 @@ export const createEvent = async (
       }
     }
     return {
-      errors: [
-        {
-          message: 'An unexpected error occurred. Could not create shelf.',
-        },
-      ],
+      errors: [{ message: 'An unexpected error occurred. Could not create event.' }],
       data: null,
     }
+  }
+}
+
+export const updateEvent = async (
+  data: FormData,
+): Promise<{
+  errors: CustomErrors[] | null
+}> => {
+  const session = await auth()
+  const user = session?.user
+
+  if (!user) {
+    return {
+      errors: [{ message: 'Unauthorized' }],
+    }
+  }
+
+  try {
+    const validatedFields = {
+      title: data.get('title'),
+      description: data.get('description'),
+      category: data.get('category'),
+      imageUrl: data.get('imageUrl') === '' ? undefined : data.get('imageUrl'),
+      date: new Date(data.get('date') as string),
+      startTime: data.get('startTime'),
+      endTime: data.get('endTime'),
+      location: data.get('location'),
+      virtual: data.get('virtual') === 'true',
+    }
+
+    const idValue = data.get('id')
+    const id = idValue !== null ? Number(idValue) : null
+
+    // id must be passed with the form data to the server action
+    if (!id) {
+      return { errors: [{ message: 'Event ID is required' }] }
+    }
+
+    const validEvent = updateEventSchema.parse(validatedFields)
+
+    await prisma.event.update({
+      where: { id },
+      data: { ...validEvent },
+    })
+
+    revalidatePath('/dashboard/events')
+    return { errors: null }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errors = transformZodErrors(error)
+      return {
+        errors,
+      }
+    }
+    return { errors: [{ message: 'An unexpected error occurred. Could not update event.' }] }
   }
 }

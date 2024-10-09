@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export type CustomZodErrors = {
+export type CustomErrors = {
   path?: string
   message: string
 }
@@ -10,7 +10,7 @@ export type CustomZodErrors = {
  * @param error the zod error
  * @returns the custom zod errors
  */
-export const transformZodErrors = (error: z.ZodError): CustomZodErrors[] => {
+export const transformZodErrors = (error: z.ZodError): CustomErrors[] => {
   return error.issues.map((issue) => ({
     path: issue.path.join('.'),
     message: issue.message,
@@ -22,7 +22,7 @@ export const transformZodErrors = (error: z.ZodError): CustomZodErrors[] => {
  * @param errors the custom zod errors of type CustomZodErrors
  * @returns the zod error of type z.ZodError
  */
-export const reverseTransformZodErrors = (errors: CustomZodErrors[]): z.ZodError => {
+export const reverseTransformZodErrors = (errors: CustomErrors[]): z.ZodError => {
   return new z.ZodError(
     errors.map((error) => ({
       path: error.path?.split('.') || [],
