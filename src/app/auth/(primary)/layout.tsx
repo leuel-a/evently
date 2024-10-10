@@ -5,7 +5,7 @@ export default function PrimaryLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="grid h-full grid-cols-1 items-center lg:grid-cols-2">
+    <div className="grid h-full items-center">
       <div className="mx-auto w-full space-y-10 px-4 sm:w-fit sm:min-w-[35rem]">
         <div className="space-y-2 lg:text-lg">
           <Link href="/" className="text-3xl font-semibold">
@@ -25,7 +25,6 @@ export default function PrimaryLayout({
 
           {children}
         </div>
-        <div className="hidden lg:block"></div>
       </div>
     </div>
   )
