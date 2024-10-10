@@ -61,7 +61,7 @@ const LoginForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className="flex flex-col gap-4 text-black"
         >
           <FormField
             control={form.control}
@@ -106,9 +106,9 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-      <p className="mt-4 text-sm text-gray-500">
+      <p className="mt-4">
         Don&apos;t have an account?{' '}
-        <Link className="text-brunswick-green" href="/auth/signup">
+        <Link className="text-indigo-600" href="/auth/signup">
           Sign Up
         </Link>
       </p>

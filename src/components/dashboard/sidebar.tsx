@@ -13,6 +13,10 @@ import avatarPlaceholder from '@/app/assets/images/avatar_placeholder.png'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
+// components
+import { Button } from '@/components/ui/button'
+
+
 export interface SidebarProps extends PropsWithChildren {}
 
 export const Sidebar = ({ children }: SidebarProps) => {
@@ -20,7 +24,7 @@ export const Sidebar = ({ children }: SidebarProps) => {
 
   return (
     <aside className="h-screen">
-      <nav className="flex h-full flex-col border-r bg-white shadow-sm">
+      <nav className="flex h-full flex-col border-r shadow-sm">
         <div className="flex items-center justify-between p-4 pb-2">
           <h1
             className={cn(
@@ -30,12 +34,9 @@ export const Sidebar = ({ children }: SidebarProps) => {
           >
             evently
           </h1>
-          <button
-            onClick={() => setExpanded((curr) => !curr)}
-            className="rounded-lg bg-gray-50 p-1.5 hover:bg-gray-100"
-          >
+          <Button variant="ghost" className="w-14" onClick={() => setExpanded((curr) => !curr)}>
             {expanded ? <ChevronFirst /> : <ChevronLast />}
-          </button>
+          </Button>
         </div>
 
         <SidebarContext.Provider value={{ expanded }}>
@@ -49,7 +50,7 @@ export const Sidebar = ({ children }: SidebarProps) => {
           >
             <div className="leading-4">
               <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+              <span className="text-xs text-gray-200">johndoe@gmail.com</span>
             </div>
             <MoreVertical size={20} />
           </div>

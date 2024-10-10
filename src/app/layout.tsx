@@ -76,7 +76,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white font-epilogue`}
+        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white text-black font-epilogue`}
       >
         <SessionProvider>{children}</SessionProvider>
         <Toaster />
