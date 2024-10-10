@@ -1,11 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, Suspense } from 'react'
 import { cn } from '@/lib/utils';
 import { useSession, signOut } from 'next-auth/react'
+
+// components
+import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import UserButton from '@/components/user-button'
+import { UserMenu } from '@/components/user-menu'
+import { SignInButton } from '@/components/signin-button'
 
 
 export default function Header() {
@@ -15,13 +19,15 @@ export default function Header() {
   const user = session?.data?.user
 
   return (
-    <header className="flex px-4 py-4 xl:px-0">
-      <h1 className="select-none text-3xl font-semibold">evently</h1>
+    <header className="min-w-container mx-auto flex max-w-container items-center justify-between px-4 py-4 xl:px-0">
+      <Link href="/" className="select-none text-3xl font-semibold">
+        evently
+      </Link>
 
       {expanded && (
         <div
           onClick={() => setExpanded((prev) => !prev)}
-          className="fixed bottom-0 left-0 right-0 top-0 z-10 bg-black/30 md:hidden"
+          className="fixed bottom-0 left-0 right-0 top-0 z-10 md:hidden"
         ></div>
       )}
 
@@ -29,65 +35,44 @@ export default function Header() {
         onClick={() => setExpanded((prev) => !prev)}
         className={cn(
           'absolute right-4 top-4 z-50 aspect-square w-8 bg-cover bg-center bg-no-repeat md:hidden',
-          !expanded ? 'bg-menu-burger' : 'bg-menu-close',
         )}
-      ></button>
+      >
+        {expanded ? (
+          <X size={24} className="aspect-square text-black" />
+        ) : (
+          <Menu size={24} className="aspect-square text-black" />
+        )}
+      </button>
 
-      <nav className="flex-1">
+      <nav className="font-medium">
         <ul
           className={cn(
-            'fixed bottom-0 left-1/3 right-0 top-0 z-20 flex flex-col gap-20 bg-white px-8 py-28 transition-transform duration-500 ease-out md:static md:translate-x-0 md:flex-row md:items-center md:justify-between md:py-0',
-            expanded ? 'translate-x-0' : 'translate-x-full',
+            'fixed bottom-0 text-white md:text-black left-1/3 right-0 top-0 z-20 flex flex-col gap-20 px-8 py-28 transition-transform duration-500 ease-out md:static md:translate-x-0 md:flex-row md:items-center md:justify-between md:py-0',
+            expanded
+              ? 'translate-x-0 bg-indigo-500 bg-opacity-50 backdrop-blur'
+              : 'translate-x-full',
           )}
         >
-          <div className="flex flex-col gap-6 md:flex-row">
+          <div onClick={() => setExpanded(false)} className="flex flex-col gap-6 md:flex-row">
             <li>
-              <Link onClick={() => setExpanded(false)} href="/">
-                Home
-              </Link>
+              <Link href="/">Home</Link>
             </li>
             <li>
-              <Link onClick={() => setExpanded(false)} href="/events">
-                Events
-              </Link>
+              <Link href="/events">Explore Events</Link>
             </li>
-          </div>
-          <div>
             <li>
-              {user && (
-                <div>
-                  <div className="space-y-2 md:hidden">
-                    <Button className="w-full" variant="default" asChild>
-                      <Link href="/dashboard">Dashboard</Link>
-                    </Button>
-                    <Button
-                      onClick={() => signOut({ callbackUrl: '/' })}
-                      variant="outline"
-                      className="w-full"
-                    >
-                      Sign Out
-                    </Button>
-                  </div>
-
-                  <div className="hidden md:block">
-                    <UserButton user={user} />
-                  </div>
-                </div>
-              )}
-              {!user && session.status !== 'loading' && (
-                <Button
-                  asChild
-                  className="w-full border border-rich-green bg-brunswick-green text-white hover:bg-brunswick-green/90"
-                >
-                  <Link onClick={() => setExpanded(false)} href="/auth/login">
-                    Sign In
-                  </Link>
-                </Button>
-              )}
+              <Link href="/events">Categories</Link>
             </li>
           </div>
         </ul>
       </nav>
+      {session.status === 'loading' ? (
+        <p>Loading...</p>
+      ) : session.data ? (
+        <UserMenu user={user} />
+      ) : (
+        <SignInButton setExpanded={setExpanded} />
+      )}
     </header>
   )
 }

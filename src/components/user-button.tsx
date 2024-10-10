@@ -18,11 +18,11 @@ import { Button } from '@/components/ui/button';
 // icons
 import { LogOut, Settings, LayoutDashboard } from 'lucide-react';
 
-interface UserButtonProps {
+export interface UserButtonProps {
   user: User;
 }
 
-const UserButton = ({ user }: UserButtonProps) => {
+export const UserButton = ({ user }: UserButtonProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -64,4 +64,3 @@ const UserButton = ({ user }: UserButtonProps) => {
   );
 };
 
-export default UserButton;

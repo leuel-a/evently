@@ -17,7 +17,7 @@ export async function GoogleSignIn() {
       className="w-full"
     >
       <button
-        className="flex h-12 w-full items-center justify-center gap-4 rounded border border-gray-300 py-2 text-gray-700"
+        className="flex h-12 w-full items-center justify-center gap-4 rounded border border-gray-300 py-2"
         type="submit"
       >
         <span className="text-[1rem]">Sign in with Google</span>
