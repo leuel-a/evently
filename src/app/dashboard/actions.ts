@@ -67,6 +67,7 @@ export const createEvent = async (
       },
     })
 
+    revalidatePath('/dashboard/events')
     return {
       errors: null,
       data: event,
@@ -137,5 +138,33 @@ export const updateEvent = async (
       }
     }
     return { errors: [{ message: 'An unexpected error occurred. Could not update event.' }] }
+  }
+}
+
+export const deleteEvent = async (data: FormData): Promise<{ errors: CustomErrors[] | null }> => {
+  const session = await auth()
+  const user = session?.user
+
+  if (!user) {
+    return { errors: [{ message: 'Unauthorized' }] }
+  }
+
+  try {
+    const idValue = data.get('id')
+    const id = idValue ? Number(idValue) : null
+
+    if (!id) {
+      return { errors: [{ message: 'Event ID is required' }] }
+    }
+
+    await prisma.event.delete({
+      where: {
+        id,
+      },
+    })
+    revalidatePath('/dashboard/events')
+    return { errors: null }
+  } catch (error) {
+    return { errors: [{ message: 'An unexpected error occurred. Could not delete event.' }] }
   }
 }
