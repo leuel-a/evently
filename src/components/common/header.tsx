@@ -10,6 +10,7 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { UserMenu } from '@/components/user-menu'
 import { SignInButton } from '@/components/signin-button'
+import { UserButton } from '@/components/user-button'
 
 
 export default function Header() {
@@ -19,7 +20,7 @@ export default function Header() {
   const user = session?.data?.user
 
   return (
-    <header className="bg-indigo-700 text-white shadow-lg border-indigo-800">
+    <header className="border-indigo-800 bg-indigo-700 text-white shadow-lg">
       <div className="min-w-container mx-auto flex max-w-container items-center justify-between px-4 py-4 xl:px-0">
         <Link href="/" className="select-none text-3xl font-semibold">
           evently
@@ -39,9 +40,9 @@ export default function Header() {
           )}
         >
           {expanded ? (
-            <X size={24} className="aspect-square text-black" />
+            <X size={32} className="aspect-square text-white" />
           ) : (
-            <Menu size={24} className="aspect-square text-black" />
+            <Menu size={32} className="aspect-square text-white" />
           )}
         </button>
 
@@ -54,7 +55,10 @@ export default function Header() {
                 : 'translate-x-full',
             )}
           >
-            <div onClick={() => setExpanded(false)} className="flex text-white flex-col gap-6 md:flex-row">
+            <div
+              onClick={() => setExpanded(false)}
+              className="flex flex-col md:items-center gap-6 text-white md:flex-row"
+            >
               <li>
                 <Link href="/">Home</Link>
               </li>
@@ -64,16 +68,23 @@ export default function Header() {
               <li>
                 <Link href="/events">Categories</Link>
               </li>
+              <li className="hidden md:block">
+                {session.status !== 'loading' && user && <UserButton user={user} />}
+              </li>
+              {session.status === 'authenticated' && (
+                <div className="md:hidden">
+                  <li>
+                    <Link href="/dashboard"></Link>
+                  </li>
+                  <li>
+                    <Button variant="outline" className="text-indigo-600 w-full hover:text-indigo-500" onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+                  </li>
+                </div>
+              )}
+              {session.status !== 'loading' && !user && <SignInButton setExpanded={setExpanded} />}
             </div>
           </ul>
         </nav>
-        {session.status === 'loading' ? (
-          <p>Loading...</p>
-        ) : session.data ? (
-          <UserMenu user={user} />
-        ) : (
-          <SignInButton setExpanded={setExpanded} />
-        )}
       </div>
     </header>
   )

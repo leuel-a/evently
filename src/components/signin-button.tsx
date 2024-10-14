@@ -9,7 +9,7 @@ export const SignInButton = ({ setExpanded }: SignInButtonProps) => {
   return (
     <Button
       asChild
-      className="border hidden md:block text-center h-10 w-28 bg-gradient-to-r from-indigo-800 to-indigo-600 text-white"
+      className="h-10 w-full border bg-gradient-to-r from-indigo-800 to-indigo-600 text-center text-white md:w-28"
     >
       <Link onClick={() => setExpanded(false)} href="/auth/login">
         Sign In
