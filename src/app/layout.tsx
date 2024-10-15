@@ -7,7 +7,6 @@ import localFont from 'next/font/local'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import Providers from '@/app/providers'
 
 export const metadata: Metadata = {

@@ -1,17 +1,11 @@
-import prisma from '@/lib/db'
+import axios from 'axios'
+import { Event } from '@/types/event'
 
-export interface HttpGetEventsPayload {
-  search?: string
-  categories?: string
-}
-
-export const getEvents = async ({}: HttpGetEventsPayload) => {
+export const getEvents = async (searchParams: string) => {
   try {
-    const events = await prisma.event.findMany({
-      where: {
-        description: {
-        }
-      }
-    })
-  } catch (error) {}
+    const response = await axios.get<Event[]>(`/api/events?${searchParams}`)
+    return response.data
+  } catch (error) {
+    return null
+  }
 }

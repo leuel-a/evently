@@ -1,9 +1,9 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { useDebounce } from '@/hooks/use-debounce'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export const SearchInput = () => {
   const router = useRouter()
@@ -23,7 +23,7 @@ export const SearchInput = () => {
       <Input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-96"
+        className="w-96 h-12"
         placeholder="Search Events..."
       />
     </div>
