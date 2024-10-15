@@ -5,12 +5,13 @@ import { useState, Suspense } from 'react'
 import { cn } from '@/lib/utils';
 import { useSession, signOut } from 'next-auth/react'
 
-// components
+// components and icons
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { UserMenu } from '@/components/user-menu'
+import { Separator } from '@/components/ui/separator'
 import { SignInButton } from '@/components/signin-button'
 import { UserButton } from '@/components/user-button'
+import { LayoutDashboard, Settings } from 'lucide-react'
 
 
 export default function Header() {
@@ -56,8 +57,7 @@ export default function Header() {
             )}
           >
             <div
-              onClick={() => setExpanded(false)}
-              className="flex flex-col md:items-center gap-6 text-white md:flex-row"
+              className="flex flex-col gap-6 text-white md:flex-row md:items-center"
             >
               <li>
                 <Link href="/">Home</Link>
@@ -72,12 +72,31 @@ export default function Header() {
                 {session.status !== 'loading' && user && <UserButton user={user} />}
               </li>
               {session.status === 'authenticated' && (
+                <div className="space-y-6 md:hidden">
+                  <Separator />
+                  <li className="flex items-center gap-2">
+                    <LayoutDashboard size={20} />
+                    <Link href="/dashboard">Dashboard</Link>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Settings size={20} />
+                    <Link href="/dashboard">Settings</Link>
+                  </li>
+                </div>
+              )}
+              {session.status === 'authenticated' && (
                 <div className="md:hidden">
                   <li>
                     <Link href="/dashboard"></Link>
                   </li>
                   <li>
-                    <Button variant="outline" className="text-indigo-600 w-full hover:text-indigo-500" onClick={() => signOut({ callbackUrl: '/' })}>Sign Out</Button>
+                    <Button
+                      variant="outline"
+                      className="w-full text-indigo-600 hover:text-indigo-500"
+                      onClick={() => signOut({ callbackUrl: '/' })}
+                    >
+                      Sign Out
+                    </Button>
                   </li>
                 </div>
               )}

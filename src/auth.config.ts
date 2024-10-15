@@ -36,7 +36,7 @@ export default {
       },
     }),
   ],
-  debug: true,
+  debug: false,
   callbacks: {},
   pages: {
     error: '/auth/error',
