@@ -1,38 +1,30 @@
-'use client'
-
-import { useEffect } from 'react'
-import { getEvents } from '@/utils/api'
-import { useSearchParams } from 'next/navigation'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-
-// components
+import { Event } from '@/types/event'
 import { EventCard } from '@/components/event-card'
 import { Skeleton } from '@/components/ui/skeleton'
 
-export const EventGrid = () => {
-  const searchParams = useSearchParams()
-  const queryClient = useQueryClient()
-  const {
-    error,
-    data: events,
-    isLoading,
-  } = useQuery({
-    queryKey: ['getEvents'],
-    queryFn: () => getEvents(searchParams.toString()),
-  })
+export interface EventGridProps {
+  isLoading: boolean
+  error: Error | null
+  events?: Event[]
+}
 
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['getEvents'], exact: true })
-  }, [searchParams])
-
+export const EventGrid = ({ error, isLoading, events }: EventGridProps) => {
   if (error) {
     return null
+  }
+
+  if (!isLoading && events?.length === 0) {
+    return (
+      <div className="flex h-[40rem] items-center justify-center">
+        <h2 className="text-xl font-medium">No Events Found</h2>
+      </div>
+    )
   }
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {isLoading && Array.from({ length: 6 }).map((_, index) => <EventSkeleton key={index} />)}
-      {events && events.map((event) => <EventCard key={event.id} event={event} />)}
+      {!isLoading && events && events.map((event) => <EventCard key={event.id} event={event} />)}
     </div>
   )
 }
