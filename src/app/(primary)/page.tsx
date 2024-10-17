@@ -15,6 +15,27 @@ export default function Page() {
           <Button>Are you are Organizer?</Button>
         </div>
       </div>
+      <div className="col-span-full mt-10 text-center">
+        <div className="mx-auto max-w-container space-y-4">
+          <h2 className="text-3xl font-medium text-indigo-600">How Evently Works</h2>
+          <div className="flex h-96 w-full flex-wrap justify-center gap-4">
+            <div className="flex-1 rounded-lg border border-indigo-600 p-4">
+              <h3 className="text-2xl font-medium text-indigo-600">Discover</h3>
+              <p>Browse through our curated list of events or use our powerful search function.</p>
+              <p>
+                Filter events by date, location, category, or price to find exactly what you're
+                looking for.
+              </p>
+            </div>
+            <div className="flex-1 rounded-lg border border-indigo-600 p-4">
+              <h3 className="text-2xl font-medium text-indigo-600">Choose</h3>
+            </div>
+            <div className="flex-1 rounded-lg border border-indigo-600 p-4">
+              <h3 className="text-2xl font-medium text-indigo-600">Attend</h3>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
