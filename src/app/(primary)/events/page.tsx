@@ -1,27 +1,42 @@
-import { getEvents } from '@/app/(primary)/actions'
+'use client'
+
+import { Event } from '@/types/event'
+import { getEvents } from '@/utils/api'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 // components
-import { EventCard } from '@/components/event-card'
+import { EventGrid } from '@/components/events/event-grid'
 import { EventFilters } from '@/components/events/event-filters'
 import { EventPagination } from '@/components/events/event-pagination'
 
-interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+export default function Page({ params: { search } }: { params: { search: string } }) {
+  const queryClient = useQueryClient()
+  const searchParams = useSearchParams()
+  const [count, setCount] = useState<number>()
+  const [events, setEvents] = useState<Event[] | undefined>(undefined)
 
-export default async function Page({ searchParams }: PageProps) {
-  const { errors, data: events } = await getEvents()
-  if (errors) {
-    return null
-  }
+  const { error, data, isLoading } = useQuery({
+    queryKey: ['getEvents', searchParams.toString()],
+    queryFn: () => getEvents(searchParams.toString()),
+  })
 
+  useEffect(() => {
+    if (data) {
+      setEvents(data.events)
+      setCount(data.count)
+    }
+  }, [data])
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['getEvents', searchParams.toString()] })
+  }, [searchParams])
   return (
-    <div className="mx-auto mt-5 max-w-container px-5 space-y-4">
+    <div className="mx-auto mt-5 max-w-container space-y-4 px-5">
       <EventFilters />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {events && events.map((event) => <EventCard event={event} key={event.id} />)}
-      </div>
-      <EventPagination />
+      <EventGrid isLoading={isLoading} error={error} events={events} />
+      <EventPagination count={count || 0} />
     </div>
   )
 }

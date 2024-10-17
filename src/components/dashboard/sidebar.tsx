@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import Image from 'next/image'
 import { ChevronFirst, ChevronLast, Link, MoreVertical } from 'lucide-react'
 import {
@@ -26,14 +27,15 @@ export const Sidebar = ({ children }: SidebarProps) => {
     <aside className="h-screen">
       <nav className="flex h-full flex-col border-r shadow-sm">
         <div className="flex items-center justify-between p-4 pb-2">
-          <h1
+          <NextLink
+            href="/"
             className={cn(
               'overflow-hidden text-2xl font-semibold transition-all',
               expanded ? 'w-32' : 'w-0',
             )}
           >
             evently
-          </h1>
+          </NextLink>
           <Button variant="ghost" className="w-14" onClick={() => setExpanded((curr) => !curr)}>
             {expanded ? <ChevronFirst /> : <ChevronLast />}
           </Button>
@@ -43,14 +45,14 @@ export const Sidebar = ({ children }: SidebarProps) => {
           <ul className="flex-1 px-3">{children}</ul>
         </SidebarContext.Provider>
 
-        <div className="flex border-t p-3">
+        <div className="flex justify-center border-t p-3">
           <Image src={avatarPlaceholder} alt="" className="h-10 w-10 rounded-md" />
           <div
             className={`flex items-center justify-between overflow-hidden transition-all ${expanded ? 'ml-3 w-52' : 'w-0'} `}
           >
             <div className="leading-4">
               <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-200">johndoe@gmail.com</span>
+              <span className="text-xs text-gray-500">johndoe@gmail.com</span>
             </div>
             <MoreVertical size={20} />
           </div>
@@ -74,7 +76,7 @@ export const SidebarItem = ({ active, icon, alert, text, href }: SidebarItemProp
   return (
     <li
       onClick={() => router.push(href)}
-      className={`group relative my-1 flex cursor-pointer items-center rounded-md px-3 py-2 font-medium transition-colors ${
+      className={`group relative my-1 flex cursor-pointer items-center justify-center rounded-md py-2 font-medium transition-colors ${
         active
           ? 'bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800'
           : 'text-gray-600 hover:bg-indigo-50'
@@ -84,11 +86,11 @@ export const SidebarItem = ({ active, icon, alert, text, href }: SidebarItemProp
       <span className={`overflow-hidden transition-all ${expanded ? 'ml-3 w-52' : 'w-0'}`}>
         {text}
       </span>
-      {alert && (
-        <div
-          className={`absolute right-2 h-2 w-2 rounded bg-indigo-400 ${expanded ? '' : 'top-2'}`}
-        />
-      )}
+      {/*{alert && (*/}
+      {/*  <div*/}
+      {/*    className={`absolute right-2 aspect-square rounded bg-indigo-400 ${expanded ? '' : 'top-2'}`}*/}
+      {/*  />*/}
+      {/*)}*/}
 
       {!expanded && (
         <div

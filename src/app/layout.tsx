@@ -1,9 +1,13 @@
 import React from 'react'
+import './globals.css'
+
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from '@/components/ui/toaster';
-import './globals.css'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Providers from '@/app/providers'
 
 export const metadata: Metadata = {
   title: 'Evently',
@@ -76,9 +80,9 @@ export default function RootLayout({
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white text-black font-epilogue`}
+        className={`${barlow.variable} ${epilogue.variable} ${barlowCond.variable} h-screen bg-white font-epilogue text-black`}
       >
-        <SessionProvider>{children}</SessionProvider>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>
