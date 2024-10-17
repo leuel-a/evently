@@ -65,9 +65,6 @@ export default function Header() {
               <li>
                 <Link href="/events">Explore Events</Link>
               </li>
-              <li>
-                <Link href="/events">Categories</Link>
-              </li>
               <li className="hidden md:block">
                 {session.status !== 'loading' && user && <UserButton user={user} />}
               </li>
