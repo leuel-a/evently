@@ -32,7 +32,7 @@ export default function Page() {
                   Browse through our curated list of events or use our powerful search function.
                 </li>
                 <li>
-                  Filter events by date, location, category, or price to find exactly what you're
+                  Filter events by date, location, category, or price to find exactly what you&apos;re
                   looking for.
                 </li>
               </ul>
