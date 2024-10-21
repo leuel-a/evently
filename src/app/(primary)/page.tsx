@@ -40,8 +40,8 @@ export default function Page() {
             <div className="flex flex-1 flex-col justify-start gap-6 rounded-lg border p-8 shadow-md">
               <h3 className="text-2xl font-medium">Choose</h3>
               <ul className="list-none space-y-2 text-gray-700">
-                <li>Once you’ve found an event that catches your eye, click for more details.</li>
-                <li>Learn about the event’s agenda, speakers, venue, and more.</li>
+                <li>Once you&apos;ve found an event that catches your eye, click for more details.</li>
+                <li>Learn about the event&apos;s agenda, speakers, venue, and more.</li>
                 <li>
                   You can easily save your favorite events or go ahead and register directly from
                   the platform.
@@ -52,11 +52,11 @@ export default function Page() {
               <h3 className="text-2xl font-medium">Attend</h3>
               <ul className="list-none space-y-2 text-gray-700">
                 <li>
-                  After registration, you'll receive all the details you need to attend, including
+                  After registration, you&apos;ll receive all the details you need to attend, including
                   reminders and updates.
                 </li>
                 <li>
-                  Whether it's an online event or in-person, Evently ensures you're always informed
+                  Whether it&apos;s an online event or in-person, Evently ensures you&apos;re always informed
                   so you can focus on enjoying the experience.
                 </li>
               </ul>
