@@ -1,0 +1,31 @@
+name: Check the branch name for a pull request (merge request)
+
+run-name: Check the branch name --> ${{ github.head_ref }} follows naming rules 
+
+on:
+  pull_request:
+    type: [opened, reopened]
+
+description: 'Checks the branch name for the PR, only names that start with bugfix/, hotfix/, or feat/ are allowed'
+
+jobs:
+  check-branch-name-is-valid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get branch name
+        run: echo "Branch name is ${{ github.head_ref }}"
+
+      - name: Check branch name is valid
+        run: |
+          BRANCH_NAME=${{ github.head_ref }}
+
+          if [[ ! $BRANCH_NAME =~ ^(feat|bugfix|hotfix)/[a-zA-z0-9._-]+$ ]]; then
+            echo ":( Invalid branch name: $BRANCH_NAME"
+            exit 1
+          else
+            echo ":) Branch name is valid: $BRANCH_NAME"
+          fi
+
