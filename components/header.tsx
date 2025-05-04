@@ -30,7 +30,10 @@ export default function Header(props: HeaderProps) {
 				</ul>
 			</nav>
 			<div className="hidden md:flex md:items-center md:gap-4">
-				<Button className="border border-white">Register</Button>
+				<Button asChild className="border border-white">
+					<Link href="/auth/signup">Register</Link>
+				</Button>
+				{/** TODO: add navigation when the pages are added */}
 				<Button className="border border-white">Login</Button>
 				<Button className="border border-white">Are Your an Organizer?</Button>
 			</div>
@@ -50,7 +53,7 @@ export default function Header(props: HeaderProps) {
 				>
 					<li>
 						<Link
-							href="#"
+							href="/auth/signup"
 							className="text-indigo-500"
 							onClick={handleSidebarLinkClick}
 						>
