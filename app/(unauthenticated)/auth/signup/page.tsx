@@ -31,7 +31,9 @@ export default function Page() {
     <main className="flex h-screen items-center justify-center">
       <div className="w-[500px] lg:w-[800px]">
         <div className="mb-5 text-center">
-          <Link href="/" className="text-4xl font-bold text-indigo-700">Evently</Link>
+          <Link href="/" className="text-4xl font-bold text-indigo-700">
+            Evently
+          </Link>
         </div>
         <Form {...form}>
           <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
@@ -51,12 +53,14 @@ export default function Page() {
           </form>
         </Form>
         <Separator className="my-8 w-full" />
-				<p className="text-gray-500">
-					Already have an account?{' '}
-					<span>
-						<Link className="text-indigo-500" href="/auth/signin">Sign In</Link>
-					</span>
-				</p>
+        <p className="text-gray-500">
+          Already have an account?{' '}
+          <span>
+            <Link className="text-indigo-500" href="/auth/signin">
+              Sign In
+            </Link>
+          </span>
+        </p>
       </div>
     </main>
   );
