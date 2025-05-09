@@ -1,15 +1,18 @@
-'use client';
+'use client'
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Form } from '@/components/ui/form';
-import { Link } from '@/components/blocks/link';
-import { Button } from '@/components/ui/button';
-import { TextInput } from '@/components/blocks/form';
-import { Separator } from '@/components/ui/separator';
+import { Form } from '@/components/ui/form'
+import { Link } from '@/components/blocks/link'
+import { Button } from '@/components/ui/button'
+import { TextInput } from '@/components/blocks/form'
+import { Separator } from '@/components/ui/separator'
 
-import { signupSchema, SignupSchemaType } from './validation';
+import { signupSchema, SignupSchemaType } from './validation'
+
+// TODO: figure out how to organize the queries and mutations for react query
 
 export default function Page() {
   const form = useForm<SignupSchemaType>({
@@ -21,11 +24,11 @@ export default function Page() {
       password: '',
       confirmPassword: '',
     },
-  });
+  })
 
   const onSubmit = (values: SignupSchemaType) => {
-    console.log(values);
-  };
+    console.log(values)
+  }
 
   return (
     <main className="flex h-screen items-center justify-center">
@@ -63,5 +66,5 @@ export default function Page() {
         </p>
       </div>
     </main>
-  );
+  )
 }
