@@ -1,26 +1,27 @@
-'use client';
+'use client'
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Form } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Link } from '@/components/blocks/link';
-import { TextInput } from '@/components/blocks/form';
-import { Separator } from '@/components/ui/separator';
+import { Form } from '@/components/ui/form'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/components/blocks/link'
+import { TextInput } from '@/components/blocks/form'
+import { Separator } from '@/components/ui/separator'
 
-import { loginSchema, LoginSchemaType } from './validation';
+import { loginSchema, LoginSchemaType } from './validation'
 
 export default function Page() {
   const form = useForm<LoginSchemaType>({
     shouldUseNativeValidation: false,
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
-  });
+  })
 
   const onSubmit = (values: LoginSchemaType) => {
-    console.log(values);
-  };
+    // TODO: make the request to create the new user
+    console.log(values)
+  }
 
   return (
     <main className="flex h-screen items-center justify-center">
@@ -55,5 +56,5 @@ export default function Page() {
         </p>
       </div>
     </main>
-  );
+  )
 }

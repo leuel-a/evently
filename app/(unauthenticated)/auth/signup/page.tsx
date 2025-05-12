@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { TextInput } from '@/components/blocks/form'
 import { Separator } from '@/components/ui/separator'
 
+import { createUserMutation } from './mutations'
 import { signupSchema, SignupSchemaType } from './validation'
 
 // TODO: figure out how to organize the queries and mutations for react query
@@ -25,6 +26,9 @@ export default function Page() {
       confirmPassword: '',
     },
   })
+
+  // TODO: read about query keys and what they are to offer
+  useMutation({ mutationFn: createUserMutation })
 
   const onSubmit = (values: SignupSchemaType) => {
     console.log(values)

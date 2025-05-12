@@ -1,3 +1,5 @@
+import { signupSchema } from '@/app/(unauthenticated)/auth/signup/validation'
+
 export const dynamic = 'force-static'
 
 export async function GET() {
