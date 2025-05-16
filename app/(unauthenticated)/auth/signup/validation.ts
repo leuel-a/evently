@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
-export const signupSchema = z
+export const createUserSchema = z
   .object({
     username: z.string({ message: 'Required' }).min(1, { message: 'Username can not be empty' }),
     email: z
@@ -14,6 +14,6 @@ export const signupSchema = z
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
     message: 'Passwords do not match.',
     path: ['confirmPassword'],
-  });
+  })
 
-export type SignupSchemaType = z.infer<typeof signupSchema>;
+export type CreateUserType = z.infer<typeof createUserSchema>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Header from '@/components/header';
+import Header from '@/components/blocks/header';
 
 export type AuthenticatedLayoutProps = Readonly<{ children: React.ReactNode }>
 

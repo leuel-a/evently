@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { FormItem, FormField, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { cn } from '@/lib/utils';
 
+// TODO: create the ability to have a custom input for the customizabitlity of the text-input
 export function TextInput(props: TextInputProps) {
   const { name, helperText = true, label, className: inputClassName, ...inputProps } = props;
 

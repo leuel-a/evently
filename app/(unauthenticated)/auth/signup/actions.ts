@@ -1,7 +1,7 @@
 'use server'
 
 import { prisma } from '@/lib/db'
-import { signupSchema } from './validation'
+import { createUserSchema } from './validation'
 
 // TODO: read about what the import('next/cache').revalidatePath does from next
 export async function createUser(formData: FormData) {
@@ -13,7 +13,7 @@ export async function createUser(formData: FormData) {
       confirmPassword: String(formData.get('password')),
     }
 
-    const validatedFields = await signupSchema.parseAsync(fields)
+    const validatedFields = await createUserSchema.parseAsync(fields)
     const user = await prisma.user.create({ data: validatedFields })
   } catch (error) {
     return { errors: [{ message: 'An unexpected error has occured can not create a user' }] }

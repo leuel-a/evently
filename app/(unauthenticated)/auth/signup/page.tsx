@@ -4,21 +4,20 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useToast } from '@/hooks/use-toast'
 import { Form } from '@/components/ui/form'
 import { Link } from '@/components/blocks/link'
 import { Button } from '@/components/ui/button'
-import { TextInput } from '@/components/blocks/form'
 import { Separator } from '@/components/ui/separator'
+import { TextInput, PasswordInput } from '@/components/blocks/form'
 
-import { createUserMutation } from './mutations'
-import { signupSchema, SignupSchemaType } from './validation'
-
-// TODO: figure out how to organize the queries and mutations for react query
+import { createUserMutation } from './queries/mutations'
+import { createUserSchema, CreateUserType } from './validation'
 
 export default function Page() {
-  const form = useForm<SignupSchemaType>({
+  const form = useForm<CreateUserType>({
     shouldUseNativeValidation: false,
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(createUserSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -27,12 +26,32 @@ export default function Page() {
     },
   })
 
-  // TODO: read about query keys and what they are to offer
-  useMutation({ mutationFn: createUserMutation })
+  const { toast } = useToast()
 
-  const onSubmit = (values: SignupSchemaType) => {
-    console.log(values)
-  }
+  const { mutate } = useMutation({
+    mutationFn: createUserMutation,
+    onSuccess: () => {
+      // TODO: generate the access token for the user and login the user
+      // without forcing the user the user to login
+      toast({
+        title: 'Success',
+        description: 'You have been successfully registered.',
+        variant: 'default',
+      })
+    },
+    onError: (error) => {
+      // TODO: add a logger instead of just using browser console
+      console.log(error)
+
+      toast({
+        title: 'Error',
+        description: 'Something went wrong while signing you up.',
+        variant: 'destructive'
+      })
+    },
+  })
+
+  const onSubmit = (values: CreateUserType) => mutate(values)
 
   return (
     <main className="flex h-screen items-center justify-center">
@@ -47,8 +66,8 @@ export default function Page() {
             <div className="flex flex-col gap-3">
               <TextInput name="username" placeholder="Username" />
               <TextInput name="email" placeholder="Email" />
-              <TextInput name="password" placeholder="Password" type="password" />
-              <TextInput
+              <PasswordInput name="password" placeholder="Password" type="password" />
+              <PasswordInput
                 name="confirmPassword"
                 placeholder="Confirm your password"
                 type="password"

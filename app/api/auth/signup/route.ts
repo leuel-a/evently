@@ -1,9 +1,9 @@
-import { signupSchema } from '@/app/(unauthenticated)/auth/signup/validation'
+import { createUserSchema } from '@/app/(unauthenticated)/auth/signup/validation'
 
 export const dynamic = 'force-static'
 
-export async function GET() {
-  return Response.json({ message: 'Hello, World!' })
-}
+export async function POST(request: Request) {
+  const body = await request.json()
 
-export async function POST() {}
+  return Response.json({ content: body })
+}
