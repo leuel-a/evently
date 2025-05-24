@@ -1,13 +1,6 @@
-import * as React from 'react';
-import Header from '@/components/blocks/header';
-
+import * as React from 'react'
 export type AuthenticatedLayoutProps = Readonly<{ children: React.ReactNode }>
 
 export default function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
-	return (
-		<React.Fragment>
-			<Header />
-			{children}
-		</React.Fragment>
-	);
+  return <React.Fragment>{children}</React.Fragment>
 }

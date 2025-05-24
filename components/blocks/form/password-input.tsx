@@ -8,7 +8,11 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/comp
 import { EyeOpenIcon, EyeOffIcon } from '@/components/assets'
 
 export function PasswordInput(props: PasswordInputProps) {
-  const { helperText, name, label, className: inputClassName, ...inputProps } = props
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(false)
+
+  const { helperText = true, name, label, className: inputClassName, ...inputProps } = props
+
+  const handlePasswordVisibilityClick = () => setPasswordVisible((prev) => !prev)
 
   const form = useFormContext()
 
@@ -25,14 +29,21 @@ export function PasswordInput(props: PasswordInputProps) {
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input
-              autoComplete="off"
-              className={cn('h-12', inputClassName)}
-              {...inputProps}
-              {...field}
-            />
-            <div>
-              <EyeOffIcon />
+            <div className="relative">
+              <Input
+                autoComplete="off"
+                {...inputProps}
+                {...field}
+                type={passwordVisible ? 'text' : 'password'}
+                className={cn('h-12', inputClassName)}
+              />
+              <button
+                type="button"
+                onClick={handlePasswordVisibilityClick}
+                className="absolute right-4 top-3 text-gray-500"
+              >
+                {!passwordVisible ? <EyeOffIcon /> : <EyeOpenIcon />}
+              </button>
             </div>
           </FormControl>
           {helperText && <FormMessage />}

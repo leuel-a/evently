@@ -1,7 +1,9 @@
 import localFont from 'next/font/local'
 import type { Metadata } from 'next'
 import './globals.css'
+
 import Providers from './providers'
+import { Header } from '@/components/blocks'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
@@ -27,8 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} font-poppins`}>
+      <body suppressHydrationWarning className={`${poppins.variable} font-poppins`}>
         <Providers>
+          <Header />
           {children}
           <Toaster />
         </Providers>

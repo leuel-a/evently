@@ -1,10 +1,14 @@
 import { MutationFunction } from '@tanstack/react-query'
 
-import { prisma } from '@/lib/db'
+import { createUser } from '../actions'
 import { type IUserModel } from '@/types/user'
 import { createUserSchema, type CreateUserType } from '../validation'
 
-export type CreateUserMutationFunction = MutationFunction<IUserModel, CreateUserType>
+// how to make prisma emit the createdAt and updatedAt timestamps
+export type CreateUserMutationFunction = MutationFunction<
+  Omit<IUserModel, 'createdAt' | 'updatedAt'> | undefined,
+  CreateUserType
+>
 
 export const createUserMutation: CreateUserMutationFunction = async (data) => {
   const parsed = createUserSchema.safeParse(data)
@@ -14,12 +18,21 @@ export const createUserMutation: CreateUserMutationFunction = async (data) => {
   }
 
   try {
-    // TODO: hash the password of the user before saving the
-    // user to the database
-    const user = await prisma.user.create({ data: parsed.data })
+    const { data: parsedData } = parsed
+    const formData = new FormData()
 
-    return user
+    formData.set('username', parsedData.username)
+    formData.set('email', parsedData.email)
+    formData.set('password', parsedData.password)
+    formData.set('confirmPassword', parsedData.confirmPassword)
+
+    const { data, errors } = await createUser(formData)
+
+    return { data, errors }
   } catch (error) {
-    throw new Error('Error while trying to create a user')
+    // TODO: use a logger instead of just logging to the Console
+    console.error(error)
+
+    throw new Error('Something went wrong while trying to create a new user')
   }
 }

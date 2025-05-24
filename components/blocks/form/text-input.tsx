@@ -1,19 +1,19 @@
-import * as React from 'react';
-import { useFormContext, FieldValues, FieldPath } from 'react-hook-form';
+import * as React from 'react'
+import { useFormContext, FieldValues, FieldPath } from 'react-hook-form'
 
-import { Input } from '@/components/ui/input';
-import { FormItem, FormField, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
-import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input'
+import { FormItem, FormField, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
+import { cn } from '@/lib/utils'
 
 // TODO: create the ability to have a custom input for the customizabitlity of the text-input
 export function TextInput(props: TextInputProps) {
-  const { name, helperText = true, label, className: inputClassName, ...inputProps } = props;
+  const { name, helperText = true, label, className: inputClassName, ...inputProps } = props
 
-  const form = useFormContext();
+  const form = useFormContext()
 
   if (!form) {
     /** if there is not form context don't throw an error instead just return nothing */
-    return <></>;
+    return <></>
   }
 
   return (
@@ -26,6 +26,7 @@ export function TextInput(props: TextInputProps) {
             {label && <FormLabel>{label}</FormLabel>}
             <FormControl>
               <Input
+                type="text"
                 autoComplete="off"
                 className={cn('h-12', inputClassName)}
                 {...inputProps}
@@ -34,19 +35,19 @@ export function TextInput(props: TextInputProps) {
             </FormControl>
             {helperText && <FormMessage />}
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }
 
 export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /** If true, displays helper text for validation */
-  helperText?: boolean;
+  helperText?: boolean
 
   /** Label text to display with the input. */
-  label?: string;
+  label?: string
 
   /** Field name for form data, compatible with react-hook-form. */
-  name: FieldPath<FieldValues>;
+  name: FieldPath<FieldValues>
 }

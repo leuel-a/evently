@@ -1,23 +1,23 @@
-'use client';
+'use client'
 
-import * as React from 'react';
-import { Menu } from 'lucide-react';
+import * as React from 'react'
+import { Menu } from 'lucide-react'
 
-import { cn } from '@/lib/utils';
-import { Link } from '@/components/blocks/link';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Link } from '@/components/blocks/shared/link'
 
-export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {}
+export function Header(props: HeaderProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false)
 
-export default function Header(props: HeaderProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false);
-
-  const handleSidebarLinkClick = () => setIsSidebarOpen(false);
+  const handleSidebarLinkClick = () => setIsSidebarOpen(false)
 
   return (
     <header className="md:h-22 flex h-20 justify-between bg-indigo-500 p-2 px-8" {...props}>
       <div className="flex items-center justify-center gap-12">
-        <h1 className="text-3xl font-extrabold text-white">Evently</h1>
+        <Link href="/">
+          <h1 className="text-3xl font-extrabold text-white">Evently</h1>
+        </Link>
         <nav className="flex flex-row items-center">
           <ul className="flex items-center gap-4">
             <li>
@@ -71,5 +71,7 @@ export default function Header(props: HeaderProps) {
         </ul>
       </div>
     </header>
-  );
+  )
 }
+
+export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {}

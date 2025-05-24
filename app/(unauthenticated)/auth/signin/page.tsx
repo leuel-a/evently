@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { Link } from '@/components/blocks/link'
+import { Link } from '@/components/blocks/shared/link'
 import { TextInput } from '@/components/blocks/form'
 import { Separator } from '@/components/ui/separator'
 

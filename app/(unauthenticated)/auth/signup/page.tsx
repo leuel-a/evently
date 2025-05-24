@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useToast } from '@/hooks/use-toast'
 import { Form } from '@/components/ui/form'
-import { Link } from '@/components/blocks/link'
+import { Link } from '@/components/blocks/shared/link'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { TextInput, PasswordInput } from '@/components/blocks/form'
@@ -41,12 +41,12 @@ export default function Page() {
     },
     onError: (error) => {
       // TODO: add a logger instead of just using browser console
-      console.log(error)
+      console.error(error)
 
       toast({
         title: 'Error',
         description: 'Something went wrong while signing you up.',
-        variant: 'destructive'
+        variant: 'destructive',
       })
     },
   })
@@ -55,7 +55,7 @@ export default function Page() {
 
   return (
     <main className="flex h-screen items-center justify-center">
-      <div className="w-[500px] lg:w-[800px]">
+      <div className="w-[500px] lg:w-[700px]">
         <div className="mb-5 text-center">
           <Link href="/" className="text-4xl font-bold text-indigo-700">
             Evently

@@ -13,8 +13,11 @@ export async function createUser(formData: FormData) {
       confirmPassword: String(formData.get('password')),
     }
 
-    const validatedFields = await createUserSchema.parseAsync(fields)
-    const user = await prisma.user.create({ data: validatedFields })
+    const { username, password, email } = await createUserSchema.parseAsync(fields)
+
+    const user = await prisma.user.create({ data: { username, password, email } })
+
+    return { data: user, errors: null }
   } catch (error) {
     return { errors: [{ message: 'An unexpected error has occured can not create a user' }] }
   }
