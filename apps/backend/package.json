@@ -2,25 +2,40 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "mit",
   "scripts": {
-    "build": "tsc --noEmit",
     "dev": "nodemon",
-    "start": "yarn run build && node dist/server.js"
+    "build": "tsc --noemit",
+    "start": "yarn run build && node dist/server.js",
+    "prettier:format": "prettier --write \"**/*.{js,ts,json,md}\"",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix"
   },
   "devDependencies": {
+    "@eslint/js": "^9.27.0",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.21",
+    "eslint": "^9.27.0",
+    "globals": "^16.2.0",
+    "husky": "^9.1.7",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
   },
   "dependencies": {
     "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.15.0",
     "winston": "^3.17.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn prettier:format && yarn lint:fix"
+    }
   }
 }

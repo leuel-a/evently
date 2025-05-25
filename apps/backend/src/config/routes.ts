@@ -1,3 +1,5 @@
-export const Routes = {
-	TEST_HEALTH: 'test-health',
+const routes = {
+  TEST_HEALTH: 'test-health',
 }
+
+export default routes
