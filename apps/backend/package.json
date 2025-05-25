@@ -9,7 +9,8 @@
     "start": "yarn run build && node dist/server.js",
     "prettier:format": "prettier --write \"**/*.{js,ts,json,md}\"",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix"
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
@@ -32,10 +33,5 @@
     "express-validator": "^7.2.1",
     "mongoose": "^8.15.0",
     "winston": "^3.17.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn prettier:format && yarn lint:fix"
-    }
   }
 }

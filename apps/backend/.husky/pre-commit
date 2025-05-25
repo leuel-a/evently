@@ -1,0 +1,1 @@
+yarn prettier:format && yarn lint:fix
