@@ -33,5 +33,9 @@
     "express-validator": "^7.2.1",
     "mongoose": "^8.15.0",
     "winston": "^3.17.0"
-  }
+  },
+	"lint-staged": {
+		"*.ts": ["yarn lint:fix"],
+		"*.{js,ts,json,md}": ["yarn prettier:format"]
+	}
 }
