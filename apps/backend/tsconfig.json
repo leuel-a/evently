@@ -11,8 +11,9 @@
     "paths": {
       "@/*": ["src/*"],
       "@/config": ["src/config/*"],
-      "@/controllers": ["src/controllers/*"],
-      "@/utils": ["src/utils"]
+      "@/handlers": ["src/handlers/*"],
+      "@/utils": ["src/utils"],
+      "@/validators": ["src/validators"]
     }
   },
   "include": ["src/**/*"],
