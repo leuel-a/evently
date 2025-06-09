@@ -10,10 +10,13 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["src/*"],
+      "@/models": ["src/models/*"],
+      "@/middlewares": ["src/middlewares/*"],
       "@/config": ["src/config/*"],
+      "@/constants": ["src/constants/*"],
       "@/handlers": ["src/handlers/*"],
-      "@/utils": ["src/utils"],
-      "@/validators": ["src/validators"]
+      "@/utils": ["src/utils/*"],
+      "@/validators": ["src/validators/*"]
     }
   },
   "include": ["src/**/*"],

@@ -1,26 +1,20 @@
-import createHttpError from 'http-errors';
 import { ErrorRequestHandler } from 'express';
+import { HttpError, isHttpError } from 'http-errors';
 import { logger } from '@/utils/logger';
 import { ValidationError } from '@/models/ValidationError';
 
-export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  if (createHttpError.isHttpError(err)) {
-    const httpError = err as createHttpError.HttpError;
-
-    res.status(httpError.status).json({
-      message: httpError.message,
+export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  if (isHttpError(error)) {
+    res.status((error as HttpError).status).json({
+      message: (error as HttpError).message,
     });
-  } else if (err instanceof ValidationError) {
-    // TODO: only log validation errors in development mode
-    // TODO: might need to add a logger for validation errors
-    logger.error('Validation Error:', err);
-
+  } else if (error instanceof ValidationError) {
     res.status(400).json({
-      message: err.message,
-      errors: err.errors,
+      message: error.message,
+      errors: error.errors,
     });
   } else {
-    logger.error('Unhandled error:', err);
+    logger.error('Unhandled error:', error);
 
     res.status(500).json({
       status: 'error',

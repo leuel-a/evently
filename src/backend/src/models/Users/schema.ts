@@ -1,12 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-export interface UserDocument extends mongoose.Document {
-  email: string
-  password: string
-  firstName: string
-  lastName: string
-  dateOfBirth: Date
-}
+import type { IUserDocument } from './types';
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,7 +10,31 @@ const userSchema = new mongoose.Schema(
     lastName: { type: String, required: true },
     dateOfBirth: { type: String, required: false },
   },
-  { timestamps: true },
-)
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        delete ret._id;
+        delete ret.__v;
 
-export default userSchema
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (_doc, ret) => {
+        delete ret._id;
+        delete ret.__v;
+
+        return ret;
+      },
+    }
+  },
+);
+
+userSchema.virtual('id').get(function (this: IUserDocument) {
+  return (this._id as mongoose.ObjectId).toString();
+});
+
+export default userSchema;
