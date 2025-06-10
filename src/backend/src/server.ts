@@ -1,9 +1,9 @@
-require('dotenv').config()
+require('dotenv').config();
 
 import 'tsconfig-paths/register';
-import { app } from '@/app';
 import { connectDB } from '@/config/database';
 import enviroment from '@/config/enviroment';
+import app from '@/config/express';
 import { logger } from '@/utils/logger';
 
 app.listen(enviroment.port, async () => {

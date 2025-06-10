@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import mongoose from 'mongoose';
 import type { IEventsDocument } from './types';
 
@@ -9,8 +10,8 @@ const eventsSchema = new mongoose.Schema(
       type: Date,
       required: true,
       validate: {
-        validator: function (this: IEventsDocument, value: Date): boolean {
-          return this.endDate ? value < this.endDate : true;
+        validator: function (this: IEventsDocument, value: string): boolean {
+          return dayjs(value) < dayjs(this.endDate);
         },
         message: 'Start date must be before the end date.',
       },

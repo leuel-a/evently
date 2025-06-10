@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 export interface IBaseEvent {
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string; // needs to be an ISO string
+  endDate: string; // needs to be an ISO string
   capacity: number;
   createdBy: string;
 }
@@ -20,4 +20,5 @@ export interface IEventsDocument extends IBaseEvent, mongoose.Document {
 
 export interface IEventsModel extends mongoose.Model<IEventsDocument> {
   // static functions
+  createEvent(input: ICreateEvent): Promise<IEventsDocument>;
 }

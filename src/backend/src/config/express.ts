@@ -1,12 +1,32 @@
-import Express from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
+import routes from '@/config/routes';
+import { errorHandler } from '@/middlewares/errorHandler';
+import { authRoutes, eventsRoutes, usersRoutes } from '@/routes';
 import './passport';
 
-const express = Express();
+const API_PREFIX = 'api';
+const app = express();
 
-express.use(morgan('dev'));
-express.use(passport.initialize()); // Initialize passport middleware
-express.use(Express.json());
+app.use(morgan('dev'));
+app.use(passport.initialize()); // Initialize passport middleware
+app.use(express.json());
 
-export default express;
+// register the routes for the application
+app.get(`/${API_PREFIX}/${routes.TEST_HEALTH}`, (_req: Request, res: Response) => {
+  res.json({
+    status: 'API is up and running',
+    database: true,
+    redis: true,
+  });
+});
+
+app.use(`/${API_PREFIX}/${routes.AUTH}`, authRoutes);
+app.use(`/${API_PREFIX}/${routes.EVENTS}`, eventsRoutes);
+app.use(`/${API_PREFIX}/${routes.USERS}`, usersRoutes);
+
+app.use(errorHandler);
+
+export default app;

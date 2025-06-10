@@ -1,45 +1,33 @@
-import mongoose from 'mongoose';
+import type { RequestHandler } from 'express';
+import createHttpError from 'http-errors';
+import { HTTP_STATUS } from '@/constants/statusCodes';
+import { AppError, ERROR_ENUM } from '@/models/AppError';
+import EventsModel from '@/models/Events';
+import type { IBaseUser } from '@/models/Users/types';
 
-const eventSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true, trim: true },
-    description: { type: String, trim: true },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
-    location: {
-      type: { type: String, enum: ['physical', 'virtual'], required: true },
-      address: { type: String, trim: true },
-      virtualLink: { type: String, trim: true },
-      coordinates: {
-        lat: { type: Number },
-        lng: { type: Number },
-      },
-    },
-    organizer: {
-      name: { type: String, required: true, trim: true },
-      contact: {
-        email: { type: String, trim: true },
-        phone: { type: String, trim: true },
-      },
-    },
-    category: {
-      type: String,
-      enum: ['conference', 'workshop', 'concert', 'meetup', 'webinar', 'other'],
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ['draft', 'published', 'cancelled', 'completed'],
-      default: 'draft',
-    },
-    capacity: { type: Number, min: 0 },
-    attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    registration: {
-      required: { type: Boolean, default: false },
-      deadline: { type: Date },
-      fee: { type: Number, min: 0, default: 0 },
-    },
-    tags: [{ type: String, trim: true }],
-  },
-  { timestamps: true },
-);
+export const createEventHandler: RequestHandler = async (req, res, next) => {
+  try {
+    const { title, description, startDate, endDate, capacity } = req.body;
+    const user = req.user as IBaseUser & { id: string };
+
+    const event = await EventsModel.createEvent({
+      title,
+      description,
+      startDate,
+      endDate,
+      capacity,
+      createdBy: user.id,
+    });
+
+    res.status(HTTP_STATUS.CREATED).json({ data: event });
+  } catch (error) {
+    if (error instanceof AppError) {
+      next(createHttpError(HTTP_STATUS.BAD_REQUEST, error.enum));
+    }
+    next(createHttpError(HTTP_STATUS.INTERNAL_SERVER_ERROR, ERROR_ENUM.INTERNAL_SERVER_ERROR));
+  }
+};
+
+export const getEventHandler: RequestHandler = (req, res, next) => {
+  res.status(200).json({ message: 'Get Single Event' });
+};

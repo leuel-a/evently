@@ -37,7 +37,7 @@ passport.use(
         if (error instanceof AppError) {
           const message =
             error?.enum === ERROR_ENUM.RESOURCE_NOT_FOUND
-              ? ERROR_ENUM.RESOURCE_NOT_FOUND
+              ? ERROR_ENUM.USER_NOT_FOUND
               : (error.message ?? 'An error occurred');
 
           return done(createHttpError(HTTP_STATUS.BAD_REQUEST, message), false);

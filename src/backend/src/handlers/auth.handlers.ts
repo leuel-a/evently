@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import createHttpError from 'http-errors';
 import { HTTP_STATUS } from '@/constants/statusCodes';
-import { IBaseUser } from '@/models/Users/types';
+import type { IBaseUser } from '@/models/Users/types';
 import { signJwt } from '@/utils/jwt';
 
 export const loginHandler: RequestHandler = (req, res, next) => {
