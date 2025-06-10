@@ -1,5 +1,6 @@
 import { ErrorRequestHandler } from 'express';
-import { HttpError, isHttpError } from 'http-errors';
+import { isHttpError } from 'http-errors';
+import type { HttpError } from 'http-errors';
 import { ValidationError } from '@/models/ValidationError';
 import { logger } from '@/utils/logger';
 

@@ -1,9 +1,3 @@
-import dotenv from 'dotenv';
-import path from 'path';
-
-const envFile = process.env.ENVFILE || '.env';
-dotenv.config({ path: path.resolve(process.cwd(), envFile) });
-
 export type NODE_ENV_VALUES = 'development' | 'staging' | 'production';
 
 export interface Enviroment {
