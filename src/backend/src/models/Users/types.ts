@@ -1,23 +1,26 @@
 import mongoose from 'mongoose';
 
-export interface ICreateUser {
+export interface IBaseUser {
   email: string;
   password: string;
   firstName: string;
+  dateOfBirth?: Date;
   lastName: string;
-  dateOfBirth: string;
 }
 
-export interface IUserDocument extends mongoose.Document {
-  _id: mongoose.ObjectId;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface ICreateUser extends IBaseUser {}
+
+export interface IUserDocument extends IBaseUser, mongoose.Document {
+  _id: mongoose.Schema.Types.ObjectId;
   dateOfBirth: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface IUserModel extends mongoose.Model<IUserDocument> {
-  createUser(input: ICreateUser): Promise<Omit<IUserDocument, 'password'>>;
+  // static functions
+  createUser(input: ICreateUser): Promise<IUserDocument>;
   getUser(id: string): Promise<IUserDocument>;
+  getUserByEmail(email: string): Promise<IUserDocument>;
 }

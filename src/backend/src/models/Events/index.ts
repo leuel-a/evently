@@ -1,0 +1,12 @@
+import mongoose from 'mongoose';
+import { modelNames } from '../constants';
+import eventsSchema from './schema';
+import * as staticFunctions from './statics';
+import { IEventsDocument } from './types';
+
+Object.assign(eventsSchema, staticFunctions);
+
+const Event = mongoose.model<IEventsDocument>(modelNames.EVENTS, eventsSchema);
+
+export default Event;
+

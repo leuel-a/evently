@@ -11,6 +11,7 @@ export interface Enviroment {
   nodeEnv: NODE_ENV_VALUES;
   saltRounds: number;
   databaseURL: string;
+  jwtSecret: string;
 }
 
 const enviroment: Enviroment = {
@@ -18,6 +19,7 @@ const enviroment: Enviroment = {
   nodeEnv: (process.env.NODE_ENV as NODE_ENV_VALUES) || 'development',
   saltRounds: Number(process.env.SALT_ROUNDS),
   databaseURL: String(process.env.DATABASE_URL),
+  jwtSecret: String(process.env.JWT_SECRET),
 };
 
 export default enviroment;

@@ -1,13 +1,11 @@
-import mongoose from 'mongoose'
-import userSchema from './schema'
-import { modelNames } from '../constants'
+import mongoose from 'mongoose';
+import { modelNames } from '../constants';
+import userSchema from './schema';
+import * as staticFunctions from './statics';
 import { IUserDocument, IUserModel } from './types';
 
-import { createUser, getUser } from './statics'
+Object.assign(userSchema.statics, staticFunctions);
 
-userSchema.static('createUser', createUser)
-userSchema.static('getUser', getUser)
+const User = mongoose.model<IUserDocument, IUserModel>(modelNames.USERS, userSchema);
 
-const User = mongoose.model<IUserDocument, IUserModel>(modelNames.USERS, userSchema)
-
-export default User
+export default User;

@@ -1,12 +1,15 @@
 import { ErrorRequestHandler } from 'express';
 import { HttpError, isHttpError } from 'http-errors';
-import { logger } from '@/utils/logger';
 import { ValidationError } from '@/models/ValidationError';
+import { logger } from '@/utils/logger';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  logger.error(error);
+
   if (isHttpError(error)) {
     res.status((error as HttpError).status).json({
-      message: (error as HttpError).message,
+      responseEnum: (error as HttpError).message,
     });
   } else if (error instanceof ValidationError) {
     res.status(400).json({

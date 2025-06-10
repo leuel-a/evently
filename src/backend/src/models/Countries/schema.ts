@@ -1,4 +1,3 @@
 import mongoose from 'mongoose';
 
-const countries = new mongoose.Schema({ })
-
+const countries = new mongoose.Schema({});

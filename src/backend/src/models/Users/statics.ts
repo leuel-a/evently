@@ -1,13 +1,9 @@
-import _ from 'lodash';
-import mongoose from 'mongoose';
-
 import { AppError, ERROR_ENUM } from '@/models/AppError';
 import { hashPassword } from '@/utils/password';
-
-import type { ICreateUser, IUserDocument } from './types';
+import type { ICreateUser, IUserDocument, IUserModel } from './types';
 
 export async function createUser(
-  this: mongoose.Model<IUserDocument>,
+  this: IUserModel,
   input: ICreateUser,
 ): Promise<Omit<IUserDocument, 'password'>> {
   try {
@@ -31,7 +27,7 @@ export async function createUser(
     };
 
     const user = await this.create(userData);
-    return _.omit(user.toObject(), ['password']);
+    return user.toObject(); // convert the response user document to a js object
   } catch (error) {
     if (error instanceof AppError) {
       throw error;
@@ -41,7 +37,7 @@ export async function createUser(
 }
 
 export async function getUser(
-  this: mongoose.Model<IUserDocument>,
+  this: IUserModel,
   id: string,
 ): Promise<Omit<IUserDocument, 'password'>> {
   try {
@@ -51,7 +47,23 @@ export async function getUser(
       throw new AppError('User not found', ERROR_ENUM.RESOURCE_NOT_FOUND);
     }
 
-    return _.omit(user, ['password']);
+    return user;
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    }
+    throw new AppError('Failed to retrieve user', ERROR_ENUM.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export async function getUserByEmail(this: IUserModel, email: string) {
+  try {
+    const user = await this.findOne({ email });
+
+    if (!user) {
+      throw new AppError('User not found', ERROR_ENUM.RESOURCE_NOT_FOUND);
+    }
+    return user;
   } catch (error) {
     if (error instanceof AppError) {
       throw error;

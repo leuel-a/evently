@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
-
+import createHttpError from 'http-errors';
 import { HTTP_STATUS } from '@/constants/statusCodes';
+import AppError, { ERROR_ENUM } from '@/models/AppError';
 import UsersModel from '@/models/Users';
 
 export const createUserHandler: RequestHandler = async (req, res, next) => {
@@ -10,8 +11,11 @@ export const createUserHandler: RequestHandler = async (req, res, next) => {
     const user = await UsersModel.createUser({ email, password, firstName, lastName, dateOfBirth });
 
     res.status(HTTP_STATUS.CREATED).json({ data: user });
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    if (error instanceof AppError) {
+      next(createHttpError(HTTP_STATUS.BAD_REQUEST, error.enum));
+    }
+    next(createHttpError(HTTP_STATUS.INTERNAL_SERVER_ERROR, ERROR_ENUM.INTERNAL_SERVER_ERROR));
   }
 };
 

@@ -24,5 +24,10 @@ export const createUserValidator = [
 ];
 
 export const getUserValidator = [
-  param('id').notEmpty().withMessage('User ID is required').bail().isMongoId().withMessage('Invalid User ID'),
+  param('id')
+    .notEmpty()
+    .withMessage('User ID is required')
+    .bail()
+    .isMongoId()
+    .withMessage('Invalid User ID'),
 ];

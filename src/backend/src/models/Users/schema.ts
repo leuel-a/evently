@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 import type { IUserDocument } from './types';
 
 const userSchema = new mongoose.Schema(
@@ -17,6 +16,7 @@ const userSchema = new mongoose.Schema(
       transform: (_doc, ret) => {
         delete ret._id;
         delete ret.__v;
+        delete ret.password;
 
         return ret;
       },
@@ -26,10 +26,11 @@ const userSchema = new mongoose.Schema(
       transform: (_doc, ret) => {
         delete ret._id;
         delete ret.__v;
+        delete ret.password;
 
         return ret;
       },
-    }
+    },
   },
 );
 
