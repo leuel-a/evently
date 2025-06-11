@@ -41,13 +41,13 @@ export async function getUser(
   id: string,
 ): Promise<Omit<IUserDocument, 'password'>> {
   try {
-    const user = await this.findById(id).lean();
+    const user = await this.findById(id);
 
     if (!user) {
       throw new AppError('User not found', ERROR_ENUM.RESOURCE_NOT_FOUND);
     }
 
-    return user;
+    return user.toObject();
   } catch (error) {
     if (error instanceof AppError) {
       throw error;

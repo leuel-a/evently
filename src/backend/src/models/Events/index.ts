@@ -4,7 +4,7 @@ import eventsSchema from './schema';
 import * as staticFunctions from './statics';
 import type { IEventsDocument, IEventsModel } from './types';
 
-Object.assign(eventsSchema, staticFunctions);
+Object.assign(eventsSchema.statics, staticFunctions);
 
 const Event = mongoose.model<IEventsDocument, IEventsModel>(modelNames.EVENTS, eventsSchema);
 

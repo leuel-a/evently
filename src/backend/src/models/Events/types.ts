@@ -6,7 +6,7 @@ export interface IBaseEvent {
   startDate: string; // needs to be an ISO string
   endDate: string; // needs to be an ISO string
   capacity: number;
-  createdBy: string;
+  createdBy: mongoose.Types.ObjectId;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -21,4 +21,6 @@ export interface IEventsDocument extends IBaseEvent, mongoose.Document {
 export interface IEventsModel extends mongoose.Model<IEventsDocument> {
   // static functions
   createEvent(input: ICreateEvent): Promise<IEventsDocument>;
+  getEvent(id: string): Promise<IEventsDocument>;
+  getEvents(): Promise<IEventsDocument[]>;
 }

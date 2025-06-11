@@ -6,8 +6,6 @@ import { logger } from '@/utils/logger';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
-  logger.error(error);
-
   if (isHttpError(error)) {
     res.status((error as HttpError).status).json({
       responseEnum: (error as HttpError).message,

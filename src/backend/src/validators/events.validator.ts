@@ -1,4 +1,5 @@
-import { body } from 'express-validator';
+import dayjs from 'dayjs';
+import { body, param } from 'express-validator';
 import { isValidISODate } from '@/utils/date';
 
 export const createEventValidator = [
@@ -21,6 +22,25 @@ export const createEventValidator = [
     .withMessage('Event End Date is required')
     .bail()
     .custom(isValidISODate)
-    .withMessage('Event End Date must be a valid ISO string'),
+    .withMessage('Event End Date must be a valid ISO string')
+    .bail()
+    .custom((_value, { req }) => {
+      const startDate = dayjs(req.body.startDate);
+      const endDate = dayjs(req.body.endDate);
+      if (startDate >= endDate) {
+        throw new Error('Event Start Date must be before End Date');
+      }
+      return true;
+    })
+    .withMessage('Event Start Date must be before End Date'),
   body('capacity').notEmpty().withMessage('Event Capacity is required'),
+];
+
+export const getEventValidator = [
+  param('id')
+    .notEmpty()
+    .withMessage('Event ID is required')
+    .bail()
+    .isMongoId()
+    .withMessage('Invalid Event ID'),
 ];

@@ -18,7 +18,7 @@ const eventsSchema = new mongoose.Schema(
     },
     endDate: { type: Date, required: true },
     capacity: { type: Number, min: 0 },
-    createdBy: { type: mongoose.Schema.Types.ObjectId },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, required: true },
   },
   {
     timestamps: true,
