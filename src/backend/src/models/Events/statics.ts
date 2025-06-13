@@ -4,7 +4,7 @@ import type { ICreateEvent, IEventsModel } from './types';
 export async function createEvent(this: IEventsModel, input: ICreateEvent) {
   try {
     const event = await this.create({ ...input });
-    return event.toObject();
+    return event;
   } catch (error: any) {
     throw new AppError(
       (error as Error).message ?? 'Failed to create event',
@@ -29,5 +29,34 @@ export async function getEvents(this: IEventsModel) {
     return events;
   } catch (error) {
     throw new AppError('Unable to get resources', ERROR_ENUM.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export async function updateEvent(
+  this: IEventsModel,
+  id: string,
+  updateData: Partial<ICreateEvent>,
+) {
+  try {
+    const event = await this.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true, runValidators: true },
+    ).lean();
+
+    if (!event) {
+      throw new AppError('Event not found', ERROR_ENUM.RESOURCE_NOT_FOUND);
+    }
+
+    return event;
+  } catch (error: any) {
+    if (error instanceof AppError) {
+      throw error;
+    }
+
+    throw new AppError(
+      (error as Error).message ?? 'Failed to update event',
+      ERROR_ENUM.INTERNAL_SERVER_ERROR,
+    );
   }
 }

@@ -9,10 +9,8 @@ export function createApiError(error: any) {
   let http_error: HttpError;
 
   if (error instanceof ApiError) {
-    console.log(`error instanceof ApiError ${error instanceof ApiError}`);
     http_error = createHttpError(error.statusCode, error.enum);
   } else if (error instanceof AppError) {
-    console.log(`error instanceof AppError ${error instanceof AppError}`);
     http_error = createHttpError(HTTP_STATUS.BAD_REQUEST, error.enum);
   } else {
     http_error = createHttpError(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.enum);

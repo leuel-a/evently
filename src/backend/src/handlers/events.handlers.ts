@@ -5,6 +5,7 @@ import { ERROR_ENUM } from '@/models/AppError';
 import EventsModel from '@/models/Events';
 import type { IBaseUser } from '@/models/Users/types';
 import { convertToObjectId, createApiError } from '@/utils/index';
+import { removeMongoFields } from '@/utils/transform';
 
 export const createEventHandler: RequestHandler = async (req, res, next) => {
   try {
@@ -20,9 +21,8 @@ export const createEventHandler: RequestHandler = async (req, res, next) => {
       createdBy: convertToObjectId(user.id),
     });
 
-    res.status(HTTP_STATUS.CREATED).json({ data: event });
+    res.status(HTTP_STATUS.CREATED).json({ data: removeMongoFields(event.toObject()) });
   } catch (error) {
-    console.log(error);
     next(createApiError(error));
   }
 };
@@ -36,7 +36,7 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
       throw new ApiError('Event not found', HTTP_STATUS.NOT_FOUND, ERROR_ENUM.RESOURCE_NOT_FOUND);
     }
 
-    res.status(HTTP_STATUS.OK).json({ data: event });
+    res.status(HTTP_STATUS.OK).json({ data: removeMongoFields(event) });
   } catch (error) {
     next(createApiError(error));
   }
@@ -45,7 +45,8 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
 export const getEventsHandler: RequestHandler = async (_req, res, next) => {
   try {
     // TODO: if the user has been authenticated, and the dashboard param is
-    // set in the query parameters list return the events that the user has created
+    //       set in the query parameters list return the events that the user
+    //       has created
 
     // TODO: add ability to create pages, and pagesize for the returned data
     // NOTE: this needs to be in the way that react admin wants the data to be returned
@@ -54,8 +55,13 @@ export const getEventsHandler: RequestHandler = async (_req, res, next) => {
       EventsModel.countDocuments(),
     ]);
 
-    res.status(HTTP_STATUS.OK).json({ data: events, total });
+    res.status(HTTP_STATUS.OK).json({ data: removeMongoFields(events), total });
   } catch (error) {
     next(createApiError(error));
   }
+};
+
+export const updateEventHandler: RequestHandler = async (req, res, _next) => {
+  console.log(req.params);
+  res.json({ message: 'Update Event Successfull' });
 };

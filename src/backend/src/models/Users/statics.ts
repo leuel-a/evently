@@ -58,16 +58,9 @@ export async function getUser(
 
 export async function getUserByEmail(this: IUserModel, email: string) {
   try {
-    const user = await this.findOne({ email });
-
-    if (!user) {
-      throw new AppError('User not found', ERROR_ENUM.RESOURCE_NOT_FOUND);
-    }
+    const user = await this.findOne({ email }).lean();
     return user;
   } catch (error) {
-    if (error instanceof AppError) {
-      throw error;
-    }
     throw new AppError('Failed to retrieve user', ERROR_ENUM.INTERNAL_SERVER_ERROR);
   }
 }

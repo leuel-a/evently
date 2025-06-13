@@ -9,6 +9,5 @@
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": ["^node:.*$", "^[a-zA-Z0-9]", "^@.*$", "^[./].*$"],
   "importOrderSortSpecifiers": true,
-  "importOrderCaseInsensitive": true,
-  "importOrderSeparation": true
+  "importOrderCaseInsensitive": true
 }

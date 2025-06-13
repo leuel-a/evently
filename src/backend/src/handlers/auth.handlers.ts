@@ -8,9 +8,10 @@ export const loginHandler: RequestHandler = (req, res, next) => {
   const user = req.user as (IBaseUser & { id: string }) | undefined;
 
   if (!user) {
-    return next(createHttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid Email or Password'));
+    next(createHttpError(HTTP_STATUS.UNAUTHORIZED, 'Invalid Email or Password'));
+    return;
   }
 
   const accessToken = signJwt({ id: user.id, email: user.email }, { expiresIn: '1h' });
-  res.status(200).json({ id: user.id, email: user.email, accessToken });
+  res.status(200).json({ ...user, accessToken });
 };

@@ -4,13 +4,16 @@ import type { HttpError } from 'http-errors';
 import { ValidationError } from '@/models/ValidationError';
 import { logger } from '@/utils/logger';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   if (isHttpError(error)) {
+    logger.error('HTTP Error: ', error);
+
     res.status((error as HttpError).status).json({
       responseEnum: (error as HttpError).message,
     });
   } else if (error instanceof ValidationError) {
+    logger.error('Validation Error: ', error);
+
     res.status(400).json({
       message: error.message,
       errors: error.errors,

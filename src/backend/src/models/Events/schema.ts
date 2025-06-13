@@ -9,6 +9,7 @@ const eventsSchema = new mongoose.Schema(
     startDate: {
       type: Date,
       required: true,
+      // TODO: should i add validation error at the schema level
       validate: {
         validator: function (this: IEventsDocument, value: string): boolean {
           return dayjs(value) < dayjs(this.endDate);
@@ -16,28 +17,11 @@ const eventsSchema = new mongoose.Schema(
         message: 'Start date must be before the end date.',
       },
     },
+    location: { type: String, required: false },
+    isRemote: { type: Boolean, required: true, default: true },
     endDate: { type: Date, required: true },
     capacity: { type: Number, min: 0 },
     createdBy: { type: mongoose.Schema.Types.ObjectId, required: true },
-  },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      transform: (_doc, ret) => {
-        delete ret._id;
-        delete ret.__v;
-        return ret;
-      },
-    },
-    toObject: {
-      virtuals: true,
-      transform: (_doc, ret) => {
-        delete ret._id;
-        delete ret.__v;
-        return ret;
-      },
-    },
   },
 );
 

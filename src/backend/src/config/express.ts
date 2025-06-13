@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import type { Request, Response } from 'express';
 import morgan from 'morgan';
@@ -10,8 +11,12 @@ import './passport';
 const API_PREFIX = 'api';
 const app = express();
 
+app.use(cors());
+
 app.use(morgan('dev'));
+
 app.use(passport.initialize()); // Initialize passport middleware
+
 app.use(express.json());
 
 // register the routes for the application

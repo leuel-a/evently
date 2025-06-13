@@ -9,6 +9,7 @@ import AppError, { ERROR_ENUM } from '@/models/AppError';
 import UsersModel from '@/models/Users';
 import { logger } from '@/utils/logger';
 import { validatePassword } from '@/utils/password';
+import { removeMongoFields } from '@/utils/transform';
 
 export type VerifyCallback = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +33,7 @@ passport.use(
           );
         }
 
-        done(null, user);
+        done(null, removeMongoFields(user));
       } catch (error) {
         if (error instanceof AppError) {
           const message =
