@@ -11,6 +11,8 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
+    "@mui/icons-material": "^7.1.1",
     "@mui/system": "^7.0.0",
     "@mui/utils": "7.0.0",
     "@tanstack/react-query-devtools": "^5.80.6",
@@ -21,7 +23,8 @@
     "react": "^19.1.0",
     "react-admin": "^5.8.2",
     "react-dom": "^19.1.0",
-    "react-is": "19.0.0"
+    "react-is": "19.0.0",
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

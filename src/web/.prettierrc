@@ -2,12 +2,24 @@
   "tabWidth": 2,
   "singleQuote": true,
   "trailingComma": "all",
-  "bracketSpacing": true,
+  "bracketSpacing": false,
   "arrowParens": "always",
   "printWidth": 100,
   "singleAttributePerLine": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["^node:.*$", "^[a-zA-Z0-9]", "^@.*$", "^[./].*$"],
+  "importOrder": [
+    "^node:.*$",
+    "^[a-zA-Z0-9]",
+    "^@mui/*",
+    "^@src/*",
+    "^@assets/*",
+    "^@components/*",
+    "^@models/*",
+    "^@lib/*",
+    "^@pages/*",
+    "^@utils/*",
+    "^[./].*$"
+  ],
   "importOrderSortSpecifiers": true,
   "importOrderCaseInsensitive": true
 }

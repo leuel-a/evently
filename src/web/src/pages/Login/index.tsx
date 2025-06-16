@@ -4,8 +4,8 @@ import {Link as RouterLink} from 'react-router-dom';
 import {Box, Button, Link, styled, TextField, Typography} from '@mui/material';
 import {PasswordTextField} from '@components/form';
 import {Flex} from '@components/ui';
-import {signupSchema} from './validations';
-import type {SignupSchema} from './validations';
+import {loginSchema} from './validations';
+import type {LoginSchema} from './validations';
 
 const StyledForm = styled('form')(({theme}) => ({
   display: 'flex',
@@ -19,58 +19,31 @@ const StyledForm = styled('form')(({theme}) => ({
   },
 }));
 
-export default function Signup() {
+export default function Login() {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<SignupSchema>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: SignupSchema) => {};
+  const onSubmit = (data: LoginSchema) => {};
 
   return (
     <Flex
       flexDirection="column"
-      justifyContent="center"
       alignItems="center"
-      sx={{height: '100vh'}}
+      justifyContent="center"
+      sx={{minHeight: '100vh'}}
     >
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
         <Typography
           sx={{textAlign: 'center', marginBottom: '2rem !important'}}
           variant="h4"
         >
-          Sign Up
+          Login
         </Typography>
-        <Controller
-          name="firstName"
-          control={control}
-          render={({field}) => (
-            <TextField
-              {...field}
-              label="First Name"
-              error={!!errors.firstName}
-              helperText={errors.firstName?.message}
-              fullWidth
-            />
-          )}
-        />
-
-        <Controller
-          name="lastName"
-          control={control}
-          render={({field}) => (
-            <TextField
-              {...field}
-              label="Last Name"
-              error={!!errors.lastName}
-              helperText={errors.lastName?.message}
-              fullWidth
-            />
-          )}
-        />
 
         <Controller
           name="email"
@@ -94,24 +67,8 @@ export default function Signup() {
             <PasswordTextField
               {...field}
               label="Password"
-              type="password"
               error={!!errors.password}
               helperText={errors.password?.message}
-              fullWidth
-            />
-          )}
-        />
-
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({field}) => (
-            <PasswordTextField
-              {...field}
-              label="Confirm Password"
-              type="password"
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword?.message}
               fullWidth
             />
           )}
@@ -125,19 +82,19 @@ export default function Signup() {
           sx={{height: '3.5rem'}}
           fullWidth
         >
-          <Typography textTransform="none">Sign Up</Typography>
+          <Typography textTransform="none">Login</Typography>
         </Button>
       </StyledForm>
       <Box mt="10px">
         <Typography color="text.secondary">
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <Link
             component={RouterLink}
-            to="/login"
+            to="/signup"
             color="primary"
             underline="hover"
           >
-            Login
+            Sign Up
           </Link>
         </Typography>
       </Box>

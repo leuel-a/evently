@@ -1,17 +1,18 @@
-import { Box, Button, List, ListItem, styled, Typography } from '@mui/material';
+import {Link} from 'react-router-dom';
+import {Button, List, ListItem, styled, Typography, useTheme} from '@mui/material';
+import {Flex} from '@components/ui';
 
 export function Header() {
+  const theme = useTheme();
+
   return (
     <StyledHeader>
-      <Box
-        sx={{
-          width: '100rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
+      <Flex
+        alignItems={'center'}
+        justifyContent={'space-between'}
+        sx={{height: '100%', marginInline: 'auto', maxWidth: '100rem'}}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+        <Flex>
           <Typography
             color="white"
             fontSize={30}
@@ -19,24 +20,39 @@ export function Header() {
             Evently
           </Typography>
           <StyledNav>
-            <List sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <List sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <ListItem>
                 <Typography color="white">Home</Typography>
               </ListItem>
             </List>
           </StyledNav>
-        </Box>
+        </Flex>
 
-        <Box>
-          <Button sx={{}}>
-            <Typography
-              textTransform="capitalize"
-              color="white"
-            >
-              Login
-            </Typography>
+        <Flex gap="20px">
+          <Button
+            component={Link}
+            to="/signup"
+            sx={{
+              border: `1px solid ${theme.palette.custom.white}`,
+              borderRadius: '8px',
+              color: theme.palette.custom.white,
+              width: '100px',
+              '&:hover': {
+                borderColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.custom.white,
+                color: theme.palette.primary.main,
+              },
+            }}
+          >
+            <Typography textTransform="capitalize">Login</Typography>
           </Button>
-          <Button>
+          <Button
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              border: `1px solid ${theme.palette.custom.white}`,
+              borderRadius: '8px',
+            }}
+          >
             <Typography
               textTransform="capitalize"
               color="white"
@@ -44,18 +60,15 @@ export function Header() {
               Are you an Organizer?
             </Typography>
           </Button>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </StyledHeader>
   );
 }
 
-const StyledHeader = styled('header')(({ theme }) => ({
+const StyledHeader = styled('header')(({theme}) => ({
   height: '80px',
   backgroundColor: theme.palette.primary.main,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 }));
 
 const StyledNav = styled('nav')(({}) => ({}));
