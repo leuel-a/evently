@@ -3,28 +3,35 @@ import './index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {Admin, Resource, defaultTheme} from 'react-admin';
+import type {RaThemeOptions} from 'react-admin';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import App from './App.tsx';
-import Signup from '@pages/Signup/index';
-import Login from '@pages/Login/index';
+import {dataProvider, authProvider} from '@lib/providers'
+
+import {Layout} from '@components/blocks/Layout';
+import resources from '@lib/resources';
 
 const queryClient = new QueryClient();
 
-const theme = createTheme({
+const theme: RaThemeOptions = {
+  breakpoints: defaultTheme.breakpoints,
   typography: {
     fontFamily: 'Poppins, Arial, sans-serif'
   },
   palette: {
+    background: {
+      default: '#fafbff',
+    },
     primary: {
       main: '#6366f1',
     },
     secondary: {
-      main: '#f59e0b'
+      main: '#e5e7eb'
     },
     custom: {
-      white: '#ffffff'
+      white: '#fff',
+      lightGray: '#e5e7eb',
+      gray: '#d1d5db'
     }
   },
   components: {
@@ -38,29 +45,16 @@ const theme = createTheme({
       }
     }
   }
-})
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-  },
-  {
-    path: '/signup',
-    element: <Signup />
-  },
-  {
-    path: '/login',
-    element: <Login />
-  }
-]);
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <Admin authProvider={authProvider} dataProvider={dataProvider} layout={Layout} theme={theme}>
+        {resources.map(({name, List, icon}) => (
+            <Resource name={name} list={List} icon={icon}/>
+        ))}
+      </Admin>
+    </QueryClientProvider>
   </StrictMode>,
 );

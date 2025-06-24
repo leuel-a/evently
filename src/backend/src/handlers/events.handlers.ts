@@ -61,7 +61,6 @@ export const getEventsHandler: RequestHandler = async (_req, res, next) => {
   }
 };
 
-export const updateEventHandler: RequestHandler = async (req, res, _next) => {
-  console.log(req.params);
+export const updateEventHandler: RequestHandler = async (_req, res, _next) => {
   res.json({ message: 'Update Event Successfull' });
 };

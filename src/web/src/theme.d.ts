@@ -3,13 +3,17 @@ import '@mui/material/styles';
 declare module '@mui/material/styles' {
   interface Palette {
     custom: {
+      gray: string;
       white: string;
+      lightGray: string;
     };
   }
+
   interface PaletteOptions {
-    custom?: {
+    custom: {
+      gray: string;
       white: string;
+      lightGray: string;
     };
   }
 }
-

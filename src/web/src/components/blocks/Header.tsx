@@ -5,6 +5,7 @@ import {Flex} from '@components/ui';
 export function Header() {
   const theme = useTheme();
 
+  // TODO: show a different UI when the user is authenticated
   return (
     <StyledHeader>
       <Flex

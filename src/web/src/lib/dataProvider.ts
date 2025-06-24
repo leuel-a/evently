@@ -10,45 +10,44 @@ import type {
   UpdateManyParams,
   UpdateParams,
 } from 'react-admin';
-
-import { makeCall } from '@src/utils/api';
+import {makeCall} from '@src/utils/api';
 
 const getList = async (resource: string, _params: GetListParams) => {
-  const response = await makeCall({ requireAuth: true, url: `${resource}`, method: 'get' });
+  const response = await makeCall({requireAuth: true, url: `${resource}`, method: 'get'});
   return response;
 };
 
-const getOne = async (resource: string, { id }: GetOneParams) => {
-  const response = await makeCall({ requireAuth: true, url: `${resource}/${id}`, method: 'get' });
+const getOne = async (resource: string, {id}: GetOneParams) => {
+  const response = await makeCall({requireAuth: true, url: `${resource}/${id}`, method: 'get'});
   return response;
 };
 
-const getMany = async (resource: string, { ids }: GetManyParams) => {
+const getMany = async (resource: string, {ids}: GetManyParams) => {
   const response = await makeCall({
     requireAuth: true,
     url: `${resource}`,
     method: 'get',
-    params: { ids },
+    params: {ids},
   });
   return response;
 };
 
-const getManyReference = async (resource: string, { target, id }: GetManyReferenceParams) => {
+const getManyReference = async (resource: string, {target, id}: GetManyReferenceParams) => {
   const response = await makeCall({
     requireAuth: true,
     url: `${resource}/${id}`,
     method: 'get',
-    params: { target },
+    params: {target},
   });
   return response;
 };
 
-const create = async (resource: string, { data }: CreateParams) => {
-  const response = await makeCall({ requireAuth: true, url: `${resource}`, method: 'post', data });
+const create = async (resource: string, {data}: CreateParams) => {
+  const response = await makeCall({requireAuth: true, url: `${resource}`, method: 'post', data});
   return response;
 };
 
-const update = async (resource: string, { id, data }: UpdateParams) => {
+const update = async (resource: string, {id, data}: UpdateParams) => {
   const response = await makeCall({
     requireAuth: true,
     url: `${resource}/${id}`,
@@ -58,18 +57,18 @@ const update = async (resource: string, { id, data }: UpdateParams) => {
   return response;
 };
 
-const updateMany = async (resource: string, { ids, data }: UpdateManyParams) => {
+const updateMany = async (resource: string, {ids, data}: UpdateManyParams) => {
   const response = await makeCall({
     data,
     requireAuth: false,
     url: `${resource}`,
     method: 'put',
-    params: { ids },
+    params: {ids},
   });
   return response;
 };
 
-const deleteQueryFunction = async (resource: string, { id }: DeleteParams) => {
+const deleteQueryFunction = async (resource: string, {id}: DeleteParams) => {
   const response = await makeCall({
     requireAuth: true,
     url: `${resource}/${id}`,
@@ -78,17 +77,17 @@ const deleteQueryFunction = async (resource: string, { id }: DeleteParams) => {
   return response;
 };
 
-const deleteManyQueryFunction = async (resource: string, { ids }: DeleteManyParams) => {
+const deleteManyQueryFunction = async (resource: string, {ids}: DeleteManyParams) => {
   const response = await makeCall({
     requireAuth: true,
     url: `${resource}`,
     method: 'delete',
-    params: { ids },
+    params: {ids},
   });
   return response;
 };
 
-const dataProvider: DataProvider = {
+export const dataProvider: DataProvider = {
   getList,
   getOne,
   getMany,
@@ -99,5 +98,3 @@ const dataProvider: DataProvider = {
   delete: deleteQueryFunction,
   deleteMany: deleteManyQueryFunction,
 };
-
-export default dataProvider;

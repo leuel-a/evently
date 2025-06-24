@@ -28,7 +28,7 @@ export default function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginSchema) => {};
+  const onSubmit = (data: LoginSchema) => console.log(data);
 
   return (
     <Flex

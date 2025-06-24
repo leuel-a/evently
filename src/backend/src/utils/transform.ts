@@ -1,5 +1,5 @@
-import { Types } from 'mongoose';
-import { DATE_FORMATS, formatDate } from '@/utils/date';
+import {Types} from 'mongoose';
+import {formatDate} from '@/utils/date';
 
 export const removeMongoFields = <T>(obj: T): T => {
   if (!obj || typeof obj !== 'object') return obj;
@@ -8,7 +8,7 @@ export const removeMongoFields = <T>(obj: T): T => {
     return obj.map((item) => removeMongoFields(item)) as unknown as T;
   }
 
-  const result = { ...obj } as Record<string, any>;
+  const result = {...obj} as Record<string, any>;
 
   // Handle ObjectId and Date conversion for all fields
   Object.keys(result).forEach((key) => {

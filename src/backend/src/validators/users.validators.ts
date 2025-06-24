@@ -1,4 +1,4 @@
-import { body, param } from 'express-validator';
+import {body, param} from 'express-validator';
 
 export const createUserValidator = [
   body('email')
@@ -7,12 +7,12 @@ export const createUserValidator = [
     .bail()
     .isEmail()
     .withMessage('Please provide a valid email address'),
-  body('password').isLength({ min: 8 }).withMessage('Password must be atleast 8 characters long.'),
+  body('password').isLength({min: 8}).withMessage('Password must be atleast 8 characters long.'),
   body('confirmPassword')
     .notEmpty()
     .bail()
     .withMessage('Confirm Password is required')
-    .custom((value, { req }) => {
+    .custom((value, {req}) => {
       if (value !== req.body.password) {
         return false;
       }

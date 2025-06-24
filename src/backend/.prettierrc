@@ -4,6 +4,7 @@
   "singleQuote": true,
   "printWidth": 100,
   "tabWidth": 2,
+  "bracketSpacing": false,
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": ["^node:.*$", "^[a-zA-Z0-9]", "^@/.*$", "^[./].*$"],
   "importOrderSortSpecifiers": true,

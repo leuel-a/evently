@@ -1,15 +1,15 @@
-import { AppError, ERROR_ENUM } from '@/models/AppError';
-import { hashPassword } from '@/utils/password';
-import type { ICreateUser, IUserDocument, IUserModel } from './types';
+import {AppError, ERROR_ENUM} from '@/models/AppError';
+import {hashPassword} from '@/utils/password';
+import type {ICreateUser, IUserDocument, IUserModel} from './types';
 
 export async function createUser(
   this: IUserModel,
   input: ICreateUser,
 ): Promise<Omit<IUserDocument, 'password'>> {
   try {
-    const { email, password, firstName, lastName, dateOfBirth } = input;
+    const {email, password, firstName, lastName, dateOfBirth} = input;
 
-    const emailExists = await this.findOne({ email }).lean();
+    const emailExists = await this.findOne({email}).lean();
     if (emailExists) {
       throw new AppError(
         'Email is already registered, please try another email',
@@ -58,7 +58,7 @@ export async function getUser(
 
 export async function getUserByEmail(this: IUserModel, email: string) {
   try {
-    const user = await this.findOne({ email }).lean();
+    const user = await this.findOne({email}).lean();
     return user;
   } catch (error) {
     throw new AppError('Failed to retrieve user', ERROR_ENUM.INTERNAL_SERVER_ERROR);
