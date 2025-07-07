@@ -1,35 +1,25 @@
 'use client';
 
-import {Calendar} from 'lucide-react';
-import {Sidebar, SidebarContent} from '@/components/ui/sidebar';
+import {useResourcesContext} from '@/context/resources-context';
+import {Sidebar, SidebarContent, useSidebar} from '@/components/ui/sidebar';
+import {getResourceGroups, generateUniqueKey} from '@/utils';
+
 import {AppSidebarGroup} from './sidebar-group';
-import type {MenuSidebarGroups} from './types';
 
-const menuSidebarGroups: MenuSidebarGroups = [
-    {
-        label: 'events',
-        items: [
-            {
-                title: 'Events',
-                url: '/dashboard/events',
-                icon: Calendar,
-            },
-        ],
-    },
-];
+function AppSidebar() {
+    const resources = useResourcesContext();
+    const resourceGroups = getResourceGroups(resources);
+    const {state} = useSidebar();
 
-export function AppSidebar() {
     return (
-        <Sidebar collapsible='icon'>
-            <SidebarContent>
-                {menuSidebarGroups.map((group) => {
-                    const {label, items} = group;
-
+        <Sidebar collapsible="icon">
+            <SidebarContent className={`${state === 'collapsed' ? 'gap-0' : ''}`}>
+                {Object.entries(resourceGroups).map(([groupLabel, resources]) => {
                     return (
                         <AppSidebarGroup
-                            key={label}
-                            label={label}
-                            items={items}
+                            key={generateUniqueKey()}
+                            label={groupLabel}
+                            resources={resources}
                         />
                     );
                 })}
@@ -37,3 +27,6 @@ export function AppSidebar() {
         </Sidebar>
     );
 }
+
+AppSidebar.displayName = 'DashboardSidebar';
+export {AppSidebar};

@@ -24,7 +24,7 @@ export default function RootLayout({
             lang="en"
             suppressHydrationWarning
         >
-            <body className={`${poppins.variable} font-poppins`}>
+            <body className={`${poppins.variable} font-poppins bg-gray-100`}>
                 <ComposeProviders components={[SidebarProvider]}>{children}</ComposeProviders>
             </body>
         </html>
