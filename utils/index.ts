@@ -28,5 +28,6 @@ export function getLabelForResource(resource: string): string {
 }
 
 export function generateUniqueKey() {
+    // TODO: figure out a less resource intensive function to generate a unique key
     return uuid();
 }
