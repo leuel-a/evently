@@ -4,7 +4,7 @@ import {useResourcesContext} from '@/context/resources-context';
 import {Sidebar, SidebarContent, useSidebar} from '@/components/ui/sidebar';
 import {getResourceGroups, generateUniqueKey} from '@/utils';
 
-import {AppSidebarGroup} from './sidebar-group';
+import {AppSidebarGroup} from './SidebarGroup';
 
 function AppSidebar() {
     const resources = useResourcesContext();

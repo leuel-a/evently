@@ -1,8 +1,10 @@
 import lodashGet from 'lodash/get';
 import {v4 as uuid} from 'uuid';
-import {splitCamelCase, capitalizeFirstLetters, uppercaseFirstLetters} from './strings';
 import {RESOURCE_GROUP_MAP} from '@/config/constants';
 import type {ResourceItems, ResourceItemsWithGroups} from '@/types/resources';
+
+import {removeEmptyStringsFromArray} from './functions';
+import {splitCamelCase, capitalizeFirstLetters, uppercaseFirstLetters} from './strings';
 
 export function getResourceGroups(resources: ResourceItems): ResourceItemsWithGroups {
     const groups: ResourceItemsWithGroups = {};
@@ -30,4 +32,8 @@ export function getLabelForResource(resource: string): string {
 export function generateUniqueKey() {
     // TODO: figure out a less resource intensive function to generate a unique key
     return uuid();
+}
+
+export function getPathnameArray(pathname: string) {
+    return removeEmptyStringsFromArray(pathname.split('/'));
 }

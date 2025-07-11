@@ -1,7 +1,7 @@
 'use client';
 
 import {usePathname} from 'next/navigation';
-import {AppSidebar} from '@/components/blocks/app-sidebar';
+import {AppSidebar} from '@/components/pages/dashboard/Common';
 import {SidebarTrigger} from '@/components/ui/sidebar';
 import {DashboardHeader} from '@/components/pages/dashboard';
 import {ResourcesProvider} from '@/context/resources-context';
@@ -19,7 +19,7 @@ export default function DashboardLayout({children}: Readonly<{children: React.Re
                     <AppSidebar />
                     <main className="flex-1">
                         <SidebarTrigger />
-                        <div className="px-8 pt-2">
+                        <div className="h-full px-8">
                             <DashboardHeader shouldShowCreateButton={shouldShowCreateButton} />
                             {children}
                         </div>
