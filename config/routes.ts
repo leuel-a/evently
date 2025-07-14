@@ -17,5 +17,26 @@ const APP_ROUTES = {
 
 type AppRoutes = typeof APP_ROUTES;
 
-export {APP_ROUTES};
-export type {AppRoutes};
+const INDEX_BASE_API_ROUTE = '/';
+const EVENTS_BASE_ROUTE = '/events';
+
+const API_ROUTES = {
+    index: INDEX_BASE_API_ROUTE, // this might never be needed
+    events: {
+        base: EVENTS_BASE_ROUTE,
+    },
+} as const;
+
+type ApiRoutes = typeof API_ROUTES;
+
+const HTTP_METHODS = {
+    POST: 'POST',
+    GET: 'GET',
+    DELETE: 'DELETE',
+    PUT: 'PUT',
+} as const;
+
+type HttpMethods = typeof HTTP_METHODS;
+
+export {APP_ROUTES, API_ROUTES, HTTP_METHODS};
+export type {AppRoutes, ApiRoutes, HttpMethods};

@@ -27,18 +27,7 @@ async function generateDefaultUser() {
     };
 
     const user = await prisma.user.create({data: {...userInput}});
-
-    const organizer: Prisma.OrganizerCreateInput = {
-        user: {
-            connect: {id: user.id},
-        },
-    };
-
-    await prisma.organizer.create({
-        data: {
-            userId,
-        },
-    });
+    await prisma.organizer.create({data: {userId: user.id, organizationName: 'Evently Admin Organization'}});
 
     // FIXME: use a proper logging system instead of just just using the Browser Console
     console.log(`Default user created with email: ${TEST_ORGANIZER_EMAIL}`);

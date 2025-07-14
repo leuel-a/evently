@@ -4,9 +4,9 @@ import {usePathname} from 'next/navigation';
 import {AppSidebar} from '@/components/pages/dashboard/Common';
 import {SidebarTrigger} from '@/components/ui/sidebar';
 import {DashboardHeader} from '@/components/pages/dashboard';
-import {ResourcesProvider} from '@/context/resources-context';
+import {ResourcesProvider} from '@/context/ResourcesContext';
 import {resources} from '@/config/resource-definitions';
-import {ResourceProvider} from '@/context/resource-context';
+import {ResourceProvider} from '@/context/ResourceContext';
 
 export default function DashboardLayout({children}: Readonly<{children: React.ReactNode}>) {
     const pathname = usePathname();

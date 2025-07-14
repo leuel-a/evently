@@ -2,7 +2,7 @@
 
 import {createContext, useContext, useState} from 'react';
 import type {ReactNode} from 'react';
-import {useResourceContext} from './resource-context';
+import {useResourceContext} from './ResourceContext';
 
 interface FilterContextType {
     resource: string | undefined;

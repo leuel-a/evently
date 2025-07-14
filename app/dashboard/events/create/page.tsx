@@ -11,10 +11,15 @@ import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {eventsSchema} from '@/components/pages/dashboard/Form/Event/schema';
 import type {EventSchemaType} from '@/components/pages/dashboard/Form/Event/schema';
 
-import {axios} from '@/config/axios';
+import {makeApiCall} from '@/config/axios';
+import {API_ROUTES, HTTP_METHODS} from '@/config/routes';
 
 const createEvent: MutationFunction<Events, EventSchemaType> = async (data) => {
-    const response = await axios.post('/events', data);
+    const response = await makeApiCall({
+        url: API_ROUTES.events.base,
+        method: HTTP_METHODS.POST,
+        data,
+    });
     return response.data;
 };
 
@@ -37,8 +42,12 @@ export default function Page() {
     const mutation = useMutation({
         mutationKey: ['events', 'create'],
         mutationFn: createEvent,
-        onSuccess: () => {
+        onSuccess: (data) => {
             console.log('Successfully created the new event');
+            console.log(data);
+        },
+        onError: (error) => {
+            console.log(`An error occured while trying to create an event: ${error?.message}`);
         },
     });
 

@@ -1,19 +1,23 @@
-import {createContext, useState, useContext} from 'react';
+'use client';
+
+import {createContext, useContext} from 'react';
 import type {ReactNode} from 'react';
 import type {User} from '@/app/generated/prisma';
+import {useSession} from '@/lib/auth-client';
 
 type AuthContextType = {
-    user: User | null;
+    user: SessionUser | undefined;
+    isPending: boolean;
     isAuthenticated: boolean;
-    loading: boolean;
 };
+type SessionUser = User & {};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({children}: Readonly<{children: ReactNode}>) {
-    const [user] = useState<AuthContextType>({user: null, isAuthenticated: false, loading: false});
+    const {data, isPending, error, refetch} = useSession();
 
-    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{user: data?.user, isAuthenticated: !!data?.user, isPending}}>{children}</AuthContext.Provider>;
 }
 
 function useAuthContext() {

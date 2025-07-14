@@ -1,9 +1,13 @@
 import localFont from 'next/font/local';
 import type {Metadata} from 'next';
 import './globals.css';
-import {SidebarProvider} from '@/components/ui/sidebar';
-import {QueryClientProvider} from '@/context/query-client-context';
+
 import ComposeProviders from '@/components/ComposeProviders';
+
+//providers
+import {AuthProvider} from '@/context/AuthContext';
+import {SidebarProvider} from '@/components/ui/sidebar';
+import {QueryClientProvider} from '@/context/QueryClientContext';
 
 export const metadata: Metadata = {
     title: 'Evently',
@@ -26,7 +30,7 @@ export default function RootLayout({
             suppressHydrationWarning
         >
             <body className={`${poppins.variable} font-poppins bg-gray-100`}>
-                <ComposeProviders components={[SidebarProvider, QueryClientProvider]}>{children}</ComposeProviders>
+                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>{children}</ComposeProviders>
             </body>
         </html>
     );

@@ -1,6 +1,6 @@
 'use client';
 
-import {useResourcesContext} from '@/context/resources-context';
+import {useResourcesContext} from '@/context/ResourcesContext';
 import {Sidebar, SidebarContent, useSidebar} from '@/components/ui/sidebar';
 import {getResourceGroups, generateUniqueKey} from '@/utils';
 

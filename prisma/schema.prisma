@@ -17,7 +17,7 @@ model User {
     phone         String
     createdAt     DateTime   @default(now())
     updatedAt     DateTime   @updatedAt
-    Organizer     Organizer?
+    organizer     Organizer?
     name          String
     emailVerified Boolean
     isOrganizer   Boolean    @default(false)
@@ -30,11 +30,12 @@ model User {
 }
 
 model Organizer {
-    id        String   @id @default(uuid())
-    userId    String
-    user      User     @relation(fields: [userId], references: [id])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id               String   @id @default(uuid())
+    userId           String
+    user             User     @relation(fields: [userId], references: [id])
+    organizationName String
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
 
     Events Events[]
 

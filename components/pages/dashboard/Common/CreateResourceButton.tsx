@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import {useResourceContext} from '@/context/resource-context';
+import {useResourceContext} from '@/context/ResourceContext';
 import {getLabelForResource} from '@/utils';
 import {Button} from '@/components/ui/button';
 import {DASHBOARD_PREFIX} from '@/config/constants';
