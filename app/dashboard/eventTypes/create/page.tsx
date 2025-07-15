@@ -1,3 +1,3 @@
 export default function Page() {
-    return <div>Create Event Types</div>
+    return <div>Create Event Types</div>;
 }

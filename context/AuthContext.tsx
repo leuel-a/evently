@@ -2,7 +2,6 @@
 
 import {createContext, useContext} from 'react';
 import type {ReactNode} from 'react';
-import type {User} from '@/app/generated/prisma';
 import {useSession} from '@/lib/auth-client';
 
 type AuthContextType = {
@@ -10,12 +9,20 @@ type AuthContextType = {
     isPending: boolean;
     isAuthenticated: boolean;
 };
-type SessionUser = User & {};
+type SessionUser = {
+    id: string;
+    name: string;
+    emailVerified: boolean;
+    email: string;
+    createdAt: Date;
+    updatedAt: Date;
+    image?: string | null | undefined | undefined;
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({children}: Readonly<{children: ReactNode}>) {
-    const {data, isPending, error, refetch} = useSession();
+    const {data, isPending} = useSession();
 
     return <AuthContext.Provider value={{user: data?.user, isAuthenticated: !!data?.user, isPending}}>{children}</AuthContext.Provider>;
 }

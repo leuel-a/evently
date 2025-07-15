@@ -11,6 +11,11 @@ import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {FormDatepicker} from '@/components/blocks/FormDatepicker';
 
 import type {EventSchemaType} from './schema';
+import {EventCategoryInput} from './EventCategoryInput';
+import {ReferenceInput} from '@/components/blocks/ReferenceInput';
+import {API_ROUTES} from '@/config/routes';
+import {CountriesSelectInput} from '@/components/CountriesSelectInput';
+import {AddressAutofillInput} from '@/components/blocks/AddressAutofillInput';
 
 export function EventForm(props: EventFormProps) {
     const {onSubmit} = props;
@@ -117,6 +122,62 @@ export function EventForm(props: EventFormProps) {
                                     <TimePicker {...field} />
                                 </FormControl>
                                 <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <FormField
+                    control={control}
+                    name="category"
+                    render={({field}) => (
+                        <ReferenceInput resource={API_ROUTES.eventCategory.base}>
+                            <EventCategoryInput
+                                onChange={field.onChange}
+                                value={field.value}
+                            />
+                        </ReferenceInput>
+                    )}
+                />
+                <FormField
+                    control={control}
+                    name="address"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormLabel>Address</FormLabel>
+                            <FormControl>
+                                <AddressAutofillInput />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2 xl:gap-2">
+                    <FormField
+                        control={control}
+                        name="country"
+                        render={({field}) => (
+                            <FormItem className="">
+                                <FormLabel>Country</FormLabel>
+                                <FormControl>
+                                    <CountriesSelectInput
+                                        onChange={field.onChange}
+                                        value={field.value}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={control}
+                        name="city"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>City</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        {...field}
+                                        placeholder="Enter the city"
+                                    />
+                                </FormControl>
                             </FormItem>
                         )}
                     />

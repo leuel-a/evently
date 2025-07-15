@@ -2,9 +2,9 @@
 
 import {useForm, FormProvider} from 'react-hook-form';
 import {useMutation} from '@tanstack/react-query';
-import type {Events} from '@/app/generated/prisma';
 import type {MutationFunction} from '@tanstack/react-query';
 
+import type {Events} from '@/app/generated/prisma';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Separator} from '@/components/ui/separator';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
@@ -51,9 +51,7 @@ export default function Page() {
         },
     });
 
-    const onSubmit = (values: EventSchemaType) => {
-        mutation.mutate(values);
-    };
+    const onSubmit = (values: EventSchemaType) => mutation.mutate(values);
 
     return (
         <FormProvider {...methods}>

@@ -2,7 +2,7 @@ import type {PropsWithChildren} from 'react';
 import {makeApiCall} from '@/config/axios';
 import {useQuery} from '@tanstack/react-query';
 import type {QueryFunction} from '@tanstack/react-query';
-import {ChoicesContext, ChoicesProvider} from '@/context/ChoicesContext';
+import {ChoicesProvider} from '@/context/ChoicesContext';
 import {checkIfRelativeLink} from '@/utils/functions';
 import {HTTP_METHODS} from '@/config/routes';
 
@@ -12,13 +12,14 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
     const {queryKey} = context;
     const [_, {resource}] = queryKey;
 
-    const url = checkIfRelativeLink(resource) ? resource : `/${resource}`;
+    // TODO: this might seem weird, but later will add check for only valid resources
+    const url = checkIfRelativeLink(resource) ? `/api/${resource}` : `/api/${resource}`;
     const response = await makeApiCall({url, method: HTTP_METHODS.GET});
 
     return response.data;
 };
 
-export default function ReferenceInput(props: ReferenceInputProps) {
+export function ReferenceInput(props: ReferenceInputProps) {
     const {resource, children} = props;
     const {data} = useQuery({
         queryKey: ['choices', {resource}],
