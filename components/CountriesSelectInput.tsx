@@ -1,5 +1,7 @@
 import worldCountries from 'world-countries';
+import {cn} from '@/lib/utils';
 import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from '@/components/ui/select';
+import {useCreateEventFormContext} from '@/components/pages/dashboard/Form/Event/useCreateEventFormContext';
 
 const countries = worldCountries.map((country) => ({
     value: country.cca3,
@@ -7,12 +9,17 @@ const countries = worldCountries.map((country) => ({
 }));
 
 export function CountriesSelectInput({onChange, value}: CountriesSelectInputProps) {
+    const {getFieldState} = useCreateEventFormContext();
+    const {error} = getFieldState('country');
+
     return (
         <Select
             onValueChange={onChange}
             value={value}
         >
-            <SelectTrigger className="w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12">
+            <SelectTrigger
+                className={cn('w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12', error ? 'border border-red-500' : '')}
+            >
                 <SelectValue placeholder="Country" />
             </SelectTrigger>
             <SelectContent>

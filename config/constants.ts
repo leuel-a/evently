@@ -10,8 +10,8 @@ const RESOURCE_GROUP_MAP: Record<string, string> = {
     events: RESOURCE_GROUPS.EVENTS,
     eventTypes: RESOURCE_GROUPS.EVENTS,
     tickets: RESOURCE_GROUPS.PAYMENTS,
+    reservations: RESOURCE_GROUPS.PAYMENTS,
     settings: RESOURCE_GROUPS.PLATFORM_SETTINGS,
-    reservations: RESOURCE_GROUPS.EVENTS,
 };
 
 const TIMES = [

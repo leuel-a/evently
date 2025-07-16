@@ -7,10 +7,10 @@ const resources: ResourceItems = [
         icon: Calendar,
         hasCreate: true,
     },
-    {
-        name: 'eventTypes',
-        icon: Tag,
-    },
+    // {
+    //     name: 'eventTypes',
+    //     icon: Tag,
+    // },
     {
         name: 'tickets',
         icon: Ticket,

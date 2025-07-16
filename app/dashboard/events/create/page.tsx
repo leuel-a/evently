@@ -53,6 +53,9 @@ export default function Page() {
 
     const onSubmit = (values: EventSchemaType) => mutation.mutate(values);
 
+    const {getFieldState} = methods;
+    const {error: addressInputError} = getFieldState('address');
+
     return (
         <FormProvider {...methods}>
             <div className="flex flex-col gap-6 bg-white p-8 pl-4">
@@ -61,7 +64,7 @@ export default function Page() {
                     <Separator className="h-1 w-full bg-indigo-400" />
                 </div>
                 <div className="w-full xl:w-3/4">
-                    <EventForm onSubmit={onSubmit} />
+                    <EventForm CustomAddressAutofillInputProps={{ error: addressInputError }} onSubmit={onSubmit} />
                 </div>
             </div>
         </FormProvider>

@@ -15,10 +15,10 @@ import {EventCategoryInput} from './EventCategoryInput';
 import {ReferenceInput} from '@/components/blocks/ReferenceInput';
 import {API_ROUTES} from '@/config/routes';
 import {CountriesSelectInput} from '@/components/CountriesSelectInput';
-import {AddressAutofillInput} from '@/components/blocks/AddressAutofillInput';
+import {AddressAutofillInput, AddressAutofillInputProps} from '@/components/blocks/AddressAutofillInput';
 
 export function EventForm(props: EventFormProps) {
-    const {onSubmit} = props;
+    const {CustomAddressAutofillInputProps = {}, onSubmit} = props;
     const methods = useFormContext<EventSchemaType>();
     const {handleSubmit, control} = methods;
 
@@ -145,8 +145,9 @@ export function EventForm(props: EventFormProps) {
                         <FormItem>
                             <FormLabel>Address</FormLabel>
                             <FormControl>
-                                <AddressAutofillInput />
+                                <AddressAutofillInput {...CustomAddressAutofillInputProps} />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -163,6 +164,7 @@ export function EventForm(props: EventFormProps) {
                                         value={field.value}
                                     />
                                 </FormControl>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -178,6 +180,7 @@ export function EventForm(props: EventFormProps) {
                                         placeholder="Enter the city"
                                     />
                                 </FormControl>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -196,6 +199,7 @@ export function EventForm(props: EventFormProps) {
 }
 
 export interface EventFormProps {
+    CustomAddressAutofillInputProps?: AddressAutofillInputProps;
     onSubmit: SubmitHandler<EventSchemaType>;
     defaultValues?: EventSchemaType;
 }
