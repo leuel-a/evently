@@ -12,3 +12,8 @@ export async function hashPassword(password: string) {
         throw new Error('Failed to has password');
     }
 }
+
+export async function validatePassword(passwordHash: string, candidate: string) {
+    try {
+    } catch (error) {}
+}

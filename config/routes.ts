@@ -1,9 +1,14 @@
 const INDEX_BASE_ROUTE = '/';
 const DASHBOARD_BASE_ROUTE = '/dashboard';
+const AUTH_BASE_ROUTE = '/auth';
 
 const APP_ROUTES = {
     index: {
         base: INDEX_BASE_ROUTE,
+    },
+    auth: {
+        base: AUTH_BASE_ROUTE,
+        login: `${AUTH_BASE_ROUTE}/login`,
     },
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,

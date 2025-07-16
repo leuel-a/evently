@@ -1,33 +1,33 @@
-import {v4 as uuid} from 'uuid';
-import type {Prisma} from '@/app/generated/prisma/client';
 import {prisma} from '@/lib/prisma';
-import {hashPassword} from '@/utils/password';
+import {signUp} from '@/lib/auth-client';
+import type {Prisma} from '@/app/generated/prisma/client';
 
-const TEST_ORGANIZER_EMAIL = 'evently.organizer@gmail.com';
+const TEST_ORGANIZER_NAME = 'Test Organizer';
+const TEST_ORGANIZATION_NAME = 'Test Organization';
 const TEST_ORGANIZER_PASSWORD = 'evently123%';
-
-function generateFakeId() {
-    return String(uuid());
-}
+const TEST_ORGANIZER_EMAIL = 'evently.organizer@gmail.com';
 
 async function generateDefaultUser() {
-    const hashedPassword = await hashPassword(TEST_ORGANIZER_PASSWORD);
-
-    const userId = generateFakeId();
-    const userInput: Prisma.UserCreateInput = {
-        id: generateFakeId(),
+    const {data, error} = await signUp.email({
         email: TEST_ORGANIZER_EMAIL,
-        password: hashedPassword,
-        firstName: 'Evently',
-        lastName: 'Admin Organizer,',
-        name: 'evently_admin',
-        phone: '+1234567890',
-        emailVerified: true,
-        isOrganizer: true,
-    };
+        password: TEST_ORGANIZER_PASSWORD,
+        name: TEST_ORGANIZER_NAME,
+    });
 
-    const user = await prisma.user.create({data: {...userInput}});
-    await prisma.organizer.create({data: {userId: user.id, organizationName: 'Evently Admin Organization'}});
+    if (error) {
+        console.log(error);
+        console.error(`Something went wrong while creating the user: ${error.message}`);
+        process.exit(1);
+    }
+
+    if (data?.user) {
+        try {
+            const organizer = await prisma.organizer.create({data: {userId: data.user.id, organizationName: TEST_ORGANIZATION_NAME}});
+            console.log(`Organizer ${organizer.userId} has been created, org name is ${organizer.organizationName}`);
+        } catch (error: any) {
+            console.error(`Something went wrong while creating an organizer: ${error?.message}`);
+        }
+    }
 
     // FIXME: use a proper logging system instead of just just using the Browser Console
     console.log(`Default user created with email: ${TEST_ORGANIZER_EMAIL}`);

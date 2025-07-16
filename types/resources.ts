@@ -4,6 +4,7 @@ export interface ResourceItem {
     name: string;
     label?: string;
     icon: ElementType;
+    hasCreate?: boolean;
 }
 
 export type ResourceItems = ResourceItem[];

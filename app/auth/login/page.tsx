@@ -1,3 +1,30 @@
+'use client';
+
+import {zodResolver} from '@hookform/resolvers/zod';
+import {FormProvider, useForm} from 'react-hook-form';
+import type {SubmitHandler} from 'react-hook-form';
+import {loginSchema} from '@/components/pages/auth/Form/Login/schema';
+import type {LoginSchemaType} from '@/components/pages/auth/Form/Login/schema';
+import {LoginForm} from '@/components/pages/auth/Form/Login/LoginForm';
+
 export default function Page() {
-    return <div>Login Page</div>;
+    const methods = useForm<LoginSchemaType>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
+
+    const onSubmit: SubmitHandler<LoginSchemaType> = (values) => {
+        console.log(values);
+    };
+
+    return (
+        <FormProvider {...methods}>
+            <div className="flex h-screen w-full items-center justify-center">
+                <LoginForm onSubmit={onSubmit} />
+            </div>
+        </FormProvider>
+    );
 }

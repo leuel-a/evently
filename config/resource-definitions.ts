@@ -5,6 +5,7 @@ const resources: ResourceItems = [
     {
         name: 'events',
         icon: Calendar,
+        hasCreate: true,
     },
     {
         name: 'eventTypes',
