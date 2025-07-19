@@ -9,6 +9,7 @@ const APP_ROUTES = {
     auth: {
         base: AUTH_BASE_ROUTE,
         login: `${AUTH_BASE_ROUTE}/login`,
+        signup: `${AUTH_BASE_ROUTE}/signup`,
     },
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,

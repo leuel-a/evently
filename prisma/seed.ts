@@ -1,10 +1,13 @@
 import {prisma} from '@/lib/prisma';
+import lodashGet from 'lodash/get';
 import {signUp} from '@/lib/auth-client';
 import type {Prisma} from '@/app/generated/prisma/client';
+import {splitCamelCase, capitalizeFirstLetters} from '@/utils/strings';
+import {ANSI_COLORS, ANSI_RESET} from '@/config/constants';
 
 const TEST_ORGANIZER_NAME = 'Test Organizer';
-const TEST_ORGANIZATION_NAME = 'Test Organization';
 const TEST_ORGANIZER_PASSWORD = 'evently123%';
+const TEST_ORGANIZATION_NAME = 'Test Organization';
 const TEST_ORGANIZER_EMAIL = 'evently.organizer@gmail.com';
 
 async function generateDefaultUser() {
@@ -15,25 +18,45 @@ async function generateDefaultUser() {
     });
 
     if (error) {
-        console.log(error);
-        console.error(`Something went wrong while creating the user: ${error.message}`);
-        process.exit(1);
+        console.error(`\n‼️ Something went wrong while creating the user: ${error.message}\n`);
+
+        if (lodashGet(error, 'details.name') === 'PrismaClientValidationError') {
+            const {message, statusText} = error;
+
+            console.log(ANSI_COLORS.RED);
+            console.log(`${message}: ${capitalizeFirstLetters(splitCamelCase(statusText))}`);
+            console.log(ANSI_RESET);
+        }
+        return;
     }
 
     if (data?.user) {
         try {
-            const organizer = await prisma.organizer.create({data: {userId: data.user.id, organizationName: TEST_ORGANIZATION_NAME}});
-            console.log(`Organizer ${organizer.userId} has been created, org name is ${organizer.organizationName}`);
+            // const organizer = await prisma.organizer.create({data: {userId: data.user.id, organizationName: TEST_ORGANIZATION_NAME}});
+            // console.log(
+            //     `ℹ️ Organizer ${ANSI_COLORS.BLUE}${organizer.userId}${ANSI_RESET} has been created, org name is ${organizer.organizationName}`,
+            //     ANSI_RESET,
+            // );
         } catch (error: any) {
-            console.error(`Something went wrong while creating an organizer: ${error?.message}`);
+            console.error(`\nℹ️ Something went wrong while creating an organizer: ${ANSI_COLORS.RED}${error?.message}\n`, ANSI_RESET);
         }
     }
 
-    // FIXME: use a proper logging system instead of just just using the Browser Console
     console.log(`Default user created with email: ${TEST_ORGANIZER_EMAIL}`);
 }
 
 async function generateDefaultEventCategories() {
+    const eventCategoryCounts = await prisma.eventsCategory.count();
+
+    if (eventCategoryCounts !== 0) {
+        console.log(
+            ANSI_COLORS.BRIGHTCYAN,
+            `\nℹ️ When seeding the table must be empty, so as not to loose data, please use --force if you want to bypass this feature\n`,
+            ANSI_RESET,
+        );
+        return;
+    }
+
     const eventCategoryData: Prisma.EventsCategoryCreateInput[] = [
         {name: 'Conference'},
         {name: 'Workshop'},
@@ -45,14 +68,23 @@ async function generateDefaultEventCategories() {
     for (const category of eventCategoryData) {
         await prisma.eventsCategory.create({data: category});
     }
-
-    // TODO: figure out how to create a more better way of seeding the data
-    // NOTE: use a proper logging system instead of just just using the Browser Console
-    console.log('Default event categories created:', eventCategoryData.map((c) => c.name).join(', '));
+    console.log(
+        '\nℹ️: Default event categories created:',
+        ANSI_COLORS.BRIGHTGREEN,
+        eventCategoryData.map((c) => c.name).join(', '),
+        '\n',
+        ANSI_RESET,
+    );
 }
 
 export async function main() {
-    await Promise.all([generateDefaultUser(), generateDefaultEventCategories()]);
+    try {
+        console.log('\n🚀 Seeding the database...\n');
+
+        await Promise.all([generateDefaultUser(), generateDefaultEventCategories()]);
+    } finally {
+        console.log(ANSI_COLORS.GREEN, '\n🎉 Seeding the database is successful.\n', ANSI_RESET);
+    }
 }
 
 main();

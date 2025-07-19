@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -9,15 +10,13 @@ datasource db {
 }
 
 model User {
-  id            String     @id
+  id            String    @id @default(uuid())
   email         String
   password      String
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  organizer     Organizer?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   name          String
-  emailVerified Boolean
-  isOrganizer   Boolean    @default(false)
+  emailVerified Boolean?
   image         String?
   sessions      Session[]
   accounts      Account[]
@@ -28,15 +27,12 @@ model User {
 
 model Organizer {
   id               String   @id @default(uuid())
-  userId           String
-  user             User     @relation(fields: [userId], references: [id])
   organizationName String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
   Events Events[]
 
-  @@unique([userId])
   @@map("organizer")
 }
 
@@ -59,9 +55,10 @@ model Events {
   description   String
   address       String
   country       String
+  date          DateTime
   city          String
-  startTime     DateTime
-  endTime       DateTime
+  startTime     String 
+  endTime       String 
   categoryId    String
   category      EventsCategory @relation(fields: [categoryId], references: [id])
   coverImageUrl String?

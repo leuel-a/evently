@@ -2,9 +2,8 @@ import localFont from 'next/font/local';
 import type {Metadata} from 'next';
 import './globals.css';
 
+import {Header} from '@/components/pages/Common/Header';
 import ComposeProviders from '@/components/ComposeProviders';
-
-//providers
 import {AuthProvider} from '@/context/AuthContext';
 import {SidebarProvider} from '@/components/ui/sidebar';
 import {QueryClientProvider} from '@/context/QueryClientContext';
@@ -30,7 +29,12 @@ export default function RootLayout({
             suppressHydrationWarning
         >
             <body className={`${poppins.variable} font-poppins bg-gray-100`}>
-                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>{children}</ComposeProviders>
+                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>
+                    <div className="flex flex-col w-full">
+                        <Header />
+                        {children}
+                    </div>
+                </ComposeProviders>
             </body>
         </html>
     );

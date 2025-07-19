@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect} from 'react';
-import {usePathname, useRouter} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 
 import {AppSidebar} from '@/components/pages/dashboard/Common';
 import {SidebarTrigger} from '@/components/ui/sidebar';
@@ -14,7 +14,6 @@ import {APP_ROUTES} from '@/config/routes';
 
 export default function DashboardLayout({children}: Readonly<{children: React.ReactNode}>) {
     const router = useRouter();
-    const pathname = usePathname();
 
     const {isAuthenticated} = useAuthContext();
 
