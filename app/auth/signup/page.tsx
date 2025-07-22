@@ -24,7 +24,7 @@ export default function Page() {
 
     return (
         <FormProvider {...methods}>
-            <div className="flex h-screen w-full items-start justify-center pt-20">
+            <div className="flex h-screen w-full items-center justify-center pt-20">
                 <UserSignupForm onSubmit={onSubmit} />
             </div>
         </FormProvider>

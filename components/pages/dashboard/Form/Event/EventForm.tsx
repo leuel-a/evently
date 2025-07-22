@@ -5,7 +5,8 @@ import {cn} from '@/lib/utils';
 import {Input} from '@/components/ui/input';
 import {Button} from '@/components/ui/button';
 import {Textarea} from '@/components/ui/textarea';
-import {Form, FormField, FormControl, FormItem, FormMessage, FormLabel, FormDescription} from '@/components/ui/form';
+import {FormLabel} from '@/components/blocks/FormLabel';
+import {Form, FormField, FormControl, FormItem, FormMessage, FormDescription} from '@/components/ui/form';
 import {TimePicker} from '@/components/ui/time-picker';
 import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {FormDatepicker} from '@/components/blocks/FormDatepicker';
@@ -33,7 +34,7 @@ export function EventForm(props: EventFormProps) {
                     name="title"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel className="ml-2">Title</FormLabel>
+                            <FormLabel>Title</FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
@@ -50,7 +51,7 @@ export function EventForm(props: EventFormProps) {
                     name="description"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel className="ml-2">Description</FormLabel>
+                            <FormLabel>Description</FormLabel>
                             <FormControl>
                                 <Textarea
                                     {...field}
@@ -59,6 +60,7 @@ export function EventForm(props: EventFormProps) {
                                     rows={20}
                                 />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -86,7 +88,7 @@ export function EventForm(props: EventFormProps) {
                         name="date"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
-                                <FormLabel className="ml-2">Date</FormLabel>
+                                <FormLabel>Date</FormLabel>
                                 <FormControl>
                                     <FormDatepicker
                                         source="date"
@@ -104,7 +106,7 @@ export function EventForm(props: EventFormProps) {
                         name="startTime"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
-                                <FormLabel className="ml-2">Start Time</FormLabel>
+                                <FormLabel>Start Time</FormLabel>
                                 <FormControl>
                                     <TimePicker {...field} />
                                 </FormControl>
@@ -117,7 +119,7 @@ export function EventForm(props: EventFormProps) {
                         name="endTime"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
-                                <FormLabel className="ml-2">End Time</FormLabel>
+                                <FormLabel>End Time</FormLabel>
                                 <FormControl>
                                     <TimePicker {...field} />
                                 </FormControl>
@@ -156,7 +158,7 @@ export function EventForm(props: EventFormProps) {
                         control={control}
                         name="country"
                         render={({field}) => (
-                            <FormItem className="">
+                            <FormItem>
                                 <FormLabel>Country</FormLabel>
                                 <FormControl>
                                     <CountriesSelectInput
@@ -178,6 +180,25 @@ export function EventForm(props: EventFormProps) {
                                     <Input
                                         {...field}
                                         placeholder="Enter the city"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <div>
+                    <FormField
+                        control={control}
+                        name="capacity"
+                        render={({field}) => (
+                            <FormItem className="w-full lg:w-1/3">
+                                <FormLabel required={false}>Capacity</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type="number"
+                                        {...field}
+                                        placeholder="What is your expected attendance?"
                                     />
                                 </FormControl>
                                 <FormMessage />

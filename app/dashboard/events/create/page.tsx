@@ -35,6 +35,7 @@ export default function Page() {
             address: '',
             country: '',
             city: '',
+            capacity: '',
             isVirtual: false,
         },
     });
@@ -51,7 +52,9 @@ export default function Page() {
         },
     });
 
-    const onSubmit = (values: EventSchemaType) => mutation.mutate(values);
+    const onSubmit = (values: EventSchemaType) => {
+        console.log(parseInt(values.capacity));
+    };
 
     const {getFieldState} = methods;
     const {error: addressInputError} = getFieldState('address');
@@ -64,7 +67,10 @@ export default function Page() {
                     <Separator className="h-1 w-full bg-indigo-400" />
                 </div>
                 <div className="w-full xl:w-3/4">
-                    <EventForm CustomAddressAutofillInputProps={{ error: addressInputError }} onSubmit={onSubmit} />
+                    <EventForm
+                        CustomAddressAutofillInputProps={{error: addressInputError}}
+                        onSubmit={onSubmit}
+                    />
                 </div>
             </div>
         </FormProvider>

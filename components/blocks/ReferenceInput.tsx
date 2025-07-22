@@ -14,10 +14,23 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
 
     // TODO: this might seem weird, but later will add check for only valid resources
     const url = checkIfRelativeLink(resource) ? `/api/${resource}` : `/api/${resource}`;
-    const response = await makeApiCall({url, method: HTTP_METHODS.GET});
 
-    return response.data;
-};
+    try {
+        const response = await makeApiCall({ url, method: HTTP_METHODS.GET });
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            console.error('Error response:', {
+                status: error.response.status,
+                data: error.response.data,
+                headers: error.response.headers,
+            });
+        } else {
+            // TODO: use a proper logger instead of the browser logging module
+            console.error('Error setting up request:', error.message);
+        }
+    }
+}
 
 export function ReferenceInput(props: ReferenceInputProps) {
     const {resource, children} = props;

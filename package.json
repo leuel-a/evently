@@ -10,6 +10,7 @@
     "prisma:clean": "npx tsx ./scripts/clean-database.js",
     "prisma:seed": "npx tsx ./scripts/clean-database.js && prisma db seed",
     "prisma:studio": "prisma studio",
+    "prisma:local": "prisma dev",
     "prisma:format": "prisma format",
     "postinstall": "prisma generate"
   },
