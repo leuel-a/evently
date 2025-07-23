@@ -2,7 +2,6 @@ import lodashGet from 'lodash/get';
 import {v4 as uuid} from 'uuid';
 import {RESOURCE_GROUP_MAP} from '@/config/constants';
 import type {ResourceItems, ResourceItemsWithGroups} from '@/types/resources';
-
 import {removeEmptyStringsFromArray} from './functions';
 import {splitCamelCase, capitalizeFirstLetters, uppercaseFirstLetters} from './strings';
 

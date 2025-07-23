@@ -8,9 +8,9 @@ import {
     SidebarMenuButton,
     useSidebar,
 } from '@/components/ui/sidebar';
-import {getLabelForResource} from '@/utils';
 import {DASHBOARD_PREFIX} from '@/config/constants';
 import type {ResourceItems} from '@/types/resources';
+import {getLabelForResource} from '@/utils';
 import {getLabelForResourceGroup} from '@/utils';
 
 function AppSidebarGroup(props: AppSidebarGroupProps) {

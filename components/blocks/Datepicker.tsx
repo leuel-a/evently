@@ -3,12 +3,11 @@
 import {useState, ComponentProps} from 'react';
 import {format} from 'date-fns';
 import {Calendar as CalendarIcon} from 'lucide-react';
-
-import {cn} from '@/lib/utils';
 import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
 import type {ButtonProps} from '@/components/ui/button';
+import {Calendar} from '@/components/ui/calendar';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {cn} from '@/lib/utils';
 
 export function Datepicker(props: DatepickerProps) {
     const {defaultValue, CalendarProps: calendarProps = {}, ButtonProps = {}, PopoverProps = {}, PopoverContentProps = {}, onChange} = props;

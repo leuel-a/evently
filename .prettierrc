@@ -6,5 +6,6 @@
     "arrowParens": "always",
     "printWidth": 150,
     "singleAttributePerLine": true,
-    "plugins": ["prettier-plugin-tailwindcss"]
+    "importOrder": ["^react", "^(node:.*|fs|path|os|util|events|http|https)$", "^[a-zA-Z]", "^@/", "^[./]"],
+    "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"]
 }

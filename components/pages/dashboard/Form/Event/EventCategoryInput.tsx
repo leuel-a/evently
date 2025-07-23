@@ -1,6 +1,6 @@
-import {useChoicesContext} from '@/context/ChoicesContext';
 import {FormControl, FormItem, FormMessage, FormLabel, FormDescription} from '@/components/ui/form';
 import {Select, SelectContent, SelectTrigger, SelectValue, SelectItem} from '@/components/ui/select';
+import {useChoicesContext} from '@/context/ChoicesContext';
 import {generateUniqueKey} from '@/utils';
 
 interface EventCategory {

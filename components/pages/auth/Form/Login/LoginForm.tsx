@@ -1,10 +1,8 @@
 import {useFormContext} from 'react-hook-form';
-
-import {Input} from '@/components/ui/input';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
-
+import {Input} from '@/components/ui/input';
 import type {LoginSchemaType} from './schema';
 
 export function LoginForm({onSubmit}: LoginFormProps) {

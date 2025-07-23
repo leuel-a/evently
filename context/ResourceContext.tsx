@@ -1,7 +1,7 @@
 'use client';
 
-import {usePathname} from 'next/navigation';
 import {createContext, useContext} from 'react';
+import {usePathname} from 'next/navigation';
 
 type ResourceContextType = string;
 

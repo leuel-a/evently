@@ -1,7 +1,7 @@
 import worldCountries from 'world-countries';
-import {cn} from '@/lib/utils';
-import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from '@/components/ui/select';
 import {useCreateEventFormContext} from '@/components/pages/dashboard/Form/Event/useCreateEventFormContext';
+import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from '@/components/ui/select';
+import {cn} from '@/lib/utils';
 
 const countries = worldCountries.map((country) => ({
     value: country.cca3,

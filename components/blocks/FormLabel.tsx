@@ -1,6 +1,6 @@
 import {ComponentProps} from 'react';
-import {cn} from '@/lib/utils';
 import {FormLabel as CnFormLabel} from '@/components/ui/form';
+import {cn} from '@/lib/utils';
 
 export function FormLabel({children, className, required = true, ...props}: FormLabelProps) {
     if (!required) {

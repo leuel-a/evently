@@ -2,15 +2,14 @@
 
 import {useEffect} from 'react';
 import {useRouter} from 'next/navigation';
-
+import {DashboardHeader} from '@/components/pages/dashboard';
 import {AppSidebar} from '@/components/pages/dashboard/Common';
 import {SidebarTrigger} from '@/components/ui/sidebar';
-import {DashboardHeader} from '@/components/pages/dashboard';
-import {ResourcesProvider} from '@/context/ResourcesContext';
 import {resources} from '@/config/resource-definitions';
-import {ResourceProvider} from '@/context/ResourceContext';
-import {useAuthContext} from '@/context/AuthContext';
 import {APP_ROUTES} from '@/config/routes';
+import {useAuthContext} from '@/context/AuthContext';
+import {ResourceProvider} from '@/context/ResourceContext';
+import {ResourcesProvider} from '@/context/ResourcesContext';
 
 export default function DashboardLayout({children}: Readonly<{children: React.ReactNode}>) {
     const router = useRouter();

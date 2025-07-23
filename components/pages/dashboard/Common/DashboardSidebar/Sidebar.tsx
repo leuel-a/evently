@@ -1,9 +1,8 @@
 'use client';
 
-import {useResourcesContext} from '@/context/ResourcesContext';
 import {Sidebar, SidebarContent, useSidebar} from '@/components/ui/sidebar';
+import {useResourcesContext} from '@/context/ResourcesContext';
 import {getResourceGroups, generateUniqueKey} from '@/utils';
-
 import {AppSidebarGroup} from './SidebarGroup';
 
 function AppSidebar() {

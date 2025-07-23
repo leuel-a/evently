@@ -1,22 +1,20 @@
 import {useFormContext} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
-
-import {cn} from '@/lib/utils';
-import {Input} from '@/components/ui/input';
-import {Button} from '@/components/ui/button';
-import {Textarea} from '@/components/ui/textarea';
-import {FormLabel} from '@/components/blocks/FormLabel';
-import {Form, FormField, FormControl, FormItem, FormMessage, FormDescription} from '@/components/ui/form';
-import {TimePicker} from '@/components/ui/time-picker';
-import {BooleanInput} from '@/components/blocks/BooleanInput';
-import {FormDatepicker} from '@/components/blocks/FormDatepicker';
-
-import type {EventSchemaType} from './schema';
-import {EventCategoryInput} from './EventCategoryInput';
-import {ReferenceInput} from '@/components/blocks/ReferenceInput';
-import {API_ROUTES} from '@/config/routes';
 import {CountriesSelectInput} from '@/components/CountriesSelectInput';
 import {AddressAutofillInput, AddressAutofillInputProps} from '@/components/blocks/AddressAutofillInput';
+import {BooleanInput} from '@/components/blocks/BooleanInput';
+import {FormDatepicker} from '@/components/blocks/FormDatepicker';
+import {FormLabel} from '@/components/blocks/FormLabel';
+import {ReferenceInput} from '@/components/blocks/ReferenceInput';
+import {Button} from '@/components/ui/button';
+import {Form, FormField, FormControl, FormItem, FormMessage, FormDescription} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {TimePicker} from '@/components/ui/time-picker';
+import {API_ROUTES} from '@/config/routes';
+import {cn} from '@/lib/utils';
+import {EventCategoryInput} from './EventCategoryInput';
+import type {EventSchemaType} from './schema';
 
 export function EventForm(props: EventFormProps) {
     const {CustomAddressAutofillInputProps = {}, onSubmit} = props;

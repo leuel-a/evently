@@ -1,9 +1,8 @@
 import * as React from 'react';
-import dynamic from 'next/dynamic';
-import {cn} from '@/lib/utils';
-
-import {Input} from '@/components/ui/input';
 import {FieldError} from 'react-hook-form';
+import dynamic from 'next/dynamic';
+import {Input} from '@/components/ui/input';
+import {cn} from '@/lib/utils';
 
 export function AddressAutofillInput(props: AddressAutofillInputProps) {
     const {error} = props;

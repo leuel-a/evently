@@ -1,9 +1,9 @@
-import {prisma} from '@/lib/prisma';
 import lodashGet from 'lodash/get';
-import {signUp} from '@/lib/auth-client';
 import type {Prisma} from '@/app/generated/prisma/client';
-import {splitCamelCase, capitalizeFirstLetters} from '@/utils/strings';
 import {ANSI_COLORS, ANSI_RESET} from '@/config/constants';
+import {signUp} from '@/lib/auth-client';
+import {prisma} from '@/lib/prisma';
+import {splitCamelCase, capitalizeFirstLetters} from '@/utils/strings';
 
 const TEST_ORGANIZER_NAME = 'Test Organizer';
 const TEST_ORGANIZER_PASSWORD = 'evently123%';

@@ -5,5 +5,5 @@ export function removeEmptyStringsFromArray<T>(array: Array<T>) {
 }
 
 export function checkIfRelativeLink(candidate: string) {
-    return /^\/[^\s]*$/.test(candidate)
+    return /^\/[^\s]*$/.test(candidate);
 }

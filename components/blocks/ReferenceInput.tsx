@@ -1,10 +1,10 @@
-import type {PropsWithChildren} from 'react';
-import {makeApiCall} from '@/config/axios';
 import {useQuery} from '@tanstack/react-query';
 import type {QueryFunction} from '@tanstack/react-query';
+import type {PropsWithChildren} from 'react';
+import {makeApiCall} from '@/config/axios';
+import {HTTP_METHODS} from '@/config/routes';
 import {ChoicesProvider} from '@/context/ChoicesContext';
 import {checkIfRelativeLink} from '@/utils/functions';
-import {HTTP_METHODS} from '@/config/routes';
 
 export type TGetChoicesQueryKey = [string, {resource: string}];
 
@@ -16,7 +16,7 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
     const url = checkIfRelativeLink(resource) ? `/api/${resource}` : `/api/${resource}`;
 
     try {
-        const response = await makeApiCall({ url, method: HTTP_METHODS.GET });
+        const response = await makeApiCall({url, method: HTTP_METHODS.GET});
         return response.data;
     } catch (error: any) {
         if (error.response) {
@@ -30,7 +30,7 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
             console.error('Error setting up request:', error.message);
         }
     }
-}
+};
 
 export function ReferenceInput(props: ReferenceInputProps) {
     const {resource, children} = props;

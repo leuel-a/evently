@@ -1,20 +1,24 @@
+import type {FormHTMLAttributes} from 'react';
 import {useFormContext} from 'react-hook-form';
-
-import {Input} from '@/components/ui/input';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
-
+import {Input} from '@/components/ui/input';
 import type {UserSignupSchemaType} from './schema';
 
-export function UserSignupForm({onSubmit}: UserSignupFormProps) {
-    const methods = useFormContext<UserSignupSchemaType>();
-    const {handleSubmit, control} = methods;
+export function UserSignupForm(props: UserSignupFormProps) {
+    const {handleSubmit: handleSubmitOverride, ...formProps} = props;
+    const form = useFormContext<UserSignupSchemaType>();
+
+    const onSubmit = (values: UserSignupSchemaType) => {
+        handleSubmitOverride && handleSubmitOverride(values);
+    };
 
     return (
-        <Form {...methods}>
+        <Form {...form}>
             <form
-                onSubmit={handleSubmit(onSubmit)}
+                {...formProps}
+                onSubmit={form.handleSubmit(onSubmit)}
                 className="flex w-[50rem] flex-col gap-6 bg-white p-8"
             >
                 <div className="text-start tracking-wide">
@@ -22,7 +26,7 @@ export function UserSignupForm({onSubmit}: UserSignupFormProps) {
                     <p className="mt-2 text-sm text-gray-500">Signup to Evently</p>
                 </div>
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="name"
                     render={({field}) => (
                         <FormItem>
@@ -40,7 +44,7 @@ export function UserSignupForm({onSubmit}: UserSignupFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="email"
                     render={({field}) => (
                         <FormItem>
@@ -58,7 +62,7 @@ export function UserSignupForm({onSubmit}: UserSignupFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="password"
                     render={({field}) => (
                         <FormItem>
@@ -75,7 +79,7 @@ export function UserSignupForm({onSubmit}: UserSignupFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="confirmPassword"
                     render={({field}) => (
                         <FormItem>
@@ -97,6 +101,6 @@ export function UserSignupForm({onSubmit}: UserSignupFormProps) {
     );
 }
 
-export interface UserSignupFormProps {
-    onSubmit: (values: UserSignupSchemaType) => void;
+export interface UserSignupFormProps extends FormHTMLAttributes<HTMLFormElement> {
+    handleSubmit?: (values: UserSignupSchemaType) => void;
 }

@@ -3,9 +3,9 @@
 import {zodResolver} from '@hookform/resolvers/zod';
 import {FormProvider, useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
+import {LoginForm} from '@/components/pages/auth/Form/Login/LoginForm';
 import {loginSchema} from '@/components/pages/auth/Form/Login/schema';
 import type {LoginSchemaType} from '@/components/pages/auth/Form/Login/schema';
-import {LoginForm} from '@/components/pages/auth/Form/Login/LoginForm';
 
 export default function Page() {
     const methods = useForm<LoginSchemaType>({

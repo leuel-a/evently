@@ -1,10 +1,10 @@
 import {Fragment} from 'react';
 import {usePathname} from 'next/navigation';
-import {DASHBOARD_PREFIX} from '@/config/constants';
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from '@/components/ui/breadcrumb';
-import {splitCamelCase} from '@/utils/strings';
+import {DASHBOARD_PREFIX} from '@/config/constants';
 import {removeEmptyStringsFromArray} from '@/utils/functions';
 import {generateUniqueKey, getPathnameArray} from '@/utils/index';
+import {splitCamelCase} from '@/utils/strings';
 
 function DashboardBreadcrumb() {
     const pathname = usePathname();

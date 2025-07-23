@@ -1,11 +1,10 @@
-import localFont from 'next/font/local';
 import type {Metadata} from 'next';
-import './globals.css';
-
+import localFont from 'next/font/local';
 import ComposeProviders from '@/components/ComposeProviders';
-import {AuthProvider} from '@/context/AuthContext';
 import {SidebarProvider} from '@/components/ui/sidebar';
+import {AuthProvider} from '@/context/AuthContext';
 import {QueryClientProvider} from '@/context/QueryClientContext';
+import './globals.css';
 
 export const metadata: Metadata = {
     title: 'Evently',

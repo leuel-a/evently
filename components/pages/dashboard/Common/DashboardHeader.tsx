@@ -1,6 +1,6 @@
 import {usePathname} from 'next/navigation';
-import {useResourcesContext} from '@/context/ResourcesContext';
 import {useResourceContext} from '@/context/ResourceContext';
+import {useResourcesContext} from '@/context/ResourcesContext';
 import {CreateResourceButton} from './CreateResourceButton';
 import {DashboardBreadcrumb} from './DashboardBreadcrumb';
 
