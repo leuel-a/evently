@@ -1,10 +1,11 @@
 'use client';
 
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useActionState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
+import {userSignupSchema} from '@/app/auth/schema';
+import type {UserSignupSchemaType} from '@/app/auth/schema';
 import {UserSignupForm} from '@/components/pages/auth/Form/Signup/UserSignupForm';
-import {userSignupSchema} from '@/components/pages/auth/Form/Signup/schema';
-import type {UserSignupSchemaType} from '@/components/pages/auth/Form/Signup/schema';
 import {createUserAction} from '../actions';
 
 export default function Page() {
@@ -18,20 +19,12 @@ export default function Page() {
         },
     });
 
-    const onSubmitHanlder = async (values: UserSignupSchemaType) => {
-        const formData = new FormData();
-
-        Object.entries(values).forEach(([key, value]) => {
-            formData.append(key, value);
-        });
-
-        await createUserAction(formData);
-    };
+    const [_, formAction] = useActionState(createUserAction, undefined);
 
     return (
         <FormProvider {...form}>
             <div className="flex h-screen w-full items-center justify-center pt-20">
-                <UserSignupForm handleSubmit={onSubmitHanlder} />
+                <UserSignupForm action={formAction} />
             </div>
         </FormProvider>
     );

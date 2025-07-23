@@ -3,7 +3,7 @@ import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
-import type {LoginSchemaType} from './schema';
+import type {LoginSchemaType} from '@/app/auth/schema';
 
 export function LoginForm({onSubmit}: LoginFormProps) {
     const methods = useFormContext<LoginSchemaType>();

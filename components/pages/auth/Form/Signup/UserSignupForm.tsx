@@ -1,10 +1,10 @@
 import type {FormHTMLAttributes} from 'react';
 import {useFormContext} from 'react-hook-form';
+import type {UserSignupSchemaType} from '@/app/auth/schema';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
-import type {UserSignupSchemaType} from './schema';
 
 export function UserSignupForm(props: UserSignupFormProps) {
     const {handleSubmit: handleSubmitOverride, ...formProps} = props;
