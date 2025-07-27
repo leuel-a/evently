@@ -1,11 +1,18 @@
 {
-    "tabWidth": 4,
+    "tabWidth": 2,
     "singleQuote": true,
     "trailingComma": "all",
     "bracketSpacing": false,
     "arrowParens": "always",
-    "printWidth": 150,
+    "printWidth": 100,
     "singleAttributePerLine": true,
-    "importOrder": ["^react", "^(node:.*|fs|path|os|util|events|http|https)$", "^[a-zA-Z]", "^@/", "^[./]"],
+    "importOrder": [
+        "^react",
+        "^[a-zA-Z]",
+        "^@[a-z]+(-[a-z]+)*$",
+        "@hookform/resolvers*",
+        "^@/[a-z]+(-[a-z]+)*",
+        "^[./]"
+    ],
     "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"]
 }

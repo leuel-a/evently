@@ -9,16 +9,18 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  email         String
-  password      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  name          String
-  emailVerified Boolean?
-  image         String?
-  sessions      Session[]
-  accounts      Account[]
+  id               String    @id @default(uuid())
+  email            String
+  password         String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  name             String
+  emailVerified    Boolean?
+  image            String?
+  isOrganizer      Boolean   @default(false)
+  organizationName String?
+  sessions         Session[]
+  accounts         Account[]
 
   @@unique([email])
   @@map("user")

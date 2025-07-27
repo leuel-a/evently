@@ -5,10 +5,23 @@ import {prisma} from '@/lib/prisma';
 export type Session = typeof auth.$Infer.Session & {};
 
 export const auth = betterAuth({
-    database: prismaAdapter(prisma, {
-        provider: 'postgresql',
-    }),
-    emailAndPassword: {
-        enabled: true,
+  database: prismaAdapter(prisma, {
+    provider: 'postgresql',
+  }),
+  emailAndPassword: {
+    enabled: true,
+  },
+  user: {
+    additionalFields: {
+      isOrganizer: {
+        defaultValue: false,
+        required: true,
+        type: 'boolean',
+      },
+      organizationName: {
+        required: false,
+        type: 'string',
+      },
     },
+  },
 });
