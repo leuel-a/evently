@@ -42,6 +42,9 @@ next-env.d.ts
 
 # editor files
 /.idea
-
+/.vscode
 
 /app/generated/prisma
+*.backup
+
+/app/generated

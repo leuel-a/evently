@@ -1,11 +1,11 @@
 import type {FormHTMLAttributes, ComponentProps, DetailedHTMLProps} from 'react';
 import {useFormContext} from 'react-hook-form';
-import type {UserSignupSchemaType} from '@/app/auth/schema';
 import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
+import type {UserSignupSchemaType} from '@/lib/db/schema';
 
 export function UserSignupForm(props: UserSignupFormProps) {
   const {handleSubmit: handleSubmitOverride, SubmitButtonProps = {}, ...formProps} = props;
@@ -110,6 +110,7 @@ export function UserSignupForm(props: UserSignupFormProps) {
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -125,6 +126,7 @@ export function UserSignupForm(props: UserSignupFormProps) {
                     placeholder="What is the name of your company?"
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />

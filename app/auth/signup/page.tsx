@@ -2,9 +2,10 @@
 
 import {FormProvider, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import type {UserSignupSchemaType} from '@/app/auth/schema';
-import {userSignupSchema} from '@/app/auth/schema';
+import type {UserSignupSchemaType} from '@/lib/db/schema';
+import {userSignupSchema} from '@/lib/db/schema';
 import {UserSignupForm} from '@/components/pages/auth/Form/Signup/UserSignupForm';
+import {ValidationError} from '@/lib/error';
 import {createUserAction} from '../actions';
 
 export default function Page() {
@@ -21,21 +22,20 @@ export default function Page() {
 
   const onSubmitHandler = async (values: UserSignupSchemaType) => {
     const formData = new FormData();
-
     Object.entries(values).forEach(([key, value]) => {
       formData.append(key, String(value));
     });
 
-    const {success, error} = await createUserAction(formData);
+    const {success, error, data} = await createUserAction(formData);
 
-    if (!success) {
-      console.log('something went wrong while trying to create the user');
-      console.log(error);
-      return;
+    if (success) {
+      console.dir(data, {depth: null});
+    } else {
+      if (error instanceof ValidationError) {
+        console.log(error.issues);
+      }
+      console.dir(error, {depth: null});
     }
-
-    console.log('user created successfully');
-    return;
   };
 
   return (

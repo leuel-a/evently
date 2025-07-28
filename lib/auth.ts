@@ -1,6 +1,6 @@
 import {betterAuth} from 'better-auth';
 import {prismaAdapter} from 'better-auth/adapters/prisma';
-import {prisma} from '@/lib/prisma';
+import {prisma} from '@/lib/db';
 
 export type Session = typeof auth.$Infer.Session & {};
 
@@ -9,6 +9,8 @@ export const auth = betterAuth({
     provider: 'postgresql',
   }),
   emailAndPassword: {
+    minPasswordLength: 8,
+    maxPasswordLength: 12,
     enabled: true,
   },
   user: {

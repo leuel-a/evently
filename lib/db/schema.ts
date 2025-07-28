@@ -12,14 +12,12 @@ export const loginSchema = z.object({
 export const userSignupSchema = z
   .object({
     name: z.string({required_error: 'Required'}).min(1, {message: 'Name can not be empty'}),
-    email: z
-      .string({required_error: 'Required'})
-      .email({message: 'Invalid email, please provide a valid email address'}),
+    email: z.string().transform((value) => value.toLowerCase()),
     password: z
       .string({required_error: 'Required'})
       .min(1, {message: 'Password can not be an empty string'}),
     confirmPassword: z.string(),
-    isOrganizer: z.boolean().optional(),
+    isOrganizer: z.coerce.boolean().optional(),
     organizationName: z.string().optional(),
   })
   .refine(

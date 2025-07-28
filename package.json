@@ -11,7 +11,7 @@
     "prisma:clean": "npx tsx ./scripts/clean-database.js",
     "prisma:seed": "npx tsx ./scripts/clean-database.js && prisma db seed",
     "prisma:studio": "prisma studio",
-    "prisma:local": "prisma dev",
+    "prisma:local": "prisma dev --debug",
     "prisma:format": "prisma format",
     "postinstall": "prisma generate"
   },
@@ -21,7 +21,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@mapbox/search-js-react": "^1.3.0",
-    "@prisma/client": "^6.11.1",
+    "@prisma/client": "^6.12.0",
     "@prisma/extension-accelerate": "^2.0.2",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
@@ -65,7 +65,7 @@
     "eslint-config-next": "15.3.4",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.13",
-    "prisma": "^6.11.1",
+    "prisma": "^6.12.0",
     "tailwindcss": "^4",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.5",
