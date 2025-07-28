@@ -1,11 +1,9 @@
-import {PrismaClient} from '../app/generated/prisma/client';
+import {PrismaClient} from '../app/generated';
 
 const prisma = new PrismaClient();
 
 export const ESC = '\x1b[';
-
 export const RESET = ESC + '0m';
-
 export const COLORS = {
     BLACK: ESC + '30m',
     RED: ESC + '31m',
@@ -29,7 +27,6 @@ export const COLORS = {
 };
 
 async function cleanDatabase() {
-    await prisma.organizer.deleteMany({});
     await prisma.user.deleteMany({});
     await prisma.eventsCategory.deleteMany({});
 }

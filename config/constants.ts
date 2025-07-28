@@ -14,7 +14,7 @@ export const RESOURCE_GROUP_MAP: Record<string, string> = {
     settings: RESOURCE_GROUPS.PLATFORM_SETTINGS,
 };
 
-export const ANSI_ESC = '\x1b[';
+const ANSI_ESC = '\x1b[';
 export const ANSI_RESET = ANSI_ESC + '0m';
 
 export const ANSI_COLORS = {

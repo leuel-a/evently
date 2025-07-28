@@ -1,9 +1,9 @@
 'use client';
 
-import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
 import type {MutationFunction} from '@tanstack/react-query';
 import {useForm, FormProvider} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import type {Events} from '@/app/generated/prisma';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {eventsSchema} from '@/components/pages/dashboard/Form/Event/schema';

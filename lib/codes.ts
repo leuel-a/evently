@@ -5,4 +5,3 @@ export const BASE_ERROR_CODES = {
     INVALID_EMAIL_OR_PASSWORD: 'Invalid email or password',
     VALIDATION_FAILED: 'Validation Failed',
 };
-
