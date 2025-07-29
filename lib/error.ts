@@ -1,5 +1,3 @@
-import {BASE_ERROR_CODES} from './codes';
-
 export const _statusCode = {
     OK: 200,
     CREATED: 201,
