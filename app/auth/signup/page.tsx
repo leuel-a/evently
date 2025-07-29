@@ -5,6 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {UserSignupForm} from '@/components/pages/auth/Form/Signup/UserSignupForm';
 import type {UserSignupSchemaType} from '@/lib/db/schema';
 import {userSignupSchema} from '@/lib/db/schema';
+import {convertToFormData} from '@/utils/functions';
 import {createUserAction} from '../actions';
 
 export default function Page() {
@@ -20,11 +21,7 @@ export default function Page() {
     });
 
     const onSubmitHandler = async (values: UserSignupSchemaType) => {
-        const formData = new FormData();
-        Object.entries(values).forEach(([key, value]) => {
-            formData.append(key, String(value));
-        });
-
+        const formData = convertToFormData(values);
         const {success, error, data} = await createUserAction(formData);
 
         if (success) {
@@ -36,7 +33,7 @@ export default function Page() {
 
     return (
         <FormProvider {...form}>
-            <div className="flex h-screen w-full items-center justify-center pt-20">
+            <div className="flex bg-white h-screen w-full items-center justify-center pt-20">
                 <UserSignupForm handleSubmit={onSubmitHandler} />
             </div>
         </FormProvider>

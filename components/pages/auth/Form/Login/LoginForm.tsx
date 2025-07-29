@@ -1,18 +1,25 @@
+import type {ComponentProps} from 'react';
 import {useFormContext} from 'react-hook-form';
+import Link from 'next/link';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
-import type {LoginSchemaType} from '@/lib/db/schema';
+import {APP_ROUTES} from '@/config/routes';
+import type {LoginUserSchemaType} from '@/lib/db/schema';
 
-export function LoginForm({onSubmit}: LoginFormProps) {
-    const methods = useFormContext<LoginSchemaType>();
-    const {handleSubmit, control} = methods;
+export function LoginForm(props: LoginFormProps) {
+    const {handleSubmit: handleSubmitOverride, SubmitButtonProps = {}} = props;
+    const form = useFormContext<LoginUserSchemaType>();
+
+    const handleSubmit = (values: LoginUserSchemaType) => {
+        handleSubmitOverride && handleSubmitOverride(values);
+    };
 
     return (
-        <Form {...methods}>
+        <Form {...form}>
             <form
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(handleSubmit)}
                 className="flex w-[40rem] flex-col gap-6 bg-white p-8"
             >
                 <div className="text-start tracking-wide">
@@ -20,7 +27,7 @@ export function LoginForm({onSubmit}: LoginFormProps) {
                     <p className="mt-2 text-sm text-gray-500">Welcome back!</p>
                 </div>
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="email"
                     render={({field}) => (
                         <FormItem>
@@ -38,7 +45,7 @@ export function LoginForm({onSubmit}: LoginFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="password"
                     render={({field}) => (
                         <FormItem>
@@ -54,12 +61,24 @@ export function LoginForm({onSubmit}: LoginFormProps) {
                         </FormItem>
                     )}
                 />
-                <Button className="h-12 rounded text-white transition-colors hover:bg-indigo-700">Sign In</Button>
+                <Button type="submit" className="h-12 rounded text-white transition-colors hover:bg-indigo-700" {...SubmitButtonProps}>Sign In</Button>
+                <div className="flex justify-end">
+                    <p className="text-sm">
+                        Don't have an account?{' '}
+                        <Link
+                            className="text-indigo-700"
+                            href={`${APP_ROUTES.auth.signup}`}
+                        >
+                            Signup
+                        </Link>
+                    </p>
+                </div>
             </form>
         </Form>
     );
 }
 
 export interface LoginFormProps {
-    onSubmit: (values: LoginSchemaType) => void;
+    handleSubmit?: (values: LoginUserSchemaType) => void;
+    SubmitButtonProps?: ComponentProps<typeof Button>;
 }

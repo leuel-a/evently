@@ -1,10 +1,12 @@
 import type {FormHTMLAttributes, ComponentProps, DetailedHTMLProps} from 'react';
 import {useFormContext} from 'react-hook-form';
+import Link from 'next/link';
 import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {PasswordInput} from '@/components/blocks/PasswordInput';
 import {Button} from '@/components/ui/button';
 import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/components/ui/form';
 import {Input} from '@/components/ui/input';
+import {APP_ROUTES} from '@/config/routes';
 import type {UserSignupSchemaType} from '@/lib/db/schema';
 
 export function UserSignupForm(props: UserSignupFormProps) {
@@ -138,6 +140,17 @@ export function UserSignupForm(props: UserSignupFormProps) {
                 >
                     Sign Up
                 </Button>
+                <div className="flex justify-end">
+                    <p className="text-sm">
+                        Already have an account?{' '}
+                        <Link
+                            className="text-indigo-700"
+                            href={`${APP_ROUTES.auth.login}`}
+                        >
+                            Login
+                        </Link>
+                    </p>
+                </div>
             </form>
         </Form>
     );
