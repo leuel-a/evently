@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+    <style>
+      .button {
+        display: inline-block;
+        padding: 12px 20px;
+        margin-top: 20px;
+        background-color: #007BFF;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Verify Your Email</h2>
+    <p>Hi {{name}},</p>
+    <p>Thanks for signing up! Please confirm your email address by clicking the button below:</p>
+    <a href="{{verificationLink}}" class="button">Verify Email</a>
+    <p>If you didn't create this account, you can ignore this email.</p>
+    <p>— Evently Team</p>
+  </body>
+</html>

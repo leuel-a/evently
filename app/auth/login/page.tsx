@@ -2,8 +2,9 @@
 
 import {FormProvider, useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
+import {cookies} from 'next/headers';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {LoginForm} from '@/components/pages/auth/Form/Login/LoginForm';
+import {LoginForm} from '@/components/pages/auth/Form/Login/LoginUserForm';
 import {loginUserSchema} from '@/lib/db/schema';
 import type {LoginUserSchemaType} from '@/lib/db/schema';
 import {convertToFormData} from '@/utils/functions';
@@ -23,7 +24,7 @@ export default function Page() {
         const {success, error, data} = await loginUserAction(formData);
 
         if (success) {
-            console.dir(data, {depth: null});
+            (await cookies()).set('token', data?.token);
         } else {
             console.dir(error, {depth: null});
         }

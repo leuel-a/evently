@@ -2,6 +2,7 @@
 
 import {ZodError} from 'zod';
 import {User} from '@/app/generated/client';
+import {APP_ROUTES} from '@/config/routes';
 import {auth} from '@/lib/auth';
 import {userSignupSchema, loginUserSchema} from '@/lib/db/schema';
 import {AppError, ValidationErrorDetails} from '@/lib/error';
@@ -40,8 +41,8 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
         const parsedData = await loginUserSchema.parseAsync(formValues);
         const {email, password} = parsedData;
         const data = await auth.api.signInEmail({
-                body: { email, password },
-        })
+            body: {email, password, callbackURL: APP_ROUTES.index.home},
+        });
         return {success: true, error: null, data};
     } catch (e: any) {
         console.log(JSON.stringify(e));

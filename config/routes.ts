@@ -5,6 +5,7 @@ const AUTH_BASE_ROUTE = '/auth';
 const APP_ROUTES = {
     index: {
         base: INDEX_BASE_ROUTE,
+        home: INDEX_BASE_ROUTE,
     },
     auth: {
         base: AUTH_BASE_ROUTE,
