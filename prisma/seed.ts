@@ -1,4 +1,5 @@
 import {Prisma} from '@/app/generated/client';
+
 import {ANSI_COLORS, ANSI_RESET} from '@/config/constants';
 import {auth} from '@/lib/auth';
 import prisma from '@/lib/db/prisma';

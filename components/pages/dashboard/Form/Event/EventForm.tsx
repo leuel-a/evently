@@ -1,3 +1,4 @@
+import lodashGet from 'lodash/get';
 import {useFormContext} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import {CountriesSelectInput} from '@/components/CountriesSelectInput';
@@ -203,6 +204,9 @@ export function EventForm(props: EventFormProps) {
                             </FormItem>
                         )}
                     />
+                </div>
+                <div>
+                    {methods.formState.errors?.root && <FormMessage className="text-sm">{lodashGet(methods.formState?.errors, 'root.serverError.message', '')}</FormMessage>}
                 </div>
                 <div className="mt-10 flex justify-end xl:justify-start">
                     <Button

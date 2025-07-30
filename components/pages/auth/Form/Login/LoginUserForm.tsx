@@ -7,8 +7,9 @@ import {Form, FormItem, FormControl, FormMessage, FormLabel, FormField} from '@/
 import {Input} from '@/components/ui/input';
 import {APP_ROUTES} from '@/config/routes';
 import type {LoginUserSchemaType} from '@/lib/db/schema';
+import {LoginUserFormRootError} from './LoginUserFormRootError';
 
-export function LoginForm(props: LoginFormProps) {
+export function LoginUserForm(props: LoginFormProps) {
     const {handleSubmit: handleSubmitOverride, SubmitButtonProps = {}} = props;
     const form = useFormContext<LoginUserSchemaType>();
 
@@ -61,6 +62,7 @@ export function LoginForm(props: LoginFormProps) {
                         </FormItem>
                     )}
                 />
+                <LoginUserFormRootError />
                 <Button
                     type="submit"
                     className="cursor-pointer h-12 rounded text-white transition-colors hover:bg-indigo-700"

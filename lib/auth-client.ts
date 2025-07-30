@@ -4,7 +4,9 @@ import {auth} from './auth';
 
 const authClient = createAuthClient({
     plugins: [inferAdditionalFields<typeof auth>()],
+    // TODO: handle errors that might occur if the APP_URL is not in the process.env
     baseURL: process.env.APP_URL as string,
 });
 
+export default authClient;
 export const {signIn, signUp, signOut, useSession} = authClient;

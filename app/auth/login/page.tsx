@@ -2,13 +2,13 @@
 
 import {FormProvider, useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
-import {cookies} from 'next/headers';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {LoginForm} from '@/components/pages/auth/Form/Login/LoginUserForm';
+import {LoginUserForm} from '@/components/pages/auth/Form/Login/LoginUserForm';
+import authClient from '@/lib/auth-client';
+import {BASE_ERROR_CODES} from '@/lib/codes';
+import {convertEnumStyleStringToNormalString} from '@/utils/strings';
 import {loginUserSchema} from '@/lib/db/schema';
 import type {LoginUserSchemaType} from '@/lib/db/schema';
-import {convertToFormData} from '@/utils/functions';
-import {loginUserAction} from '../actions';
 
 export default function Page() {
     const methods = useForm<LoginUserSchemaType>({
@@ -19,21 +19,25 @@ export default function Page() {
         },
     });
 
-    const onSubmitHandler: SubmitHandler<LoginUserSchemaType> = async (values) => {
-        const formData = convertToFormData(values);
-        const {success, error, data} = await loginUserAction(formData);
+    const {setError} = methods;
 
-        if (success) {
-            (await cookies()).set('token', data?.token);
-        } else {
-            console.dir(error, {depth: null});
+    const onSubmitHandler: SubmitHandler<LoginUserSchemaType> = async (values) => {
+        const {email, password} = values;
+        const {error} = await authClient.signIn.email({email, password});
+
+        if (error) {
+            const normalErrorCode = convertEnumStyleStringToNormalString(BASE_ERROR_CODES.EMAIL_NOT_VERIFIED);
+            console.log(normalErrorCode);
+            if (error.message === normalErrorCode) {
+                setError('root.serverError', {message: error?.message, type: error?.code});
+            }
         }
     };
 
     return (
         <FormProvider {...methods}>
-            <div className="flex bg-white h-screen w-full items-center justify-center">
-                <LoginForm handleSubmit={onSubmitHandler} />
+            <div className="flex flex-col bg-white h-screen w-full items-center justify-center">
+                <LoginUserForm handleSubmit={onSubmitHandler} />
             </div>
         </FormProvider>
     );
