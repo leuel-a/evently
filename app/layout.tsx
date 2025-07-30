@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import localFont from 'next/font/local';
 import ComposeProviders from '@/components/ComposeProviders';
 import {SidebarProvider} from '@/components/ui/sidebar';
+import {Toaster} from '@/components/ui/sonner';
 import {AuthProvider} from '@/context/AuthContext';
 import {QueryClientProvider} from '@/context/QueryClientContext';
 import './globals.css';
@@ -27,7 +28,10 @@ export default function RootLayout({
             suppressHydrationWarning
         >
             <body className={`${poppins.variable} font-poppins bg-gray-100`}>
-                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>{children}</ComposeProviders>
+                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>
+                    {children}
+                    <Toaster />
+                </ComposeProviders>
             </body>
         </html>
     );

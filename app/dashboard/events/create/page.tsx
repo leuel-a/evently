@@ -4,7 +4,7 @@ import {useMutation} from '@tanstack/react-query';
 import type {MutationFunction} from '@tanstack/react-query';
 import {useForm, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import type {Events} from '@/app/generated/prisma';
+import type {Events} from '@/app/generated/client';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {eventsSchema} from '@/components/pages/dashboard/Form/Event/schema';
 import type {EventSchemaType} from '@/components/pages/dashboard/Form/Event/schema';
@@ -14,6 +14,7 @@ import {API_ROUTES, HTTP_METHODS} from '@/config/routes';
 
 const createEvent: MutationFunction<Events, EventSchemaType> = async (data) => {
     const response = await makeApiCall({
+        isSecure: false,
         url: API_ROUTES.events.base,
         method: HTTP_METHODS.POST,
         data,
@@ -38,6 +39,7 @@ export default function Page() {
         },
     });
 
+    // @ts-ignore
     const mutation = useMutation({
         mutationKey: ['events', 'create'],
         mutationFn: createEvent,

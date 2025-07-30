@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {cookies} from 'next/headers';
 import type {AxiosRequestConfig} from 'axios';
 
 const instance = axios.create({
@@ -7,15 +6,12 @@ const instance = axios.create({
 });
 
 type MakeApiCallConfig = AxiosRequestConfig & {
-    isSecure: boolean;
+    isSecure?: boolean;
 };
 
 export async function makeApiCall(config: MakeApiCallConfig) {
-    const {isSecure, ...requestConfig} = config;
-    const cookiesStore = await cookies();
-    const token = cookiesStore.get('token');
-
-    return instance.request({...requestConfig, });
+    const {isSecure = false, ...requestConfig} = config;
+    return instance.request({...requestConfig});
 }
 
 export {instance as axios};
