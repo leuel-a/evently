@@ -19,11 +19,8 @@ export default function DashboardLayout({children}: Readonly<{children: React.Re
     useEffect(() => {
         if (!isAuthenticated) {
             router.push(APP_ROUTES.auth.login);
-            // TODO: add sonner notification for the user
         }
     }, [isAuthenticated]);
-
-    if (!isAuthenticated) return <></>;
 
     return (
         <ResourcesProvider resources={resources}>

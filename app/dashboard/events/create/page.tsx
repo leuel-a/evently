@@ -1,29 +1,19 @@
 'use client';
 
-import {useMutation} from '@tanstack/react-query';
-import type {MutationFunction} from '@tanstack/react-query';
 import {useForm, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import type {Events} from '@/app/generated/client';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {Separator} from '@/components/ui/separator';
-import {makeApiCall} from '@/config/axios';
-import {API_ROUTES, HTTP_METHODS} from '@/config/routes';
+import {useAuthContext} from '@/context/AuthContext';
 import {eventsSchema} from '@/lib/db/schema';
 import type {EventSchemaType} from '@/lib/db/schema';
-
-const createEvent: MutationFunction<Events, EventSchemaType> = async (data) => {
-    const response = await makeApiCall({
-        isSecure: false,
-        url: API_ROUTES.events.base,
-        method: HTTP_METHODS.POST,
-        data,
-    });
-    return response.data;
-};
+import {convertToFormData} from '@/utils/functions';
+import {createEventAction} from '../actions';
 
 export default function Page() {
-    const methods = useForm<EventSchemaType>({
+    const {user} = useAuthContext();
+
+    const form = useForm<EventSchemaType>({
         resolver: zodResolver(eventsSchema),
         defaultValues: {
             title: '',
@@ -36,31 +26,21 @@ export default function Page() {
             city: '',
             capacity: '',
             isVirtual: false,
+            userId: user?.id ?? '',
         },
     });
 
-    // @ts-ignore
-    const mutation = useMutation({
-        mutationKey: ['events', 'create'],
-        mutationFn: createEvent,
-        onSuccess: (data) => {
-            console.log('Successfully created the new event');
-            console.log(data);
-        },
-        onError: (error) => {
-            console.log(`An error occured while trying to create an event: ${error?.message}`);
-        },
-    });
-
-    const onSubmit = (values: EventSchemaType) => {
-        console.log(parseInt(values.capacity));
+    const onSubmit = async (values: EventSchemaType) => {
+        const formData = convertToFormData(values);
+        try {
+            await createEventAction(formData);
+        } catch (error) {}
     };
 
-    const {getFieldState} = methods;
-    const {error: addressInputError} = getFieldState('address');
+    const {error: addressInputError} = form.getFieldState('address');
 
     return (
-        <FormProvider {...methods}>
+        <FormProvider {...form}>
             <div className="flex flex-col gap-6 bg-white p-8 pl-4">
                 <div className="mb-4 space-y-1">
                     <h2 className="text-xl font-semibold tracking-tight text-indigo-700">Create a new event</h2>

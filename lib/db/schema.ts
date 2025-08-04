@@ -34,6 +34,7 @@ export const eventsSchema = z.object({
     city: z.string().min(1, {message: 'City is required'}),
     capacity: z.string(),
     isVirtual: z.boolean(),
+    userId: z.string({ required_error: 'User Id is required for the organizer of the user' }),
 });
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;
