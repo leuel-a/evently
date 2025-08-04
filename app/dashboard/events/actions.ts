@@ -1,1 +1,1 @@
-export async function creatEventAction(formData: FormData) {}
+export async function createEventAction(formData: FormData) {}
