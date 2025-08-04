@@ -36,9 +36,12 @@ export default function Page() {
                 setError('root.serverError', {message: error?.message, type: error?.code});
                 return;
             }
+            setError('root.serverError', {message: error?.message, type: error?.code});
+            setIsSubmitting(false);
+        } else {
+            router.push('/');
+            setIsSubmitting(false);
         }
-        router.push('/');
-        setIsSubmitting(false);
     };
 
     return (
