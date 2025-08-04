@@ -1,4 +1,5 @@
 import {FlatCompat} from '@eslint/eslintrc';
+import pluginJest from 'eslint-plugin-jest';
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
 
@@ -14,6 +15,11 @@ const eslintConfig = [
     ...compat.extends('plugin:@tanstack/eslint-plugin-query/recommended'),
     ...compat.extends('prettier'),
     ...compat.plugins('@tanstack/query'),
+    {
+        files: ['**/__tests__/**/*.[jt]s?(x)', '**/*.{test,spec}.[jt]s?(x)'],
+        plugins: {jest: pluginJest},
+        rules: {...pluginJest.configs.recommended.rules},
+    },
 ];
 
 export default eslintConfig;
