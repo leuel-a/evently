@@ -10,7 +10,7 @@ import type {LoginUserSchemaType} from '@/lib/db/schema';
 import {LoginUserFormRootError} from './LoginUserFormRootError';
 
 export function LoginUserForm(props: LoginFormProps) {
-    const {handleSubmit: handleSubmitOverride, SubmitButtonProps} = props;
+    const {handleSubmit: handleSubmitOverride, isSubmitting = false, SubmitButtonProps = {}} = props;
     const form = useFormContext<LoginUserSchemaType>();
 
     const handleSubmit = (values: LoginUserSchemaType) => {
@@ -67,9 +67,9 @@ export function LoginUserForm(props: LoginFormProps) {
                     {...SubmitButtonProps}
                     type="submit"
                     className="cursor-pointer h-12 rounded text-white transition-colors hover:bg-indigo-700"
-                    disabled={SubmitButtonProps?.isSubmitting ?? false}
+                    disabled={isSubmitting}
                 >
-                    {(SubmitButtonProps?.isSubmitting ?? false) ? 'Signing you in...' : 'Sign In'}
+                    {isSubmitting ? 'Signing you in...' : 'Sign In'}
                 </Button>
                 <div className="flex justify-end">
                     <p className="text-sm">
@@ -89,7 +89,6 @@ export function LoginUserForm(props: LoginFormProps) {
 
 export interface LoginFormProps {
     handleSubmit?: (values: LoginUserSchemaType) => void;
-    SubmitButtonProps?: ComponentProps<typeof Button> & {
-        isSubmitting: boolean;
-    };
+    SubmitButtonProps?: ComponentProps<typeof Button>;
+    isSubmitting?: boolean;
 }

@@ -45,7 +45,7 @@ export default function Page() {
         <FormProvider {...methods}>
             <div className="flex flex-col bg-white h-screen w-full items-center justify-center">
                 <LoginUserForm
-                    SubmitButtonProps={{isSubmitting}}
+                    isSubmitting={isSubmitting}
                     handleSubmit={onSubmitHandler}
                 />
             </div>
