@@ -7,6 +7,10 @@ export type Session = typeof auth.$Infer.Session & {};
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {provider: 'postgresql'}),
+    session: {
+        storeSessionInDatabase: true,
+        cookieCache: {enabled: true},
+    },
     emailVerification: {
         sendVerificationEmail: async ({user, url}) => {
             await sendVerificationLinkEmail({email: user.email, name: user.name, verificationLink: url});
