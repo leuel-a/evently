@@ -15,7 +15,7 @@ import {TimePicker} from '@/components/ui/time-picker';
 import {API_ROUTES} from '@/config/routes';
 import {cn} from '@/lib/utils';
 import {EventCategoryInput} from './EventCategoryInput';
-import type {EventSchemaType} from './schema';
+import type {EventSchemaType} from '@/lib/db/schema';
 
 export function EventForm(props: EventFormProps) {
     const {CustomAddressAutofillInputProps = {}, onSubmit} = props;

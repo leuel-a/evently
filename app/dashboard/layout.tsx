@@ -16,13 +16,14 @@ export default function DashboardLayout({children}: Readonly<{children: React.Re
 
     const {isAuthenticated} = useAuthContext();
 
-    // useEffect(() => {
-    //     if (!isAuthenticated) {
-    //         router.push(APP_ROUTES.auth.login);
-    //     }
-    // }, [isAuthenticated]);
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push(APP_ROUTES.auth.login);
+            // TODO: add sonner notification for the user
+        }
+    }, [isAuthenticated]);
 
-    // if (!isAuthenticated) return <></>;
+    if (!isAuthenticated) return <></>;
 
     return (
         <ResourcesProvider resources={resources}>

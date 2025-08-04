@@ -6,11 +6,11 @@ import {useForm, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import type {Events} from '@/app/generated/client';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
-import {eventsSchema} from '@/components/pages/dashboard/Form/Event/schema';
-import type {EventSchemaType} from '@/components/pages/dashboard/Form/Event/schema';
 import {Separator} from '@/components/ui/separator';
 import {makeApiCall} from '@/config/axios';
 import {API_ROUTES, HTTP_METHODS} from '@/config/routes';
+import {eventsSchema} from '@/lib/db/schema';
+import type {EventSchemaType} from '@/lib/db/schema';
 
 const createEvent: MutationFunction<Events, EventSchemaType> = async (data) => {
     const response = await makeApiCall({
