@@ -20,6 +20,7 @@ model User {
   organizationName String?
   sessions         Session[]
   accounts         Account[]
+  events           Events[]
 
   @@unique([email])
   @@map("user")
@@ -87,6 +88,8 @@ model Events {
   isVirtual     Boolean        @default(false)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  userId        String
+  user          User           @relation(fields: [userId], references: [id])
 
   @@map("events")
 }
