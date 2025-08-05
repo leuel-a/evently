@@ -1,10 +1,12 @@
 import {z} from 'zod';
 
+export type LoginUserSchemaType = z.infer<typeof loginUserSchema>;
 export const loginUserSchema = z.object({
     email: z.string({required_error: 'Email is required'}).email({message: 'Please provide a valid email address'}),
     password: z.string({required_error: 'Password is required'}).min(1, {message: 'Password can not be an empty string'}),
 });
 
+export type UserSignupSchemaType = z.infer<typeof userSignupSchema>;
 export const userSignupSchema = z
     .object({
         name: z.string({required_error: 'Required'}).min(1, {message: 'Name can not be empty'}),
@@ -22,6 +24,7 @@ export const userSignupSchema = z
         {message: 'Passwords do not match', path: ['confirmPassword']},
     );
 
+export type EventSchemaType = z.infer<typeof eventsSchema>;
 export const eventsSchema = z.object({
     title: z.string({required_error: 'Title is required'}).min(5, {message: 'Title must be a min of 50 characters'}),
     description: z.string({required_error: 'Description is required'}).min(10, 'Description can not be less than 200 characters'),
@@ -34,9 +37,5 @@ export const eventsSchema = z.object({
     country: z.string().min(1, {message: 'Country is required'}),
     city: z.string().min(1, {message: 'City is required'}),
     capacity: z.string(),
-    isVirtual: z.boolean(),
+    isVirtual: z.coerce.boolean(),
 });
-
-export type EventSchemaType = z.infer<typeof eventsSchema>;
-export type LoginUserSchemaType = z.infer<typeof loginUserSchema>;
-export type UserSignupSchemaType = z.infer<typeof userSignupSchema>;

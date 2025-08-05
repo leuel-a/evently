@@ -5,6 +5,7 @@ import type {IActionState} from '@/types/utils/ActionState';
 import {convertFormDataToObject} from '@/utils/functions';
 
 export async function createEventAction(formData: FormData): Promise<IActionState> {
+    console.log(JSON.stringify(formData));
     const values = convertFormDataToObject(formData);
 
     if (!values.userId || typeof values.userId !== 'string' || values.userId.length === 0) {

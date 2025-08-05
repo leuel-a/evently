@@ -1,14 +1,17 @@
 'use client';
 
 import {FormProvider, useForm} from 'react-hook-form';
+import {useRouter} from 'next/navigation';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {UserSignupForm} from '@/components/pages/auth/Form/Signup/UserSignupForm';
+import {APP_ROUTES} from '@/config/routes';
 import type {UserSignupSchemaType} from '@/lib/db/schema';
 import {userSignupSchema} from '@/lib/db/schema';
 import {convertObjectToFormData} from '@/utils/functions';
 import {createUserAction} from '../actions';
 
 export default function Page() {
+    const router = useRouter();
     const form = useForm<UserSignupSchemaType>({
         resolver: zodResolver(userSignupSchema),
         defaultValues: {
@@ -22,12 +25,11 @@ export default function Page() {
 
     const onSubmitHandler = async (values: UserSignupSchemaType) => {
         const formData = convertObjectToFormData(values);
-        const {success, error, data} = await createUserAction(formData);
+        const {success} = await createUserAction(formData);
 
         if (success) {
-            console.dir(data, {depth: null});
-        } else {
-            console.dir(error, {depth: null});
+            router.push(APP_ROUTES.dashboard.events.base);
+            return;
         }
     };
 
