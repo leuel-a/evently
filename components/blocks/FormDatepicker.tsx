@@ -1,33 +1,15 @@
-import {useController, useFormContext} from 'react-hook-form';
-import {Datepicker, type DatepickerProps} from './Datepicker';
+import {Datepicker} from './Datepicker';
+import {type DatepickerProps} from './Datepicker';
 
 export function FormDatepicker(props: FormDatepickerProps) {
-    const methods = useFormContext();
-
-    if (!methods) throw new Error('FormDatepicker can only be used with in a FormContext');
-
-    const {source, ButtonProps: buttonProps, CalendarProps: calendarProps} = props;
-    const {control} = methods;
-
-    const {
-        field: {onChange},
-    } = useController({
-        name: source,
-        control,
-    });
-
     return (
         <Datepicker
-            ButtonProps={{...buttonProps}}
-            CalendarProps={{
-                disabled: (date) => date > new Date() || date < new Date('1900-01-01'),
-                ...calendarProps,
-            }}
-            onChange={onChange}
+            {...props}
+            disabled={(date: Date) => date > new Date() || date < new Date('1900-01-01')}
         />
     );
 }
 
-export interface FormDatepickerProps extends DatepickerProps {
+export type FormDatepickerProps = DatepickerProps & {
     source: string;
-}
+};

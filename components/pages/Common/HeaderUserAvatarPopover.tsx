@@ -29,7 +29,7 @@ export function HeaderUserAvatarPopover() {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Avatar className="w-12 h-12 aspect-square">
+                <Avatar className="w-12 h-12 aspect-square cursor-pointer">
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>

@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {FormControl, FormItem, FormMessage, FormLabel, FormDescription} from '@/components/ui/form';
 import {Select, SelectContent, SelectTrigger, SelectValue, SelectItem} from '@/components/ui/select';
 import {useChoicesContext} from '@/context/ChoicesContext';
@@ -10,9 +11,10 @@ interface EventCategory {
     updatedAt: string;
 }
 
-export function EventCategoryInput(props: EventCategoryInputProps) {
+export function EventCategoryInputComponent(props: EventCategoryInputProps) {
     const {onChange, value} = props;
     const {choices} = useChoicesContext<EventCategory>();
+
     return (
         <FormItem className="border-input rounded border p-4">
             <div className="space-y-1">
@@ -46,6 +48,11 @@ export function EventCategoryInput(props: EventCategoryInputProps) {
         </FormItem>
     );
 }
+
+export const EventCategoryInput = memo(
+    EventCategoryInputComponent,
+    (prevProps, nextProps) => prevProps.value === nextProps.value && prevProps.onChange === nextProps.onChange,
+);
 
 export interface EventCategoryInputProps {
     onChange: (value: string) => void;

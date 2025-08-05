@@ -6,15 +6,11 @@ import {APP_ROUTES} from '@/config/routes';
 import {auth} from '@/lib/auth';
 import {userSignupSchema, loginUserSchema} from '@/lib/db/schema';
 import {AppError, ValidationErrorDetails} from '@/lib/error';
-
-export type IActionState = {
-    data?: any;
-    success?: boolean | undefined;
-    error?: ValidationErrorDetails[] | AppError | null;
-};
+import type {IActionState} from '@/types/utils/ActionState';
+import {convertFormDataToObject} from '@/utils/functions';
 
 export async function createUserAction(formData: FormData): Promise<IActionState> {
-    const formValues = Object.fromEntries(formData.entries());
+    const formValues = convertFormDataToObject(formData);
     try {
         const parsedUser = await userSignupSchema.parseAsync(formValues);
         const {name, email, password, isOrganizer, organizationName} = parsedUser;

@@ -1,6 +1,6 @@
-import lodashGet from 'lodash/get';
 import {useFormContext} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
+import lodashGet from 'lodash/get';
 import {CountriesSelectInput} from '@/components/CountriesSelectInput';
 import {AddressAutofillInput, AddressAutofillInputProps} from '@/components/blocks/AddressAutofillInput';
 import {BooleanInput} from '@/components/blocks/BooleanInput';
@@ -13,23 +13,22 @@ import {Input} from '@/components/ui/input';
 import {Textarea} from '@/components/ui/textarea';
 import {TimePicker} from '@/components/ui/time-picker';
 import {API_ROUTES} from '@/config/routes';
+import type {EventSchemaType} from '@/lib/db/schema';
 import {cn} from '@/lib/utils';
 import {EventCategoryInput} from './EventCategoryInput';
-import type {EventSchemaType} from '@/lib/db/schema';
 
 export function EventForm(props: EventFormProps) {
     const {CustomAddressAutofillInputProps = {}, onSubmit} = props;
-    const methods = useFormContext<EventSchemaType>();
-    const {handleSubmit, control} = methods;
+    const form = useFormContext<EventSchemaType>();
 
     return (
-        <Form {...methods}>
+        <Form {...form}>
             <form
                 className="space-y-4"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(onSubmit)}
             >
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="title"
                     render={({field}) => (
                         <FormItem>
@@ -46,7 +45,7 @@ export function EventForm(props: EventFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="description"
                     render={({field}) => (
                         <FormItem>
@@ -64,7 +63,7 @@ export function EventForm(props: EventFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="isVirtual"
                     render={({field}) => (
                         <FormItem className="flex flex-row items-center justify-between rounded border p-3">
@@ -83,7 +82,7 @@ export function EventForm(props: EventFormProps) {
                 />
                 <div className="flex flex-col gap-4 xl:flex-row xl:gap-2">
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="date"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
@@ -91,9 +90,8 @@ export function EventForm(props: EventFormProps) {
                                 <FormControl>
                                     <FormDatepicker
                                         source="date"
-                                        ButtonProps={{className: 'bg-transparent h-12 w-full'}}
-                                        CalendarProps={{className: 'h-12'}}
-                                        {...field}
+                                        selected={field.value}
+                                        onSelect={field.onChange}
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -101,7 +99,7 @@ export function EventForm(props: EventFormProps) {
                         )}
                     />
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="startTime"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
@@ -114,7 +112,7 @@ export function EventForm(props: EventFormProps) {
                         )}
                     />
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="endTime"
                         render={({field}) => (
                             <FormItem className="w-full xl:w-1/3">
@@ -128,7 +126,7 @@ export function EventForm(props: EventFormProps) {
                     />
                 </div>
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="category"
                     render={({field}) => (
                         <ReferenceInput resource={API_ROUTES.eventCategory.base}>
@@ -140,13 +138,16 @@ export function EventForm(props: EventFormProps) {
                     )}
                 />
                 <FormField
-                    control={control}
+                    control={form.control}
                     name="address"
                     render={({field}) => (
                         <FormItem>
                             <FormLabel>Address</FormLabel>
                             <FormControl>
-                                <AddressAutofillInput {...CustomAddressAutofillInputProps} />
+                                <AddressAutofillInput
+                                    InputProps={{...field}}
+                                    {...CustomAddressAutofillInputProps}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -154,7 +155,7 @@ export function EventForm(props: EventFormProps) {
                 />
                 <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2 xl:gap-2">
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="country"
                         render={({field}) => (
                             <FormItem>
@@ -170,7 +171,7 @@ export function EventForm(props: EventFormProps) {
                         )}
                     />
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="city"
                         render={({field}) => (
                             <FormItem>
@@ -188,7 +189,7 @@ export function EventForm(props: EventFormProps) {
                 </div>
                 <div>
                     <FormField
-                        control={control}
+                        control={form.control}
                         name="capacity"
                         render={({field}) => (
                             <FormItem className="w-full lg:w-1/3">
@@ -206,12 +207,14 @@ export function EventForm(props: EventFormProps) {
                     />
                 </div>
                 <div>
-                    {methods.formState.errors?.root && <FormMessage className="text-sm">{lodashGet(methods.formState?.errors, 'root.serverError.message', '')}</FormMessage>}
+                    {form.formState.errors?.root && (
+                        <FormMessage className="text-sm">{lodashGet(form.formState?.errors, 'root.serverError.message', '')}</FormMessage>
+                    )}
                 </div>
                 <div className="mt-10 flex justify-end xl:justify-start">
                     <Button
                         type="submit"
-                        className="h-12 w-80"
+                        className="h-12 w-80 cursor-pointer"
                     >
                         Create
                     </Button>

@@ -25,8 +25,9 @@ export const userSignupSchema = z
 export const eventsSchema = z.object({
     title: z.string({required_error: 'Title is required'}).min(5, {message: 'Title must be a min of 50 characters'}),
     description: z.string({required_error: 'Description is required'}).min(10, 'Description can not be less than 200 characters'),
-    date: z.date(),
-    startTime: z.string({required_error: 'Start Time is required'}).min(1), // TODO: come up with a better way to create the startTime
+    date: z.coerce.date(),
+    // !(todo) -> find a better way to handle the validation of the startTime and endTime
+    startTime: z.string({required_error: 'Start Time is required'}).min(1),
     endTime: z.string().optional(),
     category: z.string({required_error: 'Category is required'}).min(1, {message: 'Category can not be empty'}),
     address: z.string().min(1, {message: 'Address can not be empty'}),
@@ -34,7 +35,6 @@ export const eventsSchema = z.object({
     city: z.string().min(1, {message: 'City is required'}),
     capacity: z.string(),
     isVirtual: z.boolean(),
-    userId: z.string({ required_error: 'User Id is required for the organizer of the user' }),
 });
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;

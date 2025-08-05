@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
@@ -7,12 +8,11 @@ import {Separator} from '@/components/ui/separator';
 import {useAuthContext} from '@/context/AuthContext';
 import {eventsSchema} from '@/lib/db/schema';
 import type {EventSchemaType} from '@/lib/db/schema';
-import {convertToFormData} from '@/utils/functions';
+import {convertObjectToFormData} from '@/utils/functions';
 import {createEventAction} from '../actions';
 
 export default function Page() {
     const {user} = useAuthContext();
-
     const form = useForm<EventSchemaType>({
         resolver: zodResolver(eventsSchema),
         defaultValues: {
@@ -26,19 +26,16 @@ export default function Page() {
             city: '',
             capacity: '',
             isVirtual: false,
-            userId: user?.id ?? '',
         },
     });
 
     const onSubmit = async (values: EventSchemaType) => {
-        const formData = convertToFormData(values);
-        try {
-            await createEventAction(formData);
-        } catch (error) {}
+        const formData = convertObjectToFormData({...values, userId: user?.id});
+        await createEventAction(formData);
     };
-
     const {error: addressInputError} = form.getFieldState('address');
 
+    React.useEffect(() => {}, []);
     return (
         <FormProvider {...form}>
             <div className="flex flex-col gap-6 bg-white p-8 pl-4">
