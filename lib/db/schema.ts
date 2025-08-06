@@ -36,6 +36,6 @@ export const eventsSchema = z.object({
     address: z.string().min(1, {message: 'Address can not be empty'}),
     country: z.string().min(1, {message: 'Country is required'}),
     city: z.string().min(1, {message: 'City is required'}),
-    capacity: z.string(),
-    isVirtual: z.coerce.boolean(),
+    capacity: z.coerce.number({required_error: 'Capacity  is required'}),
+    isVirtual: z.coerce.boolean().optional(),
 });

@@ -1,5 +1,6 @@
 'use client';
 
+import {useState} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -13,6 +14,7 @@ import {convertObjectToFormData} from '@/utils/functions';
 import {createEventAction} from '../actions';
 
 export default function Page() {
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const router = useRouter();
     const {user} = useAuthContext();
     const form = useForm<EventSchemaType>({
@@ -26,16 +28,21 @@ export default function Page() {
             address: '',
             country: '',
             city: '',
-            capacity: '',
+            capacity: 0,
             isVirtual: false,
         },
     });
 
     const onSubmit = async (values: EventSchemaType) => {
+        setSubmitting(true);
         const formData = convertObjectToFormData({...values, userId: user?.id});
-        const {success} = await createEventAction(formData);
+        const {error} = await createEventAction(formData);
 
-        if (success) {
+        if (error) {
+            form.setError('root.serverError', {message: 'Something went wrong, please try again'});
+            setSubmitting(false);
+        } else {
+            setSubmitting(false);
             return router.push(APP_ROUTES.dashboard.events.base);
         }
     };
@@ -51,6 +58,7 @@ export default function Page() {
                 <div className="w-full xl:w-3/4">
                     <EventForm
                         CustomAddressAutofillInputProps={{error: addressInputError}}
+                        isSubmitting={submitting}
                         onSubmit={onSubmit}
                     />
                 </div>

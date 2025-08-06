@@ -80,7 +80,7 @@ model Events {
   date          DateTime
   city          String
   startTime     String
-  endTime       String
+  endTime       String?
   categoryId    String
   category      EventsCategory @relation(fields: [categoryId], references: [id])
   coverImageUrl String?

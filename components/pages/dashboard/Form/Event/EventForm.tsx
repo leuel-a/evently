@@ -226,6 +226,7 @@ export function EventForm(props: EventFormProps) {
 
 export interface EventFormProps {
     CustomAddressAutofillInputProps?: AddressAutofillInputProps;
+    isSubmitting: boolean;
     onSubmit: SubmitHandler<EventSchemaType>;
     defaultValues?: EventSchemaType;
 }
