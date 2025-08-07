@@ -1,3 +1,5 @@
+'use client';
+
 import {Fragment} from 'react';
 import {usePathname} from 'next/navigation';
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from '@/components/ui/breadcrumb';

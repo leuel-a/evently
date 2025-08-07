@@ -1,3 +1,5 @@
+'use client';
+
 import {usePathname} from 'next/navigation';
 import {useResourceContext} from '@/context/ResourceContext';
 import {useResourcesContext} from '@/context/ResourcesContext';

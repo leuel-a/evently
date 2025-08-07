@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import {APP_ROUTES} from '@/config/routes';
 import {HeaderActionList} from './HeaderActionList';

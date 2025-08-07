@@ -163,7 +163,7 @@ export function EventForm(props: EventFormProps) {
                                 <FormControl>
                                     <CountriesSelectInput
                                         onChange={field.onChange}
-                                        value={field.value}
+                                        value={field.value ?? ''}
                                     />
                                 </FormControl>
                                 <FormMessage />

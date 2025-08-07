@@ -38,3 +38,6 @@ export const ANSI_COLORS = {
     UNDERLINE: ANSI_ESC + '4m',
     INVERSE: ANSI_ESC + '7m',
 };
+
+export const BETTER_AUTH_SESSION_DATA_COOKIE = 'better-auth.session_data';
+export const BETTER_AUTH_SESSION_TOKEN_COOKIE = 'better-auth.session_token';

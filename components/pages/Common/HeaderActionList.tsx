@@ -1,14 +1,15 @@
+import {headers} from 'next/headers';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
 import {APP_ROUTES} from '@/config/routes';
-import {useAuthContext} from '@/context/AuthContext';
-import { HeaderUserAvatarPopover } from './HeaderUserAvatarPopover';
+import {auth} from '@/lib/auth';
+import {HeaderUserAvatarPopover} from './HeaderUserAvatarPopover';
 
-export function HeaderActionList() {
-    const {isAuthenticated} = useAuthContext();
+export async function HeaderActionList() {
+    const session = await auth.api.getSession({headers: await headers(), query: {}});
 
-    if (isAuthenticated) {
-        return <HeaderUserAvatarPopover />
+    if (session && session?.user) {
+        return <HeaderUserAvatarPopover />;
     }
 
     return (

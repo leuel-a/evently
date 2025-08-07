@@ -1,5 +1,7 @@
 'use server';
 
+import {revalidatePath} from 'next/cache';
+import {headers} from 'next/headers';
 import {ZodError} from 'zod';
 import {User} from '@/app/generated/client';
 import {APP_ROUTES} from '@/config/routes';
@@ -50,4 +52,9 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
         const appError = new AppError();
         return {success: false, error: appError};
     }
+}
+
+export async function logoutUserAction(_: any, formData: FormData) {
+    await auth.api.signOut({headers: await headers()});
+    revalidatePath(APP_ROUTES.index.home);
 }

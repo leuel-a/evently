@@ -38,5 +38,5 @@ export function CountriesSelectInput({onChange, value}: CountriesSelectInputProp
 
 export interface CountriesSelectInputProps {
     onChange: (value: string) => void;
-    value: string;
+    value?: string;
 }

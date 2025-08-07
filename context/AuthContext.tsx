@@ -23,10 +23,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({children}: Readonly<{children: ReactNode}>) {
     const {data, isPending} = useSession();
+
     return <AuthContext.Provider value={{user: data?.user, isAuthenticated: !!data?.user, isPending}}>{children}</AuthContext.Provider>;
 }
 
-function useAuthContext() {
+function useAuth() {
     const context = useContext(AuthContext);
 
     if (!context) {
@@ -35,5 +36,5 @@ function useAuthContext() {
     return context;
 }
 
-export {useAuthContext, AuthProvider, AuthContext};
+export {useAuth as useAuthContext, AuthProvider, AuthContext};
 export type {AuthContextType};
