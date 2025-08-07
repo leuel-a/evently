@@ -75,10 +75,10 @@ model Events {
   id            String         @id @default(uuid())
   title         String
   description   String
-  address       String
-  country       String
+  address       String?
+  country       String?
   date          DateTime
-  city          String
+  city          String?
   startTime     String
   endTime       String?
   categoryId    String

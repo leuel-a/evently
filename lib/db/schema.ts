@@ -25,17 +25,29 @@ export const userSignupSchema = z
     );
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;
-export const eventsSchema = z.object({
-    title: z.string({required_error: 'Title is required'}).min(5, {message: 'Title must be a min of 50 characters'}),
-    description: z.string({required_error: 'Description is required'}).min(10, 'Description can not be less than 200 characters'),
-    date: z.coerce.date(),
-    // !(todo) -> find a better way to handle the validation of the startTime and endTime
-    startTime: z.string({required_error: 'Start Time is required'}).min(1),
-    endTime: z.string().optional(),
-    category: z.string({required_error: 'Category is required'}).min(1, {message: 'Category can not be empty'}),
-    address: z.string().min(1, {message: 'Address can not be empty'}),
-    country: z.string().min(1, {message: 'Country is required'}),
-    city: z.string().min(1, {message: 'City is required'}),
-    capacity: z.coerce.number({required_error: 'Capacity  is required'}),
-    isVirtual: z.coerce.boolean().optional(),
-});
+export const eventsSchema = z
+    .object({
+        title: z.string({required_error: 'Title is required'}).min(5, {message: 'Title must be a min of 50 characters'}),
+        description: z.string({required_error: 'Description is required'}).min(10, {message: 'Description can not be less than 200 characters'}),
+        date: z.coerce.date(),
+        startTime: z.string({required_error: 'Start Time is required'}).min(1),
+        endTime: z.string().optional(),
+        category: z.string({required_error: 'Category is required'}).min(1, {message: 'Category can not be empty'}),
+        address: z.string().optional(),
+        country: z.string().optional(),
+        city: z.string(),
+        capacity: z.coerce.number({required_error: 'Capacity is required'}),
+        isVirtual: z.coerce.boolean().optional(),
+    })
+    .refine(
+        ({isVirtual, address, country, city}) => {
+            if (isVirtual === false) {
+                return Boolean(address && address.trim()) && Boolean(country && country.trim()) && Boolean(city && city.trim());
+            }
+            return true;
+        },
+        {
+            message: 'Address, country, and city are required for in-person events',
+            path: ['address'], // You can point this to any one of the fields
+        },
+    );
