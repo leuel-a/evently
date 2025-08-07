@@ -1,6 +1,8 @@
 'use server';
 
+import {_statusCode} from 'better-auth';
 import {ZodError} from 'zod';
+import {getServerSession} from '@/lib/auth';
 import prisma from '@/lib/db/prisma';
 import {eventsSchema} from '@/lib/db/schema';
 import {ValidationErrorDetails, AppError} from '@/lib/error';
@@ -9,16 +11,17 @@ import {convertFormDataToObject} from '@/utils/functions';
 
 export async function createEventAction(formData: FormData): Promise<IActionState> {
     const values = convertFormDataToObject(formData);
+    const session = await getServerSession();
 
-    if (!values.userId || typeof values.userId !== 'string' || values.userId.length === 0) {
-        const appError = new AppError();
-        return {success: false, error: appError, data: null};
+    if (!session || !session.user) {
+        const appError = new AppError('UNAUTHORIZED');
+        return {success: false, error: appError};
     }
 
     try {
         const parsedEvent = await eventsSchema.parseAsync(values);
         const {category: categoryId, ...cleanValues} = parsedEvent;
-        const createdEvent = await prisma.events.create({data: {...cleanValues, userId: values.userId, categoryId: parsedEvent.category}});
+        const createdEvent = await prisma.events.create({data: {...cleanValues, userId: session.user.id, categoryId: parsedEvent.category}});
 
         return {success: true, error: null, data: createdEvent};
     } catch (e: any) {

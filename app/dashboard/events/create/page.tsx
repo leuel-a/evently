@@ -7,7 +7,6 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {Separator} from '@/components/ui/separator';
 import {APP_ROUTES} from '@/config/routes';
-import {useAuthContext} from '@/context/AuthContext';
 import {eventsSchema} from '@/lib/db/schema';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {convertObjectToFormData} from '@/utils/functions';
@@ -16,7 +15,6 @@ import {createEventAction} from '../actions';
 export default function Page() {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const router = useRouter();
-    const {user} = useAuthContext();
     const form = useForm<EventSchemaType>({
         resolver: zodResolver(eventsSchema),
         defaultValues: {
@@ -35,17 +33,17 @@ export default function Page() {
 
     const onSubmit = async (values: EventSchemaType) => {
         setSubmitting(true);
-        const formData = convertObjectToFormData({...values, userId: user?.id});
+        const formData = convertObjectToFormData({...values});
         const {error} = await createEventAction(formData);
 
+        setSubmitting(false);
         if (error) {
             form.setError('root.serverError', {message: 'Something went wrong, please try again'});
-            setSubmitting(false);
         } else {
-            setSubmitting(false);
-            return router.push(APP_ROUTES.dashboard.events.base);
+            router.push(APP_ROUTES.dashboard.events.base);
         }
     };
+
     const {error: addressInputError} = form.getFieldState('address');
 
     return (

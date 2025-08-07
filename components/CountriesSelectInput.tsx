@@ -1,5 +1,5 @@
 import worldCountries from 'world-countries';
-import {useCreateEventFormContext} from '@/components/pages/dashboard/Form/Event/useCreateEventFormContext';
+import {useEventFormContext} from '@/components/pages/dashboard/Form/Event/useEventFormContext';
 import {Select, SelectTrigger, SelectValue, SelectContent, SelectItem} from '@/components/ui/select';
 import {cn} from '@/lib/utils';
 
@@ -9,7 +9,7 @@ const countries = worldCountries.map((country) => ({
 }));
 
 export function CountriesSelectInput({onChange, value}: CountriesSelectInputProps) {
-    const {getFieldState} = useCreateEventFormContext();
+    const {getFieldState} = useEventFormContext();
     const {error} = getFieldState('country');
 
     return (

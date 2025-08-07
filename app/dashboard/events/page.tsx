@@ -1,8 +1,8 @@
 import {headers} from 'next/headers';
+import {DataTable} from '@/components/blocks/DataTable';
 import {auth} from '@/lib/auth';
 import prisma from '@/lib/db/prisma';
 import {columns} from './columns';
-import {DataTable} from './data-table';
 
 export default async function Page() {
     const session = await auth.api.getSession({headers: await headers()});
