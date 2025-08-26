@@ -27,6 +27,7 @@ export const COLORS = {
 };
 
 async function cleanDatabase() {
+    await prisma.events.deleteMany({});
     await prisma.user.deleteMany({});
     await prisma.eventsCategory.deleteMany({});
 }

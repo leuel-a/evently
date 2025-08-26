@@ -1,38 +1,39 @@
 'use server';
 
 import {_statusCode} from 'better-auth';
-import {ZodError} from 'zod';
-import {getServerSession} from '@/lib/auth';
+import {headers} from 'next/headers';
+import {auth} from '@/lib/auth';
 import prisma from '@/lib/db/prisma';
 import {eventsSchema} from '@/lib/db/schema';
-import {ValidationErrorDetails, AppError} from '@/lib/error';
-import type {IActionState} from '@/types/utils/ActionState';
+import {AppError} from '@/lib/error';
+import {ValidationError} from '@/lib/error';
 import {convertFormDataToObject} from '@/utils/functions';
+import logger from '@/utils/logger';
 
-export async function createEventAction(formData: FormData): Promise<IActionState> {
+export async function createEventAction(formData: FormData) {
     const values = convertFormDataToObject(formData);
-    const session = await getServerSession();
+    const session = await auth.api.getSession({headers: await headers()});
 
     if (!session || !session.user) {
-        const appError = new AppError('UNAUTHORIZED');
-        return {success: false, error: appError};
+        logger.error('Error creating new event: User is not authenticated');
+        const error = new AppError('UNAUTHORIZED', {message: 'User is not authenticated'});
+        return {success: false, error};
     }
 
     try {
-        const parsedEvent = await eventsSchema.parseAsync(values);
-        const {category: categoryId, ...cleanValues} = parsedEvent;
-        const createdEvent = await prisma.events.create({data: {...cleanValues, userId: session.user.id, categoryId: parsedEvent.category}});
+        const {success: successParseEvent, data: parsedData, error: zodError} = await eventsSchema.safeParseAsync(values);
 
-        return {success: true, error: null, data: createdEvent};
-    } catch (e: any) {
-        console.log(`\nError in CreateEventAction: ${e}`);
-        if (e instanceof ZodError) {
-            const errors = e.flatten().fieldErrors;
-            const validationErrorsWithDetails: ValidationErrorDetails[] = Object.entries(errors).map(([key, value]) => ({path: key, message: value}));
-            return {success: false, error: validationErrorsWithDetails};
+        if (!successParseEvent) {
+            const error = ValidationError.convertZodError(zodError);
+            logger.error('Error creating new event: Unable to parse data', {error});
+            return {success: false, error, data: null};
         }
+        const {category, ...eventFields} = parsedData;
+        const newEvent = await prisma.events.create({data: {...eventFields, userId: session.user.id, categoryId: category}});
 
-        const appError = new AppError();
-        return {success: false, error: appError};
+        logger.info('Event created successfully');
+        return {success: true, data: newEvent, error: null};
+    } catch (error) {
+        return {success: false, error: new AppError('INTERNAL_SERVER_ERROR', {message: 'Failed to create event'})};
     }
 }

@@ -18,7 +18,7 @@ export function Datepicker(props: DatepickerProps) {
                 <Button
                     variant={buttonVariant || 'outline'}
                     data-empty={!selected}
-                    className={cn('data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal')}
+                    className={cn('h-12 data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal')}
                 >
                     <CalendarIcon />
                     {selected ? format(selected, 'PPP') : <span>Pick a selected</span>}

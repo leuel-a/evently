@@ -1,3 +1,5 @@
+import type {ZodError} from 'zod';
+
 export const _statusCode = {
     OK: 200,
     CREATED: 201,
@@ -156,5 +158,13 @@ export class ValidationError extends Error {
         this.details = details;
         this.name = 'Validation failed';
         ((this.statusCode = statusCode), (this.stack = ''));
+    }
+
+    static convertZodError(error: ZodError): ValidationError {
+        const details = error.errors.map((issue) => ({
+            path: issue.path.join('.'),
+            message: [issue.message],
+        }));
+        return new ValidationError(details);
     }
 }

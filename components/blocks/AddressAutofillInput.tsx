@@ -14,7 +14,7 @@ export function AddressAutofillInputComponent(props: AddressAutofillInputProps) 
             <Input
                 {...inputProps}
                 autoComplete="street-address"
-                className={cn(error ? 'border-red-500' : '')}
+                className={cn('h-12', error ? 'border-red-500' : '')}
                 placeholder="Enter address"
             />
         </AddressAutofill>

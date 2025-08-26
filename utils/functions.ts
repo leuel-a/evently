@@ -1,4 +1,5 @@
 import lodashIsEmpty from 'lodash/isEmpty';
+import {ZodEffects, ZodObject} from 'zod';
 
 export function removeEmptyStringsFromArray<T>(array: Array<T>) {
     return array.filter((value) => !lodashIsEmpty(value));
@@ -18,4 +19,9 @@ export function convertObjectToFormData(object: Object) {
 
 export function convertFormDataToObject(formData: FormData) {
     return Object.fromEntries(formData.entries());
+}
+
+export function getValuesFromObjectBasedOnSchema(object: Object, inputSchema: ZodEffects<ZodObject<any>>) {
+    const eventsSchemaKeys = Object.keys(inputSchema._def.schema.shape);
+    return Object.fromEntries(Object.entries(object).filter(([key]) => eventsSchemaKeys.includes(key)));
 }

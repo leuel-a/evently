@@ -3,6 +3,7 @@
 import {useState} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
+import {toast} from 'sonner';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
 import {Separator} from '@/components/ui/separator';
@@ -13,7 +14,6 @@ import {convertObjectToFormData} from '@/utils/functions';
 import {createEventAction} from '../actions';
 
 export default function Page() {
-    const [submitting, setSubmitting] = useState<boolean>(false);
     const router = useRouter();
     const form = useForm<EventSchemaType>({
         resolver: zodResolver(eventsSchema),
@@ -31,20 +31,20 @@ export default function Page() {
         },
     });
 
-    const onSubmit = async (values: EventSchemaType) => {
-        setSubmitting(true);
-        const formData = convertObjectToFormData({...values});
-        const {error} = await createEventAction(formData);
-
-        setSubmitting(false);
-        if (error) {
-            form.setError('root.serverError', {message: 'Something went wrong, please try again'});
-        } else {
-            router.push(APP_ROUTES.dashboard.events.base);
-        }
-    };
-
+    const [submitting, setSubmitting] = useState<boolean>();
     const {error: addressInputError} = form.getFieldState('address');
+
+    const handleSubmit = async (values: EventSchemaType) => {
+        setSubmitting(true);
+        const {success} = await createEventAction(convertObjectToFormData(values));
+        if (success) {
+            toast('Event Created Succesfully');
+            router.push(APP_ROUTES.dashboard.events.base);
+        } else {
+            toast.error('Something went wrong');
+        }
+        setSubmitting(false);
+    };
 
     return (
         <FormProvider {...form}>
@@ -56,8 +56,8 @@ export default function Page() {
                 <div className="w-full xl:w-3/4">
                     <EventForm
                         CustomAddressAutofillInputProps={{error: addressInputError}}
-                        isSubmitting={submitting}
-                        onSubmit={onSubmit}
+                        SubmitButtonProps={{disabled: submitting}}
+                        onSubmit={handleSubmit}
                     />
                 </div>
             </div>

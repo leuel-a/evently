@@ -1,8 +1,10 @@
 import {ComponentProps} from 'react';
-import {FormLabel as CnFormLabel} from '@/components/ui/form';
+import {FormLabel as CnFormLabel, useFormField} from '@/components/ui/form';
 import {cn} from '@/lib/utils';
 
 export function FormLabel({children, className, required = true, ...props}: FormLabelProps) {
+    const {name} = useFormField();
+
     if (!required) {
         return <CnFormLabel {...props}>{children}</CnFormLabel>;
     }

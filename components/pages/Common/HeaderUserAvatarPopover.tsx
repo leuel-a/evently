@@ -1,7 +1,8 @@
 'use client';
 
-import {useActionState} from 'react';
+import {useActionState, useEffect} from 'react';
 import Link from 'next/link';
+import {toast} from 'sonner';
 import {logoutUserAction} from '@/app/auth/actions';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {Button} from '@/components/ui/button';
@@ -9,7 +10,13 @@ import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {APP_ROUTES} from '@/config/routes';
 
 export function HeaderUserAvatarPopover() {
-    const [_, formAction, pending] = useActionState(logoutUserAction, undefined);
+    const [state, formAction, pending] = useActionState(logoutUserAction, {});
+
+    useEffect(() => {
+        if (state.success === false) {
+            toast('Sorry, we were unable to sign yout out');
+        }
+    }, [state]);
 
     return (
         <Popover>

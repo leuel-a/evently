@@ -10,6 +10,7 @@ import {userSignupSchema, loginUserSchema} from '@/lib/db/schema';
 import {AppError, ValidationErrorDetails} from '@/lib/error';
 import type {IActionState} from '@/types/utils/ActionState';
 import {convertFormDataToObject} from '@/utils/functions';
+import logger from '@/utils/logger';
 
 export async function createUserAction(formData: FormData): Promise<IActionState> {
     const formValues = convertFormDataToObject(formData);
@@ -54,7 +55,21 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
     }
 }
 
-export async function logoutUserAction(_: any, formData: FormData) {
-    await auth.api.signOut({headers: await headers()});
-    revalidatePath(APP_ROUTES.index.home);
+export async function logoutUserAction(_: IActionState, _formData: FormData): Promise<IActionState> {
+    try {
+        const {success} = await auth.api.signOut({headers: await headers()});
+        if (success) {
+            logger.info('User Successfully Logged Out');
+            revalidatePath(APP_ROUTES.index.home);
+            return {success: true};
+        }
+
+        const error = new AppError('INTERNAL_SERVER_ERROR', {message: 'Failed to logout user'});
+        logger.error(`Error: occured while trying to logout user ${error}`);
+
+        return {success: false, error};
+    } catch (error: any) {
+        logger.error(`Error: occured while trying to logout user ${error}`);
+        return {success: false, error};
+    }
 }

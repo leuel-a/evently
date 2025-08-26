@@ -1,14 +1,18 @@
 'use client';
 
 import {ColumnDef, flexRender, getCoreRowModel, useReactTable} from '@tanstack/react-table';
+import type {Row} from '@tanstack/react-table';
+import type {ComponentProps, ReactNode} from 'react';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table';
 
 interface DataTableProps<TData, TValue> {
+    TableRowProps?: ComponentProps<typeof TableRow>;
+    customTableRow?: (row: Row<TData>) => ReactNode | undefined;
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
 }
 
-export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({columns, data, customTableRow = undefined, ...props}: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
@@ -33,16 +37,20 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                 </TableHeader>
                 <TableBody>
                     {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && 'selected'}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                                ))}
-                            </TableRow>
-                        ))
+                        table.getRowModel().rows.map((row) => {
+                            if (customTableRow) return customTableRow(row);
+                            return (
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    {...props.TableRowProps}
+                                >
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                    ))}
+                                </TableRow>
+                            );
+                        })
                     ) : (
                         <TableRow>
                             <TableCell

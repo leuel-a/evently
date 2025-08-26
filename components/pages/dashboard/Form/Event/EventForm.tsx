@@ -1,8 +1,10 @@
+import type {FormHTMLAttributes, ComponentProps} from 'react';
 import {useFormContext} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import lodashGet from 'lodash/get';
 import {CountriesSelectInput} from '@/components/CountriesSelectInput';
-import {AddressAutofillInput, AddressAutofillInputProps} from '@/components/blocks/AddressAutofillInput';
+import {AddressAutofillInput} from '@/components/blocks/AddressAutofillInput';
+import type {AddressAutofillInputProps} from '@/components/blocks/AddressAutofillInput';
 import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {FormDatepicker} from '@/components/blocks/FormDatepicker';
 import {FormLabel} from '@/components/blocks/FormLabel';
@@ -17,15 +19,25 @@ import type {EventSchemaType} from '@/lib/db/schema';
 import {cn} from '@/lib/utils';
 import {EventCategoryInput} from './EventCategoryInput';
 
+export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
+
+export interface EventFormProps extends Omit<DefaultFormProps, 'onSubmit'> {
+    CustomAddressAutofillInputProps?: AddressAutofillInputProps;
+    onSubmit?: SubmitHandler<EventSchemaType>;
+    SubmitButtonProps?: ComponentProps<typeof Button>;
+    defaultValues?: EventSchemaType;
+}
+
 export function EventForm(props: EventFormProps) {
-    const {CustomAddressAutofillInputProps = {}, onSubmit} = props;
+    const formProps = sanitizeProps(props);
     const form = useFormContext<EventSchemaType>();
 
     return (
         <Form {...form}>
             <form
+                onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
                 className="space-y-4"
-                onSubmit={form.handleSubmit(onSubmit)}
+                {...formProps}
             >
                 <FormField
                     control={form.control}
@@ -145,8 +157,8 @@ export function EventForm(props: EventFormProps) {
                             <FormLabel>Address</FormLabel>
                             <FormControl>
                                 <AddressAutofillInput
-                                    InputProps={{...field}}
-                                    {...CustomAddressAutofillInputProps}
+                                    InputProps={{...field, className: 'h-12'}}
+                                    {...props.CustomAddressAutofillInputProps}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -215,6 +227,7 @@ export function EventForm(props: EventFormProps) {
                     <Button
                         type="submit"
                         className="h-12 w-80 cursor-pointer"
+                        {...props.SubmitButtonProps}
                     >
                         Create
                     </Button>
@@ -224,9 +237,7 @@ export function EventForm(props: EventFormProps) {
     );
 }
 
-export interface EventFormProps {
-    CustomAddressAutofillInputProps?: AddressAutofillInputProps;
-    isSubmitting: boolean;
-    onSubmit: SubmitHandler<EventSchemaType>;
-    defaultValues?: EventSchemaType;
-}
+export const sanitizeProps = (props: EventFormProps) => {
+    const {CustomAddressAutofillInputProps, onSubmit, defaultValues, SubmitButtonProps, ...defaultFormProps} = props;
+    return defaultFormProps;
+};
