@@ -10,9 +10,7 @@ import {splitCamelCase} from '@/utils/strings';
 
 function DashboardBreadcrumb() {
     const pathname = usePathname();
-
     const currentPath = getPathnameArray(pathname).splice(1);
-
     const pathList = currentPath.reduce<string[]>((accumlated, currentValue, currentIndex) => {
         if (currentIndex === 0) return [`/${DASHBOARD_PREFIX}/${currentValue}`];
 

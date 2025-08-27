@@ -1,21 +1,11 @@
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
+import {APP_ROUTES} from '@/config/routes';
 import prisma from '@/lib/db/prisma';
+import {formatDate, formatTime} from '@/utils/date';
 
-interface PageProps {
+export interface PageProps {
     params: Promise<{id: string}>;
-}
-
-function formatDate(date: Date) {
-    return new Date(date).toLocaleDateString(undefined, {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'});
-}
-
-function formatTime(hms?: string) {
-    if (!hms) return '';
-    const [h, m] = hms.split(':');
-    const date = new Date();
-    date.setHours(Number(h), Number(m || '0'));
-    return date.toLocaleTimeString(undefined, {hour: 'numeric', minute: '2-digit'});
 }
 
 export default async function Page({params}: PageProps) {
@@ -28,21 +18,8 @@ export default async function Page({params}: PageProps) {
     if (!event) return notFound();
 
     return (
-        <div className="max-w-5xl mx-auto p-6">
+        <div className="max-w-7xl p-6">
             <div className="flex items-start gap-6">
-                <div className="w-40 h-40 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 border">
-                    {event.coverImageUrl ? (
-                        // use simple img to avoid next/image config issues in this snippet
-                        <img
-                            src={event.coverImageUrl}
-                            alt={event.title}
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">No image</div>
-                    )}
-                </div>
-
                 <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
                         <div>
@@ -52,7 +29,7 @@ export default async function Page({params}: PageProps) {
 
                         <div className="text-right space-y-2">
                             <Link
-                                href={`/dashboard/events/${event.id}/edit`}
+                                href={`${APP_ROUTES.dashboard.events.base}/${event.id}/update`}
                                 className="inline-flex items-center gap-2 px-3 py-1.5 border rounded text-sm bg-white hover:bg-slate-50"
                             >
                                 Edit
@@ -77,7 +54,7 @@ export default async function Page({params}: PageProps) {
                             <h3 className="text-sm font-medium text-slate-600">Where</h3>
                             <div className="mt-2 text-sm text-slate-700">
                                 {event.isVirtual ? (
-                                    <div className="italic text-sky-600">Virtual event</div>
+                                    <div className="text-indigo-600">Virtual event</div>
                                 ) : (
                                     <>
                                         <div>{event.address ?? 'Address not provided'}</div>

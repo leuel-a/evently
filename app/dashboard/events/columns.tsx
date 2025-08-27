@@ -15,7 +15,7 @@ export const columns: ColumnDef<Events>[] = [
             <Checkbox
                 checked={table.getIsAllRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all Events"
+                aria-label="Select all events"
             />
         ),
         cell: ({row}) => (
@@ -52,7 +52,11 @@ export const columns: ColumnDef<Events>[] = [
     },
     {accessorKey: 'startTime', header: 'Start Time'},
     {accessorKey: 'endTime', header: 'End Time'},
-    {accessorKey: 'capacity', header: 'Capacity'},
+    {
+        accessorKey: 'capacity',
+        header: () => <div className="text-center">Capacity</div>,
+        cell: ({row}) => <div className="text-center">{row.getValue('capacity')}</div>,
+    },
     {
         accessorKey: 'isVirtual',
         header: 'Type',
