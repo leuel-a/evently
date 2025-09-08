@@ -37,10 +37,7 @@ function DashboardBreadcrumb() {
                     return (
                         <Fragment key={generateUniqueKey()}>
                             <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    className="text-2xl tracking-tight capitalize"
-                                    href={path}
-                                >
+                                <BreadcrumbLink className="text-2xl tracking-tight capitalize" href={path}>
                                     {currentPathname}
                                 </BreadcrumbLink>
                             </BreadcrumbItem>

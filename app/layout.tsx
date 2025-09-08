@@ -28,10 +28,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html
-            lang="en"
-            suppressHydrationWarning
-        >
+        <html lang="en" suppressHydrationWarning>
             <body className={`${poppins.variable} ${kumbhSans.variable} font-kumbh bg-gray-100 antialiased`}>
                 <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>
                     {children}

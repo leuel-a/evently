@@ -21,13 +21,13 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
         choices = response.data;
     } catch (error: any) {
         if (error.response) {
-            console.error('Error response:', {
+            console.log('Error response:', {
                 status: error.response.status,
                 data: error.response.data,
                 headers: error.response.headers,
             });
         } else {
-            console.error('Error setting up request:', error.message);
+            console.log('Error setting up request:', error.message);
         }
     }
     return choices;

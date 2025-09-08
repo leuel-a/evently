@@ -21,11 +21,7 @@ export function UserSignupForm(props: UserSignupFormProps) {
 
     return (
         <Form {...form}>
-            <form
-                {...formProps}
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className="flex w-[50rem] flex-col gap-4 bg-white p-8"
-            >
+            <form {...formProps} onSubmit={form.handleSubmit(handleSubmit)} className="flex w-[50rem] flex-col gap-4 bg-white p-8">
                 <div className="text-start tracking-wide">
                     <h2 className="text-2xl font-semibold">Welcome</h2>
                     <p className="mt-2 text-sm text-gray-500">Signup to Evently</p>
@@ -107,10 +103,7 @@ export function UserSignupForm(props: UserSignupFormProps) {
                         <FormItem className="flex items-center gap-4">
                             <FormLabel className="text-sm font-medium">Are you an organizer?</FormLabel>
                             <FormControl>
-                                <BooleanInput
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
+                                <BooleanInput checked={field.value} onCheckedChange={field.onChange} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -123,30 +116,20 @@ export function UserSignupForm(props: UserSignupFormProps) {
                         render={({field}) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="What is the name of your company?"
-                                    />
+                                    <Input {...field} placeholder="What is the name of your company?" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
                 )}
-                <Button
-                    type="submit"
-                    className="h-12 cursor-pointer rounded text-white transition-colors hover:bg-indigo-500"
-                    {...SubmitButtonProps}
-                >
+                <Button type="submit" className="h-12 cursor-pointer rounded text-white transition-colors hover:bg-indigo-500" {...SubmitButtonProps}>
                     Sign Up
                 </Button>
                 <div className="flex justify-end">
                     <p className="text-sm">
                         Already have an account?{' '}
-                        <Link
-                            className="text-indigo-700"
-                            href={`${APP_ROUTES.auth.login}`}
-                        >
+                        <Link className="text-indigo-700" href={`${APP_ROUTES.auth.login}`}>
                             Login
                         </Link>
                     </p>

@@ -33,11 +33,7 @@ export function Event(props: EventProps) {
                 </div>
                 <div className="flex flex-col gap-4">
                     <Button variant="default">Reserve Your Spot</Button>
-                    <Button
-                        asChild
-                        variant="link"
-                        className="hidden"
-                    >
+                    <Button asChild variant="link" className="hidden">
                         <Link href={APP_ROUTES.index.home}>View Details</Link>
                     </Button>
                 </div>

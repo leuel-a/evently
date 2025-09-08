@@ -24,10 +24,7 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
                     Category section of the dashboard.
                 </FormDescription>
             </div>
-            <Select
-                onValueChange={onChange}
-                defaultValue={value}
-            >
+            <Select onValueChange={onChange} defaultValue={value}>
                 <FormControl>
                     <SelectTrigger className="w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12">
                         <SelectValue placeholder="Select your event category" />
@@ -35,10 +32,7 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
                 </FormControl>
                 <SelectContent>
                     {choices?.map((choice) => (
-                        <SelectItem
-                            key={generateUniqueKey()}
-                            value={choice.id}
-                        >
+                        <SelectItem key={generateUniqueKey()} value={choice.id}>
                             {choice.name}
                         </SelectItem>
                     ))}

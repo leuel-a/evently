@@ -33,10 +33,7 @@ export const columns: ColumnDef<Events>[] = [
         cell: ({row}) => {
             const description: string = row.getValue('description');
             return (
-                <div
-                    className="truncate w-96"
-                    title={description}
-                >
+                <div className="truncate w-96" title={description}>
                     {description}
                 </div>
             );
@@ -69,10 +66,7 @@ export const columns: ColumnDef<Events>[] = [
         cell: ({row}) => {
             const event = row.original;
             return (
-                <Link
-                    href={`${APP_ROUTES.dashboard.events.base}/${event.id}`}
-                    className="font-medium underline text-indigo-600 hover:underline"
-                >
+                <Link href={`${APP_ROUTES.dashboard.events.base}/${event.id}`} className="font-medium underline text-indigo-600 hover:underline">
                     View
                 </Link>
             );

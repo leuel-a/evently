@@ -41,6 +41,7 @@ if (process.env.NODE_ENV === 'development') {
         })
         .catch((error) => {
             console.error(COLORS.RED, `\n❌ Something went wrong while trying to clean the database: ${error?.message}\n`, RESET);
+            console.error(error);
 
             prisma
                 .$disconnect()

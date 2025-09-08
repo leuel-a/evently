@@ -34,11 +34,7 @@ export function EventForm(props: EventFormProps) {
 
     return (
         <Form {...form}>
-            <form
-                onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
-                className="space-y-4"
-                {...formProps}
-            >
+            <form onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined} className="space-y-4" {...formProps}>
                 <FormField
                     control={form.control}
                     name="title"
@@ -46,11 +42,7 @@ export function EventForm(props: EventFormProps) {
                         <FormItem>
                             <FormLabel>Title</FormLabel>
                             <FormControl>
-                                <Input
-                                    {...field}
-                                    className={cn('h-12 rounded border shadow-none')}
-                                    placeholder="Make the title slick 😉"
-                                />
+                                <Input {...field} className={cn('h-12 rounded border shadow-none')} placeholder="Make the title slick 😉" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -84,10 +76,7 @@ export function EventForm(props: EventFormProps) {
                                 <FormDescription>Enable this if your event will be held online (virtual event).</FormDescription>
                             </div>
                             <FormControl>
-                                <BooleanInput
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
+                                <BooleanInput checked={field.value} onCheckedChange={field.onChange} />
                             </FormControl>
                         </FormItem>
                     )}
@@ -100,11 +89,7 @@ export function EventForm(props: EventFormProps) {
                             <FormItem className="w-full xl:w-1/3">
                                 <FormLabel>Date</FormLabel>
                                 <FormControl>
-                                    <FormDatepicker
-                                        source="date"
-                                        selected={field.value}
-                                        onSelect={field.onChange}
-                                    />
+                                    <FormDatepicker source="date" selected={field.value} onSelect={field.onChange} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -142,10 +127,7 @@ export function EventForm(props: EventFormProps) {
                     name="category"
                     render={({field}) => (
                         <ReferenceInput resource={API_ROUTES.eventCategory.base}>
-                            <EventCategoryInput
-                                onChange={field.onChange}
-                                value={field.value}
-                            />
+                            <EventCategoryInput onChange={field.onChange} value={field.value} />
                         </ReferenceInput>
                     )}
                 />
@@ -156,10 +138,7 @@ export function EventForm(props: EventFormProps) {
                         <FormItem>
                             <FormLabel>Address</FormLabel>
                             <FormControl>
-                                <AddressAutofillInput
-                                    InputProps={{...field, className: 'h-12'}}
-                                    {...props.CustomAddressAutofillInputProps}
-                                />
+                                <AddressAutofillInput InputProps={{...field, className: 'h-12'}} {...props.CustomAddressAutofillInputProps} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -173,10 +152,7 @@ export function EventForm(props: EventFormProps) {
                             <FormItem>
                                 <FormLabel>Country</FormLabel>
                                 <FormControl>
-                                    <CountriesSelectInput
-                                        onChange={field.onChange}
-                                        value={field.value ?? ''}
-                                    />
+                                    <CountriesSelectInput onChange={field.onChange} value={field.value ?? ''} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -189,10 +165,7 @@ export function EventForm(props: EventFormProps) {
                             <FormItem>
                                 <FormLabel>City</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        {...field}
-                                        placeholder="Enter the city"
-                                    />
+                                    <Input {...field} placeholder="Enter the city" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -207,11 +180,7 @@ export function EventForm(props: EventFormProps) {
                             <FormItem className="w-full lg:w-1/3">
                                 <FormLabel required={false}>Capacity</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type="number"
-                                        {...field}
-                                        placeholder="What is your expected attendance?"
-                                    />
+                                    <Input type="number" {...field} placeholder="What is your expected attendance?" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -224,11 +193,7 @@ export function EventForm(props: EventFormProps) {
                     )}
                 </div>
                 <div className="mt-10 flex justify-end xl:justify-start">
-                    <Button
-                        type="submit"
-                        className="h-12 w-80 cursor-pointer"
-                        {...props.SubmitButtonProps}
-                    >
+                    <Button type="submit" className="h-12 w-80 cursor-pointer" {...props.SubmitButtonProps}>
                         Create
                     </Button>
                 </div>

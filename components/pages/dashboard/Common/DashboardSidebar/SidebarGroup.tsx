@@ -30,10 +30,7 @@ function AppSidebarGroup(props: AppSidebarGroupProps) {
                             <SidebarMenuItem key={url}>
                                 <SidebarMenuButton>
                                     <item.icon />
-                                    <Link
-                                        key={url}
-                                        href={url}
-                                    >
+                                    <Link key={url} href={url}>
                                         {getLabelForResource(item.name)}
                                     </Link>
                                 </SidebarMenuButton>

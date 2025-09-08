@@ -48,10 +48,7 @@ export default function Page() {
     return (
         <FormProvider {...methods}>
             <div className="flex flex-col bg-white h-screen w-full items-center justify-center">
-                <LoginUserForm
-                    isSubmitting={isSubmitting}
-                    handleSubmit={onSubmitHandler}
-                />
+                <LoginUserForm isSubmitting={isSubmitting} handleSubmit={onSubmitHandler} />
             </div>
         </FormProvider>
     );

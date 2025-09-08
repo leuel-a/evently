@@ -11,12 +11,7 @@ export function AddressAutofillInputComponent(props: AddressAutofillInputProps) 
     const {error, InputProps: inputProps} = props;
     return (
         <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string}>
-            <Input
-                {...inputProps}
-                autoComplete="street-address"
-                className={cn('h-12', error ? 'border-red-500' : '')}
-                placeholder="Enter address"
-            />
+            <Input {...inputProps} autoComplete="street-address" className={cn('h-12', error ? 'border-red-500' : '')} placeholder="Enter address" />
         </AddressAutofill>
     );
 }

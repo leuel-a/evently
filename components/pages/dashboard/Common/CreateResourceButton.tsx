@@ -16,10 +16,7 @@ export function CreateResourceButton() {
 
     return (
         <Button className="h-12">
-            <Link
-                className="text-md"
-                href={createUrl}
-            >
+            <Link className="text-md" href={createUrl}>
                 {buttonLabel}
             </Link>
         </Button>

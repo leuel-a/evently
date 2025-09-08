@@ -13,10 +13,7 @@ export function CountriesSelectInput({onChange, value}: CountriesSelectInputProp
     const {error} = getFieldState('country');
 
     return (
-        <Select
-            onValueChange={onChange}
-            value={value}
-        >
+        <Select onValueChange={onChange} value={value}>
             <SelectTrigger
                 className={cn('w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12', error ? 'border border-red-500' : '')}
             >
@@ -24,10 +21,7 @@ export function CountriesSelectInput({onChange, value}: CountriesSelectInputProp
             </SelectTrigger>
             <SelectContent>
                 {countries.map(({value, label}) => (
-                    <SelectItem
-                        key={value}
-                        value={value}
-                    >
+                    <SelectItem key={value} value={value}>
                         {label}
                     </SelectItem>
                 ))}

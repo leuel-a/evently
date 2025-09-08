@@ -6,30 +6,15 @@ import {CheckIcon, ChevronDownIcon, ChevronUpIcon} from 'lucide-react';
 import {cn} from '@/lib/utils';
 
 function Select({...props}: React.ComponentProps<typeof SelectPrimitive.Root>) {
-    return (
-        <SelectPrimitive.Root
-            data-slot="select"
-            {...props}
-        />
-    );
+    return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
 function SelectGroup({...props}: React.ComponentProps<typeof SelectPrimitive.Group>) {
-    return (
-        <SelectPrimitive.Group
-            data-slot="select-group"
-            {...props}
-        />
-    );
+    return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
 function SelectValue({...props}: React.ComponentProps<typeof SelectPrimitive.Value>) {
-    return (
-        <SelectPrimitive.Value
-            data-slot="select-value"
-            {...props}
-        />
-    );
+    return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
 function SelectTrigger({
@@ -89,13 +74,7 @@ function SelectContent({className, children, position = 'popper', ...props}: Rea
 }
 
 function SelectLabel({className, ...props}: React.ComponentProps<typeof SelectPrimitive.Label>) {
-    return (
-        <SelectPrimitive.Label
-            data-slot="select-label"
-            className={cn('text-muted-foreground px-2 py-1.5 text-xs', className)}
-            {...props}
-        />
-    );
+    return <SelectPrimitive.Label data-slot="select-label" className={cn('text-muted-foreground px-2 py-1.5 text-xs', className)} {...props} />;
 }
 
 function SelectItem({className, children, ...props}: React.ComponentProps<typeof SelectPrimitive.Item>) {

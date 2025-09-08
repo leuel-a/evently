@@ -25,11 +25,7 @@ export function Datepicker(props: DatepickerProps) {
                 </Button>
             </PopoverTrigger>
             <PopoverContent className={cn('w-auto bg-white p-0')}>
-                <Calendar
-                    mode="single"
-                    selected={selected}
-                    onSelect={onSelect}
-                />
+                <Calendar mode="single" selected={selected} onSelect={onSelect} />
             </PopoverContent>
         </Popover>
     );

@@ -10,11 +10,7 @@ export default async function Page() {
 
     return (
         <div className="mx-auto py-10">
-            <div></div>
-            <DataTable
-                columns={columns}
-                data={events}
-            />
+            <DataTable columns={columns} data={events} />
         </div>
     );
 }

@@ -15,22 +15,13 @@ function AppSidebar() {
     return (
         <Sidebar collapsible="icon">
             <SidebarHeader>
-                <Link
-                    href={APP_ROUTES.index.home}
-                    className="text-2xl tracking-tighter"
-                >
+                <Link href={APP_ROUTES.index.home} className="text-2xl tracking-tighter">
                     Evently
                 </Link>
             </SidebarHeader>
             <SidebarContent className={`${state === 'collapsed' ? 'gap-0' : ''}`}>
                 {Object.entries(resourceGroups).map(([groupLabel, resources]) => {
-                    return (
-                        <AppSidebarGroup
-                            key={generateUniqueKey()}
-                            label={groupLabel}
-                            resources={resources}
-                        />
-                    );
+                    return <AppSidebarGroup key={generateUniqueKey()} label={groupLabel} resources={resources} />;
                 })}
             </SidebarContent>
         </Sidebar>

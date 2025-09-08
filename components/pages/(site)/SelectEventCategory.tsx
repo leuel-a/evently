@@ -14,10 +14,7 @@ export function SelectEventCategory() {
                 <SelectItem value="All">All</SelectItem>
                 {eventsCateogry &&
                     eventsCateogry.map((cateogry) => (
-                        <SelectItem
-                            key={cateogry.id}
-                            value={cateogry.id}
-                        >
+                        <SelectItem key={cateogry.id} value={cateogry.id}>
                             {cateogry.name}
                         </SelectItem>
                     ))}

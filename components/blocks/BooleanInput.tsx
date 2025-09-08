@@ -5,12 +5,7 @@ import {cn} from '@/lib/utils';
 export function BooleanInput(props: BooleanInputProps) {
     const {className, ...switchProps} = props;
 
-    return (
-        <Switch
-            className={cn(className)}
-            {...switchProps}
-        />
-    );
+    return <Switch className={cn(className)} {...switchProps} />;
 }
 
 type SwitchProps = ComponentProps<typeof Switch>;

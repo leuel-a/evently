@@ -10,7 +10,8 @@ export type UserSignupSchemaType = z.infer<typeof userSignupSchema>;
 export const userSignupSchema = z
     .object({
         name: z.string({required_error: 'Required'}).min(1, {message: 'Name can not be empty'}),
-        email: z.string().transform((value) => value.toLowerCase()),
+        // email: z.string().transform((value) => value.toLowerCase()),
+        email: z.string({required_error: 'Required'}).email({message: 'Please provide a valid email address'}),
         password: z.string({required_error: 'Required'}).min(1, {message: 'Password can not be an empty string'}),
         confirmPassword: z.string(),
         isOrganizer: z.coerce.boolean().optional(),

@@ -16,8 +16,6 @@ export default async () => {
 
     return {
         ...config,
-        transformIgnorePatterns: [
-            '/node_modules/(?!(nanostores)/)'
-        ]
+        transformIgnorePatterns: ['/node_modules/(?!(nanostores)/)'],
     };
-}
+};

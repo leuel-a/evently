@@ -4,34 +4,34 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id               String    @id
+  id               String    @id @map("_id")
   name             String
   email            String
-  emailVerified    Boolean
+  emailVerified    Boolean   @default(false)
   image            String?
-  createdAt        DateTime
-  updatedAt        DateTime
-  isOrganizer      Boolean
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @default(now()) @updatedAt
+  isOrganizer      Boolean   @default(false)
   organizationName String?
   sessions         Session[]
   accounts         Account[]
-  events           Events[]
+  Events           Events[]
 
   @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   expiresAt DateTime
   token     String
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
   userId    String
@@ -42,7 +42,7 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
+  id                    String    @id @default(auto()) @map("_id") @db.ObjectId
   accountId             String
   providerId            String
   userId                String
@@ -54,25 +54,25 @@ model Account {
   refreshTokenExpiresAt DateTime?
   scope                 String?
   password              String?
-  createdAt             DateTime
-  updatedAt             DateTime
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@map("account")
 }
 
 model Verification {
-  id         String    @id
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   value      String
   expiresAt  DateTime
-  createdAt  DateTime?
-  updatedAt  DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 
   @@map("verification")
 }
 
 model Events {
-  id            String         @id @default(uuid())
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   description   String
   address       String?
@@ -81,26 +81,25 @@ model Events {
   city          String?
   startTime     String
   endTime       String?
-  categoryId    String
-  category      EventsCategory @relation(fields: [categoryId], references: [id])
+  categoryId    String         @db.ObjectId
   coverImageUrl String?
   capacity      Int?
   isVirtual     Boolean        @default(false)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   userId        String
-  user          User           @relation(fields: [userId], references: [id])
+  category      EventsCategory @relation(fields: [categoryId], references: [id])
+  user          User           @relation(fields: [userId], references: [email])
 
   @@map("events")
 }
 
 model EventsCategory {
-  id        String   @id @default(uuid())
-  name      String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Events    Events[]
 
-  @@unique([name])
   @@map("events_category")
 }
