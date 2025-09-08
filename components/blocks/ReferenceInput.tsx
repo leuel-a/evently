@@ -5,9 +5,10 @@ import {makeApiCall} from '@/config/axios';
 import {HTTP_METHODS} from '@/config/routes';
 import {ChoicesProvider} from '@/context/ChoicesContext';
 import {checkIfRelativeLink as _} from '@/utils/functions';
-import logger from '@/utils/logger';
 
 export type TGetChoicesQueryKey = [string, {resource: string}];
+
+// TODO: remove console.logs and use a proper browser logger
 
 export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]> = async (context) => {
     let choices = [];
@@ -20,13 +21,13 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
         choices = response.data;
     } catch (error: any) {
         if (error.response) {
-            logger.error('Error response:', {
+            console.error('Error response:', {
                 status: error.response.status,
                 data: error.response.data,
                 headers: error.response.headers,
             });
         } else {
-            logger.error('Error setting up request:', error.message);
+            console.error('Error setting up request:', error.message);
         }
     }
     return choices;
