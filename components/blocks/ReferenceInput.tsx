@@ -4,32 +4,32 @@ import type {PropsWithChildren} from 'react';
 import {makeApiCall} from '@/config/axios';
 import {HTTP_METHODS} from '@/config/routes';
 import {ChoicesProvider} from '@/context/ChoicesContext';
-import {checkIfRelativeLink} from '@/utils/functions';
+import {checkIfRelativeLink as _} from '@/utils/functions';
+import logger from '@/utils/logger';
 
 export type TGetChoicesQueryKey = [string, {resource: string}];
 
 export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]> = async (context) => {
+    let choices = [];
     const {queryKey} = context;
     const [_, {resource}] = queryKey;
 
-    // TODO: this might seem weird, but later will add check for only valid resources
-    const url = checkIfRelativeLink(resource) ? `/api/${resource}` : `/api/${resource}`;
-
+    const url = `/api/${resource}`;
     try {
-        const response = await makeApiCall({url, method: HTTP_METHODS.GET});
-        return response.data;
+        const response = await makeApiCall<Array<any>>({url, method: HTTP_METHODS.GET});
+        choices = response.data;
     } catch (error: any) {
         if (error.response) {
-            console.error('Error response:', {
+            logger.error('Error response:', {
                 status: error.response.status,
                 data: error.response.data,
                 headers: error.response.headers,
             });
         } else {
-            // TODO: use a proper logger instead of the browser logging module
-            console.error('Error setting up request:', error.message);
+            logger.error('Error setting up request:', error.message);
         }
     }
+    return choices;
 };
 
 export function ReferenceInput(props: ReferenceInputProps) {

@@ -32,7 +32,6 @@ export default function Page() {
             isVirtual: false,
         },
     });
-
     const [submitting, setSubmitting] = useState<boolean>();
     const {error: addressInputError} = form.getFieldState('address');
 

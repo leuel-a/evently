@@ -9,9 +9,9 @@ type MakeApiCallConfig = AxiosRequestConfig & {
     isSecure?: boolean;
 };
 
-export async function makeApiCall(config: MakeApiCallConfig) {
+export async function makeApiCall<T>(config: MakeApiCallConfig) {
     const {isSecure = false, ...requestConfig} = config;
-    return instance.request({...requestConfig});
+    return instance.request<T>({...requestConfig});
 }
 
 export {instance as axios};
