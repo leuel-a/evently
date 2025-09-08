@@ -8,7 +8,8 @@ const logFormat = format.printf(({level, message, timestamp, ...meta}) => {
 const logger = createLogger({
     level: process.env.LOG_LEVEL ?? 'info',
     format: format.combine(format.errors({stack: false}), format.timestamp(), logFormat),
-    transports: [new transports.Console(), new transports.File({filename: 'error.log', level: 'error'})],
+    // TODO: figure out how to do logs to files in client side, because it does not work out of the box
+    // transports: [new transports.Console(), new transports.File({filename: 'error.log', level: 'error'})],
 });
 
 if (process.env.NODE_ENV !== 'production') {
