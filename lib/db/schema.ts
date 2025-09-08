@@ -37,7 +37,7 @@ export const eventsSchema = z
         country: z.string().optional(),
         city: z.string(),
         capacity: z.coerce.number({required_error: 'Capacity is required'}),
-        isVirtual: z.coerce.boolean().optional(),
+        isVirtual: z.preprocess((v) => (v === 'true' ? true : v === 'false' ? false : v), z.boolean()).optional(),
     })
     .refine(
         ({isVirtual, address, country, city}) => {

@@ -24,9 +24,9 @@ const APP_ROUTES = {
 
 type AppRoutes = typeof APP_ROUTES;
 
-const INDEX_BASE_API_ROUTE = '/';
-const EVENTS_BASE_ROUTE = '/events';
-const EVENT_CATEGORIES_BASE_ROUTE = '/eventCategory';
+const INDEX_BASE_API_ROUTE = '/api';
+const EVENTS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/events`;
+const EVENT_CATEGORIES_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventCategory`;
 
 const API_ROUTES = {
     index: INDEX_BASE_API_ROUTE, // this might never be needed

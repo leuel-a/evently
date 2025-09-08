@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
+import {EventsDescription} from '@/components/pages/dashboard/Events/EventsDescription';
 import {APP_ROUTES} from '@/config/routes';
 import prisma from '@/lib/db/prisma';
 import {formatDate, formatTime} from '@/utils/date';
@@ -79,11 +80,7 @@ export default async function Page({params}: PageProps) {
                             </div>
                         </div>
                     </div>
-
-                    <div className="mt-6 rounded border p-6 bg-white">
-                        <h3 className="text-sm font-medium text-slate-600">Description</h3>
-                        <p className="mt-3 text-sm text-slate-700 whitespace-pre-line">{event.description}</p>
-                    </div>
+                    <EventsDescription event={event} />
                 </div>
             </div>
         </div>

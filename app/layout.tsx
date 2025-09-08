@@ -17,6 +17,11 @@ const poppins = localFont({
     variable: '--font-poppins',
 });
 
+const kumbhSans = localFont({
+    src: '../assets/fonts/kumbh_sans/KumbhSans_VariableFont.ttf',
+    variable: '--font-kumbh-sans',
+});
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -27,7 +32,7 @@ export default function RootLayout({
             lang="en"
             suppressHydrationWarning
         >
-            <body className={`${poppins.variable} font-poppins bg-gray-100`}>
+            <body className={`${poppins.variable} ${kumbhSans.variable} font-kumbh bg-gray-100 antialiased`}>
                 <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>
                     {children}
                     <Toaster />

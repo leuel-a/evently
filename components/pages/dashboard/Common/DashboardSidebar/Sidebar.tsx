@@ -1,6 +1,8 @@
 'use client';
 
-import {Sidebar, SidebarContent, useSidebar} from '@/components/ui/sidebar';
+import Link from 'next/link';
+import {Sidebar, SidebarContent, SidebarHeader, useSidebar} from '@/components/ui/sidebar';
+import {APP_ROUTES} from '@/config/routes';
 import {useResourcesContext} from '@/context/ResourcesContext';
 import {getResourceGroups, generateUniqueKey} from '@/utils';
 import {AppSidebarGroup} from './SidebarGroup';
@@ -12,6 +14,14 @@ function AppSidebar() {
 
     return (
         <Sidebar collapsible="icon">
+            <SidebarHeader>
+                <Link
+                    href={APP_ROUTES.index.home}
+                    className="text-2xl tracking-tighter"
+                >
+                    Evently
+                </Link>
+            </SidebarHeader>
             <SidebarContent className={`${state === 'collapsed' ? 'gap-0' : ''}`}>
                 {Object.entries(resourceGroups).map(([groupLabel, resources]) => {
                     return (

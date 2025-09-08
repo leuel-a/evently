@@ -24,7 +24,7 @@ export function UserSignupForm(props: UserSignupFormProps) {
             <form
                 {...formProps}
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className="flex w-[50rem] flex-col gap-6 bg-white p-8"
+                className="flex w-[50rem] flex-col gap-4 bg-white p-8"
             >
                 <div className="text-start tracking-wide">
                     <h2 className="text-2xl font-semibold">Welcome</h2>
