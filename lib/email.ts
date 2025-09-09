@@ -21,7 +21,7 @@ const template = `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify Your Email Address</title>
     <style>
-        :root {
+        html {
             --color-primary: #6366f1;
             --color-white: #ffffff;
             --color-very-dark-gray: #f1f5f9;
