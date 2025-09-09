@@ -27,7 +27,7 @@ model User {
 }
 
 model Session {
-  id        String   @id @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   expiresAt DateTime
   token     String
   createdAt DateTime @default(now())

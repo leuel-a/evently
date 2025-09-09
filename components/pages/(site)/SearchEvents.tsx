@@ -27,7 +27,7 @@ export function SearchEvents(props: SearchEventsProps) {
     }, [debouncedInput]);
 
     return (
-        <div className="w-full md:w-fit">
+        <div className="w-full bg-white md:w-fit">
             <Input
                 type="text"
                 value={input}

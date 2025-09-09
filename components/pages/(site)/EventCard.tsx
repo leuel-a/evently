@@ -12,7 +12,7 @@ export function Event(props: EventProps) {
     const {event} = props;
 
     return (
-        <div className="border border-indigo-200 p-4 py-6 flex flex-col justify-between gap-8">
+        <div className="bg-white border border-indigo-200 p-4 py-6 flex flex-col justify-between gap-8">
             <div className="flex flex-col gap-8">
                 <h3 className="text-xl font-medium tracking-tight">{event.title}</h3>
                 <p className="line-clamp-3">{event.description}</p>

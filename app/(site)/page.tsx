@@ -1,18 +1,26 @@
 import {Event, FiltersEvent} from '@/components/pages/(site)';
 import prisma from '@/lib/db/prisma';
+import {getCategoriesFilterFromSearchParams} from '@/utils';
 
 export default async function Page(props: {
     searchParams?: Promise<{
         q?: string;
+        categories?: string;
     }>;
 }) {
     const searchParams = await props.searchParams;
+    const categoriesFilters = getCategoriesFilterFromSearchParams(searchParams?.categories);
     const events = await prisma.events.findMany({
         where: {
             OR: [
                 {title: {contains: searchParams?.q, mode: 'insensitive'}},
                 {description: {contains: searchParams?.q, mode: 'insensitive'}},
             ],
+            category: {
+                name: {
+                    ...(categoriesFilters.length > 0 && {in: categoriesFilters}),
+                },
+            },
         },
     });
 

@@ -36,3 +36,9 @@ export function generateUniqueKey() {
 export function getPathnameArray(pathname: string) {
     return removeEmptyStringsFromArray(pathname.split('/'));
 }
+
+export function getCategoriesFilterFromSearchParams(
+    categoriesParams: string | undefined,
+): string[] {
+    return JSON.parse(categoriesParams ?? '[]');
+}
