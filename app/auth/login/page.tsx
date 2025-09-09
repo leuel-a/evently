@@ -32,7 +32,9 @@ export default function Page() {
         const {error} = await authClient.signIn.email({email, password});
 
         if (error) {
-            const normalErrorCode = convertEnumStyleStringToNormalString(BASE_ERROR_CODES.EMAIL_NOT_VERIFIED);
+            const normalErrorCode = convertEnumStyleStringToNormalString(
+                BASE_ERROR_CODES.EMAIL_NOT_VERIFIED,
+            );
             if (error.message === normalErrorCode) {
                 setError('root.serverError', {message: error?.message, type: error?.code});
                 return;
@@ -48,7 +50,10 @@ export default function Page() {
     return (
         <FormProvider {...methods}>
             <div className="flex flex-col bg-white h-screen w-full items-center justify-center">
-                <LoginUserForm isSubmitting={isSubmitting} handleSubmit={onSubmitHandler} />
+                <LoginUserForm
+                    isSubmitting={isSubmitting}
+                    handleSubmit={onSubmitHandler}
+                />
             </div>
         </FormProvider>
     );

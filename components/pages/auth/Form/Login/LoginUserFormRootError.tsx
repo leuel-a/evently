@@ -21,7 +21,12 @@ export function LoginUserFormRootError() {
             <div>
                 <FormMessage className="text-sm text-indigo-700">
                     {`${message}`}
-                    <Button variant="link" type="button" className="p-0 font-bold underline ml-2 cursor-pointer" onClick={onVerifiyButtonClick}>
+                    <Button
+                        variant="link"
+                        type="button"
+                        className="p-0 font-bold underline ml-2 cursor-pointer"
+                        onClick={onVerifiyButtonClick}
+                    >
                         verify now
                     </Button>
                 </FormMessage>
@@ -29,5 +34,11 @@ export function LoginUserFormRootError() {
         );
     }
 
-    return <div>{formState.errors?.root && <FormMessage className="text-sm">{message as string}</FormMessage>}</div>;
+    return (
+        <div>
+            {formState.errors?.root && (
+                <FormMessage className="text-sm">{message as string}</FormMessage>
+            )}
+        </div>
+    );
 }

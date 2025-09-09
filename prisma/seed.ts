@@ -77,7 +77,10 @@ async function seedDefaultEventCateogries() {
         try {
             await prisma.eventsCategory.create({data: category});
         } catch (error) {
-            console.error(ANSI_COLORS.BRIGHTRED, `Error creating EventCategory: ${JSON.stringify(error)}${ANSI_RESET}`);
+            console.error(
+                ANSI_COLORS.BRIGHTRED,
+                `Error creating EventCategory: ${JSON.stringify(error)}${ANSI_RESET}`,
+            );
         }
     }
 
@@ -111,7 +114,10 @@ async function seedDefaultEvents() {
                 },
             });
         } catch (error: any) {
-            console.error(ANSI_COLORS.RED, `\nError creating event: ${title} ${error.message}${ANSI_RESET}`);
+            console.error(
+                ANSI_COLORS.RED,
+                `\nError creating event: ${title} ${error.message}${ANSI_RESET}`,
+            );
         }
     }
 }
@@ -124,7 +130,12 @@ async function main() {
         await seedDefaultEvents();
         console.log('\n🎉 Seeding Database Successful', ANSI_RESET, '\n');
     } catch (e: any) {
-        console.log(ANSI_COLORS.BRIGHTRED, '\n❌ Something went wrong while trying to seed the database.', '\n', ANSI_RESET);
+        console.log(
+            ANSI_COLORS.BRIGHTRED,
+            '\n❌ Something went wrong while trying to seed the database.',
+            '\n',
+            ANSI_RESET,
+        );
         console.log('\n', JSON.stringify(e), '\n');
     }
 }

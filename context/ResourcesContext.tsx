@@ -8,7 +8,9 @@ type ResourceContextType = ResourceItems;
 
 const ResourcesContext = createContext<ResourceContextType | undefined>(undefined);
 
-const ResourcesProvider: FC<Readonly<{resources: ResourceItems; children: ReactNode}>> = (props) => {
+const ResourcesProvider: FC<Readonly<{resources: ResourceItems; children: ReactNode}>> = (
+    props,
+) => {
     const {resources, children} = props;
     return <ResourcesContext.Provider value={resources}>{children}</ResourcesContext.Provider>;
 };

@@ -14,7 +14,11 @@ export function DashboardHeader(_: DashboardHeaderProps) {
 
     const isCreatePath = pathname.split('/').includes('create');
     const currentPathIsList = removeEmptyStringsFromArray(pathname.split('/')).length === 2;
-    const shouldShowCreateButton = (resources.find((res) => res.name === resource)?.hasCreate && !isCreatePath && currentPathIsList) ?? false;
+    const shouldShowCreateButton =
+        (resources.find((res) => res.name === resource)?.hasCreate &&
+            !isCreatePath &&
+            currentPathIsList) ??
+        false;
 
     return (
         <div className="flex h-20 w-full items-center justify-between px-2">

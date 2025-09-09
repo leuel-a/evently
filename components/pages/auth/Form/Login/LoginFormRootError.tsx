@@ -8,5 +8,9 @@ export function LoginFormRootError() {
     const message = lodashGet(form.formState?.errors, 'root.serverError.message', '');
     const type = lodashGet(form.formState?.errors, 'root.serverError.type', '');
 
-    return <div>{form.formState.errors?.root && <FormMessage className="text-sm">{}</FormMessage>}</div>;
+    return (
+        <div>
+            {form.formState.errors?.root && <FormMessage className="text-sm">{}</FormMessage>}
+        </div>
+    );
 }

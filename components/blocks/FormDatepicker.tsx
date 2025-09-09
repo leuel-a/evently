@@ -2,7 +2,12 @@ import {Datepicker} from './Datepicker';
 import {type DatepickerProps} from './Datepicker';
 
 export function FormDatepicker(props: FormDatepickerProps) {
-    return <Datepicker {...props} disabled={(date: Date) => date > new Date() || date < new Date('1900-01-01')} />;
+    return (
+        <Datepicker
+            {...props}
+            disabled={(date: Date) => date > new Date() || date < new Date('1900-01-01')}
+        />
+    );
 }
 
 export type FormDatepickerProps = DatepickerProps & {

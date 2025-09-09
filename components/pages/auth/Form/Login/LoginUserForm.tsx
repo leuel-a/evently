@@ -10,7 +10,11 @@ import type {LoginUserSchemaType} from '@/lib/db/schema';
 import {LoginUserFormRootError} from './LoginUserFormRootError';
 
 export function LoginUserForm(props: LoginFormProps) {
-    const {handleSubmit: handleSubmitOverride, isSubmitting = false, SubmitButtonProps = {}} = props;
+    const {
+        handleSubmit: handleSubmitOverride,
+        isSubmitting = false,
+        SubmitButtonProps = {},
+    } = props;
     const form = useFormContext<LoginUserSchemaType>();
 
     const handleSubmit = (values: LoginUserSchemaType) => {
@@ -19,7 +23,10 @@ export function LoginUserForm(props: LoginFormProps) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-[40rem] flex-col gap-4 bg-white p-8">
+            <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="flex w-[40rem] flex-col gap-4 bg-white p-8"
+            >
                 <div className="text-start tracking-wide">
                     <h2 className="text-2xl font-semibold">Login to Evently</h2>
                     <p className="mt-2 text-sm text-gray-500">Welcome back!</p>
@@ -71,7 +78,10 @@ export function LoginUserForm(props: LoginFormProps) {
                 <div className="flex justify-end">
                     <p className="text-sm">
                         Don't have an account?{' '}
-                        <Link className="text-indigo-700" href={`${APP_ROUTES.auth.signup}`}>
+                        <Link
+                            className="text-indigo-700"
+                            href={`${APP_ROUTES.auth.signup}`}
+                        >
                             Signup
                         </Link>
                     </p>

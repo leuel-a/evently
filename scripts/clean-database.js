@@ -40,13 +40,21 @@ if (process.env.NODE_ENV === 'development') {
             prisma.$disconnect();
         })
         .catch((error) => {
-            console.error(COLORS.RED, `\n❌ Something went wrong while trying to clean the database: ${error?.message}\n`, RESET);
+            console.error(
+                COLORS.RED,
+                `\n❌ Something went wrong while trying to clean the database: ${error?.message}\n`,
+                RESET,
+            );
             console.error(error);
 
             prisma
                 .$disconnect()
                 .catch((_) => {
-                    console.error(COLORS.BRIGHTCYAN, `\nℹ️ Unable to close prisma connection. \n`, RESET);
+                    console.error(
+                        COLORS.BRIGHTCYAN,
+                        `\nℹ️ Unable to close prisma connection. \n`,
+                        RESET,
+                    );
                     console.error(COLORS.RED, 'Exiting...\n', RESET);
                 })
                 .finally(() => {

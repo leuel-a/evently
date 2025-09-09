@@ -12,7 +12,12 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
 }
 
-export function DataTable<TData, TValue>({columns, data, customTableRow = undefined, ...props}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    columns,
+    data,
+    customTableRow = undefined,
+    ...props
+}: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
@@ -28,7 +33,12 @@ export function DataTable<TData, TValue>({columns, data, customTableRow = undefi
                             {headerGroup.headers.map((header) => {
                                 return (
                                     <TableHead key={header.id}>
-                                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef.header,
+                                                  header.getContext(),
+                                              )}
                                     </TableHead>
                                 );
                             })}
@@ -40,16 +50,28 @@ export function DataTable<TData, TValue>({columns, data, customTableRow = undefi
                         table.getRowModel().rows.map((row) => {
                             if (customTableRow) return customTableRow(row);
                             return (
-                                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} {...props.TableRowProps}>
+                                <TableRow
+                                    key={row.id}
+                                    data-state={row.getIsSelected() && 'selected'}
+                                    {...props.TableRowProps}
+                                >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                                        <TableCell key={cell.id}>
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )}
+                                        </TableCell>
                                     ))}
                                 </TableRow>
                             );
                         })
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                            <TableCell
+                                colSpan={columns.length}
+                                className="h-24 text-center"
+                            >
                                 No results.
                             </TableCell>
                         </TableRow>

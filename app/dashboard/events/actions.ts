@@ -21,7 +21,11 @@ export async function createEventAction(formData: FormData) {
     }
 
     try {
-        const {success: successParseEvent, data: parsedData, error: zodError} = await eventsSchema.safeParseAsync(values);
+        const {
+            success: successParseEvent,
+            data: parsedData,
+            error: zodError,
+        } = await eventsSchema.safeParseAsync(values);
 
         if (!successParseEvent) {
             const error = ValidationError.convertZodError(zodError);
@@ -29,11 +33,16 @@ export async function createEventAction(formData: FormData) {
             return {success: false, error, data: null};
         }
         const {category, ...eventFields} = parsedData;
-        const newEvent = await prisma.events.create({data: {...eventFields, userId: session.user.id, categoryId: category}});
+        const newEvent = await prisma.events.create({
+            data: {...eventFields, userId: session.user.id, categoryId: category},
+        });
 
         logger.info('Event created successfully');
         return {success: true, data: newEvent, error: null};
     } catch (error) {
-        return {success: false, error: new AppError('INTERNAL_SERVER_ERROR', {message: 'Failed to create event'})};
+        return {
+            success: false,
+            error: new AppError('INTERNAL_SERVER_ERROR', {message: 'Failed to create event'}),
+        };
     }
 }

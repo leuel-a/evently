@@ -9,7 +9,10 @@ export default async function Page(props: {
     const searchParams = await props.searchParams;
     const events = await prisma.events.findMany({
         where: {
-            OR: [{title: {contains: searchParams?.q, mode: 'insensitive'}}, {description: {contains: searchParams?.q, mode: 'insensitive'}}],
+            OR: [
+                {title: {contains: searchParams?.q, mode: 'insensitive'}},
+                {description: {contains: searchParams?.q, mode: 'insensitive'}},
+            ],
         },
     });
 

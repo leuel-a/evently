@@ -10,7 +10,9 @@ export type TGetChoicesQueryKey = [string, {resource: string}];
 
 // TODO: remove console.logs and use a proper browser logger
 
-export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]> = async (context) => {
+export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]> = async (
+    context,
+) => {
     let choices = [];
     const {queryKey} = context;
     const [_, {resource}] = queryKey;

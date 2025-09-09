@@ -26,7 +26,9 @@ export async function createUserAction(formData: FormData): Promise<IActionState
         console.log(JSON.stringify(e));
         if (e instanceof ZodError) {
             const errors = e.flatten().fieldErrors;
-            const validationErrorsWithDetails: ValidationErrorDetails[] = Object.entries(errors).map(([key, value]) => ({path: key, message: value}));
+            const validationErrorsWithDetails: ValidationErrorDetails[] = Object.entries(
+                errors,
+            ).map(([key, value]) => ({path: key, message: value}));
             return {success: false, error: validationErrorsWithDetails};
         }
         const appError = new AppError();
@@ -47,7 +49,9 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
         console.log(JSON.stringify(e));
         if (e instanceof ZodError) {
             const errors = e.flatten().fieldErrors;
-            const validationErrorsWithDetails: ValidationErrorDetails[] = Object.entries(errors).map(([key, value]) => ({path: key, message: value}));
+            const validationErrorsWithDetails: ValidationErrorDetails[] = Object.entries(
+                errors,
+            ).map(([key, value]) => ({path: key, message: value}));
             return {success: false, error: validationErrorsWithDetails};
         }
         const appError = new AppError();
@@ -55,7 +59,10 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
     }
 }
 
-export async function logoutUserAction(_: IActionState, _formData: FormData): Promise<IActionState> {
+export async function logoutUserAction(
+    _: IActionState,
+    _formData: FormData,
+): Promise<IActionState> {
     try {
         const {success} = await auth.api.signOut({headers: await headers()});
         if (success) {

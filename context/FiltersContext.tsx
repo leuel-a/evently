@@ -25,7 +25,11 @@ function FilterProvider({children}: Readonly<FilterProviderProps>) {
     const [filters, setFilters] = useState<FiltersType>({});
 
     // TODO: add slots for normal filters and advanced filters that can be injected when using the provider
-    return <FilterContext.Provider value={{resource, filters, setFilters}}>{children}</FilterContext.Provider>;
+    return (
+        <FilterContext.Provider value={{resource, filters, setFilters}}>
+            {children}
+        </FilterContext.Provider>
+    );
 }
 
 function useFilterContext() {

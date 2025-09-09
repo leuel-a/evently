@@ -51,7 +51,9 @@ export default function Page() {
         <FormProvider {...form}>
             <div className="flex flex-col gap-6 bg-white p-8 pl-4">
                 <div className="mb-4 space-y-1">
-                    <h2 className="text-xl font-semibold tracking-tight text-indigo-700">Create a new event</h2>
+                    <h2 className="text-xl font-semibold tracking-tight text-indigo-700">
+                        Create a new event
+                    </h2>
                     <Separator className="h-1 w-full bg-indigo-400" />
                 </div>
                 <div className="w-full xl:w-3/4">

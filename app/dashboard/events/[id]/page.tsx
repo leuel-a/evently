@@ -24,8 +24,12 @@ export default async function Page({params}: PageProps) {
                 <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
                         <div>
-                            <h1 className="text-2xl font-semibold tracking-tight text-slate-800 capitalize">{event.title}</h1>
-                            <p className="mt-1 text-sm text-slate-500">{event.category?.name ?? 'Uncategorized'}</p>
+                            <h1 className="text-2xl font-semibold tracking-tight text-slate-800 capitalize">
+                                {event.title}
+                            </h1>
+                            <p className="mt-1 text-sm text-slate-500">
+                                {event.category?.name ?? 'Uncategorized'}
+                            </p>
                         </div>
 
                         <div className="text-right space-y-2">
@@ -35,7 +39,9 @@ export default async function Page({params}: PageProps) {
                             >
                                 Edit
                             </Link>
-                            <div className="text-xs text-slate-500">Created {new Date(event.createdAt).toLocaleDateString()}</div>
+                            <div className="text-xs text-slate-500">
+                                Created {new Date(event.createdAt).toLocaleDateString()}
+                            </div>
                         </div>
                     </div>
 
@@ -60,7 +66,9 @@ export default async function Page({params}: PageProps) {
                                     <>
                                         <div>{event.address ?? 'Address not provided'}</div>
                                         <div className="text-sm text-slate-500">
-                                            {event.city ? `${event.city}${event.country ? `, ${event.country}` : ''}` : (event.country ?? '')}
+                                            {event.city
+                                                ? `${event.city}${event.country ? `, ${event.country}` : ''}`
+                                                : (event.country ?? '')}
                                         </div>
                                     </>
                                 )}
@@ -69,7 +77,9 @@ export default async function Page({params}: PageProps) {
 
                         <div className="rounded border p-4 bg-white">
                             <h3 className="text-sm font-medium text-slate-600">Capacity</h3>
-                            <div className="mt-2 text-sm text-slate-700">{event.capacity ?? 'Unlimited'}</div>
+                            <div className="mt-2 text-sm text-slate-700">
+                                {event.capacity ?? 'Unlimited'}
+                            </div>
                         </div>
 
                         <div className="rounded border p-4 bg-white">

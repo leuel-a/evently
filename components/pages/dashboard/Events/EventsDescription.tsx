@@ -30,7 +30,10 @@ export function EventsDescription({event}: EventsDescriptionProps) {
         <div className="mt-6 rounded border p-6 bg-white">
             <div className="w-full flex justify-between items-center">
                 <h3 className="text-sm font-medium text-slate-600">Description</h3>
-                <Button variant="outline" onClick={() => setEditDescription((prev) => !prev)}>
+                <Button
+                    variant="outline"
+                    onClick={() => setEditDescription((prev) => !prev)}
+                >
                     {editDescription ? <X /> : <PenLine />}
                 </Button>
             </div>
@@ -38,7 +41,9 @@ export function EventsDescription({event}: EventsDescriptionProps) {
                 {editDescription ? (
                     <EditEventDescriptionForm event={event} />
                 ) : (
-                    <p className="mt-3 text-sm text-slate-700 whitespace-pre-line">{event.description}</p>
+                    <p className="mt-3 text-sm text-slate-700 whitespace-pre-line">
+                        {event.description}
+                    </p>
                 )}
             </div>
         </div>
@@ -75,7 +80,11 @@ export function EditEventDescriptionForm(props: EditEventDescriptionFormProps) {
                 />
                 <div className="flex gap-4 justify-end">
                     <Button type="submit">Update</Button>
-                    <Button type="button" variant="secondary" className="border border-neutral-300">
+                    <Button
+                        type="button"
+                        variant="secondary"
+                        className="border border-neutral-300"
+                    >
                         Cancel
                     </Button>
                 </div>

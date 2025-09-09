@@ -13,7 +13,10 @@ export const columns: ColumnDef<Events>[] = [
         id: 'select',
         header: ({table}) => (
             <Checkbox
-                checked={table.getIsAllRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
+                checked={
+                    table.getIsAllRowsSelected() ||
+                    (table.getIsSomePageRowsSelected() && 'indeterminate')
+                }
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all events"
             />
@@ -33,7 +36,10 @@ export const columns: ColumnDef<Events>[] = [
         cell: ({row}) => {
             const description: string = row.getValue('description');
             return (
-                <div className="truncate w-96" title={description}>
+                <div
+                    className="truncate w-96"
+                    title={description}
+                >
                     {description}
                 </div>
             );
@@ -58,7 +64,9 @@ export const columns: ColumnDef<Events>[] = [
         accessorKey: 'isVirtual',
         header: 'Type',
         cell: ({row}) => (
-            <Badge variant={row.getValue('isVirtual') ? 'outline' : 'default'}>{row.getValue('isVirtual') ? 'Virtual' : 'In-Person'}</Badge>
+            <Badge variant={row.getValue('isVirtual') ? 'outline' : 'default'}>
+                {row.getValue('isVirtual') ? 'Virtual' : 'In-Person'}
+            </Badge>
         ),
     },
     {
@@ -66,7 +74,10 @@ export const columns: ColumnDef<Events>[] = [
         cell: ({row}) => {
             const event = row.original;
             return (
-                <Link href={`${APP_ROUTES.dashboard.events.base}/${event.id}`} className="font-medium underline text-indigo-600 hover:underline">
+                <Link
+                    href={`${APP_ROUTES.dashboard.events.base}/${event.id}`}
+                    className="font-medium underline text-indigo-600 hover:underline"
+                >
                     View
                 </Link>
             );

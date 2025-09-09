@@ -27,11 +27,19 @@ export function HeaderUserAvatarPopover() {
                 </Avatar>
             </PopoverTrigger>
             <PopoverContent className="w-fit p-2 rounded-xs flex flex-col gap-2">
-                <Button asChild variant="link" className="text-right">
+                <Button
+                    asChild
+                    variant="link"
+                    className="text-right"
+                >
                     <Link href={APP_ROUTES.dashboard.events.base}>Go to Dashboard</Link>
                 </Button>
                 <form action={formAction}>
-                    <Button type="submit" className="w-full shadow-none" disabled={pending}>
+                    <Button
+                        type="submit"
+                        className="w-full shadow-none"
+                        disabled={pending}
+                    >
                         {pending ? 'Signing you out...' : 'Sign Out'}
                     </Button>
                 </form>

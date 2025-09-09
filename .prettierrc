@@ -4,8 +4,15 @@
     "trailingComma": "all",
     "bracketSpacing": false,
     "arrowParens": "always",
-    "printWidth": 150,
+    "printWidth": 100,
     "singleAttributePerLine": true,
-    "importOrder": ["^react", "^[a-zA-Z]", "^@[a-z]+(-[a-z]+)*$", "@hookform/resolvers*", "^@/[a-z]+(-[a-z]+)*", "^[./]"],
+    "importOrder": [
+        "^react",
+        "^[a-zA-Z]",
+        "^@[a-z]+(-[a-z]+)*$",
+        "@hookform/resolvers*",
+        "^@/[a-z]+(-[a-z]+)*",
+        "^[./]"
+    ],
     "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"]
 }

@@ -42,8 +42,18 @@ const template = `
 </html>
 `;
 
-export async function sendVerificationLinkEmail({email, name, verificationLink}: {email: string; name: string; verificationLink: string}) {
-    const html = template.replace(/{{\s*name\s*}}/g, name).replace(/{{\s*verificationLink\s*}}/g, verificationLink);
+export async function sendVerificationLinkEmail({
+    email,
+    name,
+    verificationLink,
+}: {
+    email: string;
+    name: string;
+    verificationLink: string;
+}) {
+    const html = template
+        .replace(/{{\s*name\s*}}/g, name)
+        .replace(/{{\s*verificationLink\s*}}/g, verificationLink);
     const mailOptions: SendMailOptions = {
         from: process.env.NODE,
         to: email,

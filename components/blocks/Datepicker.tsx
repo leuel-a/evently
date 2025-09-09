@@ -18,14 +18,20 @@ export function Datepicker(props: DatepickerProps) {
                 <Button
                     variant={buttonVariant || 'outline'}
                     data-empty={!selected}
-                    className={cn('h-12 data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal')}
+                    className={cn(
+                        'h-12 data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal',
+                    )}
                 >
                     <CalendarIcon />
                     {selected ? format(selected, 'PPP') : <span>Pick a selected</span>}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className={cn('w-auto bg-white p-0')}>
-                <Calendar mode="single" selected={selected} onSelect={onSelect} />
+                <Calendar
+                    mode="single"
+                    selected={selected}
+                    onSelect={onSelect}
+                />
             </PopoverContent>
         </Popover>
     );
