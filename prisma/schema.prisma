@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id               String    @id @map("_id")
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
   name             String
   email            String
   emailVerified    Boolean   @default(false)
@@ -27,14 +27,14 @@ model User {
 }
 
 model Session {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @map("_id") @db.ObjectId
   expiresAt DateTime
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId    String
+  userId    String   @db.ObjectId
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([token])
@@ -45,7 +45,7 @@ model Account {
   id                    String    @id @default(auto()) @map("_id") @db.ObjectId
   accountId             String
   providerId            String
-  userId                String
+  userId                String    @db.ObjectId
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
@@ -87,9 +87,9 @@ model Events {
   isVirtual     Boolean        @default(false)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  userId        String
+  userId        String         @db.ObjectId
   category      EventsCategory @relation(fields: [categoryId], references: [id])
-  user          User           @relation(fields: [userId], references: [email])
+  user          User           @relation(fields: [userId], references: [id])
 
   @@map("events")
 }

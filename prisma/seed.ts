@@ -105,7 +105,7 @@ async function seedDefaultEvents() {
                     isVirtual: true,
                     categoryId: category.id,
                     date: new Date(),
-                    userId: user.email,
+                    userId: user.id,
                     startTime: '11:30 AM',
                     endTime: '9:00 PM',
                 },
