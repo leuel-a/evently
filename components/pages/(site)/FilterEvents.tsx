@@ -4,9 +4,9 @@ import {useState} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
 import {SelectEventCategory} from '@/components/pages/(site)';
 import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
 import {useIsMobile} from '@/hooks/use-mobile';
 import {cn} from '@/lib/utils';
+import {SearchEvents} from './SearchEvents';
 
 export function FiltersEvent() {
     const isMobile = useIsMobile();
@@ -14,11 +14,13 @@ export function FiltersEvent() {
 
     return (
         <div className="flex flex-col gap-1 md:gap-0 md:flex-row justify-between">
-            <div className="w-full md:w-fit">
-                <Input placeholder="Search for your events" className="w-full md:w-96 h-12" />
-            </div>
+            <SearchEvents />
             <div className="relative md:hidden my-8 mt-4">
-                <Button variant="secondary" onClick={() => setShowFilter((prev) => !prev)} className="absolute right-0">
+                <Button
+                    variant="secondary"
+                    onClick={() => setShowFilter((prev) => !prev)}
+                    className="absolute right-0"
+                >
                     {showFilter ? <ChevronUp /> : <ChevronDown />}
                 </Button>
             </div>
