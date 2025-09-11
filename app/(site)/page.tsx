@@ -1,28 +1,20 @@
 import {Event, FiltersEvent} from '@/components/pages/(site)';
-import prisma from '@/lib/db/prisma';
-import {getCategoriesFilterFromSearchParams} from '@/utils';
+import {getEvents} from './actions';
 
-export default async function Page(props: {
+export interface PageProps {
     searchParams?: Promise<{
         q?: string;
         categories?: string;
     }>;
-}) {
-    const searchParams = await props.searchParams;
-    const categoriesFilters = getCategoriesFilterFromSearchParams(searchParams?.categories);
-    const events = await prisma.events.findMany({
-        where: {
-            OR: [
-                {title: {contains: searchParams?.q, mode: 'insensitive'}},
-                {description: {contains: searchParams?.q, mode: 'insensitive'}},
-            ],
-            category: {
-                name: {
-                    ...(categoriesFilters.length > 0 && {in: categoriesFilters}),
-                },
-            },
-        },
-    });
+}
+
+export default async function Page(props: PageProps) {
+    const params = await props.searchParams;
+    const {success, data: events} = await getEvents(params);
+
+    if (!success || !events) {
+        return <div>Whoops, something went wrong. Please refetch the page.</div>;
+    }
 
     return (
         <div className="w-5/6 md:w-4/6 mx-auto">

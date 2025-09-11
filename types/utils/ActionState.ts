@@ -1,7 +1,7 @@
 import {AppError, ValidationErrorDetails} from '@/lib/error';
 
-export type IActionState = {
-    data?: any;
+export type IActionState<T = any> = {
+    data?: T;
     success?: boolean | undefined;
     error?: ValidationErrorDetails[] | AppError | null;
 };
