@@ -4,7 +4,7 @@ import {HeaderActionList} from './HeaderActionList';
 
 export function Header() {
     return (
-        <header className="h-20 w-full bg-indigo-500 text-white">
+        <header className="h-16 w-full bg-indigo-500 text-white">
             <div className="mx-auto flex h-full w-5/6 items-center justify-between">
                 <div>
                     <h1 className="cursor-pointer text-2xl select-none">

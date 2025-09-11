@@ -1,3 +1,4 @@
+import {Footer} from '@/components/pages/common/Footer';
 import {Header} from '@/components/pages/common/Header';
 
 export default function HeaderLayout({
@@ -6,9 +7,10 @@ export default function HeaderLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col gap-8 w-full">
             <Header />
-            {children}
+            <div className="flex-1">{children}</div>
+            <Footer />
         </div>
     );
 }

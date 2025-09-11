@@ -15,11 +15,11 @@ export function FiltersEvent() {
     return (
         <div className="flex flex-col gap-1 md:gap-0 md:flex-row justify-between">
             <SearchEvents />
-            <div className="relative md:hidden my-8 mt-4">
+            <div className="relative md:hidden py-8 pt-4">
                 <Button
                     variant="secondary"
                     onClick={() => setShowFilter((prev) => !prev)}
-                    className="absolute right-0"
+                    className="absolute right-0 bg-white md:bg-transparent"
                 >
                     {showFilter ? <ChevronUp /> : <ChevronDown />}
                 </Button>
