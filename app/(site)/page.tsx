@@ -1,4 +1,4 @@
-import {Event, FiltersEvent} from '@/components/pages/(site)';
+import {EventCard, FiltersEvent} from '@/components/pages/(site)';
 import {getEvents} from './actions';
 
 export interface PageProps {
@@ -22,7 +22,7 @@ export default async function Page(props: PageProps) {
                 <FiltersEvent />
                 <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
                     {events.map((event) => (
-                        <Event
+                        <EventCard
                             key={event.id}
                             event={event}
                         />

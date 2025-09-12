@@ -1,3 +1,3 @@
 export function Footer() {
-    return <footer className="h-56 bg-indigo-500"></footer>;
+    return <footer className="h-40 bg-indigo-500"></footer>;
 }

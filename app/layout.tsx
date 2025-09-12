@@ -35,7 +35,7 @@ export default function RootLayout({
             <body
                 className={`${poppins.variable} ${kumbhSans.variable} font-kumbh bg-gray-100 antialiased`}
             >
-                <ComposeProviders components={[SidebarProvider, QueryClientProvider, AuthProvider]}>
+                <ComposeProviders components={[SidebarProvider, QueryClientProvider]}>
                     {children}
                     <Toaster />
                 </ComposeProviders>

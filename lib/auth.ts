@@ -7,10 +7,12 @@ import {sendVerificationLinkEmail} from '@/lib/email';
 export type Session = typeof auth.$Infer.Session & {};
 
 export const auth = betterAuth({
-    database: prismaAdapter(prisma, {provider: 'mongodb'}),
+    database: prismaAdapter(prisma, {
+        provider: 'mongodb',
+        debugLogs: process.env.NODE_ENV === 'development',
+    }),
     advanced: {database: {generateId: false}},
     session: {
-        storeSessionInDatabase: true,
         cookieCache: {enabled: true},
     },
     emailVerification: {

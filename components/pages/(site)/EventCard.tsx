@@ -8,9 +8,8 @@ interface EventProps {
     event: Events;
 }
 
-export function Event(props: EventProps) {
+export function EventCard(props: EventProps) {
     const {event} = props;
-    console.log({reservationLink: `${APP_ROUTES.events}/${event.id}`});
 
     return (
         <div className="bg-white border border-indigo-200 p-4 py-6 flex flex-col justify-between gap-8">
