@@ -1,12 +1,13 @@
-import {headers} from 'next/headers';
 import {DataTable} from '@/components/blocks/DataTable';
-import {auth} from '@/lib/auth';
-import prisma from '@/lib/db/prisma';
+import {getUserEvents} from './actions';
 import {columns} from './columns';
 
 export default async function Page() {
-    const session = await auth.api.getSession({headers: await headers()});
-    const events = await prisma.events.findMany({where: {userId: session?.user.id}});
+    const {success, data: events} = await getUserEvents();
+
+    if (!success) {
+        return <div>Whoops, fetching events failed!</div>;
+    }
 
     return (
         <div className="mx-auto py-10">

@@ -7,6 +7,7 @@ import prisma from '@/lib/db/prisma';
 import {eventsSchema} from '@/lib/db/schema';
 import {AppError} from '@/lib/error';
 import {ValidationError} from '@/lib/error';
+import {IActionState} from '@/types/utils/ActionState';
 import {convertFormDataToObject} from '@/utils/functions';
 import logger from '@/utils/logger';
 
@@ -44,5 +45,17 @@ export async function createEventAction(formData: FormData) {
             success: false,
             error: new AppError('INTERNAL_SERVER_ERROR', {message: 'Failed to create event'}),
         };
+    }
+}
+
+export async function getUserEvents(): Promise<IActionState> {
+    try {
+        const session = await auth.api.getSession({headers: await headers()});
+        const events = await prisma.events.findMany({where: {userId: session?.user.id}});
+        return {success: true, data: events};
+    } catch (error: any) {
+        console.log(error);
+        const appError = new AppError();
+        return {success: false, error: appError};
     }
 }
