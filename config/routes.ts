@@ -1,11 +1,11 @@
-const INDEX_BASE_ROUTE = '/';
+const INDEX_BASE_ROUTE = '';
 const DASHBOARD_BASE_ROUTE = '/dashboard';
 const AUTH_BASE_ROUTE = '/auth';
 
 const APP_ROUTES = {
-    index: {
-        base: INDEX_BASE_ROUTE,
-        home: INDEX_BASE_ROUTE,
+    base: INDEX_BASE_ROUTE,
+    events: {
+        base: `${INDEX_BASE_ROUTE}/events`,
     },
     auth: {
         base: AUTH_BASE_ROUTE,

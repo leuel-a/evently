@@ -7,7 +7,7 @@ export default async function DashboardLayout({children}: Readonly<{children: Re
     const session = await auth.api.getSession({headers: await headers()});
 
     if (session && session.user) {
-        return redirect(APP_ROUTES.index.home);
+        return redirect(APP_ROUTES.base);
     }
 
     return <> {children} </>;

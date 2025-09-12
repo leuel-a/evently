@@ -8,7 +8,7 @@ export function Header() {
             <div className="mx-auto flex h-full w-5/6 items-center justify-between">
                 <div>
                     <h1 className="cursor-pointer text-2xl select-none">
-                        <Link href={APP_ROUTES.index.home}>Evently</Link>
+                        <Link href={APP_ROUTES.base}>Evently</Link>
                     </h1>
                 </div>
                 <HeaderActionList />

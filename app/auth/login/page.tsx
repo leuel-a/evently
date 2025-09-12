@@ -42,7 +42,7 @@ export default function Page() {
             setError('root.serverError', {message: error?.message, type: error?.code});
             setIsSubmitting(false);
         } else {
-            router.push(APP_ROUTES.index.home);
+            router.push(APP_ROUTES.base);
             setIsSubmitting(false);
         }
     };

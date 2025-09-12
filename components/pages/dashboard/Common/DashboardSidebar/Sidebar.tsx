@@ -16,7 +16,7 @@ function AppSidebar() {
         <Sidebar collapsible="icon">
             <SidebarHeader>
                 <Link
-                    href={APP_ROUTES.index.home}
+                    href={APP_ROUTES.base}
                     className="text-2xl tracking-tighter"
                 >
                     Evently

@@ -10,6 +10,7 @@ interface EventProps {
 
 export function Event(props: EventProps) {
     const {event} = props;
+    console.log({reservationLink: `${APP_ROUTES.events}/${event.id}`});
 
     return (
         <div className="bg-white border border-indigo-200 p-4 py-6 flex flex-col justify-between gap-8">
@@ -32,13 +33,20 @@ export function Event(props: EventProps) {
                     )}
                 </div>
                 <div className="flex flex-col gap-4">
-                    <Button variant="default">Reserve Your Spot</Button>
+                    <Button
+                        variant="default"
+                        asChild
+                    >
+                        <Link href={`${APP_ROUTES.events.base}/${event.id}`}>
+                            Reserve Your Spot
+                        </Link>
+                    </Button>
                     <Button
                         asChild
                         variant="link"
                         className="hidden"
                     >
-                        <Link href={APP_ROUTES.index.home}>View Details</Link>
+                        <Link href={`/${APP_ROUTES.events.base}/${event.id}`}>View Details</Link>
                     </Button>
                 </div>
             </div>

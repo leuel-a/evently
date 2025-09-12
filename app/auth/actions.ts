@@ -42,7 +42,7 @@ export async function loginUserAction(formData: FormData): Promise<IActionState>
         const parsedData = await loginUserSchema.parseAsync(formValues);
         const {email, password} = parsedData;
         const data = await auth.api.signInEmail({
-            body: {email, password, callbackURL: APP_ROUTES.index.home},
+            body: {email, password, callbackURL: APP_ROUTES.base},
         });
         return {success: true, error: null, data};
     } catch (e: any) {
@@ -67,7 +67,7 @@ export async function logoutUserAction(
         const {success} = await auth.api.signOut({headers: await headers()});
         if (success) {
             logger.info('User Successfully Logged Out');
-            revalidatePath(APP_ROUTES.index.home);
+            revalidatePath(APP_ROUTES.base);
             return {success: true};
         }
 

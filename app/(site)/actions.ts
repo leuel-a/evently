@@ -35,3 +35,15 @@ export async function getEvents(params: GetEvensFunctionProps): Promise<IActionS
         return {success: false, error: appError};
     }
 }
+
+export async function getEventById(id: string): Promise<IActionState<Events | null>> {
+    try {
+        const event = await prisma.events.findUnique({where: {id}});
+        return {success: true, data: event};
+    } catch (error: any) {
+        const appError = new AppError('INTERNAL_SERVER_ERROR', {
+            message: 'Something went wrong while trying to get the event',
+        });
+        return {success: false, error: appError};
+    }
+}
