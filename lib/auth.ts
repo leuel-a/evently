@@ -9,7 +9,7 @@ export type Session = typeof auth.$Infer.Session & {};
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: 'mongodb',
-        debugLogs: process.env.NODE_ENV === 'development',
+        debugLogs: true,
     }),
     advanced: {database: {generateId: false}},
     emailVerification: {
