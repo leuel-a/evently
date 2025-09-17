@@ -83,6 +83,8 @@ model Events {
   endTime       String?
   categoryId    String         @db.ObjectId
   coverImageUrl String?
+  isFree        Boolean        @default(false)
+  price         Int
   capacity      Int?
   isVirtual     Boolean        @default(false)
   createdAt     DateTime       @default(now())

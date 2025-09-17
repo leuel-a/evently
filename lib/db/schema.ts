@@ -37,21 +37,23 @@ export type EventSchemaType = z.infer<typeof eventsSchema>;
 export const eventsSchema = z
     .object({
         title: z
-            .string({required_error: 'Title is required'})
+            .string({required_error: 'Required'})
             .min(5, {message: 'Title must be a min of 50 characters'}),
         description: z
-            .string({required_error: 'Description is required'})
+            .string({required_error: 'Required'})
             .min(10, {message: 'Description can not be less than 200 characters'}),
         date: z.coerce.date(),
-        startTime: z.string({required_error: 'Start Time is required'}).min(1),
+        startTime: z.string({required_error: 'Required'}).min(1),
         endTime: z.string().optional(),
         category: z
-            .string({required_error: 'Category is required'})
+            .string({required_error: 'Required'})
             .min(1, {message: 'Category can not be empty'}),
         address: z.string().optional(),
         country: z.string().optional(),
         city: z.string(),
-        capacity: z.coerce.number({required_error: 'Capacity is required'}),
+        capacity: z.coerce.number({required_error: 'Required'}),
+        price: z.coerce.number({required_error: 'Required'}),
+        isFree: z.boolean().default(false),
         isVirtual: z
             .preprocess((v) => (v === 'true' ? true : v === 'false' ? false : v), z.boolean())
             .optional(),

@@ -1,8 +1,5 @@
-import {format} from 'date-fns';
-import {MapPin, Calendar} from 'lucide-react';
-import {Events} from '@/app/generated';
-import {Button} from '@/components/ui/button';
-import {Separator} from '@/components/ui/separator';
+import {EventDescriptionCard} from '@/components/pages/(site)';
+import {ReserveYourSpotButton} from '@/components/pages/(site)';
 import {getEventById} from '../../actions';
 
 interface PageProps {
@@ -18,39 +15,22 @@ export default async function Page(props: PageProps) {
     }
 
     return (
-        <div className="w-5/6 md:w-4/6 mx-auto">
-            <div className="flex flex-col gap-8">
-                <h1 className="text-2xl font-medium tracking-tight">{event.title}</h1>
-                <div className=" space-y-6">
-                    <div>
-                        <h2 className="text-sm">Description</h2>
-                        <Separator className="my-2 mb-4" />
-                        <p className="text-justify">{event.description}</p>
+        <div className="w-5/6 md:w-4/6 flex flex-col xl:flex-row gap-10 items-start mx-auto">
+            <EventDescriptionCard event={event} />
+            <div className="w-full xl:max-w-md mx-auto bg-white shadow-lg rounded p-6 space-y-4">
+                <h2 className="text-xl font-semibold">Reserve Your Spot</h2>
+                <div className="space-y-2">
+                    <div className="flex justify-between">
+                        <span>Event Ticket</span>
+                        <span>$20</span>
                     </div>
-                    <Separator />
-                    <div className="space-y-2">
-                        <div className="flex gap-2 items-center">
-                            <MapPin className="w-4 aspect-square" />
-                            <span>{getEventAddress(event)}</span>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                            <Calendar className="w-4 aspect-square" />
-                            <span>{getEventDate(event.date)}</span>
-                        </div>
+                    <div className="flex justify-between font-semibold">
+                        <span>Total</span>
+                        <span>$20</span>
                     </div>
                 </div>
-                <div className="flex justify-end">
-                    <Button className="h-12">Reserve Your Spot</Button>
-                </div>
+                <ReserveYourSpotButton />
             </div>
         </div>
     );
-}
-
-function getEventDate(date: Date) {
-    return format(new Date(date), 'MMMM dd, yyyy');
-}
-
-function getEventAddress(event: Events) {
-    return event.isVirtual ? 'Remote' : event.address;
 }

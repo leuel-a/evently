@@ -12,9 +12,6 @@ export const auth = betterAuth({
         debugLogs: process.env.NODE_ENV === 'development',
     }),
     advanced: {database: {generateId: false}},
-    session: {
-        cookieCache: {enabled: true},
-    },
     emailVerification: {
         sendVerificationEmail: async ({user, url}) => {
             await sendVerificationLinkEmail({

@@ -3,7 +3,7 @@ const DASHBOARD_BASE_ROUTE = '/dashboard';
 const AUTH_BASE_ROUTE = '/auth';
 
 const APP_ROUTES = {
-    base: INDEX_BASE_ROUTE,
+    base: `/${INDEX_BASE_ROUTE}`,
     events: {
         base: `${INDEX_BASE_ROUTE}/events`,
     },

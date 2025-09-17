@@ -16,7 +16,7 @@ import {createEventAction} from '../actions';
 export default function Page() {
     const router = useRouter();
     const form = useForm<EventSchemaType>({
-        // For some reason zodResolver can not understand the type from zod.preprocess()
+        // INFO: for some reason zodresolver can not understand the type from zod.preprocess()
         // @ts-ignore
         resolver: zodResolver(eventsSchema),
         defaultValues: {

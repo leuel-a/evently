@@ -7,6 +7,8 @@ import {removeEmptyStringsFromArray} from '@/utils/functions';
 import {CreateResourceButton} from './CreateResourceButton';
 import {DashboardBreadcrumb} from './DashboardBreadcrumb';
 
+export interface DashboardHeaderProps {}
+
 export function DashboardHeader(_: DashboardHeaderProps) {
     const pathname = usePathname();
     const resource = useResourceContext();
@@ -27,5 +29,3 @@ export function DashboardHeader(_: DashboardHeaderProps) {
         </div>
     );
 }
-
-export interface DashboardHeaderProps {}

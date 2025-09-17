@@ -3,7 +3,6 @@ import localFont from 'next/font/local';
 import ComposeProviders from '@/components/ComposeProviders';
 import {SidebarProvider} from '@/components/ui/sidebar';
 import {Toaster} from '@/components/ui/sonner';
-import {AuthProvider} from '@/context/AuthContext';
 import {QueryClientProvider} from '@/context/QueryClientContext';
 import './globals.css';
 
@@ -22,7 +21,7 @@ const kumbhSans = localFont({
     variable: '--font-kumbh-sans',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
