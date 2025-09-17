@@ -206,7 +206,9 @@ async function seedDefaultEventCateogries() {
 
     for (const category of defaultCategories) {
         try {
-            const alreadyCreated = prisma.eventsCategory.findUnique({where: {name: category.name}});
+            const alreadyCreated = await prisma.eventsCategory.findFirst({
+                where: {name: category.name},
+            });
             if (!alreadyCreated) {
                 await prisma.eventsCategory.create({data: category});
             }
@@ -228,11 +230,25 @@ async function seedDefaultEvents() {
     console.log(ANSI_COLORS.BRIGHTGREEN, `\nCreating Default Events...\n${ANSI_RESET}`);
 
     const user = await prisma.user.findFirst({where: {email: DEFAULT_USER_EMAIL}});
-    if (!user) return;
+    if (!user) {
+        console.log(
+            ANSI_COLORS.RED,
+            `\n User with ${DEFAULT_USER_EMAIL} email not found.\n`,
+            ANSI_RESET,
+        );
+        return;
+    }
 
     for (const {description, category: categoryName, title, price, isFree} of DEFAULT_EVENTS) {
         const category = await prisma.eventsCategory.findFirst({where: {name: categoryName}});
-        if (!category) continue;
+        if (!category) {
+            console.log(
+                ANSI_COLORS.RED,
+                `\n Category with ${categoryName} not found.\n`,
+                ANSI_RESET,
+            );
+            continue;
+        }
 
         try {
             await prisma.events.create({

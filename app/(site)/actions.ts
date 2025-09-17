@@ -10,6 +10,23 @@ import {getCategoriesFilterFromSearchParams} from '@/utils';
 
 type GetEvensFunctionProps = Awaited<PageProps['searchParams']>;
 
+function buildEventsWhere(params: Awaited<PageProps['searchParams']>) {
+    const categoriesFilters = getCategoriesFilterFromSearchParams(params?.categories);
+    return {
+        ...(params?.q && {
+            OR: [
+                {title: {contains: params?.q, mode: Prisma.QueryMode.insensitive}},
+                {description: {contains: params?.q, mode: Prisma.QueryMode.insensitive}},
+            ],
+        }),
+        ...(categoriesFilters.length > 0 && {
+            category: {
+                name: {in: categoriesFilters},
+            },
+        }),
+    };
+}
+
 export async function getEvents(
     params: GetEvensFunctionProps,
 ): Promise<IActionState<PaginatedData<Events[]>>> {
@@ -17,30 +34,13 @@ export async function getEvents(
         const page = parseInt(params?.page ?? '1');
         const limit = parseInt(params?.limit ?? '6');
 
-        const categoriesFilters = getCategoriesFilterFromSearchParams(params?.categories);
+        const whereClause = buildEventsWhere(params);
         const [total, events] = await Promise.all([
-            await prisma.events.count(),
+            await prisma.events.count({where: whereClause}),
             await prisma.events.findMany({
                 skip: (page - 1) * limit,
                 take: limit,
-                where: {
-                    ...(params?.q && {
-                        OR: [
-                            {title: {contains: params?.q, mode: Prisma.QueryMode.insensitive}},
-                            {
-                                description: {
-                                    contains: params?.q,
-                                    mode: Prisma.QueryMode.insensitive,
-                                },
-                            },
-                        ],
-                    }),
-                    category: {
-                        name: {
-                            ...(categoriesFilters.length > 0 && {in: categoriesFilters}),
-                        },
-                    },
-                },
+                where: whereClause,
             }),
         ]);
         return {success: true, data: {data: events, total}};
