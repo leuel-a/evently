@@ -25,6 +25,7 @@ export function SelectEventCategory() {
 
     useEffect(() => {
         const newParams = new URLSearchParams(params.toString());
+        newParams.set('page', '1');
         if (selected === 'All') {
             newParams.delete('categories');
         } else {
