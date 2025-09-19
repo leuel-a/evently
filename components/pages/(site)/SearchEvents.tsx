@@ -19,7 +19,7 @@ export function SearchEvents(props: SearchEventsProps) {
     const handleSearch = (value: string) => {
         const params = new URLSearchParams();
         params.append('q', value);
-        router.replace(`${APP_ROUTES.base}?${params.toString()}`);
+        router.replace(`${APP_ROUTES.events.base}?${params.toString()}`);
     };
 
     useEffect(() => {

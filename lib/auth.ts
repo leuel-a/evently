@@ -7,6 +7,7 @@ import {sendVerificationLinkEmail} from '@/lib/email';
 export type Session = typeof auth.$Infer.Session & {};
 
 export const auth = betterAuth({
+    trustedOrigins: ['http://localhost:3000'],
     database: prismaAdapter(prisma, {
         provider: 'mongodb',
         debugLogs: true,

@@ -38,7 +38,7 @@ export function SelectEventCategory() {
                 newParams.set('categories', JSON.stringify([...filters, selected]));
             }
         }
-        router.replace(`${APP_ROUTES.base}?${newParams.toString()}`);
+        router.replace(`${APP_ROUTES.events.base}?${newParams.toString()}`);
     }, [selected]);
 
     return (

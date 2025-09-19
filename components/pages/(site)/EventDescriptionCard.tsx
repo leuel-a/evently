@@ -42,11 +42,11 @@ export function EventDescriptionCard({event}: EventDescriptionCardProps) {
                     transition={{delay: 0.3}}
                 >
                     <div className="flex gap-2 items-center text-gray-600">
-                        <MapPin className="w-4 h-4 text-blue-500" />
+                        <MapPin className="w-4 h-4 text-gray-500" />
                         <span>{getEventAddress(event)}</span>
                     </div>
                     <div className="flex gap-2 items-center text-gray-600">
-                        <Calendar className="w-4 h-4 text-green-500" />
+                        <Calendar className="w-4 h-4 text-gray-500" />
                         <span>{getEventDate(event.date)}</span>
                     </div>
                 </motion.div>

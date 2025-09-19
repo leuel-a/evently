@@ -1,6 +1,6 @@
 'use server';
 
-import type {PageProps} from '@/app/(site)/page';
+import type {PageProps} from '@/app/(site)/events/page';
 import {Events, Prisma} from '@/app/generated/client';
 import prisma from '@/lib/db/prisma';
 import {AppError} from '@/lib/error';
