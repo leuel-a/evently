@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {LoginUserForm} from '@/components/pages/auth/Form/Login/LoginUserForm';
 import {APP_ROUTES} from '@/config/routes';
-import authClient from '@/lib/auth-client';
+import {authClient} from '@/lib/auth-client';
 import {BASE_ERROR_CODES} from '@/lib/codes';
 import {loginUserSchema} from '@/lib/db/schema';
 import type {LoginUserSchemaType} from '@/lib/db/schema';
@@ -32,6 +32,7 @@ export default function Page() {
         const {error} = await authClient.signIn.email({email, password});
 
         if (error) {
+            console.log('(error)', error);
             const normalErrorCode = convertEnumStyleStringToNormalString(
                 BASE_ERROR_CODES.EMAIL_NOT_VERIFIED,
             );
@@ -42,7 +43,7 @@ export default function Page() {
             setError('root.serverError', {message: error?.message, type: error?.code});
             setIsSubmitting(false);
         } else {
-            router.push(APP_ROUTES.base);
+            router.push(APP_ROUTES.dashboard.base);
             setIsSubmitting(false);
         }
     };

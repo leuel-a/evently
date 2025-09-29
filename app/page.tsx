@@ -1,7 +1,7 @@
-import {Features} from '@/components/pages/(site)/Home/Features';
-import {Footer} from '@/components/pages/(site)/Home/Footer';
-import {Hero} from '@/components/pages/(site)/Home/Hero';
-import {Testimonials} from '@/components/pages/(site)/Home/Testimonials';
+import {Features} from '@/components/pages/(site)/Landing/Features';
+import {Footer} from '@/components/pages/(site)/Landing/Footer';
+import {Hero} from '@/components/pages/(site)/Landing/Hero';
+import {Testimonials} from '@/components/pages/(site)/Landing/Testimonials';
 
 export interface PageProps {}
 

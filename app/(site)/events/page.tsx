@@ -1,5 +1,5 @@
 import {EventsPagination, FiltersEvent} from '@/components/pages/(site)';
-import {EventsGrid, NoEventsFound} from '@/components/pages/(site)';
+import {EventsContainer, NoEventsFound} from '@/components/pages/(site)';
 import {getEvents} from '../actions';
 
 export interface PageProps {
@@ -20,7 +20,7 @@ export default async function Page(props: PageProps) {
             {success && data ? (
                 <main className="flex flex-col gap-4">
                     <FiltersEvent />
-                    <EventsGrid events={data.data} />
+                    <EventsContainer events={data.data} />
                     <EventsPagination total={data.total} />
                 </main>
             ) : (

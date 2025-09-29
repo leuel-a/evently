@@ -1,4 +1,5 @@
 import lodashGet from 'lodash/get';
+import type {ReadonlyHeaders} from 'next/dist/server/web/spec-extension/adapters/headers';
 import {v4 as uuid} from 'uuid';
 import {RESOURCE_GROUP_MAP} from '@/config/constants';
 import type {ResourceItems, ResourceItemsWithGroups} from '@/types/resources';
@@ -25,12 +26,8 @@ export function getLabelForResourceGroup(group: string): string {
 
 export function getLabelForResource(resource: string): string {
     const resourceString = splitCamelCase(resource);
-    return capitalizeFirstLetters(resourceString);
-}
-
-export function generateUniqueKey() {
-    // TODO: figure out a less resource intensive function to generate a unique key
-    return uuid();
+    const labelResource = capitalizeFirstLetters(resourceString);
+    return labelResource.endsWith('s') ? labelResource.slice(0, -1) : labelResource;
 }
 
 export function getPathnameArray(pathname: string) {
@@ -41,4 +38,8 @@ export function getCategoriesFilterFromSearchParams(
     categoriesParams: string | undefined,
 ): string[] {
     return JSON.parse(categoriesParams ?? '[]');
+}
+
+export function getOriginUrl(headers: ReadonlyHeaders) {
+    return `${headers.get('x-forwarded-proto') ?? 'https'}://${headers.get('host')}`;
 }

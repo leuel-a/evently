@@ -1,11 +1,3 @@
-# The GH actions don't seem to compile and verify themselves well when Prettier is applied to them
-.github/actions/javascript/**/index.js
-.well-known
-desktop/dist/**/*.js
-dist/**/*.js
-.rnef
-assets/animations
-vendor
 package.json
 package-lock.json
 *.html
@@ -15,12 +7,3 @@ package-lock.json
 *.scss
 *.md
 *.markdown
-# We need to modify the import here specifically, hence we disable prettier to get rid of the sorted imports
-src/libs/E2E/reactNativeLaunchingTest.ts
-
-# Automatically generated files
-src/libs/SearchParser/searchParser.js
-src/libs/SearchParser/autocompleteParser.js
-
-# Disable prettier in the submodule
-Mobile-Expensify

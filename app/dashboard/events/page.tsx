@@ -1,21 +1,24 @@
-import {DataTable} from '@/components/blocks/DataTable';
-import {getUserEvents} from './actions';
-import {columns} from './columns';
+import {FilterTable} from '@/components/blocks/FilterTable';
+import {EventsTable} from '@/components/pages/dashboard/Events/EventsTable';
+import {getUserEvents} from '../actions';
 
-export const dynamic = 'force-static';
+export interface PageProps {
+    searchParams?: Promise<{
+        q?: string;
+    }>;
+}
 
-export default async function Page() {
-    const {success, data: events} = await getUserEvents();
+export default async function Page(props: PageProps) {
+    const searchParams = await props.searchParams;
+    const {success, data: events} = await getUserEvents(searchParams);
 
     return (
         <div className="mx-auto py-10">
-            {success ? (
-                <div className="bg-red-800">Whoops, fetching events failed!</div>
+            <FilterTable />
+            {!success ? (
+                <div className="">Whoops, fetching events failed!</div>
             ) : (
-                <DataTable
-                    columns={columns}
-                    data={events}
-                />
+                <EventsTable events={events ?? []} />
             )}
         </div>
     );

@@ -1,4 +1,5 @@
 import {memo} from 'react';
+import {v4 as uuid} from 'uuid';
 import {FormControl, FormItem, FormMessage, FormLabel, FormDescription} from '@/components/ui/form';
 import {
     Select,
@@ -8,7 +9,6 @@ import {
     SelectItem,
 } from '@/components/ui/select';
 import {useChoicesContext} from '@/context/ChoicesContext';
-import {generateUniqueKey} from '@/utils';
 
 interface EventCategory {
     id: string;
@@ -43,7 +43,7 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
                 <SelectContent>
                     {choices?.map((choice) => (
                         <SelectItem
-                            key={generateUniqueKey()}
+                            key={uuid()}
                             value={choice.id}
                         >
                             {choice.name}

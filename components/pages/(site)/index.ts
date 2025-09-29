@@ -2,7 +2,7 @@ export * from './EventCard';
 export * from './FilterEvents';
 export * from './SelectEventCategory';
 export * from './ReserveYourSpot';
-export * from './EventsGrid';
+export * from './EventsContainer';
 export * from './NoEventsFound';
 export * from './EventsPagination';
 export * from './EventDescriptionCard';

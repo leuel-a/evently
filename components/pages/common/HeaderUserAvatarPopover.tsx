@@ -1,30 +1,29 @@
-'use client';
-
-import {useActionState, useEffect} from 'react';
-import Link from 'next/link';
-import {toast} from 'sonner';
-import {logoutUserAction} from '@/app/auth/actions';
+import type {User} from 'better-auth';
+import {CircleUserRound} from 'lucide-react';
+import NextLink from 'next/link';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {Button} from '@/components/ui/button';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {APP_ROUTES} from '@/config/routes';
+import {LogoutUserButton} from './LogoutUserButton';
 
-export function HeaderUserAvatarPopover() {
-    const [state, formAction, pending] = useActionState(logoutUserAction, {});
+interface HeaderUserAvatarPopoverProps {
+    user: User;
+}
 
-    useEffect(() => {
-        if (state.success === false) {
-            toast('Sorry, we were unable to sign yout out');
-        }
-    }, [state]);
-
+export function HeaderUserAvatarPopover({user}: HeaderUserAvatarPopoverProps) {
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Avatar className="w-12 h-12 aspect-square cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <div className="flex items-center">
+                    <span className="select-none">{user.name}</span>
+                    <Avatar className="w-12 h-12 aspect-square cursor-pointer">
+                        <AvatarImage src={user.image ?? undefined} />
+                        <AvatarFallback className="bg-transparent h-full">
+                            <CircleUserRound className="text-white w-3/5 h-3/5" />
+                        </AvatarFallback>
+                    </Avatar>
+                </div>
             </PopoverTrigger>
             <PopoverContent className="w-fit p-2 rounded-xs flex flex-col gap-2">
                 <Button
@@ -32,17 +31,11 @@ export function HeaderUserAvatarPopover() {
                     variant="link"
                     className="text-right"
                 >
-                    <Link href={APP_ROUTES.dashboard.events.base}>Go to Dashboard</Link>
+                    <NextLink href={APP_ROUTES.dashboard.events.base}>
+                        <span>Go to Dashboard</span>
+                    </NextLink>
                 </Button>
-                <form action={formAction}>
-                    <Button
-                        type="submit"
-                        className="w-full shadow-none"
-                        disabled={pending}
-                    >
-                        {pending ? 'Signing you out...' : 'Sign Out'}
-                    </Button>
-                </form>
+                <LogoutUserButton />
             </PopoverContent>
         </Popover>
     );

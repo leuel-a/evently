@@ -2,7 +2,7 @@ import {useFormContext} from 'react-hook-form';
 import lodashGet from 'lodash/get';
 import {Button} from '@/components/ui/button';
 import {FormMessage} from '@/components/ui/form';
-import authClient from '@/lib/auth-client';
+import {authClient} from '@/lib/auth-client';
 import {BASE_ERROR_CODES} from '@/lib/codes';
 
 export function LoginUserFormRootError() {
@@ -13,7 +13,10 @@ export function LoginUserFormRootError() {
     const type = lodashGet(form.formState?.errors, 'root.serverError.type', '');
 
     const onVerifiyButtonClick = async () => {
-        await authClient.sendVerificationEmail({email: 'leuel.asfaw@gmail.com', callbackURL: '/'});
+        await authClient.sendVerificationEmail({
+            email: 'leuel.asfaw@gmail.com',
+            callbackURL: '/events',
+        });
     };
 
     if (formState.errors.root && type === BASE_ERROR_CODES.EMAIL_NOT_VERIFIED) {

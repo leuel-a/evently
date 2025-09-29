@@ -31,7 +31,7 @@ export function EventsPagination({total}: EventsPaginationProps) {
     const totalPages = Math.max(1, Math.ceil(total / limit));
 
     const getHref = (page: number) =>
-        `${APP_ROUTES.base}?${createNewPageParams(page, limit, params)}`;
+        `${APP_ROUTES.events.base}?${createNewPageParams(page, limit, params)}`;
 
     return (
         <Pagination>

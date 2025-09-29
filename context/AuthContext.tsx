@@ -1,44 +1,39 @@
 'use client';
 
-import {createContext, useContext} from 'react';
-import type {ReactNode} from 'react';
-import {useSession} from '@/lib/auth-client';
+import {createContext, useContext, useState} from 'react';
+import type {PropsWithChildren, ReactNode} from 'react';
+import type {User} from 'better-auth';
+import type {AuthenticatedUser} from '@/app/auth/actions';
 
 type AuthContextType = {
-    user: SessionUser | undefined;
-    isPending: boolean;
+    user: AuthenticatedUser | undefined;
     isAuthenticated: boolean;
-};
-type SessionUser = {
-    id: string;
-    name: string;
-    emailVerified: boolean;
-    email: string;
-    createdAt: Date;
-    updatedAt: Date;
-    image?: string | null | undefined | undefined;
+    isPending: boolean;
 };
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+type AuthProviderProps = PropsWithChildren & Omit<AuthContextType, 'isAuthenticated'> & {};
 
-function AuthProvider({children}: Readonly<{children: ReactNode}>) {
-    const {data, isPending} = useSession();
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-    return (
-        <AuthContext.Provider value={{user: data?.user, isAuthenticated: !!data?.user, isPending}}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
-
-function useAuth() {
+export function useAuthContext() {
     const context = useContext(AuthContext);
-
     if (!context) {
         throw new Error('useAuthContext must be used within an AuthProvider');
     }
     return context;
 }
 
-export {useAuth as useAuthContext, AuthProvider, AuthContext};
-export type {AuthContextType};
+export function AuthProvider({user, isPending, children}: AuthProviderProps) {
+    const [authState, setAuthState] = useState<{user?: User; isPending: boolean}>({
+        user,
+        isPending,
+    });
+    return (
+        <AuthContext.Provider value={{user, isAuthenticated: !!user, isPending}}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+AuthProvider.name = 'AuthProvider';
+export type {AuthenticatedUser as AuthUser, AuthContextType, AuthProviderProps};

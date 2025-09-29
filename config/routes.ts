@@ -30,6 +30,9 @@ const EVENT_CATEGORIES_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventCategory`;
 
 const API_ROUTES = {
     index: INDEX_BASE_API_ROUTE, // this might never be needed
+    auth: {
+        getSession: `${INDEX_BASE_API_ROUTE}/auth/get-session`,
+    },
     events: {
         base: EVENTS_BASE_ROUTE,
     },

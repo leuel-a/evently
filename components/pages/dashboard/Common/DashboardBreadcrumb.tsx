@@ -2,6 +2,7 @@
 
 import {Fragment} from 'react';
 import {usePathname} from 'next/navigation';
+import {v4 as uuid} from 'uuid';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -12,7 +13,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import {DASHBOARD_PREFIX} from '@/config/constants';
 import {removeEmptyStringsFromArray} from '@/utils/functions';
-import {generateUniqueKey, getPathnameArray} from '@/utils/index';
+import {getPathnameArray} from '@/utils/index';
 import {splitCamelCase} from '@/utils/strings';
 
 function DashboardBreadcrumb() {
@@ -37,7 +38,7 @@ function DashboardBreadcrumb() {
 
                     if (isLastIndex) {
                         return (
-                            <BreadcrumbItem key={generateUniqueKey()}>
+                            <BreadcrumbItem key={uuid()}>
                                 <BreadcrumbPage className="text-2xl tracking-tight capitalize select-none">
                                     {currentPathname}
                                 </BreadcrumbPage>
@@ -46,7 +47,7 @@ function DashboardBreadcrumb() {
                     }
 
                     return (
-                        <Fragment key={generateUniqueKey()}>
+                        <Fragment key={uuid()}>
                             <BreadcrumbItem>
                                 <BreadcrumbLink
                                     className="text-2xl tracking-tight capitalize"

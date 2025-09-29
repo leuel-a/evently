@@ -1,30 +1,24 @@
 'use client';
 
-import * as React from 'react';
+import {useState} from 'react';
 import {Plus, Minus} from 'lucide-react';
-import {motion} from 'motion/react';
 import NextImage from 'next/image';
 import type {Events} from '@/app/generated/client';
 import {Button} from '@/components/ui/button';
 
-export interface ReserveYourSpotProps {
+interface ReserveYourSpotProps {
     event: Events;
 }
 
 export function ReserveYourSpot({event}: ReserveYourSpotProps) {
-    const [quantity, setQuantity] = React.useState<number>(1);
+    const [quantity, setQuantity] = useState<number>(1);
     const increaseQuantity = () => setQuantity((prev) => prev + 1);
     const decreaseQuantity = () => setQuantity((prev) => Math.max(1, prev - 1));
-    const [openReserveButton, setOpenReserveButton] = React.useState<boolean>(false);
+    const [openReserveButton, setOpenReserveButton] = useState<boolean>(false);
     const toggleReserveButton = () => setOpenReserveButton((prev) => !prev);
 
     return (
-        <motion.div
-            initial={{opacity: 0, y: 20}}
-            animate={{opacity: 1, y: 0}}
-            transition={{duration: 0.4}}
-            className="w-full xl:max-w-md mx-auto bg-white shadow-lg rounded p-6 space-y-4"
-        >
+        <div className="w-full xl:max-w-md mx-auto bg-white shadow-lg rounded p-6 space-y-4">
             <h2 className="text-xl font-semibold">Reserve Your Spot</h2>
             <div className="space-y-2">
                 <div className="flex justify-between">
@@ -91,6 +85,6 @@ export function ReserveYourSpot({event}: ReserveYourSpotProps) {
             >
                 Reserve Your Spot
             </Button>
-        </motion.div>
+        </div>
     );
 }

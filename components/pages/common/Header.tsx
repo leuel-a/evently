@@ -2,12 +2,12 @@ import Link from 'next/link';
 import {APP_ROUTES} from '@/config/routes';
 import {HeaderActionList} from './HeaderActionList';
 
-export function Header() {
+export async function Header() {
     return (
-        <header className="h-16 w-full bg-indigo-500 text-white">
+        <header className="sticky top-0 h-16 w-full bg-indigo-500 text-white">
             <div className="mx-auto flex h-full w-5/6 items-center justify-between">
                 <div>
-                    <h1 className="cursor-pointer text-2xl select-none">
+                    <h1 className="cursor-pointer select-none text-2xl">
                         <Link href={APP_ROUTES.events.base}>Evently</Link>
                     </h1>
                 </div>

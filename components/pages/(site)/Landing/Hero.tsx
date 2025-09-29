@@ -1,4 +1,7 @@
-import {ArrowRight, Play} from 'lucide-react';
+'use client';
+
+import {ArrowRight} from 'lucide-react';
+import {motion} from 'motion/react';
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 import {Button} from '@/components/ui/button';
@@ -20,20 +23,29 @@ export function Hero(_: HeroProps) {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-light/80"></div>
             </div>
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <div className="animate-fade-in-up">
-                    <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-                        Create{' '}
-                        <span className="gradient-text bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                            Unforgettable
-                        </span>
-                        <br />
-                        Events with Evently
-                    </h1>
+                <div className="w-full">
+                    <div className="text-5xl md:text-7xl max-w-[24ch] font-medium tracking-tight text-white mb-6">
+                        {'Create Unforgettable Events with Evently'.split('').map((char, index) => (
+                            <motion.span
+                                key={index}
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                transition={{delay: index * 0.05}}
+                            >
+                                {char}
+                            </motion.span>
+                        ))}
+                    </div>
 
-                    <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto animate-fade-in-up-delay">
+                    <motion.p
+                        initial={{opacity: 0, y: 40}}
+                        animate={{opacity: 1, y: 0}}
+                        transition={{duration: 2.5, ease: 'easeOut'}}
+                        className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto animate-fade-in-up-delay"
+                    >
                         The all-in-one platform for event organizers to create, manage, and scale
                         their events. From intimate gatherings to large conferences.
-                    </p>
+                    </motion.p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up-delay-2">
                         <Button
@@ -41,14 +53,9 @@ export function Hero(_: HeroProps) {
                             className="bg-indigo-500 h-14 text-lg"
                         >
                             <NextLink href={APP_ROUTES.events.base}>
-                                Start Creating Events
+                                Start Exploring Events
                                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                             </NextLink>
-                        </Button>
-
-                        <Button className="h-14 group bg-white/20 text-lg backdrop-blur-sm border-white/30 text-white hover:bg-white hover:text-primary">
-                            <Play className="mr-2 h-5 w-5" />
-                            Watch Demo
                         </Button>
                     </div>
 

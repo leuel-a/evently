@@ -11,7 +11,7 @@ import {APP_ROUTES} from '@/config/routes';
 import {eventsSchema} from '@/lib/db/schema';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {convertObjectToFormData} from '@/utils/functions';
-import {createEventAction} from '../actions';
+import {createEventAction} from '../../actions';
 
 export default function Page() {
     const router = useRouter();

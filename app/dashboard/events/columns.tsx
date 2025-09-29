@@ -5,46 +5,11 @@ import {format} from 'date-fns';
 import Link from 'next/link';
 import type {Events} from '@/app/generated/client';
 import {Badge} from '@/components/ui/badge';
-import {Checkbox} from '@/components/ui/checkbox';
 import {APP_ROUTES} from '@/config/routes';
 
 export const columns: ColumnDef<Events>[] = [
-    {
-        id: 'select',
-        header: ({table}) => (
-            <Checkbox
-                checked={
-                    table.getIsAllRowsSelected() ||
-                    (table.getIsSomePageRowsSelected() && 'indeterminate')
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all events"
-            />
-        ),
-        cell: ({row}) => (
-            <Checkbox
-                checked={row.getIsSelected()}
-                onCheckedChange={(value) => row.toggleSelected(!!value)}
-                aria-label={`Select event ${row.getValue('title')}`}
-            />
-        ),
-    },
+    {id: 'none'},
     {accessorKey: 'title', header: 'Title'},
-    {
-        accessorKey: 'description',
-        header: 'Description',
-        cell: ({row}) => {
-            const description: string = row.getValue('description');
-            return (
-                <div
-                    className="truncate w-96"
-                    title={description}
-                >
-                    {description}
-                </div>
-            );
-        },
-    },
     {
         accessorKey: 'date',
         header: 'Date',
@@ -65,7 +30,7 @@ export const columns: ColumnDef<Events>[] = [
         header: 'Type',
         cell: ({row}) => (
             <Badge variant={row.getValue('isVirtual') ? 'outline' : 'default'}>
-                {row.getValue('isVirtual') ? 'Virtual' : 'In-Person'}
+                {row.getValue('isVirtual') == 'true' ? 'Virtual' : 'In-Person'}
             </Badge>
         ),
     },

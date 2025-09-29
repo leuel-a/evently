@@ -11,7 +11,7 @@ export function EventPageContent({event}: EventPageContentProps) {
     return (
         <Fragment>
             <EventDescriptionCard event={event} />
-            <ReserveYourSpot event={event} />
+            {!event.isFree && <ReserveYourSpot event={event} />}
         </Fragment>
     );
 }
