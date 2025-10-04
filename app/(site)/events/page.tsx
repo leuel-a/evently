@@ -1,3 +1,4 @@
+import {Fragment} from 'react';
 import {EventsPagination, FiltersEvent} from '@/components/pages/(site)';
 import {EventsContainer, NoEventsFound} from '@/components/pages/(site)';
 import {getEvents} from '../actions';
@@ -7,7 +8,7 @@ export interface PageProps {
         q?: string;
         page?: string;
         limit?: string;
-        categories?: string;
+        filters?: string;
     }>;
 }
 
@@ -17,15 +18,17 @@ export default async function Page(props: PageProps) {
 
     return (
         <div className="w-5/6 md:w-4/6 mx-auto">
-            {success && data ? (
-                <main className="flex flex-col gap-4">
-                    <FiltersEvent />
-                    <EventsContainer events={data.data} />
-                    <EventsPagination total={data.total} />
-                </main>
-            ) : (
-                <NoEventsFound />
-            )}
+            <main className="flex flex-col gap-4">
+                <FiltersEvent />
+                {success && data ? (
+                    <Fragment>
+                        <EventsContainer events={data.data} />
+                        <EventsPagination total={data.total} />
+                    </Fragment>
+                ) : (
+                    <NoEventsFound />
+                )}
+            </main>
         </div>
     );
 }

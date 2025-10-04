@@ -1,6 +1,6 @@
 import lodashGet from 'lodash/get';
 import type {ReadonlyHeaders} from 'next/dist/server/web/spec-extension/adapters/headers';
-import {v4 as uuid} from 'uuid';
+import type {GetEvensFunctionProps} from '@/app/(site)/actions';
 import {RESOURCE_GROUP_MAP} from '@/config/constants';
 import type {ResourceItems, ResourceItemsWithGroups} from '@/types/resources';
 import {removeEmptyStringsFromArray} from './functions';
@@ -32,12 +32,6 @@ export function getLabelForResource(resource: string): string {
 
 export function getPathnameArray(pathname: string) {
     return removeEmptyStringsFromArray(pathname.split('/'));
-}
-
-export function getCategoriesFilterFromSearchParams(
-    categoriesParams: string | undefined,
-): string[] {
-    return JSON.parse(categoriesParams ?? '[]');
 }
 
 export function getOriginUrl(headers: ReadonlyHeaders) {

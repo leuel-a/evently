@@ -1,6 +1,5 @@
 export * from './EventCard';
 export * from './FilterEvents';
-export * from './SelectEventCategory';
 export * from './ReserveYourSpot';
 export * from './EventsContainer';
 export * from './NoEventsFound';

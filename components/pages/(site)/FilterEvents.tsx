@@ -1,17 +1,23 @@
 'use client';
 
+import {useQuery} from '@tanstack/react-query';
 import {useState} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
-import {SelectEventCategory} from '@/components/pages/(site)';
 import {Button} from '@/components/ui/button';
 import {useIsMobile} from '@/hooks/use-mobile';
 import {cn} from '@/lib/utils';
-import {SearchEvents} from './SearchEvents';
+import {getEventsQuery} from '@/queries/eventCategory';
+import {MultiSelectEventCategory} from '../common/MultiSelectEventCategory';
+import {SearchEvents} from '../common/SearchEvents';
 
 export function FiltersEvent() {
     const isMobile = useIsMobile();
     const [showFilter, setShowFilter] = useState<boolean>();
 
+    const {data: eventCategories} = useQuery({
+        queryKey: ['events:select-event-category'],
+        queryFn: getEventsQuery,
+    });
     return (
         <div className="flex flex-col gap-1 md:gap-0 md:flex-row justify-between">
             <SearchEvents />
@@ -25,7 +31,12 @@ export function FiltersEvent() {
                 </Button>
             </div>
             <div className={cn(isMobile && showFilter ? 'block' : 'hidden md:block')}>
-                <SelectEventCategory />
+                <div className="w-96">
+                    <MultiSelectEventCategory
+                        MultiSelectProps={{placeholder: 'Select different categories...'}}
+                        categories={eventCategories ?? []}
+                    />
+                </div>
             </div>
         </div>
     );

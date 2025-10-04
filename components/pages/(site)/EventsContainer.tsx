@@ -5,7 +5,7 @@ interface EventsContainerProps {
     events: Array<Events>;
 }
 
-export function EventsContainer({events}: EventsContainerProps) {
+export async function EventsContainer({events}: EventsContainerProps) {
     return (
         <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
             {events.map((event) => (

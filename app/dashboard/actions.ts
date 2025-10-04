@@ -1,9 +1,9 @@
 'use server';
 
 import {_statusCode} from 'better-auth';
-import {headers as nextHeaders, cookies as nextCookies} from 'next/headers';
+import {headers as nextHeaders} from 'next/headers';
 import {Prisma} from '@/app/generated/client';
-import type {Events} from '@/app/generated/client';
+import type {EventsCategory, Events} from '@/app/generated/client';
 import {auth} from '@/lib/auth';
 import prisma from '@/lib/db/prisma';
 import {eventsSchema} from '@/lib/db/schema';
@@ -52,9 +52,7 @@ export async function createEventAction(formData: FormData) {
     }
 }
 
-type GetUserEventsFunction = Awaited<EventsPageProps['searchParams']>;
-
-function buildUserEventsWhere(params: GetUserEventsFunction) {
+function buildUserEventsWhere(params: GetUserEventsFunctionParams) {
     return {
         ...(params?.q && {
             OR: [
@@ -65,9 +63,10 @@ function buildUserEventsWhere(params: GetUserEventsFunction) {
     };
 }
 
-export async function getUserEvents(
-    params: GetUserEventsFunction,
-): Promise<IActionState<Events[]>> {
+export type GetUserEventsFunctionParams = Awaited<EventsPageProps['searchParams']>;
+
+export type GetUserEventsReturn = Awaited<ReturnType<typeof getUserEvents>>;
+export async function getUserEvents(params: GetUserEventsFunctionParams) {
     try {
         const headers = await nextHeaders();
         const session = await auth.api.getSession({headers});
@@ -75,11 +74,30 @@ export async function getUserEvents(
         const whereClause = buildUserEventsWhere(params);
         const events = await prisma.events.findMany({
             where: {userId: session?.user.id, ...whereClause},
+            include: {category: true},
         });
 
         return {success: true, data: events};
     } catch (error: any) {
         const appError = new AppError();
         return {success: false, error: appError};
+    }
+}
+
+export type GetUserEventsCategoriesReturn = Awaited<ReturnType<typeof getUserEventsCategories>>;
+export async function getUserEventsCategories() {
+    try {
+        const headers = await nextHeaders();
+        const session = await auth.api.getSession({headers});
+
+        const events = await prisma.events.findMany({
+            where: {userId: session?.user.id},
+            select: {category: true},
+        });
+
+        return {success: true, data: events.map(({category}) => category)};
+    } catch (error: any) {
+        const appError = new AppError();
+        return {success: true, error: appError};
     }
 }

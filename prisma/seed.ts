@@ -7,7 +7,7 @@ const DEFAULT_USER_EMAIL = 'leuel.asfaw@gmail.com';
 const DEFAULT_USER_PASSWORD = 'LeuelAsfaw123';
 const DEFAULT_USER_ORGANIZATION = 'LeuelA Organization';
 
-const DEFAULT_EVENTS = [
+export const DEFAULT_EVENTS = [
     {
         title: 'International Technology Conference 2025',
         description:
@@ -19,6 +19,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 500,
     },
     {
         title: 'Global Environmental Summit',
@@ -31,6 +32,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 1000,
     },
     {
         title: 'World Culinary Festival',
@@ -43,6 +45,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 300,
     },
     {
         title: 'International Film & Arts Expo',
@@ -55,6 +58,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 400,
     },
     {
         title: 'Global Health Innovation Summit',
@@ -67,6 +71,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 800,
     },
     {
         title: 'World Music Festival',
@@ -79,6 +84,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 600,
     },
     {
         title: 'Startup & Business Leadership Forum',
@@ -91,6 +97,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 350,
     },
     {
         title: 'International Marathon Challenge',
@@ -103,6 +110,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 2000,
     },
     {
         title: 'Global Education Forum',
@@ -115,6 +123,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 400,
     },
     {
         title: 'Community Development Expo',
@@ -127,6 +136,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 600,
     },
     {
         title: 'Adventure Travel & Outdoor Expo',
@@ -139,6 +149,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 300,
     },
     {
         title: 'Global Fashion Week',
@@ -151,6 +162,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 250,
     },
     {
         title: 'International Children’s Festival',
@@ -163,6 +175,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 400,
     },
     {
         title: 'Charity Gala for Global Hunger Relief',
@@ -175,6 +188,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 500,
     },
     {
         title: 'World Jazz & Blues Festival',
@@ -187,6 +201,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 700,
     },
     {
         title: 'Global Startup Hackathon',
@@ -199,6 +214,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 350,
     },
     {
         title: 'International Yoga & Wellness Retreat',
@@ -211,6 +227,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 200,
     },
     {
         title: 'Culinary & Wine Pairing Gala',
@@ -223,6 +240,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 300,
     },
     {
         title: 'Global Leadership in Education Awards',
@@ -235,6 +253,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: true,
+        capacity: 250,
     },
     {
         title: 'International Cultural Heritage Festival',
@@ -247,6 +266,7 @@ const DEFAULT_EVENTS = [
         city: 'Addis Ababa',
         country: 'Ethiopia',
         isVirtual: false,
+        capacity: 400,
     },
 ];
 async function seedDefaultUser() {
@@ -319,7 +339,16 @@ async function seedDefaultEvents() {
         return;
     }
 
-    for (const {description, category: categoryName, title, price, isFree} of DEFAULT_EVENTS) {
+    for (const {
+        description,
+        category: categoryName,
+        title,
+        price,
+        isFree,
+        isVirtual,
+        address,
+        capacity,
+    } of DEFAULT_EVENTS) {
         const category = await prisma.eventsCategory.findFirst({where: {name: categoryName}});
         if (!category) {
             console.log(
@@ -335,7 +364,9 @@ async function seedDefaultEvents() {
                 data: {
                     title,
                     description,
-                    isVirtual: true,
+                    isVirtual,
+                    address,
+                    capacity,
                     categoryId: category.id,
                     date: new Date(),
                     userId: user.id,

@@ -11,6 +11,7 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination';
 import {APP_ROUTES} from '@/config/routes';
+import {getLimitFromSearchParams, getPageFromSearchParams} from '@/utils/filters';
 
 export interface EventsPaginationProps {
     total: number;
@@ -18,16 +19,18 @@ export interface EventsPaginationProps {
 
 function createNewPageParams(currPage: number, limit: number, prevParams: ReadonlyURLSearchParams) {
     const newParams = new URLSearchParams(prevParams.toString());
+
     newParams.set('page', `${currPage}`);
     newParams.set('limit', `${limit}`);
+
     return newParams;
 }
 
 export function EventsPagination({total}: EventsPaginationProps) {
     const params = useSearchParams();
 
-    const currPage = parseInt(params.get('page') ?? '1', 10);
-    const limit = parseInt(params.get('limit') ?? '6', 10);
+    const currPage = getPageFromSearchParams(params);
+    const limit = getLimitFromSearchParams(params);
     const totalPages = Math.max(1, Math.ceil(total / limit));
 
     const getHref = (page: number) =>

@@ -23,7 +23,7 @@ export const auth = betterAuth({
             });
         },
     },
-    emailAndPassword: {enabled: true, requireEmailVerification: true},
+    emailAndPassword: {enabled: true, requireEmailVerification: false},
     user: {
         additionalFields: {
             isOrganizer: {

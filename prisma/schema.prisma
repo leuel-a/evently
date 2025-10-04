@@ -103,5 +103,5 @@ model EventsCategory {
   updatedAt DateTime @updatedAt
   Events    Events[]
 
-  @@map("events_category")
+  @@map("eventsCategory")
 }
