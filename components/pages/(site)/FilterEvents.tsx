@@ -10,6 +10,8 @@ import {getEventsQuery} from '@/queries/eventCategory';
 import {MultiSelectEventCategory} from '../common/MultiSelectEventCategory';
 import {SearchEvents} from '../common/SearchEvents';
 
+export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
+
 export function FiltersEvent() {
     const isMobile = useIsMobile();
     const [showFilter, setShowFilter] = useState<boolean>();
@@ -33,7 +35,7 @@ export function FiltersEvent() {
             <div className={cn(isMobile && showFilter ? 'block' : 'hidden md:block')}>
                 <div className="w-96">
                     <MultiSelectEventCategory
-                        MultiSelectProps={{placeholder: 'Select different categories...'}}
+                        MultiSelectProps={{placeholder: SELECT_CATEGORIES_PLACEHOLDER}}
                         categories={eventCategories ?? []}
                     />
                 </div>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {cva, type VariantProps} from 'class-variance-authority';
 import {CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles} from 'lucide-react';
+import {v4 as uuid} from 'uuid';
 import {Badge} from '@/components/ui/badge';
 import {Button} from '@/components/ui/button';
 import {
@@ -837,7 +838,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                 };
                                                 return (
                                                     <Badge
-                                                        key={value}
+                                                        key={uuid()}
                                                         className={cn(
                                                             getBadgeAnimationClass(),
                                                             multiSelectVariants({variant}),
@@ -1071,7 +1072,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                 )}
                                                 aria-hidden="true"
                                             >
-                                                <CheckIcon className="h-4 w-4 text-white" />
+                                                <CheckIcon className="h-4 w-4 text-whte" />
                                             </div>
                                             <span>
                                                 (Select All
@@ -1086,7 +1087,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                 {isGroupedOptions(filteredOptions) ? (
                                     filteredOptions.map((group) => (
                                         <CommandGroup
-                                            key={group.heading}
+                                            key={uuid()}
                                             heading={group.heading}
                                         >
                                             {group.options.map((option) => {
@@ -1095,7 +1096,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                 );
                                                 return (
                                                     <CommandItem
-                                                        key={option.value}
+                                                        key={uuid()}
                                                         onSelect={() => toggleOption(option.value)}
                                                         role="option"
                                                         aria-selected={isSelected}
@@ -1143,7 +1144,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                             );
                                             return (
                                                 <CommandItem
-                                                    key={option.value}
+                                                    key={uuid()}
                                                     onSelect={() => toggleOption(option.value)}
                                                     role="option"
                                                     aria-selected={isSelected}
