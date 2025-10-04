@@ -1,7 +1,6 @@
 import {EventsCategory} from '@/app/generated';
 import {SelectEventCategory} from '@/components/pages/common';
 import {SearchEvents} from '../../common/SearchEvents';
-import {SearchEventsTable} from './SearchEventsTable';
 
 interface EventsFilterTableProps {
     categories: EventsCategory[];
