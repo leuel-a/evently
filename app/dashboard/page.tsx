@@ -31,7 +31,7 @@ export default async function Page() {
                 />
                 <KPICard
                     title="Average Ticket Price"
-                    value={`Br${averagePriceForTicket}`}
+                    value={`Br ${averagePriceForTicket}`}
                     footer="Average price"
                 />
             </div>

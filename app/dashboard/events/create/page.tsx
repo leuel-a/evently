@@ -2,10 +2,12 @@
 
 import {useState} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
+import {ArrowLeft} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {toast} from 'sonner';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {EventForm} from '@/components/pages/dashboard/Form/Event/EventForm';
+import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
 import {APP_ROUTES} from '@/config/routes';
 import {eventsSchema} from '@/lib/db/schema';
@@ -49,14 +51,28 @@ export default function Page() {
 
     return (
         <FormProvider {...form}>
-            <div className="flex flex-col gap-6 bg-white p-8 pl-4">
-                <div className="mb-4 space-y-1">
-                    <h2 className="text-xl font-semibold tracking-tight text-indigo-700">
-                        Create a new event
-                    </h2>
+            <div className="flex items-center flex-col gap-6 p-8 pl-4 mt-8">
+                <div className="w-full xl:w-3/4 bg-white py-4 px-4">
+                    <div className="flex gap-6 mb-4 items-center">
+                        <Button
+                            variant="outline"
+                            className="rounded-full"
+                            onClick={() => router.back()}
+                        >
+                            <ArrowLeft />
+                        </Button>
+                        <div>
+                            <h2 className="text-xl font-medium tracking-tight text-indigo-700">
+                                Create a new event
+                            </h2>
+                            <p className="text-sm text-gray-500">
+                                Fill in the details to create your event
+                            </p>
+                        </div>
+                    </div>
                     <Separator className="h-1 w-full bg-indigo-400" />
                 </div>
-                <div className="w-full xl:w-3/4">
+                <div className="w-full xl:w-3/4 bg-white p-4">
                     <EventForm
                         CustomAddressAutofillInputProps={{error: addressInputError}}
                         SubmitButtonProps={{disabled: submitting}}
