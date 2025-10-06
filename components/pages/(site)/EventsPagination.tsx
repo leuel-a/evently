@@ -1,6 +1,6 @@
 'use client';
 
-import {ReadonlyURLSearchParams, useSearchParams} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
 import {
     Pagination,
     PaginationContent,
@@ -11,19 +11,14 @@ import {
     PaginationPrevious,
 } from '@/components/ui/pagination';
 import {APP_ROUTES} from '@/config/routes';
-import {getLimitFromSearchParams, getPageFromSearchParams} from '@/utils/filters';
+import {
+    getLimitFromSearchParams,
+    getPageFromSearchParams,
+    createNewPageParams,
+} from '@/utils/filters';
 
 export interface EventsPaginationProps {
     total: number;
-}
-
-function createNewPageParams(currPage: number, limit: number, prevParams: ReadonlyURLSearchParams) {
-    const newParams = new URLSearchParams(prevParams.toString());
-
-    newParams.set('page', `${currPage}`);
-    newParams.set('limit', `${limit}`);
-
-    return newParams;
 }
 
 export function EventsPagination({total}: EventsPaginationProps) {

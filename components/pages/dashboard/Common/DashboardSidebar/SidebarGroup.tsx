@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import NextLink from 'next/link';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -32,14 +32,15 @@ function AppSidebarGroup(props: AppSidebarGroupProps) {
 
                         return (
                             <SidebarMenuItem key={url}>
-                                <SidebarMenuButton>
+                                <SidebarMenuButton className="cursor-pointer py-2">
                                     <item.icon />
-                                    <Link
+                                    <NextLink
                                         key={url}
                                         href={url}
+                                        className="text-lg"
                                     >
                                         {getLabelForResource(item.name)}
-                                    </Link>
+                                    </NextLink>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         );

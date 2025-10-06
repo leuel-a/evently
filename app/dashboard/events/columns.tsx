@@ -6,7 +6,8 @@ import type {GetUserEventsReturn} from '@/app/dashboard/actions';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
 
-export type EventsRow = NonNullable<GetUserEventsReturn['data']>[number];
+export type UserEventsData = NonNullable<GetUserEventsReturn['data']>;
+export type EventsRow = UserEventsData['events'][number];
 export const columns: ColumnDef<EventsRow>[] = [
     {
         accessorKey: 'title',
@@ -19,7 +20,7 @@ export const columns: ColumnDef<EventsRow>[] = [
                     <div>
                         <span className="text-lg font-medium">{row.getValue('title')}</span>
                     </div>
-                    <div className="text-gray-500 line-clamp-2 max-w-[35rem]">
+                    <div className="text-gray-500 select-none line-clamp-2 max-w-[35rem]">
                         {row.original.description}
                     </div>
                 </div>

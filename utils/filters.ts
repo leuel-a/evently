@@ -1,6 +1,7 @@
 import lodashGet from 'lodash/get';
 import lodashSet from 'lodash/set';
 import lodashUnset from 'lodash/unset';
+import {ReadonlyURLSearchParams} from 'next/navigation';
 import {GetEvensFunctionProps} from '@/app/(site)/actions';
 import type {FilterParams} from '@/types/utils/Filters';
 
@@ -95,20 +96,33 @@ export function removePropertyFromFilter(params: URLSearchParams, keyToBeRemoved
     return newParams;
 }
 
-export function getPageFromSearchParams(params: URLSearchParams) {
+export function createNewPageParams(
+    currPage: number,
+    limit: number,
+    prevParams: ReadonlyURLSearchParams,
+) {
+    const newParams = new URLSearchParams(prevParams.toString());
+
+    newParams.set('page', `${currPage}`);
+    newParams.set('limit', `${limit}`);
+
+    return newParams;
+}
+
+export function getPageFromSearchParams(params: URLSearchParams, defaultValue: string = '1') {
     const paramsObj = Object.fromEntries(params.entries());
-    return parseInt(lodashGet(paramsObj, PAGE_PARAM_KEY, '1'));
+    return parseInt(lodashGet(paramsObj, PAGE_PARAM_KEY, defaultValue));
 }
 
-export function getLimitFromSearchParams(params: URLSearchParams) {
+export function getLimitFromSearchParams(params: URLSearchParams, defaultValue: string = '6') {
     const paramsObj = Object.fromEntries(params.entries());
-    return parseInt(lodashGet(paramsObj, LIMIT_PARAM_KEY, '6'));
+    return parseInt(lodashGet(paramsObj, LIMIT_PARAM_KEY, defaultValue));
 }
 
-export function getPageFromPageParam(params: GetEvensFunctionProps) {
-    return parseInt(lodashGet(params, PAGE_PARAM_KEY, '1'));
+export function getPageFromPageParam(params: GetEvensFunctionProps, defaultValue: string = '1') {
+    return parseInt(lodashGet(params, PAGE_PARAM_KEY, defaultValue));
 }
 
-export function getLimitFromPageParam(params: GetEvensFunctionProps) {
-    return parseInt(lodashGet(params, LIMIT_PARAM_KEY, '6'));
+export function getLimitFromPageParam(params: GetEvensFunctionProps, defaultValue: string = '6') {
+    return parseInt(lodashGet(params, LIMIT_PARAM_KEY, defaultValue));
 }

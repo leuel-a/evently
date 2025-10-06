@@ -23,7 +23,7 @@ export function DashboardHeader(_: DashboardHeaderProps) {
         false;
 
     return (
-        <div className="flex h-20 w-full items-center justify-between px-2">
+        <div className="flex h-8 w-full items-center justify-between px-2">
             <DashboardBreadcrumb />
             {shouldShowCreateButton && <CreateResourceButton />}
         </div>

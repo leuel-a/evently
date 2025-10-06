@@ -10,7 +10,7 @@ export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
 
 export async function FilterEventsTable({categories}: EventsFilterTableProps) {
     return (
-        <div className="flex gap-2 my-2">
+        <div className="flex gap-2 mb-2">
             <div className="flex w-full justify-between gap-8">
                 <SearchEvents />
                 <div className="">

@@ -7,6 +7,7 @@ import {APP_ROUTES} from '@/config/routes';
 import {useResourcesContext} from '@/context/ResourcesContext';
 import {cn} from '@/lib/utils';
 import {getResourceGroups} from '@/utils';
+import {SidebarDashboardMenu} from './SidebarDashboardMenu';
 import {AppSidebarGroup} from './SidebarGroup';
 
 function DashboardSidebar() {
@@ -30,6 +31,7 @@ function DashboardSidebar() {
                 </Link>
             </SidebarHeader>
             <SidebarContent className={`${state === 'collapsed' ? 'gap-0' : ''}`}>
+                <SidebarDashboardMenu />
                 {Object.entries(resourceGroups).map(([groupLabel, resources]) => {
                     return (
                         <AppSidebarGroup
