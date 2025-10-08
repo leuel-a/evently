@@ -1,12 +1,12 @@
 import {Fragment} from 'react';
+import {GetEventByIdReturn} from '@/app/(site)/actions';
 import {Events} from '@/app/generated/client';
 import {EventDescriptionCard} from './EventDescriptionCard';
 import {ReserveYourSpot} from './ReserveYourSpot';
 
 interface EventPageContentProps {
-    event: Events;
+    event: NonNullable<GetEventByIdReturn['data']>;
 }
-
 export function EventPageContent({event}: EventPageContentProps) {
     return (
         <Fragment>

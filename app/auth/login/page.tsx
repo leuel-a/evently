@@ -50,7 +50,7 @@ export default function Page() {
 
     return (
         <FormProvider {...methods}>
-            <div className="flex flex-col bg-white h-screen w-full items-center justify-center">
+            <div className="flex flex-col bg-zinc-900 h-screen w-full items-center justify-center">
                 <LoginUserForm
                     isSubmitting={isSubmitting}
                     handleSubmit={onSubmitHandler}

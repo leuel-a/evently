@@ -35,7 +35,7 @@ export default function Page() {
 
     return (
         <FormProvider {...form}>
-            <div className="flex bg-white h-screen w-full items-center justify-center pt-20">
+            <div className="flex bg-zinc-900 h-screen w-full items-center justify-center pt-20">
                 <UserSignupForm handleSubmit={onSubmitHandler} />
             </div>
         </FormProvider>

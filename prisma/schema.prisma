@@ -71,6 +71,16 @@ model Verification {
   @@map("verification")
 }
 
+model EventsCategory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Events    Events[]
+
+  @@map("eventsCategory")
+}
+
 model Events {
   id            String         @id @default(auto()) @map("_id") @db.ObjectId
   title         String
@@ -92,16 +102,38 @@ model Events {
   userId        String         @db.ObjectId
   category      EventsCategory @relation(fields: [categoryId], references: [id])
   user          User           @relation(fields: [userId], references: [id])
+  Tickets       Tickets[]
 
   @@map("events")
 }
 
-model EventsCategory {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Events    Events[]
+model Tickets {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  eventId        String           @db.ObjectId
+  event          Events           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  type           String
+  price          Int
+  quantity       Int
+  sold           Int              @default(0)
+  isActive       Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  TicketPurchase TicketPurchase[]
 
-  @@map("eventsCategory")
+  @@map("tickets")
+}
+
+model TicketPurchase {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  ticketId   String   @db.ObjectId
+  ticket     Tickets  @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  buyerEmail String?
+  buyerPhone String?
+  qrCodeUrl  String?
+  paymentId  String?
+  isPaid     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("ticketPurchase")
 }

@@ -8,19 +8,14 @@ import {checkIfRelativeLink as _} from '@/utils/functions';
 
 export type TGetChoicesQueryKey = [string, {resource: string}];
 
-// TODO: remove console.logs and use a proper browser logger
-
 export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]> = async (
     context,
 ) => {
-    let choices = [];
-    const {queryKey} = context;
-    const [_, {resource}] = queryKey;
-
-    const url = `/api/${resource}`;
     try {
-        const response = await makeApiCall<Array<any>>({url, method: HTTP_METHODS.GET});
-        choices = response.data;
+        const {queryKey} = context;
+        const [_, {resource}] = queryKey;
+        const url = `${resource}`;
+        return (await makeApiCall<Array<any>>({url, method: HTTP_METHODS.GET})).data;
     } catch (error: any) {
         if (error.response) {
             console.log('Error response:', {
@@ -31,8 +26,8 @@ export const getChoices: QueryFunction<Array<any>, [string, {resource: string}]>
         } else {
             console.log('Error setting up request:', error.message);
         }
+        return [];
     }
-    return choices;
 };
 
 export function ReferenceInput(props: ReferenceInputProps) {
@@ -41,7 +36,6 @@ export function ReferenceInput(props: ReferenceInputProps) {
         queryKey: ['choices', {resource}],
         queryFn: getChoices,
     });
-
     return <ChoicesProvider choices={data}>{children}</ChoicesProvider>;
 }
 

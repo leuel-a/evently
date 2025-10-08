@@ -1,4 +1,4 @@
-import {Calendar} from 'lucide-react';
+import {Calendar, Tag} from 'lucide-react';
 import type {ResourceItems} from '@/types/resources';
 
 const resources: ResourceItems = [
@@ -6,6 +6,11 @@ const resources: ResourceItems = [
         name: 'events',
         icon: Calendar,
         hasCreate: true,
+    },
+    {
+        name: 'tickets',
+        icon: Tag,
+        hasCreate: false,
     },
 ];
 

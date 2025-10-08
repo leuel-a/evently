@@ -8,6 +8,7 @@ export const RESOURCE_GROUPS = {
 
 export const RESOURCE_GROUP_MAP: Record<string, string> = {
     events: RESOURCE_GROUPS.EVENTS,
+    tickets: RESOURCE_GROUPS.EVENTS,
 };
 
 const ANSI_ESC = '\x1b[';

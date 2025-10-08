@@ -1,4 +1,7 @@
+'use client';
+
 import NextLink from 'next/link';
+import {usePathname} from 'next/navigation';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -9,11 +12,14 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 import {DASHBOARD_PREFIX} from '@/config/constants';
+import {cn} from '@/lib/utils';
 import type {ResourceItems} from '@/types/resources';
 import {getLabelForResource} from '@/utils';
 import {getLabelForResourceGroup} from '@/utils';
+import {getResourceFromPathname} from '@/utils/functions';
 
-function AppSidebarGroup(props: AppSidebarGroupProps) {
+function SidebarAppGroup(props: SidebarAppGroupProps) {
+    const pathname = usePathname();
     const {label, resources: items} = props;
     const {state} = useSidebar();
 
@@ -24,22 +30,29 @@ function AppSidebarGroup(props: AppSidebarGroupProps) {
                     {getLabelForResourceGroup(label)}
                 </SidebarGroupLabel>
             )}
-            <SidebarGroupContent className={`${state === 'expanded' ? 'pl-4' : 'gap-0'}`}>
+            <SidebarGroupContent className={`${state === 'expanded' ? '' : 'gap-0'}`}>
                 <SidebarMenu className={state === 'collapsed' ? 'gap-2' : ''}>
                     {items.map((item) => {
                         const {name: resource} = item;
                         const url = `/${DASHBOARD_PREFIX}/${resource}`;
+                        const isCurrResource = getResourceFromPathname(pathname, resource);
 
                         return (
                             <SidebarMenuItem key={url}>
-                                <SidebarMenuButton className="cursor-pointer py-2">
+                                <SidebarMenuButton
+                                    className={cn(
+                                        'cursor-pointer rounded py-2 h-12',
+                                        isCurrResource
+                                            ? 'border-2 border-white bg-indigo-500 text-white hover:text-white hover:bg-indigo-600/80'
+                                            : '',
+                                    )}
+                                >
                                     <item.icon />
                                     <NextLink
                                         key={url}
                                         href={url}
-                                        className="text-lg"
                                     >
-                                        {getLabelForResource(item.name)}
+                                        {getLabelForResource(resource)}
                                     </NextLink>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
@@ -51,10 +64,10 @@ function AppSidebarGroup(props: AppSidebarGroupProps) {
     );
 }
 
-export interface AppSidebarGroupProps {
+export interface SidebarAppGroupProps {
     label: string;
     resources: ResourceItems;
 }
 
-AppSidebarGroup.displayName = 'DashboardSidebarGroup';
-export {AppSidebarGroup};
+SidebarAppGroup.displayName = 'DashboardSidebarGroup';
+export {SidebarAppGroup};

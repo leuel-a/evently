@@ -21,6 +21,8 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
     const {onChange, value} = props;
     const {choices} = useChoicesContext<EventCategory>();
 
+    console.log({choices});
+
     return (
         <FormItem className="border-input rounded border p-4">
             <div className="space-y-1">

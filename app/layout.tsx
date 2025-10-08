@@ -4,6 +4,7 @@ import ComposeProviders from '@/components/ComposeProviders';
 import {SidebarProvider} from '@/components/ui/sidebar';
 import {Toaster} from '@/components/ui/sonner';
 import {QueryClientProvider} from '@/context/QueryClientContext';
+import {ThemeProvider} from '@/context/ThemeContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -34,7 +35,9 @@ export default async function RootLayout({
             <body
                 className={`${poppins.variable} ${kumbhSans.variable} font-kumbh bg-gray-100 antialiased`}
             >
-                <ComposeProviders components={[SidebarProvider, QueryClientProvider]}>
+                <ComposeProviders
+                    components={[SidebarProvider, QueryClientProvider, ThemeProvider]}
+                >
                     {children}
                     <Toaster />
                 </ComposeProviders>

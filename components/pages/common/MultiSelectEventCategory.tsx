@@ -47,7 +47,11 @@ export function MultiSelectEventCategory({
     return (
         <MultiSelect
             {...restMultiSelectProps}
-            className={cn('bg-white h-12 rounded hover:bg-white', multiSelectContainerClassName)}
+            className={cn(
+                'h-12 rounded transition-all duration-300 backdrop-blur-sm border placeholder:text-gray-500 dark:placeholder:text-zinc-500 hover:border-gray-400 dark:hover:border-zinc-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
+                'bg-white dark:bg-zinc-800/50 border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-zinc-800',
+                multiSelectContainerClassName,
+            )}
             options={options}
             value={selectedCategories}
             onValueChange={setSelectedCategories}

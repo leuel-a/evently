@@ -1,5 +1,6 @@
 import lodashIsEmpty from 'lodash/isEmpty';
 import {ZodEffects, ZodObject} from 'zod';
+import {APP_ROUTES} from '@/config/routes';
 
 export function removeEmptyStringsFromArray<T>(array: Array<T>) {
     return array.filter((value) => !lodashIsEmpty(value));
@@ -31,4 +32,14 @@ export function getValuesFromObjectBasedOnSchema(
     return Object.fromEntries(
         Object.entries(object).filter(([key]) => eventsSchemaKeys.includes(key)),
     );
+}
+
+export function getResourceFromPathname(
+    pathname: string,
+    currResource: string,
+    isDashboard: boolean = false,
+) {
+    return !isDashboard
+        ? !!removeEmptyStringsFromArray(pathname.split('/')).find((value) => value === currResource)
+        : pathname === APP_ROUTES.dashboard.base;
 }

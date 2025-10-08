@@ -1,5 +1,17 @@
 import {z} from 'zod';
 
+export type CheckoutSchemaType = z.infer<typeof checkoutSchema>;
+export const checkoutSchema = z
+    .object({
+        contactMethod: z.enum(['email', 'phoneNumber'], {required_error: 'Required'}),
+        email: z.string().email().optional(),
+        phoneNumber: z.string().optional(),
+    })
+    .refine((data) => (data.contactMethod === 'email' ? !!data.email : !!data.phoneNumber), {
+        message: 'Required',
+        path: ['contactMethod'],
+    });
+
 export type LoginUserSchemaType = z.infer<typeof loginUserSchema>;
 export const loginUserSchema = z.object({
     email: z
@@ -52,7 +64,7 @@ export const eventsSchema = z
         country: z.string().optional(),
         city: z.string(),
         capacity: z.coerce.number({required_error: 'Required'}),
-        price: z.coerce.number({required_error: 'Required'}),
+        price: z.number(),
         isFree: z.boolean().default(false),
         isVirtual: z
             .preprocess((v) => (v === 'true' ? true : v === 'false' ? false : v), z.boolean())
@@ -73,4 +85,10 @@ export const eventsSchema = z
             message: 'Address, country, and city are required for in-person events',
             path: ['address'], // You can point this to any one of the fields
         },
-    );
+    )
+    .refine(({isFree, price}) => {
+        if (isFree === false) {
+            return Boolean(price && price > 0);
+        }
+        return true;
+    });

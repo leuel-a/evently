@@ -59,9 +59,10 @@ export async function getEvents(
     }
 }
 
-export async function getEventById(id: string): Promise<IActionState<Events | null>> {
+export type GetEventByIdReturn = Awaited<ReturnType<typeof getEventById>>;
+export async function getEventById(id: string) {
     try {
-        const event = await prisma.events.findUnique({where: {id}});
+        const event = await prisma.events.findUnique({where: {id}, include: {category: true}});
         return {success: true, data: event};
     } catch (error: any) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
