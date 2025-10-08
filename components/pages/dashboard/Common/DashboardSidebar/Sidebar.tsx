@@ -7,8 +7,8 @@ import {APP_ROUTES} from '@/config/routes';
 import {useResourcesContext} from '@/context/ResourcesContext';
 import {cn} from '@/lib/utils';
 import {getResourceGroups} from '@/utils';
+import {SidebarAppGroup} from './SidebarAppGroup';
 import {SidebarDashboardMenu} from './SidebarDashboardMenu';
-import {AppSidebarGroup} from './SidebarGroup';
 
 function DashboardSidebar() {
     const resources = useResourcesContext();
@@ -34,7 +34,7 @@ function DashboardSidebar() {
                 <SidebarDashboardMenu />
                 {Object.entries(resourceGroups).map(([groupLabel, resources]) => {
                     return (
-                        <AppSidebarGroup
+                        <SidebarAppGroup
                             key={uuid()}
                             label={groupLabel}
                             resources={resources}
