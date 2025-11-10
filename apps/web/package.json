@@ -1,12 +1,13 @@
 {
-  "name": "apps",
+  "name": "web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "echo 'running tests'"
   },
   "dependencies": {
     "react": "19.1.0",
