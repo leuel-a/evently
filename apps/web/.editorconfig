@@ -26,3 +26,10 @@ trim_trailing_whitespace = true
 
 # No standard.  Please document a standard if different from .js
 [**.md]
+
+# Standard at:
+[Makefile]
+
+[package*]
+indent_style = space
+indent_size = 2

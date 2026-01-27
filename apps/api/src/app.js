@@ -1,15 +1,20 @@
-require('dotenv').config()
+import './env.js';
 
-import express from 'express';
+import {logger} from './utils/logger.js';
+import { createApp } from './app.factory.js';
 
-const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT;
 
+async function startServer() {
+    try {
+        const app = await createApp();
+        app.listen(PORT, async () => {
+            logger.info(`🚀 Server running at http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        logger.error('❌ Failed to start server:', error);
+        process.exit(1);
+    }
+}
 
-// Mount express json middleware after Better Auth handler
-// or only apply it to routes that don't interact with better auth
-app.use(express.json());
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-});
+startServer();

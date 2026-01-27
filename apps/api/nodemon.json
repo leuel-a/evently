@@ -1,5 +1,5 @@
 {
-  "watch": ["routes/", "controllers/", "app.js"],
+  "watch": ["routes/", "handlers/", "utils/", "lib/","setup.js", "config.js", "env.js"],
   "ext": "js,json",
   "ignore": ["node_modules/"],
   "delay": "1000"
