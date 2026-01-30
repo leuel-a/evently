@@ -89,13 +89,24 @@ const fields = {
             message: 'address must be a string',
         },
     },
+    startTime: {
+        name: 'startTime',
+        isString: {
+            message: 'startTime must be a string',
+        },
+    },
+    endTime: {
+        name: 'endTime',
+        isString: {
+            message: 'endTime must be a string',
+        },
+    },
     category: {
         name: 'category',
         isMongoId: {
             message: 'category must be a valid Mongo Id',
         },
     },
-    startTime: ""
 };
 
 const eventFieldsValidators = {
@@ -110,7 +121,7 @@ const eventFieldsValidators = {
         .bail()
         .notEmpty()
         .withMessage(fields.description.notEmpty.message),
-    date: body(fields.date).isISO8601().withMessage(fields.date.isISO8601.message),
+    date: body(fields.date.name).isISO8601().withMessage(fields.date.isISO8601.message).toDate(),
     location: body(fields.location.name).isString().withMessage(fields.location.isString.message),
     ticketPrice: body(fields.ticketPrice.name)
         .isNumeric()
@@ -138,19 +149,27 @@ const eventFieldsValidators = {
         .isString()
         .withMessage(fields.address.isString.message)
         .optional(),
+    startTime: body(fields.startTime.name)
+        .isString()
+        .withMessage(fields.startTime.isString.message),
+    endTime: body(fields.endTime.name).isString().withMessage(fields.endTime.isString.message),
+    category: body(fields.category.name).isMongoId().withMessage(fields.category.isMongoId.message),
 };
 
 export const createEventValidator = [
     eventFieldsValidators.title,
     eventFieldsValidators.description,
     eventFieldsValidators.date,
-    eventFieldsValidators.ticketPrice,
+    eventFieldsValidators.ticketPrice.optional(),
     eventFieldsValidators.capacity,
     eventFieldsValidators.location.optional(),
     eventFieldsValidators.checkoutLink.optional(),
     eventFieldsValidators.status.optional(),
     eventFieldsValidators.type.optional(),
     eventFieldsValidators.virtualUrl.optional(),
+    eventFieldsValidators.startTime,
+    eventFieldsValidators.endTime,
+    eventFieldsValidators.category,
 ];
 
 export const getEventsValidator = [

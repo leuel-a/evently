@@ -1,22 +1,32 @@
+import httpStatus from 'http-status';
 import {validationResult} from 'express-validator';
+import {ERROR_LOG_TYPES} from '../utils/constants.js';
+import winstonLogger from '../config/winston.js';
 
 /**
  * Middleware to run validation and handle errors before controllers.
- *
  * @type {import('express').RequestHandler}
  */
 export function validateRequest(req, res, next) {
-    const errors = validationResult(req);
+    const validationErrors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            success: false,
-            errors: errors.array().map((err) => ({
-                field: err.path,
-                message: err.msg,
-            })),
-        });
+    if (validationErrors.isEmpty()) {
+        return next();
     }
 
-    next();
+    winstonLogger.error({
+        message: 'Input Validation Error',
+        status: httpStatus.BAD_REQUEST,
+        requestUrl: req?.originalUrl,
+        requestParams: req?.params,
+        requestQuery: req?.query,
+        requestBody: req?.body,
+        validationErrors: validationErrors.errors,
+        errorType: ERROR_LOG_TYPES.VALIDATION,
+    });
+
+    return res.status(httpStatus.BAD_REQUEST).json({
+        success: false,
+        errors: validationErrors.array(),
+    });
 }

@@ -1,4 +1,5 @@
 import {getPaginationValues} from '../helpers/index.js';
+import {normalizeID} from '../helpers/aggregations.js';
 import {getEventProjection} from './utils.js';
 import {modelNames} from '../../config.js';
 
@@ -52,7 +53,7 @@ export async function createEvent(payload) {
  * @param {import('mongoose').FilterQuery} [matchQuery]
  */
 export async function getEvents({page, size}) {
-    const matchQuery = {};
+    const matchQuery = {isDeleted: false};
     const {limit, skip} = getPaginationValues(page, size);
 
     const events = await this.aggregate([
@@ -61,7 +62,7 @@ export async function getEvents({page, size}) {
         },
         {
             $lookup: {
-                from: modelNames.eventsCategory,
+                from: this.model(modelNames.eventsCategory).collection.name,
                 localField: 'category',
                 foreignField: '_id',
                 as: 'category',
@@ -78,6 +79,30 @@ export async function getEvents({page, size}) {
         },
         {
             $limit: limit,
+        },
+        ...normalizeID(),
+        {
+            $project: {
+                id: 1,
+                title: 1,
+                description: 1,
+                location: 1,
+                ticketPrice: 1,
+                capacity: 1,
+                status: 1,
+                type: 1,
+                category: {
+                    id: '$category._id',
+                    name: '$category.name',
+                    description: '$category.description',
+                },
+                virtualUrl: 1,
+                isVirtual: 1,
+                isFree: 1,
+                address: 1,
+                startTime: 1,
+                endTime: 1,
+            },
         },
     ]).exec();
 
@@ -107,4 +132,60 @@ export async function updateEvent(objectId, updatedData, options = {new: true}) 
     return this.findByIdAndUpdate(objectId, {...updatedData}, options)
         .populate('category', '_id name description')
         .exec();
+}
+
+/**
+ * @this {import('mongoose').Model}
+ */
+export async function getSettingEventCategories() {
+    const [allCategories, activeCategories] = await Promise.all([
+        this.model(modelNames.eventsCategory).aggregate([
+            {
+                $match: {
+                    isDeleted: false,
+                },
+            },
+            {
+                $project: {
+                    id: '$_id',
+                    name: 1,
+                    _id: 0,
+                },
+            },
+        ]),
+        this.aggregate([
+            {
+                $match: {
+                    isDeleted: false,
+                },
+            },
+            {
+                $lookup: {
+                    from: this.model(modelNames.eventsCategory).collection.name,
+                    localField: 'category',
+                    foreignField: '_id',
+                    as: 'category',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$category',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $project: {
+                    id: '$category._id',
+                    name: '$category.name',
+                },
+            },
+            ...normalizeID(),
+        ]),
+    ]);
+    return {
+        category: {
+            all: allCategories,
+            active: activeCategories,
+        },
+    };
 }

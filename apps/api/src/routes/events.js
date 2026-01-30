@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import express from 'express';
 import {
     createEventValidator,
     getEventsValidator,
@@ -18,7 +18,7 @@ import {validateRequest} from '../middlewares/validateRequest.js';
 const BASE_URL = '';
 const BASE_URL_WITH_ID = `${BASE_URL}/:id`;
 
-const router = Router();
+const router = express.Router();
 
 router.post(BASE_URL, createEventValidator, validateRequest, createEventHandler);
 router.get(BASE_URL_WITH_ID, getEventValidator, validateRequest, getEventHandler);

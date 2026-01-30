@@ -13,4 +13,22 @@ const schema = new mongoose.Schema(
     {timestamps: true},
 );
 
+/** HELPER FUNCTIONS TO CONVERT ID */
+schema.set('toJSON', {
+    transform: (_document, returned) => {
+        returned.id = returned._id;
+        delete returned.__v;
+        delete returned._id;
+    },
+});
+
+schema.set('toObject', {
+    transform: (_document, returned) => {
+        returned.id = returned._id;
+        delete returned.__v;
+        delete returned._id;
+    },
+});
+
+
 export default schema;

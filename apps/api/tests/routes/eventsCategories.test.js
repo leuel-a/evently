@@ -1,5 +1,8 @@
 import '../../src/env.js';
+
+import httpStatus from 'http-status';
 import request from 'supertest';
+import lodashGet from 'lodash/get.js';
 import {expect, describe, test, beforeAll, beforeEach, afterEach} from 'vitest';
 import EventsCategory from '../../src/models/eventsCategory/index.js';
 import {createApp} from '../../src/app.factory.js';
@@ -27,14 +30,31 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-    await EventsCategory.deleteOne({_id: testEventCategory._id});
+    await EventsCategory.deleteOne({_id: testEventCategory.id});
 });
 
 describe('/eventsCategory API', () => {
-    test('[GET] /eventsCategory - returns paginated events', async () => {
+    test('[POST] /eventsCategory - creates a new event category', async () => {
+        const createNewTestEventCategory = {
+            name: 'New Test Event Cateogry',
+            description: 'Test Event Category Description',
+        };
+
+        const response = await request(app)
+            .post(BASE_URL)
+            .set('Content-Type', 'application/json')
+            .send(createNewTestEventCategory);
+
+        expect(response.status).toBe(httpStatus.CREATED);
+
+        // TODO: this does not seem like a good way to do this
+        await EventsCategory.deleteOne({_id: response.body.data.id});
+    });
+
+    test('[GET] /eventsCategory - returns paginated events categories', async () => {
         const response = await request(app).get(BASE_URL);
 
-        expect(response?.status).toBe(200);
+        expect(response?.status).toBe(httpStatus.OK);
         expect(response.body).toMatchObject({
             data: expect.any(Array),
             page: expect.any(Number),
@@ -46,13 +66,26 @@ describe('/eventsCategory API', () => {
     });
 
     test('[GET] /eventsCategory/:id - get an event category based on its id', async () => {
-        const res = await request(app).get(`${BASE_URL}/${testEventCategory._id}`);
+        const res = await request(app).get(`${BASE_URL}/${testEventCategory.id}`);
 
-        expect(res.status).toBe(200);
+        expect(res.status).toBe(httpStatus.OK);
         expect(res.body).toHaveProperty('data');
 
         expect(res?.body?.data).toMatchObject({
-            _id: testEventCategory?._id.toString(),
+            id: testEventCategory.id,
+            name: testEventCategory?.name,
+            description: testEventCategory?.description,
+        });
+    });
+
+    test('[DELETE] /eventsCategory/:id - delete an event category', async () => {
+        const res = await request(app).delete(`${BASE_URL}/${testEventCategory.id}`);
+
+        expect(res.status).toBe(httpStatus.OK);
+        expect(res.body).toHaveProperty('data');
+
+        expect(res?.body?.data).toMatchObject({
+            id: testEventCategory.id,
             name: testEventCategory?.name,
             description: testEventCategory?.description,
         });

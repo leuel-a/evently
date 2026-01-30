@@ -9,6 +9,7 @@ import MongoClient from './lib/mongo-client.js';
 import {API_ROUTES, API_PREFIX} from './config.js';
 import eventsRoutes from './routes/events.js';
 import usersRoutes from './routes/organizers.js';
+import settingsRoutes from './routes/settings.js';
 import eventsCategoryRoutes from './routes/eventsCategory.js';
 import {errorHandler} from './middlewares/errorHandler.js';
 
@@ -43,7 +44,8 @@ export async function setup(app) {
 
         app.use(`${API_PREFIX}${API_ROUTES.users.base}`, usersRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.events.base}`, eventsRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.eventsCategory.base}`, eventsCategoryRoutes)
+        app.use(`${API_PREFIX}${API_ROUTES.eventsCategory.base}`, eventsCategoryRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.settings.base}`, settingsRoutes);
 
         // Mount the error handler
         app.use(errorHandler);

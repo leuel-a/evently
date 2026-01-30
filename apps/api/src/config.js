@@ -7,6 +7,7 @@ export const API_ROUTES = Object.freeze({
     eventsCategory: {
         base: '/eventsCategory',
     },
+    settings: {base: '/settings'},
 });
 
 export const modelNames = Object.freeze({

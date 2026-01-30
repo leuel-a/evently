@@ -1,8 +1,9 @@
 import {getPaginationValues} from '../helpers/index.js';
+import {normalizeID} from '../helpers/aggregations.js';
 import {getEventCategoryProjection} from './utils.js';
 
 /**
- * Get a single event based on the criteria
+ * Get a single event category based on the criteria
  *
  * @this {import('mongoose').Model}
  * @param {Object} param0
@@ -11,33 +12,30 @@ import {getEventCategoryProjection} from './utils.js';
  * @param {import('mongoose').QueryOptions} options
  */
 export async function getEventCategory({id}, opts = {lean: true}) {
-    /** @type {import('mongoose').FilterQuery<import('../../utils/types.js').EventCategoryDoc>} */
-    const query = {_id: id};
+    /** @type {import('mongoose').FilterQuery<import('../../utils/types.js').EventCategoryDocument>} */
+    const matchQuery = {_id: id, isDeleted: false};
 
     const projection = getEventCategoryProjection();
-    const options = {lean: true, ...opts};
-    const eventCategory = await this.findOne(query, projection, options);
+    const options = {...opts};
+    const eventCategory = await this.findOne(matchQuery, projection, options);
 
     return {
-        data: {
-            ...eventCategory,
-        },
+        data: eventCategory,
     };
 }
 
 /**
- * Creates a new Event
+ * Creates a new Event Category
  *
  * @this {import('mongoose').Model}
  * @param {import('../../utils/types.js').EventCategory} payload - the new event to be added to the DB
  */
 export async function createEventCategory(payload) {
-    const eventCategory = await this.create(payload);
-    return eventCategory;
+    return this.create(payload);
 }
 
 /**
- * Finds Events based on the query options
+ * Finds Event Categories based on the query options
  *
  * @this {import('mongoose').Model}
  * @param {import('mongoose').FilterQuery} [matchQuery]
@@ -56,13 +54,14 @@ export async function getEventCategories({page, size}) {
         {
             $limit: limit,
         },
+        ...normalizeID(),
     ]).exec();
 
     return {data: eventsCategory, page, limit: size};
 }
 
 /**
- * Finds an event and marks it as a deleted event
+ * Finds an event and marks it as a deleted event category
  *
  * @this {import('mongoose').Model}
  * @param {import('mongoose').ObjectId} objectId
@@ -72,7 +71,7 @@ export async function deleteEventCategory(objectId) {
 }
 
 /**
- * Updates an event
+ * Updates an event category
  *
  * @this {import('mongoose').Model}
  * @param {string} id

@@ -1,3 +1,4 @@
+import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
 import {errors} from '../errors/utils.js';
 import EventCategory from '../models/eventsCategory/index.js';
@@ -15,7 +16,7 @@ export async function getEventCategoriesHandler(req, res, next) {
             limit: results?.limit,
         };
 
-        res.json(responseRaw);
+        res.status(httpStatus.OK).json(responseRaw);
     } catch (err) {
         next(err);
     }
@@ -26,13 +27,50 @@ export async function getEventCategoryHandler(req, res, next) {
     try {
         const {id} = matchedData(req, {locations: ['params']});
 
-        const result = await EventCategory.getEventCategory({id});
+        const result = await EventCategory.getEventCategory({id}, {lean: false});
         if (!result?.data || Object.keys(result?.data).length === 0) {
             throw errors.notFound(EVENT_CATEGORY_NOT_FOUND_MESSAGE);
         }
 
-        res.status(200).json(result);
+        res.status(httpStatus.OK).json(result);
     } catch (error) {
         next(error);
+    }
+}
+
+/** @type {import('express').RequestHandler} */
+export async function createEventCategoryHandler(req, res, next) {
+    try {
+        const body = matchedData(req, {locations: ['body']});
+        const eventCategory = await EventCategory.createEventCategory(body);
+
+        res.status(httpStatus.CREATED).json({data: eventCategory});
+    } catch (error) {
+        next(error);
+    }
+}
+
+/** @type {import('express').RequestHandler} */
+export async function updateEventHandler(req, res, next) {
+    try {
+        const params = matchedData(req, {locations: ['params']});
+        const body = matchedData(req, {locations: ['body']});
+
+        const result = await EventCategory.updateEventCategory(params?.id, body);
+        res.status(httpStatus.OK).json(result);
+    } catch (error) {
+        next(error);
+    }
+}
+
+/** @type {import('express').RequestHandler} */
+export async function deleteEventHandler(req, res, next) {
+    try {
+        const params = matchedData(req, {locations: ['params']});
+        const result = await EventCategory.deleteEventCategory(params?.id);
+
+        res.status(httpStatus.OK).json({data: result});
+    } catch (error) {
+        next();
     }
 }

@@ -1,3 +1,4 @@
+import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
 import EventsModel from '../models/events/index.js';
 import {errors} from '../errors/utils.js';
@@ -9,9 +10,10 @@ const EVENT_NOT_FOUND_MESSAGE = 'Event not found';
 /** @type {RequestHandler} */
 export async function createEventHandler(req, res, next) {
     try {
-        const body = matchedData(req, {location: ['body']});
-        const event = await EventsModel.createEvent({...body});
-        res.json({data: event});
+        const body = matchedData(req, {locations: ['body']});
+        const event = await EventsModel.createEvent(body);
+
+        res.status(httpStatus.CREATED).json({data: event});
     } catch (error) {
         next(error);
     }
@@ -27,7 +29,7 @@ export async function getEventHandler(req, res, next) {
             throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
         }
 
-        res.status(200).json(result);
+        res.status(httpStatus.OK).json(result);
     } catch (err) {
         next(err);
     }
@@ -45,7 +47,7 @@ export async function getEventsHandler(req, res, next) {
             limit: results?.limit,
         };
 
-        res.json(responseRaw);
+        res.status(httpStatus.OK).json(responseRaw);
     } catch (error) {
         next(error);
     }
@@ -58,7 +60,7 @@ export async function updateEventHandler(req, res, next) {
         const {id} = matchedData(req, {locations: ['params']});
 
         const result = await EventsModel.updateEvent(id, body);
-        res.status(200).json(result);
+        res.status(httpStatus.OK).json(result);
     } catch (error) {
         next(error);
     }
@@ -74,7 +76,7 @@ export async function deleteEventHandler(req, res, next) {
             throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
         }
 
-        res.status(200);
+        res.status(httpStatus.OK).json(result);
     } catch (error) {
         next(error);
     }

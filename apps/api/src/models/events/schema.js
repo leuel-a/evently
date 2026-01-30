@@ -25,7 +25,7 @@ const schema = new mongoose.Schema(
         description: {type: String, required: true},
         date: {type: Date, required: true},
         location: {type: String},
-        ticketPrice: {type: Number, required: true},
+        ticketPrice: {type: Number, required: false, default: 0},
         capacity: {type: Number, required: true},
         checkoutLink: {type: String, required: false},
         status: {
@@ -58,6 +58,23 @@ const schema = new mongoose.Schema(
 schema.pre('save', function () {
     this.isVirtual = this.type === EVENT_TYPE.VIRTUAL;
     this.isFree = this.ticketPrice === 0;
+});
+
+/** HELPER FUNCTIONS TO CONVERT ID */
+schema.set('toJSON', {
+    transform: (_document, returned) => {
+        returned.id = returned._id;
+        delete returned.__v;
+        delete returned._id;
+    },
+});
+
+schema.set('toObject', {
+    transform: (_document, returned) => {
+        returned.id = returned._id;
+        delete returned.__v;
+        delete returned._id;
+    },
 });
 
 export default schema;
