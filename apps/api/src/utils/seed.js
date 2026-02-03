@@ -2,6 +2,7 @@ import '../env.js';
 
 import mongoose from 'mongoose';
 import Event from '../models/events/index.js';
+import Resource from '../models/resources/index.js';
 import EventCategory from '../models/eventsCategory/index.js';
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -12,6 +13,8 @@ const getFutureDate = (days) => {
     date.setUTCHours(10, 0, 0, 0);
     return date;
 };
+
+const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
 
 const defaultCategories = [
     {name: 'Technology & Innovation', description: 'AI, software, and emerging technologies.'},
@@ -65,9 +68,14 @@ async function seed() {
         console.log('Connected to DB');
 
         /* 1️⃣ Clear collections */
+        await Resource.deleteMany({});
         await Event.deleteMany({});
         await EventCategory.deleteMany({});
         console.log('Cleared events & categories');
+
+        /** Insert resources */
+        const resources = await Resource.insertMany(defaultResources);
+        console.log(`Inserted ${resources.length} resources`);
 
         /* 2️⃣ Insert categories */
         const categories = await EventCategory.insertMany(defaultCategories);

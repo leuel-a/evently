@@ -2,6 +2,12 @@ import {EVENT_STATUS, EVENT_TYPE} from '../models/events/schema.js';
 import {TICKET_STATUS} from '../models/tickets/schema.js';
 
 /**
+ * @typedef {Object} Resource
+ *
+ * @property {string} name
+ */
+
+/**
  * @typedef {Object} Event
  *
  * @property {import('mongoose').Types.ObjectId} organizerId

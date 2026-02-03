@@ -86,6 +86,7 @@ export async function getEvents({page, size}) {
                 id: 1,
                 title: 1,
                 description: 1,
+                date: 1,
                 location: 1,
                 ticketPrice: 1,
                 capacity: 1,

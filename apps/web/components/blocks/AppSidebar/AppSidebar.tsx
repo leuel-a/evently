@@ -1,13 +1,9 @@
 import {LayoutDashboard, Calendar} from 'lucide-react';
-import {appRoutes} from '@/config/routes';
-import {
-    Sidebar,
-    SidebarContent,
-    SidebarHeader,
-} from '@/components/ui/sidebar';
+import {APP_ROUTES} from '@/config/routes';
+import {Sidebar, SidebarContent, SidebarHeader} from '@/components/ui/sidebar';
 import {AppSidebarMenu} from './AppSidebarMenu';
-import {AppSidebarGroupMenu} from './AppSidebarGroupMenu'
-import {Resource} from './types'
+import {AppSidebarGroupMenu} from './AppSidebarGroupMenu';
+import {Resource} from './types';
 
 const groups = Object.freeze({
     independent: 'independent',
@@ -17,18 +13,17 @@ const groups = Object.freeze({
 const resources: Resource[] = [
     {
         title: 'Dashboard',
-        url: appRoutes.dashboard.index,
+        url: APP_ROUTES.dashboard.base,
         icon: LayoutDashboard,
         group: groups.independent,
     },
     {
         title: 'Events',
-        url: appRoutes.dashboard.events,
+        url: APP_ROUTES.dashboard.events.base,
         icon: Calendar,
         group: groups.events,
     },
 ];
-
 
 export function AppSidebar() {
     const independentResources = resources.filter((value) => value.group === groups.independent);
@@ -39,9 +34,11 @@ export function AppSidebar() {
                 {independentResources.map((resource) => (
                     <AppSidebarMenu key={resource.url} resource={resource} />
                 ))}
-                {Object.values(groups).filter(group => group !== groups.independent).map((group) => (
-                    <AppSidebarGroupMenu key={group} resources={resources} group={group} />
-                ))}
+                {Object.values(groups)
+                    .filter((group) => group !== groups.independent)
+                    .map((group) => (
+                        <AppSidebarGroupMenu key={group} resources={resources} group={group} />
+                    ))}
             </SidebarContent>
         </Sidebar>
     );

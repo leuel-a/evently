@@ -1,57 +1,65 @@
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import {capitalizeFirstLetter} from '@/lib/utils';
-import {Input} from '@/components/ui/input';
+'use client';
+
+import type {IEvent} from '@/types';
+import {DataTable as EventTable} from './data-table';
+import {columns} from './columns';
+import {type QueryFunction, useQuery} from '@tanstack/react-query';
+import {FilterEventsTable} from '@/components/pages/dashboard/FilterEventsTable';
+
+export type EventResponse = {
+    data: IEvent[];
+    page: number;
+    limit: number;
+};
+
+export type SettingsApiResponse = {
+    category: {
+        all: {id: string; name: string}[];
+        active: {id: string; name: string}[];
+    };
+};
 
 export default function Page() {
-    return (
-        <div>
-            <div>
-                <h1 className="text-lg">Events</h1>
-            </div>
-        </div>
-    );
-}
+    const fetchEvents: QueryFunction<EventResponse, ['events']> = async () => {
+        const response = await fetch('/api/events');
 
-const categories = [
-    'Conferences',
-    'Workshops',
-    'Webinars',
-    'Networking Events',
-    'Trade Shows',
-    'Festivals',
-    'Concerts',
-    'Corporate Meetings',
-    'Sports Events',
-    'Social Gatherings',
-];
+        if (!response.ok) {
+            throw new Error('Failed to fetch events');
+        }
 
-export function FilterEvents() {
+        return response.json();
+    };
+
+    const getSettings: QueryFunction<SettingsApiResponse, ['settings']> = async () => {
+        const response = await fetch('/api/settings');
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch events');
+        }
+
+        return response.json();
+    };
+
+    const {
+        data: events,
+        isPending: isPendingEvent,
+        isError: isErrorEvent,
+    } = useQuery({queryKey: ['events'], queryFn: fetchEvents});
+
+    const {data: settings} = useQuery({
+        queryKey: ['settings'],
+        queryFn: getSettings,
+    });
+
     return (
-        <div>
-            <div>
-                <Input />
-                <Select>
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a fruit" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Categories</SelectLabel>
-                            {categories.map(category => (
-                                <SelectItem value={category}>{capitalizeFirstLetter(category)}</SelectItem>
-                            ))}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </div>
+        <div className="mx-auto py-10">
+            <FilterEventsTable categories={settings?.category?.all || []} />
+            {isErrorEvent && <div>Something wen't wrong while trying to fetch.</div>}
+            {isPendingEvent ? (
+                <div>Loading</div>
+            ) : (
+                <EventTable data={events?.data || []} columns={columns} />
+            )}
         </div>
     );
 }

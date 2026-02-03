@@ -99,6 +99,35 @@ describe('/events API', () => {
 
         expect(res.body?.data?.length).toBeGreaterThanOrEqual(1);
         expect(res.body?.page).toBe(1);
+
+        const data = lodashGet(res.body, 'data');
+
+        expect(data).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    id: testEvent.id,
+                    title: testEvent.title,
+                    description: testEvent.description,
+                    date: testEvent.date.toISOString(),
+                    location: testEvent.location,
+                    ticketPrice: testEvent.ticketPrice,
+                    capacity: testEvent.capacity,
+                    status: testEvent.status,
+                    type: testEvent.type,
+                    category: {
+                        id: testCategory.id,
+                        name: testCategory.name,
+                        description: testCategory.description,
+                    },
+                    virtualUrl: testEvent.virtualUrl,
+                    isVirtual: testEvent.isVirtual,
+                    isFree: testEvent.isFree,
+                    address: testEvent.address,
+                    startTime: testEvent.startTime,
+                    endTime: testEvent.endTime,
+                }),
+            ]),
+        );
     });
 
     test('[GET] /events/:id - returns a single event', async () => {
@@ -107,17 +136,23 @@ describe('/events API', () => {
         expect(res.status).toBe(httpStatus.OK);
         expect(res.body).toHaveProperty('data');
 
-        // expect(res.body.data).toMatchObject({
-        //     id: testEvent.id,
-        //     title: testEventPayload.title,
-        //     description: testEventPayload.description,
-        //     category: {
-        //         id: testCategory.id,
-        //         name: testCategory.name,
-        //     },
-        //     startTime: testEventPayload.startTime,
-        //     endTime: testEventPayload.endTime,
-        // });
+        expect(res.body.data).toMatchObject({
+                    id: testEvent.id,
+                    title: testEvent.title,
+                    description: testEvent.description,
+                    date: testEvent.date.toISOString(),
+                    location: testEvent.location,
+                    ticketPrice: testEvent.ticketPrice,
+                    capacity: testEvent.capacity,
+                    status: testEvent.status,
+                    type: testEvent.type,
+                    virtualUrl: testEvent.virtualUrl,
+                    isVirtual: testEvent.isVirtual,
+                    isFree: testEvent.isFree,
+                    address: testEvent.address,
+                    startTime: testEvent.startTime,
+                    endTime: testEvent.endTime,
+        });
     });
 
     test('[GET] /events/:id - returns 404 for invalid id', async () => {
