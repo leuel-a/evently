@@ -2,6 +2,7 @@ import {getPaginationValues} from '../helpers/index.js';
 import {normalizeID} from '../helpers/aggregations.js';
 import {getEventProjection} from './utils.js';
 import {modelNames} from '../../config.js';
+import {EVENT_TYPE} from './schema.js';
 
 /**
  * Get a single event based on the criteria
@@ -72,6 +73,12 @@ export async function getEvents({page, size}) {
             $unwind: {
                 path: '$category',
                 preserveNullAndEmptyArrays: true,
+            },
+        },
+        {
+            $addFields: {
+                isVirtual: {$eq: ['$type', EVENT_TYPE.VIRTUAL]},
+                isFree: {$eq: ['$ticketPrice', 0]},
             },
         },
         {

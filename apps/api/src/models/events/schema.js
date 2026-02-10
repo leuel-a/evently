@@ -45,8 +45,6 @@ const schema = new mongoose.Schema(
         },
         isDeleted: {type: Boolean, default: false},
         virtualUrl: {type: String, required: false},
-        isVirtual: {type: Boolean, default: false},
-        isFree: {type: Boolean, default: false},
         address: {type: String, required: false},
         startTime: {type: String, required: true},
         endTime: {type: String, required: true},
@@ -55,13 +53,17 @@ const schema = new mongoose.Schema(
 );
 
 /** AUTO-DERIVED FIELDS */
-schema.pre('save', function () {
-    this.isVirtual = this.type === EVENT_TYPE.VIRTUAL;
-    this.isFree = this.ticketPrice === 0;
+schema.virtual('isVirtual').get(function () {
+    return this.type === EVENT_TYPE.VIRTUAL;
+});
+
+schema.virtual('isFree').get(function () {
+    return this.ticketPrice === 0;
 });
 
 /** HELPER FUNCTIONS TO CONVERT ID */
 schema.set('toJSON', {
+    virtuals: true,
     transform: (_document, returned) => {
         returned.id = returned._id;
         delete returned.__v;
@@ -70,6 +72,7 @@ schema.set('toJSON', {
 });
 
 schema.set('toObject', {
+    virtuals: true,
     transform: (_document, returned) => {
         returned.id = returned._id;
         delete returned.__v;
