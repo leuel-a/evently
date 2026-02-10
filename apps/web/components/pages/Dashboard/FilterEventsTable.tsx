@@ -1,7 +1,7 @@
 'use client'
 
-import {MultiSelectEventCategory} from '@/components/pages/common/MultiSelectEventCategory';
-import {SearchEvents} from '../common/SearchEvents';
+import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
+import {SearchEvents} from '../Common/SearchEvents';
 
 interface EventsCategory {
     name: string;

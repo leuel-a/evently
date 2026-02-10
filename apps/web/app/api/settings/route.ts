@@ -1,6 +1,7 @@
-const API_BASE_URL = process.env.API_BASE_URL;
+import { makeApiCall } from "@/config/api";
+import {API_ROUTES} from '@/config/routes';
 
 export async function GET() {
-    const response = await fetch(`${API_BASE_URL}/settings`);
-    return Response.json(await response.json());
+    const response = await makeApiCall({url: API_ROUTES.settings.base});
+    return Response.json(response);
 }

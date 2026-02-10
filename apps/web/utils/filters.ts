@@ -1,6 +1,6 @@
 import lodashGet from 'lodash/get';
 import lodashSet from 'lodash/set';
-import { FilterParams } from '@/types/utils/filters';
+import {FilterParams} from '@/types/utils/filters';
 
 export const FILTERS_PARAM_KEY = 'filters';
 export const PAGE_PARAM_KEY = 'page';

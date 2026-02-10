@@ -26,19 +26,15 @@ type AppRoutes = typeof APP_ROUTES;
 
 const INDEX_BASE_API_ROUTE = '/api';
 const EVENTS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/events`;
-const EVENT_CATEGORIES_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventCategory`;
+const EVENT_CATEGORIES_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventsCategory`;
+const SETTINGS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/settings`;
 
 const API_ROUTES = {
     index: INDEX_BASE_API_ROUTE, // this might never be needed
-    auth: {
-        getSession: `${INDEX_BASE_API_ROUTE}/auth/get-session`,
-    },
-    events: {
-        base: EVENTS_BASE_ROUTE,
-    },
-    eventCategory: {
-        base: EVENT_CATEGORIES_BASE_ROUTE,
-    },
+    auth: {getSession: `${INDEX_BASE_API_ROUTE}/auth/get-session`},
+    events: {base: EVENTS_BASE_ROUTE},
+    eventCategory: {base: EVENT_CATEGORIES_BASE_ROUTE},
+    settings: {base: SETTINGS_BASE_ROUTE},
 } as const;
 
 type ApiRoutes = typeof API_ROUTES;

@@ -1,6 +1,7 @@
 'use client';
 
 import type {ColumnDef} from '@tanstack/react-table';
+import lodashGet from 'lodash/get';
 import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
@@ -73,19 +74,23 @@ export const columns: ColumnDef<IEvent>[] = [
         },
     },
     {
-        accessorKey: 'price',
+        accessorKey: 'ticketPrice',
         header: 'Price',
-        cell: ({row: {original}}) =>
-            original.isFree ? (
-                <Badge variant="outline" className="text-green-600 border-green-600 rounded">
+        cell: ({row}) => {
+            const isFree = lodashGet(row.original, 'isFree', false);
+            const price = row.getValue('ticketPrice') as number;
+
+            return isFree ? (
+                <Badge variant="outline" className="text-yellow-600 border-yellow-600 rounded">
                     Free
                 </Badge>
             ) : (
                 <span className="inline-flex items-center px-2 py-1 border border-input text-sm font-semibold text-gray-700 bg-gray-100 rounded">
                     <span className="mr-1">Br</span>
-                    {original.price}
+                    {price}
                 </span>
-            ),
+            );
+        },
     },
     {
         accessorKey: 'category',
@@ -115,6 +120,24 @@ export const columns: ColumnDef<IEvent>[] = [
                         {row.original.capacity} <span className="text-gray-700 text-sm">max</span>
                     </span>
                 </div>
+            );
+        },
+    },
+    {
+        accessorKey: 'isVirtual',
+        header: 'Mode',
+        cell: ({row}) => {
+            const isVirtual = row.getValue<boolean>('isVirtual');
+
+            return (
+                <Badge
+                    variant={isVirtual ? 'secondary' : 'default'}
+                    className={
+                        isVirtual ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                    }
+                >
+                    {isVirtual ? 'Remote' : 'On-Site'}
+                </Badge>
             );
         },
     },

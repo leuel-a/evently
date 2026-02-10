@@ -31,6 +31,22 @@ export interface IEvent {
     address: string;
 }
 
+export type IApiResponse<T = any> = {
+    data: T,
+}
+
+export type EventApiResponse = {
+    data: IEvent[];
+    page: number;
+    limit: number;
+};
+
+export type SettingsApiResponse = {
+    category: {
+        all: {id: string; name: string}[];
+        active: {id: string; name: string}[];
+    };
+};
 export interface IEventCategory {
     name: string;
     description: string;

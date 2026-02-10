@@ -1,3 +1,5 @@
+'use client';
+
 import {resources} from '@/config/resource-defnitions';
 import {SidebarProvider} from '@/components/ui/sidebar';
 import {ResourcesProvider} from '@/context/ResourcesContext';
@@ -7,7 +9,9 @@ export default function DashboardProviders({children}: Readonly<{children: React
     return (
         <ResourcesProvider resources={resources}>
             <ResourceProvider>
-                <SidebarProvider>{children}</SidebarProvider>
+                <SidebarProvider defaultOpen={false}>
+                    {children}
+                </SidebarProvider>
             </ResourceProvider>
         </ResourcesProvider>
     );

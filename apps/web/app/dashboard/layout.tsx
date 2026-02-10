@@ -1,8 +1,6 @@
-'use client';
-
-import {SidebarProvider, SidebarTrigger} from '@/components/ui/sidebar';
+import {SidebarTrigger} from '@/components/ui/sidebar';
 import {AppSidebar} from '@/components/blocks/AppSidebar';
-import {DashboardHeader} from '@/components/pages/dashboard/Common/DashboardHeader';
+import {DashboardHeader} from '@/components/pages/Dashboard/Common/DashboardHeader';
 import DashboardProviders from './providers';
 
 interface DashboardLayoutProps {
@@ -12,16 +10,14 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({children}: DashboardLayoutProps) {
     return (
         <DashboardProviders>
-            <SidebarProvider defaultOpen={true}>
-                <AppSidebar />
-                <main className="w-full">
-                    <SidebarTrigger />
-                    <div className="px-10 py-4">
-                        <DashboardHeader />
-                        {children}
-                    </div>
-                </main>
-            </SidebarProvider>
+            <AppSidebar />
+            <main className="w-full">
+                <SidebarTrigger />
+                <div className="px-10 py-4">
+                    <DashboardHeader />
+                    {children}
+                </div>
+            </main>
         </DashboardProviders>
     );
 }
