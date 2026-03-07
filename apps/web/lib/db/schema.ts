@@ -1,3 +1,4 @@
+import {EVENT_TYPE} from '@/types/events';
 import {z} from 'zod';
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;
@@ -12,24 +13,24 @@ export const eventsSchema = z
         date: z.coerce.date(),
         startTime: z.string({error: 'Required'}).min(1),
         endTime: z.string().optional(),
-        category: z
-            .string({error: 'Required'})
-            .min(1, {message: 'Category can not be empty'}),
-        address: z.string().optional(),
+        category: z.string({error: 'Required'}),
+        location: z.string().optional(),
         country: z.string().optional(),
         city: z.string(),
         capacity: z.coerce.number({error: 'Required'}),
-        price: z.number(),
+        type: z.enum(Object.values(EVENT_TYPE), {error: 'Required'}),
+        ticketPrice: z.coerce.number(),
         isFree: z.boolean().default(false),
         isVirtual: z
             .preprocess((v) => (v === 'true' ? true : v === 'false' ? false : v), z.boolean())
             .optional(),
+        virtualUrl: z.string().optional(),
     })
     .refine(
-        ({isVirtual, address, country, city}) => {
+        ({isVirtual, location, country, city}) => {
             if (isVirtual === false) {
                 return (
-                    Boolean(address && address.trim()) &&
+                    Boolean(location && location.trim()) &&
                     Boolean(country && country.trim()) &&
                     Boolean(city && city.trim())
                 );
@@ -37,13 +38,19 @@ export const eventsSchema = z
             return true;
         },
         {
-            message: 'Address, country, and city are required for in-person events',
-            path: ['address'], // You can point this to any one of the fields
+            message: 'Location, country, and city are required for in-person events',
+            path: ['location'], // You can point this to any one of the fields
         },
     )
-    .refine(({isFree, price}) => {
+    .refine(({isFree, ticketPrice: price}) => {
         if (isFree === false) {
             return Boolean(price && price > 0);
         }
         return true;
+    })
+    .transform((values) => {
+        return {
+            ...values,
+            type: values.isVirtual ? EVENT_TYPE.VIRTUAL : EVENT_TYPE.PHYSICAL,
+        };
     });

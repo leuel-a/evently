@@ -9,7 +9,7 @@ export default function DashboardProviders({children}: Readonly<{children: React
     return (
         <ResourcesProvider resources={resources}>
             <ResourceProvider>
-                <SidebarProvider defaultOpen={false}>
+                <SidebarProvider defaultOpen={true}>
                     {children}
                 </SidebarProvider>
             </ResourceProvider>

@@ -7,3 +7,7 @@ export const errors = {
     notFound: (message) => createError.NotFound(message),
     conflict: (message) => createError.Conflict(message),
 };
+
+export const ERROR_MESSAGES = {
+    UNAUTHORIZED: 'Unauthorized',
+};

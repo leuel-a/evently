@@ -6,6 +6,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "nodemon --config nodemon.json ./src/app.js",
+        "start": "node ./src/app.js",
         "docs": "jsdoc -c jsdoc.conf.json",
         "docs:watch": "jsdoc -c jsdoc.conf.json --watch",
         "test": "vitest run",
@@ -14,6 +15,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@better-auth/mongo-adapter": "^1.5.4",
         "better-auth": "^1.4.10",
         "chai": "^6.2.0",
         "cors": "^2.8.5",
@@ -23,7 +25,8 @@
         "express-validator": "^7.3.0",
         "http-errors": "^2.0.1",
         "http-status": "^2.1.0",
-        "mongoose": "^8.19.3",
+        "lodash": "^4.17.23",
+        "mongoose": "^9.2.4",
         "morgan": "^1.10.1",
         "winston": "^3.19.0"
     },
@@ -34,5 +37,8 @@
         "prettier": "^3.7.1",
         "supertest": "^7.1.4",
         "vitest": "^4.0.16"
+    },
+    "overrides": {
+        "mongodb": "^6.21.0"
     }
 }

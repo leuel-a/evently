@@ -1,7 +1,7 @@
 export const API_PREFIX = '/api';
 
 export const API_ROUTES = Object.freeze({
-    users: {base: '/users'},
+    users: {base: '/users', linkedAccounts: '/me/linked-accounts'},
     auth: {base: '/auth'},
     events: {base: '/events'},
     eventsCategory: {

@@ -60,7 +60,7 @@ const fields = {
         },
     },
     type: {
-        name: 'status',
+        name: 'type',
         isIn: {
             message: `Type must be one of: ${Object.values(EVENT_TYPE).join(', ')}`,
         },
@@ -159,16 +159,14 @@ const eventFieldsValidators = {
 export const createEventValidator = [
     eventFieldsValidators.title,
     eventFieldsValidators.description,
+    eventFieldsValidators.startTime,
+    eventFieldsValidators.endTime,
     eventFieldsValidators.date,
     eventFieldsValidators.ticketPrice.optional(),
     eventFieldsValidators.capacity,
     eventFieldsValidators.location.optional(),
-    eventFieldsValidators.checkoutLink.optional(),
-    eventFieldsValidators.status.optional(),
-    eventFieldsValidators.type.optional(),
+    eventFieldsValidators.type,
     eventFieldsValidators.virtualUrl.optional(),
-    eventFieldsValidators.startTime,
-    eventFieldsValidators.endTime,
     eventFieldsValidators.category,
 ];
 

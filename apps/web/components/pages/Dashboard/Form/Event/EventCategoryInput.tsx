@@ -22,10 +22,10 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
     const {choices} = useChoicesContext<EventCategory>();
 
     return (
-        <>
+        <div className="w-xl">
             <Field>
                 <div className="space-y-1">
-                    <FieldLabel htmlFor="eventCategory">Event Category</FieldLabel>
+                    <FieldLabel htmlFor="category">Event Category</FieldLabel>
                     <FieldDescription>
                         Select the category that best fits your event. If you can't find the right
                         category, you can create a new one in the Event Category section of the
@@ -34,7 +34,7 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
                 </div>
 
                 <Select onValueChange={onChange} defaultValue={value}>
-                    <SelectTrigger className="w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12">
+                    <SelectTrigger className="rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12">
                         <SelectValue placeholder="Select your event category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -46,7 +46,7 @@ export function EventCategoryInputComponent(props: EventCategoryInputProps) {
                     </SelectContent>
                 </Select>
             </Field>
-        </>
+        </div>
     );
 }
 

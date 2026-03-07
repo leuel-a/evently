@@ -3,10 +3,7 @@ import {useFormContext, Controller} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import lodashGet from 'lodash/get';
 import NextLink from 'next/link';
-import {CountriesSelectInput} from '@/components/pages/Common/CountriesSelectInput';
-import {AddressAutofillInput} from '@/components/blocks/Common/AddressAutofillInput';
 import type {AddressAutofillInputProps} from '@/components/blocks/Common/AddressAutofillInput';
-import {BooleanInput} from '@/components/blocks/BooleanInput';
 import {FormDatepicker} from '@/components/blocks/Form/FormDatepicker';
 import {ReferenceInput} from '@/components/blocks/ReferenceInput';
 import {Button} from '@/components/ui/button';
@@ -19,6 +16,11 @@ import {API_ROUTES, APP_ROUTES} from '@/config/routes';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {cn} from '@/lib/utils';
 import {EventCategoryInput} from './EventCategoryInput';
+import {EventLocationInput} from './EventLocationInput';
+import {EventIsVirtualInput} from './EventIsVirtualInput';
+import {EventIsFreeInput} from './EventIsFreeInput';
+import {EventTicketPriceInput} from './EventTicketPriceInput';
+import {EventCapacityInput} from './EventCapacityInput';
 
 export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
 
@@ -32,6 +34,10 @@ export interface EventFormProps extends Omit<DefaultFormProps, 'onSubmit'> {
 export function EventForm(props: EventFormProps) {
     const formProps = sanitizeProps(props);
     const form = useFormContext<EventSchemaType>();
+
+    const {watch} = form;
+    const isVirtual = watch('isVirtual');
+    const isFree = watch('isFree');
 
     return (
         <form
@@ -98,78 +104,22 @@ export function EventForm(props: EventFormProps) {
                         control={form.control}
                         name="isVirtual"
                         render={({field, fieldState}) => (
-                            <Field
-                                data-invalid={fieldState.invalid}
-                                className="flex flex-row items-center justify-between rounded border p-3"
-                            >
-                                <div className="space-y-1">
-                                    <FieldLabel>Virtual Event</FieldLabel>
-                                    <FieldDescription>
-                                        Enable this if your event will be held online (virtual
-                                        event).
-                                    </FieldDescription>
-                                </div>
-                                <BooleanInput
-                                    aria-invalid={fieldState.invalid}
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                            </Field>
+                            <EventIsVirtualInput field={field} fieldState={fieldState} />
                         )}
                     />
                     <Controller
                         control={form.control}
-                        name="address"
+                        name="location"
                         render={({field, fieldState}) => (
-                            <Field>
-                                <FieldLabel>Address</FieldLabel>
-                                <AddressAutofillInput
-                                    InputProps={{
-                                        ...field,
-                                        className: 'h-12',
-                                        'aria-invalid': fieldState.invalid,
-                                    }}
-                                    {...props.CustomAddressAutofillInputProps}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                            </Field>
+                            <EventLocationInput
+                                field={field}
+                                fieldState={fieldState}
+                                CustomAddressAutofillInputProps={{
+                                    InputProps: {disabled: isVirtual},
+                                }}
+                            />
                         )}
                     />
-                    <div className="flex flex-col gap-4 xl:grid xl:grid-cols-2 xl:gap-2">
-                        <Controller
-                            control={form.control}
-                            name="country"
-                            render={({field, fieldState}) => (
-                                <Field>
-                                    <FieldLabel>Country</FieldLabel>
-                                    <CountriesSelectInput
-                                        onChange={field.onChange}
-                                        value={field.value ?? ''}
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
-                            )}
-                        />
-                        <Controller
-                            control={form.control}
-                            name="city"
-                            render={({field, fieldState}) => (
-                                <Field>
-                                    <FieldLabel>City</FieldLabel>
-                                    <Input
-                                        {...field}
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="Enter the city"
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
-                            )}
-                        />
-                    </div>
                 </div>
             </div>
             <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
@@ -202,7 +152,9 @@ export function EventForm(props: EventFormProps) {
                                 <Field className="flex-1">
                                     <FieldLabel>Start Time</FieldLabel>
                                     <TimePicker {...field} />
-                                    {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                    {fieldState.invalid && (
+                                        <FieldError errors={[fieldState.error]} />
+                                    )}
                                 </Field>
                             )}
                         />
@@ -232,56 +184,26 @@ export function EventForm(props: EventFormProps) {
                         control={form.control}
                         name="isFree"
                         render={({field, fieldState}) => (
-                            <Field className="flex flex-row items-center justify-between rounded border p-3">
-                                <div className="space-y-1">
-                                    <FieldLabel>Free Event</FieldLabel>
-                                    <FieldDescription>No Charge for attendees</FieldDescription>
-                                </div>
-                                <BooleanInput
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                />
-                            </Field>
+                            <EventIsFreeInput field={field} fieldState={fieldState} />
                         )}
                     />
                     <div className="flex gap-2">
                         <Controller
                             control={form.control}
-                            name="price"
+                            name="ticketPrice"
                             render={({field, fieldState}) => (
-                                <Field className="flex-1">
-                                    <FieldLabel>Ticket Price</FieldLabel>
-                                    <Input
-                                        aria-invalid={fieldState.invalid}
-                                        type="number"
-                                        {...field}
-                                        placeholder="What is your expected attendance?"
-                                    />
-                                    <FieldDescription>
-                                        Leave empty if event is free
-                                    </FieldDescription>
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
+                                <EventTicketPriceInput
+                                    disabled={isFree}
+                                    field={field}
+                                    fieldState={fieldState}
+                                />
                             )}
                         />
                         <Controller
                             control={form.control}
                             name="capacity"
                             render={({field, fieldState}) => (
-                                <Field className="flex-1">
-                                    <FieldLabel>Capacity</FieldLabel>
-                                    <Input
-                                        type="number"
-                                        {...field}
-                                        placeholder="What is your expected attendance?"
-                                    />
-                                    <FieldDescription>Maximum number of attendees</FieldDescription>
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
+                                <EventCapacityInput field={field} fieldState={fieldState} />
                             )}
                         />
                     </div>

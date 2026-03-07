@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import accountSchema from './schema.js';
-import * as statics from './statics';
+import * as statics from './statics.js';
 import * as methods from './methods.js';
 import {modelNames} from '../../config.js';
 

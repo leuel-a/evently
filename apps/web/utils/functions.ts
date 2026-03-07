@@ -1,6 +1,14 @@
 import lodashIsEmpty from 'lodash/isEmpty';
-import {ZodEffects, ZodObject} from 'zod';
 import {APP_ROUTES} from '@/config/routes';
+
+export function getInitials(name: string) {
+    return name
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? '')
+        .join('');
+}
 
 export function removeEmptyStringsFromArray<T>(array: Array<T>) {
     return array.filter((value) => !lodashIsEmpty(value));
@@ -22,16 +30,6 @@ export function convertFormDataToObject(formData: FormData) {
     return Object.fromEntries(
         Array.from(formData.entries()).map(([k, v]) => [k, v.toString()]),
     ) as Record<string, string>;
-}
-
-export function getValuesFromObjectBasedOnSchema(
-    object: Object,
-    inputSchema: ZodEffects<ZodObject<any>>,
-) {
-    const eventsSchemaKeys = Object.keys(inputSchema._def.schema.shape);
-    return Object.fromEntries(
-        Object.entries(object).filter(([key]) => eventsSchemaKeys.includes(key)),
-    );
 }
 
 export function getResourceFromPathname(
