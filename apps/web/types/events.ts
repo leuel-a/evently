@@ -1,3 +1,5 @@
+import {IApiResponse} from './utils';
+
 export enum EVENT_STATUS {
     DRAFT = 'draft',
     ACTIVE = 'active',
@@ -11,11 +13,13 @@ export enum EVENT_TYPE {
 }
 
 export interface IEventCategory {
+    id: string;
     name: string;
     description: string;
 }
 
 export interface IEvent {
+    id: string;
     title: string;
     description: string;
     date: Date;
@@ -36,9 +40,10 @@ export interface IEvent {
     address: string;
 }
 
-export type EventApiResponse = {
-    data: IEvent[];
+export type EventApiResponse = IApiResponse<IEvent[]> & {
     page: number;
+    total: number;
     limit: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
 };
-

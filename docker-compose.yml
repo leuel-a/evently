@@ -1,0 +1,48 @@
+services:
+  api:
+    env_file:
+      - .env.production
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.production
+    container_name: evently-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: 5000
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      DATABASE_URL: ${DATABASE_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+    expose:
+      - "5000"
+    networks:
+      - appnet
+
+  web:
+    env_file:
+      - .env.production
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.production
+    container_name: evently-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: 3000
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+      NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+      NEXT_PUBLIC_MAPBOX_API_KEY: ${NEXT_PUBLIC_MAPBOX_API_KEY}
+      API_URL: ${API_URL}
+      APP_URL: ${APP_URL}
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

@@ -5,7 +5,7 @@ import lodashGet from 'lodash/get';
 import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
-import type {IEvent} from '@/types';
+import type {IEvent} from '@/types/events';
 
 export const columns: ColumnDef<IEvent>[] = [
     {

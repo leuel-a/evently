@@ -1,4 +1,4 @@
-import {AppError} from '@/lib/error';
+import {ApiError} from '@/lib/error';
 
 export type IApiResponse<T = any> = {
     data: T;
@@ -7,5 +7,5 @@ export type IApiResponse<T = any> = {
 export interface IActionResult<T> {
     success: boolean;
     data?: T;
-    error?: AppError;
+    error?: ApiError;
 }

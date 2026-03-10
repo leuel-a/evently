@@ -46,7 +46,7 @@ export function AccountConnectionsSection({data, onConnect}: AccountConnectionsS
     );
 
     return (
-        <Card className="border-border/60 shadow-sm">
+        <Card className="border-border/60 shadow-sm rounded">
             <CardHeader className="space-y-2">
                 <div className="flex items-center gap-2">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">

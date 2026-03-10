@@ -1,6 +1,7 @@
 import '../env.js';
 
 import mongoose from 'mongoose';
+import Ticket from '../models/tickets/index.js';
 import Event from '../models/events/index.js';
 import Resource from '../models/resources/index.js';
 import EventCategory from '../models/eventsCategory/index.js';
@@ -14,7 +15,31 @@ const getFutureDate = (days) => {
     return date;
 };
 
+const defaultUserId = '69aac1e3e136422e6bb2a70e';
 const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
+
+const defaultPurchasers = [
+    {name: 'Abel Tesfaye', email: 'abel.tesfaye@example.com'},
+    {name: 'Hana Bekele', email: 'hana.bekele@example.com'},
+    {name: 'Dawit Alemu', email: 'dawit.alemu@example.com'},
+    {name: 'Selam Tadesse', email: 'selam.tadesse@example.com'},
+    {name: 'Ruth Kebede', email: 'ruth.kebede@example.com'},
+    {name: 'Nati Girma', email: 'nati.girma@example.com'},
+    {name: 'Meron Haile', email: 'meron.haile@example.com'},
+    {name: 'Samuel Worku', email: 'samuel.worku@example.com'},
+    {name: 'Bethel Assefa', email: 'bethel.assefa@example.com'},
+    {name: 'Yonas Fikru', email: 'yonas.fikru@example.com'},
+    {name: 'Lidiya Solomon', email: 'lidiya.solomon@example.com'},
+    {name: 'Henok Bekele', email: 'henok.bekele@example.com'},
+    {name: 'Rahel Getachew', email: 'rahel.getachew@example.com'},
+    {name: 'Biruk Teshome', email: 'biruk.teshome@example.com'},
+    {name: 'Eden Mesfin', email: 'eden.mesfin@example.com'},
+    {name: 'Surafel Abate', email: 'surafel.abate@example.com'},
+    {name: 'Mahi Deribe', email: 'mahi.deribe@example.com'},
+    {name: 'Naol Mebratu', email: 'naol.mebratu@example.com'},
+    {name: 'Saron Desta', email: 'saron.desta@example.com'},
+    {name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com'},
+];
 
 const defaultCategories = [
     {name: 'Technology & Innovation', description: 'AI, software, and emerging technologies.'},
@@ -37,6 +62,7 @@ const seedEventsData = [
         ticketPrice: 299,
         capacity: 150,
         status: 'active',
+        user: defaultUserId,
         type: 'virtual',
         categoryName: 'Technology & Innovation',
     },
@@ -47,6 +73,7 @@ const seedEventsData = [
         ticketPrice: 49.99,
         capacity: 50,
         status: 'draft',
+        user: defaultUserId,
         type: 'physical',
         categoryName: 'Education & Learning',
     },
@@ -57,10 +84,45 @@ const seedEventsData = [
         ticketPrice: 0,
         capacity: 50,
         status: 'active',
+        user: defaultUserId,
         type: 'physical',
         categoryName: 'Networking & Community',
     },
 ];
+
+function buildPaymentId(index) {
+    return `PAY-${Date.now()}-${String(index + 1).padStart(3, '0')}`;
+}
+
+function buildTickets(events) {
+    const tickets = [];
+
+    for (let index = 0; index < 20; index++) {
+        const purchaser = defaultPurchasers[index];
+        const event = events[index % events.length];
+
+        let status = 'PAID';
+
+        // sprinkle in a few different statuses
+        if (index === 4 || index === 11 || index === 17) {
+            status = 'REFUNDED';
+        } else if (index === 8 || index === 15) {
+            status = 'PENDING';
+        }
+
+        tickets.push({
+            event: event._id,
+            purchaserName: purchaser.name,
+            purchaserEmail: purchaser.email,
+            paymentId: buildPaymentId(index),
+            amountPaid: event.ticketPrice,
+            currency: "Br",
+            status,
+        });
+    }
+
+    return tickets;
+}
 
 async function seed() {
     try {
@@ -68,6 +130,7 @@ async function seed() {
         console.log('Connected to DB');
 
         /* 1️⃣ Clear collections */
+        await Ticket.deleteMany({});
         await Resource.deleteMany({});
         await Event.deleteMany({});
         await EventCategory.deleteMany({});
@@ -95,6 +158,7 @@ async function seed() {
                 ticketPrice: event.ticketPrice,
                 capacity: event.capacity,
                 status: event.status,
+                user: event.user,
                 type: event.type,
                 category: categoryMap[event.categoryName],
 
@@ -107,9 +171,21 @@ async function seed() {
             };
         });
 
-        await Event.insertMany(events);
+        const insertedEvents = await Event.insertMany(events);
         console.log(`Inserted ${events.length} events`);
 
+        const tickets = buildTickets(insertedEvents);
+        const insertedTickets = await Ticket.insertMany(tickets);
+        console.log(`Inserted ${insertedTickets.length} tickets`);
+
+        const groupedCounts = insertedTickets.reduce((accumulator, ticket) => {
+            const key = ticket.event.toString();
+
+            accumulator[key] = (accumulator[key] || 0) + 1;
+            return accumulator;
+        }, {});
+
+        console.log('Tickets per event:', groupedCounts);
         console.log('✅ Seeding complete');
         process.exit(0);
     } catch (err) {

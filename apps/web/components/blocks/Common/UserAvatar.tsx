@@ -17,8 +17,8 @@ import {cn} from '@/lib/utils';
 interface UserAvatarMenuProps {
     data: AuthSessionData;
     onProfile?: () => void;
-    onSignOut?: () => void;
-    className: string;
+    onSignOut?: () => Promise<void>;
+    className?: string;
 }
 
 export function UserAvatarMenu({data, onProfile, onSignOut, className}: UserAvatarMenuProps) {
@@ -61,9 +61,7 @@ export function UserAvatarMenu({data, onProfile, onSignOut, className}: UserAvat
                         </div>
                     </div>
                 </DropdownMenuLabel>
-
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem onClick={onProfile}>
                     <UserIcon className="mr-2 h-4 w-4" />
                     Profile
@@ -73,9 +71,7 @@ export function UserAvatarMenu({data, onProfile, onSignOut, className}: UserAvat
                     <ShieldCheck className="mr-2 h-4 w-4" />
                     {user.emailVerified ? 'Email verified' : 'Email not verified'}
                 </DropdownMenuItem>
-
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem
                     onClick={onSignOut}
                     className="text-destructive focus:text-destructive"

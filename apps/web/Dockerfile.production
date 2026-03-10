@@ -1,0 +1,45 @@
+ARG NODE_VERSION=22-slim
+FROM node:${NODE_VERSION} AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+FROM base AS pruner
+WORKDIR /repo
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY apps ./apps
+COPY packages ./packages
+
+RUN pnpm dlx turbo prune web --docker
+
+FROM base AS installer
+WORKDIR /app
+
+COPY --from=pruner /repo/out/json/ ./
+
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+COPY --from=pruner /repo/out/full/ ./
+
+RUN pnpm turbo run build --filter=web
+
+FROM node:${NODE_VERSION} AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+RUN groupadd --system --gid 1001 nodejs \
+    && useradd --system --uid 1001 --gid nodejs nextjs
+
+COPY --from=installer /app/apps/web/.next/standalone ./
+COPY --from=installer /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=installer /app/apps/web/public ./apps/web/public
+
+USER nextjs
+EXPOSE 3000
+
+CMD ["node", "apps/web/server.js"]

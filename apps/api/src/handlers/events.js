@@ -38,13 +38,22 @@ export async function getEventHandler(req, res, next) {
 /** @type {RequestHandler} */
 export async function getEventsHandler(req, res, next) {
     try {
+        const user = req.user;
         const {page, limit} = matchedData(req, {locations: ['query']});
 
-        const results = await EventsModel.getEvents({page, size: limit});
+        const results = await EventsModel.getEvents({page, size: limit, userId: user.id});
+
+        const currentPage = Number(results?.page ?? 1);
+        const currentLimit = Number(results?.limit ?? 10);
+        const total = Number(results?.total ?? 0);
+
         const responseRaw = {
-            data: results?.data,
-            page: page,
-            limit: results?.limit,
+            data: results?.data ?? [],
+            page: currentPage,
+            limit: currentLimit,
+            total,
+            hasPreviousPage: currentPage > 1,
+            hasNextPage: currentPage * currentLimit < total,
         };
 
         res.status(httpStatus.OK).json(responseRaw);

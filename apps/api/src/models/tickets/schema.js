@@ -3,9 +3,9 @@ import {modelNames} from '../../config.js';
 
 /** @enum {string} */
 export const TICKET_STATUS = Object.freeze({
-    PAID: 'paid',
-    REFUNDED: 'refunded',
-    PEDNING: 'pending',
+    PAID: 'PAID',
+    REFUNDED: 'REFUNDED',
+    PENDING: 'PENDING',
 });
 
 /**
@@ -14,7 +14,7 @@ export const TICKET_STATUS = Object.freeze({
  */
 const schema = new mongoose.Schema(
     {
-        eventId: {
+        event: {
             type: mongoose.Schema.Types.ObjectId,
             ref: modelNames.events,
             required: true,

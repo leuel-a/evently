@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import {getPaginationValues} from '../helpers/index.js';
 import {normalizeID} from '../helpers/aggregations.js';
 import {getEventProjection} from './utils.js';
@@ -53,14 +54,11 @@ export async function createEvent(payload) {
  * @this {import('mongoose').Model}
  * @param {import('mongoose').FilterQuery} [matchQuery]
  */
-export async function getEvents({page, size}) {
-    const matchQuery = {isDeleted: false};
+export async function getEvents({page, size, userId}) {
+    const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
     const {limit, skip} = getPaginationValues(page, size);
 
-    const events = await this.aggregate([
-        {
-            $match: matchQuery,
-        },
+    const results = await this.aggregate([
         {
             $lookup: {
                 from: this.model(modelNames.eventsCategory).collection.name,
@@ -82,39 +80,47 @@ export async function getEvents({page, size}) {
             },
         },
         {
-            $skip: skip,
+            $match: matchQuery,
         },
         {
-            $limit: limit,
-        },
-        ...normalizeID(),
-        {
-            $project: {
-                id: 1,
-                title: 1,
-                description: 1,
-                date: 1,
-                location: 1,
-                ticketPrice: 1,
-                capacity: 1,
-                status: 1,
-                type: 1,
-                category: {
-                    id: '$category._id',
-                    name: '$category.name',
-                    description: '$category.description',
-                },
-                virtualUrl: 1,
-                isVirtual: 1,
-                isFree: 1,
-                address: 1,
-                startTime: 1,
-                endTime: 1,
+            $facet: {
+                data: [
+                    {$skip: skip},
+                    {$limit: limit},
+                    {
+                        $project: {
+                            id: '$_id',
+                            _id: 0,
+                            title: 1,
+                            description: 1,
+                            date: 1,
+                            location: 1,
+                            ticketPrice: 1,
+                            capacity: 1,
+                            status: 1,
+                            type: 1,
+                            category: {
+                                id: '$category._id',
+                                name: '$category.name',
+                                description: '$category.description',
+                            },
+                            virtualUrl: 1,
+                            isVirtual: 1,
+                            isFree: 1,
+                            address: 1,
+                            startTime: 1,
+                            endTime: 1,
+                        },
+                    },
+                ],
+                total: [{$count: 'count'}],
             },
         },
-    ]).exec();
+    ]);
 
-    return {data: events, page, limit: size};
+    const resultData = results?.[0]?.data;
+    const resultTotal = results?.[0]?.total;
+    return {data: resultData, total: resultTotal?.[0].count, page, limit};
 }
 
 /**

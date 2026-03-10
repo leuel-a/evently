@@ -1,19 +1,24 @@
-import {ERROR_CODES, type ErrorCode} from './error-codes';
-
 export type AppErrorOptions = {
     message: string;
     statusCode?: number;
-    code?: ErrorCode;
+    status: number;
+    statusText: string;
+    url: string;
+    data?: unknown;
 };
 
-export class AppError extends Error {
+export class ApiError extends Error {
     public readonly statusCode: number;
-    public readonly code: string;
+    public readonly statusText: string;
+    public readonly url: string;
+    public readonly data?: unknown;
 
-    constructor({message, statusCode = 500, code = ERROR_CODES.INTERNAL_ERROR}: AppErrorOptions) {
+    constructor({message, status, statusText, url, data}: AppErrorOptions) {
         super(message);
-
-        this.statusCode = statusCode;
-        this.code = code;
+        this.name = 'ApiError';
+        this.statusCode = status;
+        this.statusText = statusText;
+        this.url = url;
+        this.data = data;
     }
 }

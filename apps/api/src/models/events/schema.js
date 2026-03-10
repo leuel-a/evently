@@ -43,6 +43,11 @@ const schema = new mongoose.Schema(
             ref: modelNames.eventsCategory,
             required: true,
         },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: modelNames.user,
+            required: true,
+        },
         isDeleted: {type: Boolean, default: false},
         virtualUrl: {type: String, required: false},
         address: {type: String, required: false},

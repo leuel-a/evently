@@ -9,9 +9,9 @@ import MongoClient from './lib/mongo-client.js';
 import {API_ROUTES, API_PREFIX} from './config.js';
 import eventsRoutes from './routes/events.js';
 import usersRoutes from './routes/users.js';
+import ticketsRoutes from './routes/tickets.js';
 import settingsRoutes from './routes/settings.js';
-import eventsCategoryRoutes from './routes/eventsCategory.js';
-import {errorHandler} from './middlewares/errorHandler.js';
+import eventsCategoryRoutes from './routes/eventsCategory.js'; import {errorHandler} from './middlewares/errorHandler.js';
 
 export const MORGAN_FORMAT = ':timestamp [http] :method :url :status - :response-time ms';
 export const db = new MongoClient();
@@ -54,6 +54,7 @@ export async function setup(app) {
 
         app.use(`${API_PREFIX}${API_ROUTES.users.base}`, usersRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.events.base}`, eventsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.tickets.base}`, ticketsRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.eventsCategory.base}`, eventsCategoryRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.settings.base}`, settingsRoutes);
 
