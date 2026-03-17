@@ -1,6 +1,6 @@
 {
-  "watch": ["routes/", "handlers/", "utils/", "lib/","setup.js", "models/","config.js", "env.js"],
-  "ext": "js,json",
-  "ignore": ["node_modules/"],
-  "delay": "1000"
+    "watch": ["./src/**/*"],
+    "ext": "js,json,ts",
+    "ignore": ["node_modules/", "dist/"],
+    "exec": ["ts-node ./src/app.ts"]
 }

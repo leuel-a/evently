@@ -2,10 +2,10 @@
     "name": "@repo/api",
     "version": "1.0.0",
     "description": "API for the Evently Platform",
-    "type": "module",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon --config nodemon.json ./src/app.js",
+        "dev": "nodemon --config nodemon.json",
+        "build": "tsc",
         "start": "node ./src/app.js",
         "docs": "jsdoc -c jsdoc.conf.json",
         "docs:watch": "jsdoc -c jsdoc.conf.json --watch",
@@ -16,6 +16,8 @@
     "license": "ISC",
     "dependencies": {
         "@better-auth/mongo-adapter": "^1.5.4",
+        "@types/cors": "^2.8.19",
+        "@types/morgan": "^1.9.10",
         "better-auth": "^1.4.10",
         "chai": "^6.2.0",
         "cors": "^2.8.5",
@@ -26,16 +28,23 @@
         "http-errors": "^2.0.1",
         "http-status": "^2.1.0",
         "lodash": "^4.17.23",
+        "mongodb": "^7.1.0",
         "mongoose": "^9.2.4",
         "morgan": "^1.10.1",
         "winston": "^3.19.0"
     },
     "devDependencies": {
+        "@types/express": "^5.0.6",
+        "@types/http-errors": "^2.0.5",
         "@types/lodash": "^4.17.20",
+        "@types/mongodb": "^4.0.7",
+        "@types/node": "^20.19.37",
         "jsdoc": "^4.0.5",
         "nodemon": "^3.1.10",
         "prettier": "^3.7.1",
         "supertest": "^7.1.4",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3",
         "vitest": "^4.0.16"
     },
     "overrides": {
