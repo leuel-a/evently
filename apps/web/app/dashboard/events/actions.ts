@@ -16,6 +16,7 @@ export type GetEventsPageResultData = {
 export async function getEventsPageData(): Promise<IActionResult<GetEventsPageResultData>> {
     try {
         const headers = await nextHeaders();
+
         const [events, settings] = await Promise.all([
             makeApiCall<EventApiResponse>({url: API_ROUTES.events.base, headers}),
             makeApiCall<SettingsApiResponse>({url: API_ROUTES.settings.base}),

@@ -1,13 +1,13 @@
 import {Suspense} from 'react';
+import {DataTable as EventTable, TablePagination} from '@/components/pages/Dashboard/Common';
 import {FilterEventsTable} from '@/components/pages/Dashboard/Events/FilterEventsTable';
 import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
-import {DataTable as EventTable, TablePagination} from '@/components/pages/Dashboard/Common';
 import {getEventsPageData} from './actions';
 import {columns} from './columns';
 
 export default async function Page() {
     const {success, data, error} = await getEventsPageData();
-    console.log(error?.data)
+
     return (
         <Suspense fallback={<LoadingSpinner />}>
             {error && <div>Error: {}</div>}
