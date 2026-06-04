@@ -54,3 +54,29 @@ export const eventsSchema = z
             type: values.isVirtual ? EVENT_TYPE.VIRTUAL : EVENT_TYPE.PHYSICAL,
         };
     });
+
+export type EventCategorySchemaType = z.infer<typeof eventCategorySchema>;
+export const eventCategorySchema = z.object({
+    name: z
+        .string({error: 'Required'})
+        .min(1, {message: "Name can't be an empty string"})
+        .refine((v) => typeof v === 'string', {message: 'Name must be a string'}),
+    description: z
+        .string({error: 'Required'})
+        .min(1, {message: "Description can't be an empty string"})
+        .refine((v) => typeof v === 'string', {message: 'Description must be a string'}),
+});
+
+export type EmailSignupSchemaType = z.infer<typeof emailSignupSchema>;
+export const emailSignupSchema = z.object({
+    email: z.string({error: 'Required'}),
+    password: z.string({error: 'Required'}),
+    fullName: z.string({error: 'Required'}),
+    confirmPassword: z.string({error: 'Required'}),
+})
+
+export type EmailSigninSchemaType = z.infer<typeof emailSigninSchema>;
+export const emailSigninSchema = z.object({
+    email: z.string({error: 'Required'}),
+    password: z.string({error: 'Required'}),
+})

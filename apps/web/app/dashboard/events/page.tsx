@@ -5,8 +5,13 @@ import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
 import {getEventsPageData} from './actions';
 import {columns} from './columns';
 
-export default async function Page() {
-    const {success, data, error} = await getEventsPageData();
+interface PageProps {
+    searchParams: Promise<Record<string, string>>;
+}
+
+export default async function Page(props: PageProps) {
+    const params = await props.searchParams;
+    const {success, data, error} = await getEventsPageData(params);
 
     return (
         <Suspense fallback={<LoadingSpinner />}>
@@ -26,3 +31,4 @@ export default async function Page() {
         </Suspense>
     );
 }
+

@@ -34,7 +34,7 @@ function DashboardBreadcrumb() {
             <BreadcrumbList>
                 {pathList.map((path, index) => {
                     const isLastIndex = currentPath.length === index + 1;
-                    const currentPathList = removeEmptyStringsFromArray(path.split('/'));
+                    const currentPathList = removeEmptyStringsFromArray(path.replace('-', ' ').split('/'));
                     const currentPathname = splitCamelCase(
                         currentPathList[currentPathList.length - 1],
                     );

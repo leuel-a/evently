@@ -5,15 +5,23 @@ const API_BASE_URL = process.env.API_URL;
 export type MakeApiCallConfig = RequestInit & {
     url: string;
     isSecure?: boolean;
+    internal?: boolean;
 };
+
+function resolveURL(url: string, internal: boolean): string {
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    const base = internal ? '' : API_BASE_URL;
+    return `${base}${url}`;
+}
 
 export async function makeApiCall<T>({
     url,
     isSecure = false,
+    internal = false,
     headers,
     ...init
 }: MakeApiCallConfig): Promise<T> {
-    const callURL = `${API_BASE_URL}${url}`;
+    const callURL = resolveURL(url, internal);
     const outgoingHeaders = new Headers();
 
     if (headers instanceof Headers) {

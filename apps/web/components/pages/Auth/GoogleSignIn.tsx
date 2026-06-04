@@ -4,11 +4,13 @@ import {GoogleGlyph} from '../Common/GoogleGlyph';
 import {SubmitEventHandler} from 'react';
 import {APP_ROUTES} from '@/config/routes';
 
+const GOOGLE_PROVIDER = 'google';
+
 export function GoogleSignIn() {
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         await authClient.signIn.social({
-            provider: 'google',
+            provider: GOOGLE_PROVIDER,
             callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}${APP_ROUTES.dashboard.events.base}`,
         });
     };

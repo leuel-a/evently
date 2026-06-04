@@ -22,39 +22,60 @@ export async function getEventCategory(
     return {data: eventCategory};
 }
 
-export type CreateEventCategoryResult = EventCategoryDocument;
+export type CreateEventCategoryResult = Omit<IEventCategory, '_id' | 'isDeleted'> & {id: string};
 export type CreateEventCategoryPayload = Omit<IEventCategory, 'isDeleted'>;
 export async function createEventCategory(
     this: IEventCategoryModel,
     payload: CreateEventCategoryPayload,
-): Promise<CreateEventCategoryPayload> {
-    return this.create(payload);
+): Promise<CreateEventCategoryResult> {
+    const result = await this.create(payload);
+    const {_id, ...rest} = result.toObject() as EventCategoryDocument;
+    return {id: _id.toString(), ...rest};
 }
 
-export type GetEventCategoriesResult = {data: IEventCategory[]; page: string; limit: string};
-export type GetEventCategoriesParams = {page: string; size: string};
+export type GetEventCategoriesResult = {
+    data: IEventCategory[];
+    page: string;
+    limit: number;
+    total: number;
+};
+export type GetEventCategoriesParams = {page: string; size: string; userId: string};
 export async function getEventCategories(
     this: typeof EventsCategoryModel,
     params: GetEventCategoriesParams,
 ): Promise<GetEventCategoriesResult> {
-    const {page, size} = params;
-    const matchQuery = {};
+    const {page, size, userId} = params;
+    const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
     const {limit, skip} = getPaginationValues(page, size);
 
-    const eventsCategory = await this.aggregate([
+    const results = await this.aggregate([
         {
             $match: matchQuery,
         },
         {
-            $skip: skip,
+            $facet: {
+                data: [
+                    {$skip: skip},
+                    {$limit: limit},
+                    {
+                        $project: {
+                            id: '$_id',
+                            _id: 0,
+                            name: 1,
+                            description: 1,
+                            createdAt: 1,
+                            updatedAt: 1,
+                        },
+                    },
+                ],
+                total: [{$count: 'count'}],
+            },
         },
-        {
-            $limit: limit,
-        },
-        ...normalizeID(),
     ]);
 
-    return {data: eventsCategory, page, limit: size};
+    const resultData = results?.[0]?.data;
+    const resultTotal = results?.[0]?.total;
+    return {data: resultData, total: resultTotal?.[0].count, page, limit};
 }
 
 export type DeleteEventCategoryResult = IEventCategory;

@@ -8,11 +8,13 @@ import {
     GetEventCategoryResult,
     UpdateEventCategoryResult,
 } from './statics';
+import {modelNames} from '../../config';
 
 export interface IEventCategory {
     name: string;
     description: string;
     isDeleted: boolean;
+    user: mongoose.Schema.Types.ObjectId;
 }
 
 export type EventCategoryDocument = IEventCategory &
@@ -52,6 +54,11 @@ const schema = new mongoose.Schema<IEventCategory>(
         name: {type: String, required: true, unique: true},
         description: {type: String, required: true},
         isDeleted: {type: Boolean, required: false, default: false},
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: modelNames.user,
+            required: true,
+        },
     },
     {timestamps: true},
 );

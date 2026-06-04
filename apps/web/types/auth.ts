@@ -4,3 +4,8 @@ export type AuthSessionData = {
     session: Session;
     user: User;
 };
+
+export type EmailSignupResponse = {
+    token: string,
+    user: User;
+};

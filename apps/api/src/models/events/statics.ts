@@ -32,15 +32,31 @@ export async function getEventStats(this: typeof EventModel, params: GetEventSta
         {
             $match: matchQuery,
         },
+        // TODO: here there can be a better way to generate the total categories
+        // search on the mongodb documentation
         {
             $facet: {
-                totalCategories: [
+                categories: [
                     {
                         $group: {
-                            _id: '$category.name',
+                            _id: {
+                                id: '$category._id',
+                                name: '$category.name',
+                            },
                             count: {$sum: 1},
                         },
                     },
+                    {
+                        $sort: {count: -1}, // INFO: this might need to be passed as a parameter
+                    },
+                    {
+                        $project: {
+                            id: '$_id.id',
+                            _id: 0,
+                            name: '$_id.name',
+                            count: 1,
+                        }
+                    }
                 ],
                 totalEvents: [
                     {
@@ -51,7 +67,12 @@ export async function getEventStats(this: typeof EventModel, params: GetEventSta
         },
     ]);
 
-    const resultsData = results?.[0]?.data;
+    const raw = results?.[0];
+    const resultsData = {
+        totalEvents: raw?.totalEvents?.[0]?.totalEvents ?? 0,
+        totalCategories: (raw?.categories ?? []).length,
+        categories: raw?.categories ?? [],
+    };
     return {data: resultsData};
 }
 
@@ -82,8 +103,7 @@ export async function getEvent(
     };
 }
 
-export type CreateEventPayload = IEvent;
-
+export type CreateEventPayload = Omit<IEvent, 'isDeleted'>;
 export async function createEvent(this: typeof EventModel, payload: CreateEventPayload) {
     const event = await this.create(payload);
     return event;
@@ -91,7 +111,6 @@ export async function createEvent(this: typeof EventModel, payload: CreateEventP
 
 export type GetEventsParams = {page: string; size: string; userId: string};
 export type GetEventsResult = {data: IEvent[]; total: number; page: string; limit: number};
-
 export async function getEvents(this: typeof EventModel, params: GetEventsParams) {
     const {page, size, userId} = params;
     const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
@@ -149,6 +168,8 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
                             address: 1,
                             startTime: 1,
                             endTime: 1,
+                            createdAt: 1,
+                            updatedAt: 1,
                         },
                     },
                 ],

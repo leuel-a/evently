@@ -8,6 +8,7 @@ let auth: ReturnType<typeof createAuth> | undefined = undefined;
 /** Create a Better Auth instance using native handles from Mongoose. */
 export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
     return betterAuth({
+        emailAndPassword: {enabled: true},
         database: mongodbAdapter(db, {client}),
         socialProviders: {
             google: {

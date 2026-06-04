@@ -5,14 +5,21 @@ import EventsModel from '../models/events';
 import {errors} from '../errors/utils';
 import {IEvent} from '../models/events/schema';
 
+// INFO: organize the messages better in another file
 const EVENT_NOT_FOUND_MESSAGE = 'Event not found';
+const EVENT_USER_NOT_AUTHORIZED_MESSAGE = 'Forbidden';
 
 export const createEventHandler: RequestHandler = async (req, res, next) => {
     try {
+        const currentUser = res.locals.user;
         const body = matchedData(req, {locations: ['body']}) as IEvent;
-        const event = await EventsModel.createEvent(body);
 
-        res.status(httpStatus.CREATED).json({data: event});
+        const payload = {...body, user: currentUser?.id};
+        const result = await EventsModel.createEvent(payload);
+        const {_id, ...rest} = result.toObject();
+
+        const resultData = {id: _id.toString(), ...rest}
+        res.status(httpStatus.CREATED).json({data: resultData});
     } catch (error) {
         next(error);
     }
@@ -20,11 +27,18 @@ export const createEventHandler: RequestHandler = async (req, res, next) => {
 
 export const getEventHandler: RequestHandler = async (req, res, next) => {
     try {
+        const user = res.locals.user;
         const {id} = matchedData(req, {locations: ['params']});
         const result = await EventsModel.getEvent({id});
 
         if (!result?.data || Object.keys(result?.data).length === 0) {
             throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
+        }
+
+        // INFO: there might be a better way to do this
+        const resultData = result?.data;
+        if (resultData?.user.toString() !== user?.id) {
+            throw errors.forbidden(EVENT_USER_NOT_AUTHORIZED_MESSAGE);
         }
 
         res.status(httpStatus.OK).json(result);
@@ -33,6 +47,7 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
     }
 };
 
+// TODO: there needs to be a public [GET] /events endpoint, figure out how to do this?
 export const getEventsHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;

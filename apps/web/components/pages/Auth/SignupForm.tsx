@@ -1,28 +1,24 @@
 'use client';
 
-import {z} from 'zod';
+import {useRouter} from 'next/navigation'
 import {Controller, useForm} from 'react-hook-form';
 import {Mail, Lock, User} from 'lucide-react';
+import {useMutation} from '@tanstack/react-query';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Field, FieldLabel, FieldError, FieldDescription} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
+import {emailSignupSchema, type EmailSignupSchemaType} from '@/lib/db/schema';
 import {GoogleSignIn} from './GoogleSignIn';
-
-const signupSchema = z.object({
-    email: z.string({error: 'Required'}),
-    password: z.string({error: 'Required'}),
-    fullName: z.string({error: 'Required'}),
-    confirmPassword: z.string({error: 'Required'}),
-});
-
-type SignupSchemaType = z.infer<typeof signupSchema>;
+import {emailSignupMutation} from '@/app/(auth)/queries';
+import { APP_ROUTES } from '@/config/routes';
 
 export function SignupForm() {
-    const form = useForm<SignupSchemaType>({
-        resolver: zodResolver(signupSchema),
+    const router = useRouter();
+    const form = useForm<EmailSignupSchemaType>({
+        resolver: zodResolver(emailSignupSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -30,6 +26,17 @@ export function SignupForm() {
             confirmPassword: '',
         },
     });
+
+    const mutation = useMutation({
+        mutationFn: emailSignupMutation,
+        onSuccess: () => {
+            router.push(APP_ROUTES.dashboard.base);
+        },
+    });
+
+    const handleSubmit = async (values: EmailSignupSchemaType) => {
+        mutation.mutate(values);
+    };
 
     return (
         <Card className="border-indigo-100/60 rounded shadow-sm">
@@ -47,7 +54,7 @@ export function SignupForm() {
                         OR
                     </span>
                 </div>
-                <form className="space-y-4">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                     <Controller
                         control={form.control}
                         name="fullName"

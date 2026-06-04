@@ -5,8 +5,8 @@ export function splitCamelCase(str: string): string {
     return str.replace(/([a-z])([A-Z])/g, '$1 $2');
 }
 
-export function capitalizeFirstLetters(str: string, delimiter: string = ' '): string {
-    const strings = str.split(delimiter);
+export function capitalizeFirstLetters(str: string | string[], delimiter: string = ' '): string {
+    const strings = Array.isArray(str) ? str : str.split(delimiter);
     return strings.map((s) => lodashCapitalize(s)).join(delimiter);
 }
 

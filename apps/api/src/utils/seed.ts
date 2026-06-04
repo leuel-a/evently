@@ -1,21 +1,23 @@
-import '../env.js';
+import '../env';
 
 import mongoose from 'mongoose';
-import Ticket from '../models/tickets/index.js';
-import Event from '../models/events/index.js';
-import Resource from '../models/resources/index.js';
-import EventCategory from '../models/eventsCategory/index.js';
+import Ticket from '../models/tickets/index';
+import {TicketDocument} from '../models/tickets/schema'
+import Event from '../models/events/index';
+import {EventDocument} from '../models/events/schema';
+import Resource from '../models/resources/index';
+import EventCategory from '../models/eventsCategory/index';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const getFutureDate = (days) => {
+const getFutureDate = (days: number) => {
     const date = new Date();
     date.setDate(date.getDate() + days);
     date.setUTCHours(10, 0, 0, 0);
     return date;
 };
 
-const defaultUserId = '69aac1e3e136422e6bb2a70e';
+const defaultUserId = '6a1eaba394754e77c069b33a';
 const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
 
 const defaultPurchasers = [
@@ -41,17 +43,17 @@ const defaultPurchasers = [
     {name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com'},
 ];
 
-const defaultCategories = [
-    {name: 'Technology & Innovation', description: 'AI, software, and emerging technologies.'},
-    {name: 'Business & Entrepreneurship', description: 'Founders, strategy, and startups.'},
-    {name: 'Education & Learning', description: 'Workshops, bootcamps, and training.'},
-    {name: 'Health & Wellness', description: 'Health and wellbeing events.'},
-    {name: 'Arts & Culture', description: 'Cultural and creative events.'},
-    {name: 'Music & Entertainment', description: 'Concerts and live shows.'},
-    {name: 'Sports & Fitness', description: 'Sports and physical activities.'},
-    {name: 'Networking & Community', description: 'Social and professional meetups.'},
-    {name: 'Science & Research', description: 'Scientific talks and conferences.'},
-    {name: 'Lifestyle & Hobbies', description: 'Personal interests and hobbies.'},
+const seedEventsCategoryData = [
+    {user: defaultUserId, name: 'Technology & Innovation', description: 'AI, software, and emerging technologies.'},
+    {user: defaultUserId, name: 'Business & Entrepreneurship', description: 'Founders, strategy, and startups.'},
+    {user: defaultUserId, name: 'Education & Learning', description: 'Workshops, bootcamps, and training.'},
+    {user: defaultUserId, name: 'Health & Wellness', description: 'Health and wellbeing events.'},
+    {user: defaultUserId, name: 'Arts & Culture', description: 'Cultural and creative events.'},
+    {user: defaultUserId, name: 'Music & Entertainment', description: 'Concerts and live shows.'},
+    {user: defaultUserId, name: 'Sports & Fitness', description: 'Sports and physical activities.'},
+    {user: defaultUserId, name: 'Networking & Community', description: 'Social and professional meetups.'},
+    {user: defaultUserId, name: 'Science & Research', description: 'Scientific talks and conferences.'},
+    {user: defaultUserId, name: 'Lifestyle & Hobbies', description: 'Personal interests and hobbies.'},
 ];
 
 const seedEventsData = [
@@ -88,13 +90,127 @@ const seedEventsData = [
         type: 'physical',
         categoryName: 'Networking & Community',
     },
+    {
+        title: 'Blockchain & Web3 Summit',
+        description: 'Exploring decentralized finance and smart contract development.',
+        date: getFutureDate(15),
+        ticketPrice: 199,
+        capacity: 200,
+        status: 'active',
+        user: defaultUserId,
+        type: 'virtual',
+        categoryName: 'Technology & Innovation',
+    },
+    {
+        title: 'UX Design Thinking Bootcamp',
+        description: 'Hands-on workshop covering user research and prototyping techniques.',
+        date: getFutureDate(20),
+        ticketPrice: 79.99,
+        capacity: 40,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Education & Learning',
+    },
+    {
+        title: 'Startup Pitch Night',
+        description: 'Early-stage founders pitch to a panel of angel investors and VCs.',
+        date: getFutureDate(25),
+        ticketPrice: 25,
+        capacity: 120,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Business & Entrepreneurship',
+    },
+    {
+        title: 'Mindfulness & Burnout Recovery Workshop',
+        description:
+            'Practical mindfulness techniques for stress management and mental resilience.',
+        date: getFutureDate(35),
+        ticketPrice: 49.99,
+        capacity: 60,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Health & Wellness',
+    },
+    {
+        title: 'Women in Tech Networking Mixer',
+        description: 'Free community event celebrating and connecting women in the industry.',
+        date: getFutureDate(40),
+        ticketPrice: 0,
+        capacity: 100,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Networking & Community',
+    },
+    {
+        title: 'Contemporary Art & Digital Installations Expo',
+        description:
+            'Showcasing local and international artists blending physical and digital mediums.',
+        date: getFutureDate(50),
+        ticketPrice: 15,
+        capacity: 250,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Arts & Culture',
+    },
+    {
+        title: 'Indie Music & Acoustic Sessions Night',
+        description:
+            'Live performances from emerging indie and acoustic artists in an intimate venue.',
+        date: getFutureDate(60),
+        ticketPrice: 29.99,
+        capacity: 150,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Music & Entertainment',
+    },
+    {
+        title: 'Urban 5K Fun Run & Fitness Expo',
+        description: 'Community fun run through the city followed by a fitness and wellness expo.',
+        date: getFutureDate(75),
+        ticketPrice: 20,
+        capacity: 500,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Sports & Fitness',
+    },
+    {
+        title: 'Climate Science & Sustainability Conference',
+        description:
+            'Researchers and policymakers present the latest findings on climate solutions.',
+        date: getFutureDate(90),
+        ticketPrice: 99,
+        capacity: 300,
+        status: 'draft',
+        user: defaultUserId,
+        type: 'virtual',
+        categoryName: 'Science & Research',
+    },
+    {
+        title: 'Urban Gardening & Home Brewing Fest',
+        description: 'Hands-on workshops for gardening enthusiasts and home craft brew lovers.',
+        date: getFutureDate(110),
+        ticketPrice: 35,
+        capacity: 80,
+        status: 'active',
+        user: defaultUserId,
+        type: 'physical',
+        categoryName: 'Lifestyle & Hobbies',
+    },
 ];
 
-function buildPaymentId(index) {
+function buildPaymentId(index: number) {
     return `PAY-${Date.now()}-${String(index + 1).padStart(3, '0')}`;
 }
 
-function buildTickets(events) {
+function buildTickets(events: EventDocument[]) {
     const tickets = [];
 
     for (let index = 0; index < 20; index++) {
@@ -111,11 +227,11 @@ function buildTickets(events) {
         }
 
         tickets.push({
-            event: event._id,
+            event: event?._id,
             purchaserName: purchaser?.name,
             purchaserEmail: purchaser?.email,
             paymentId: buildPaymentId(index),
-            amountPaid: event.ticketPrice,
+            amountPaid: event?.ticketPrice,
             currency: 'Br',
             status,
         });
@@ -141,11 +257,11 @@ async function seed() {
         console.log(`Inserted ${resources.length} resources`);
 
         /* 2️⃣ Insert categories */
-        const categories = await EventCategory.insertMany(defaultCategories);
+        const categories = await EventCategory.insertMany(seedEventsCategoryData);
         console.log(`Inserted ${categories.length} categories`);
 
         const categoryMap: Record<string, string> = {};
-        categories.forEach((category) => (categoryMap[category.name] = category._id));
+        categories.forEach((category) => (categoryMap[category.name] = String(category._id)));
 
         /* 3️⃣ Build events */
         const events = seedEventsData.map((event) => {
@@ -171,11 +287,11 @@ async function seed() {
             };
         });
 
-        const insertedEvents = await Event.insertMany(events);
+        const insertedEvents = await Event.insertMany(events) as unknown as EventDocument[];
         console.log(`Inserted ${events.length} events`);
 
         const tickets = buildTickets(insertedEvents);
-        const insertedTickets = await Ticket.insertMany(tickets);
+        const insertedTickets = await Ticket.insertMany(tickets) as unknown  as TicketDocument[];
         console.log(`Inserted ${insertedTickets.length} tickets`);
 
         const groupedCounts = insertedTickets.reduce((accumulator, ticket) => {
@@ -183,7 +299,7 @@ async function seed() {
 
             accumulator[key] = (accumulator[key] || 0) + 1;
             return accumulator;
-        }, {});
+        }, {} as Record<string, number>);
 
         console.log('Tickets per event:', groupedCounts);
         console.log('✅ Seeding complete');

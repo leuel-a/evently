@@ -7,6 +7,7 @@ import {useResourcesContext} from '@/context/ResourcesContext';
 import {removeEmptyStringsFromArray} from '@/utils/functions';
 import {CreateResourceButton} from './CreateResourceButton';
 import {DashboardBreadcrumb} from './DashboardBreadCrumb';
+import { normalizeResourceName } from '@/config/resource-defnitions';
 
 export interface DashboardHeaderProps {}
 
@@ -18,7 +19,7 @@ export function DashboardHeader(_: DashboardHeaderProps) {
     const isCreatePath = pathname.split('/').includes('create');
     const currentPathIsList = removeEmptyStringsFromArray(pathname.split('/')).length === 2;
     const shouldShowCreateButton =
-        (resources.find((res) => res.name === resource)?.hasCreate &&
+        (resources.find((res) => res.name === normalizeResourceName(resource))?.hasCreate &&
             !isCreatePath &&
             currentPathIsList) ??
         false;

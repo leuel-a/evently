@@ -12,12 +12,18 @@ const APP_ROUTES = {
         login: `${AUTH_PAGE_BASE_ROUTE}login`,
         signup: `${AUTH_PAGE_BASE_ROUTE}signup`,
     },
+    api: {
+        eventsCategory: `/api/eventsCategory`,
+    },
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,
         events: {
             base: `${DASHBOARD_BASE_ROUTE}\/events`,
             create: `${DASHBOARD_BASE_ROUTE}\/events\create`,
             update: `${DASHBOARD_BASE_ROUTE}\/events\/update\{id}`,
+        },
+        eventsCategory: {
+            base: `${DASHBOARD_BASE_ROUTE}\/events-category`,
         },
         tickets: {
             base: `${DASHBOARD_BASE_ROUTE}/tickets`,
@@ -36,12 +42,16 @@ const INDEX_BASE_API_ROUTE = '/api';
 const USERS_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/users`;
 const AUTH_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/auth`;
 const EVENTS_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/events`;
-const EVENT_API_CATEGORIES_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventsCategory`;
+const EVENT_CATEGORIES_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventsCategory`;
 const SETTINGS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/settings`;
 const TICKETS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/tickets`;
 
 const API_ROUTES = {
-    index: INDEX_BASE_API_ROUTE, // this might never be needed
+    index: INDEX_BASE_API_ROUTE, // INFO: this might never be needed
+    stats: {
+        base: `${INDEX_BASE_API_ROUTE}/stats`,
+        dashboard: `${INDEX_BASE_API_ROUTE}/stats/dashboard`
+    },
     auth: {
         base: AUTH_API_BASE_ROUTE,
         me: {
@@ -56,7 +66,7 @@ const API_ROUTES = {
     },
     tickets: {base: TICKETS_BASE_ROUTE},
     events: {base: EVENTS_API_BASE_ROUTE},
-    eventCategory: {base: EVENT_API_CATEGORIES_BASE_ROUTE},
+    eventCategory: {base: EVENT_CATEGORIES_API_BASE_ROUTE},
     settings: {base: SETTINGS_BASE_ROUTE},
 } as const;
 

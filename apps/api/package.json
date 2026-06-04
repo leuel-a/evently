@@ -10,7 +10,7 @@
         "docs": "jsdoc -c jsdoc.conf.json",
         "docs:watch": "jsdoc -c jsdoc.conf.json --watch",
         "test": "vitest run",
-        "seed": "node ./src/utils/seed.js"
+        "seed": "ts-node ./src/utils/seed.ts"
     },
     "author": "",
     "license": "ISC",

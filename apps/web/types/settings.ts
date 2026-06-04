@@ -1,7 +1,9 @@
+import {IEventsCategory} from './eventsCategory';
+
 export type SettingsApiResponse = {
     category: {
-        all: {id: string; name: string}[];
-        active: {id: string; name: string}[];
+        all: IEventsCategory[];
+        active: IEventsCategory[];
     },
     resources: Array<{
         id: string,

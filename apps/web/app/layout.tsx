@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import {Toaster} from '@/components/ui/sonner';
 import {ComposeProviders} from './providers';
 import './globals.css';
 
@@ -15,7 +16,10 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning={true}>
             <ComposeProviders>
-                <body className="antialiased font-sans">{children}</body>
+                <body className="antialiased font-sans">
+                    {children}
+                    <Toaster />
+                </body>
             </ComposeProviders>
         </html>
     );

@@ -1,7 +1,14 @@
 'use client';
 
 import {useRouter} from 'next/navigation';
-import {LayoutDashboard, Calendar, Settings, TicketCheck, UserCogIcon} from 'lucide-react';
+import {
+    LayoutDashboard,
+    Calendar,
+    Settings,
+    TicketCheck,
+    UserCogIcon,
+    ChartBarStacked,
+} from 'lucide-react';
 import {APP_ROUTES} from '@/config/routes';
 import {Sidebar, SidebarContent, SidebarHeader} from '@/components/ui/sidebar';
 import {AppSidebarMenu} from './AppSidebarMenu';
@@ -27,6 +34,12 @@ const resources: Resource[] = [
         title: 'Events',
         url: APP_ROUTES.dashboard.events.base,
         icon: Calendar,
+        group: groups.events,
+    },
+    {
+        title: 'Events Category',
+        url: APP_ROUTES.dashboard.eventsCategory.base,
+        icon: ChartBarStacked,
         group: groups.events,
     },
     {

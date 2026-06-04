@@ -13,14 +13,16 @@ export type GetEventsPageResultData = {
     settings: SettingsApiResponse;
 };
 
-export async function getEventsPageData(): Promise<IActionResult<GetEventsPageResultData>> {
+export async function getEventsPageData(params: Record<string, string>): Promise<IActionResult<GetEventsPageResultData>> {
     try {
+        const searchParams = new URLSearchParams(params);
         const headers = await nextHeaders();
 
         const [events, settings] = await Promise.all([
-            makeApiCall<EventApiResponse>({url: API_ROUTES.events.base, headers}),
+            makeApiCall<EventApiResponse>({url: `${API_ROUTES.events.base}?${searchParams.toString()}`, headers}),
             makeApiCall<SettingsApiResponse>({url: API_ROUTES.settings.base}),
         ]);
+
         return {success: true, data: {events, settings}};
     } catch (err) {
         const error = err as ApiError

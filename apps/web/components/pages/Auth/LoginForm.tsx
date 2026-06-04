@@ -1,32 +1,41 @@
 'use client';
 
 import NextLink from 'next/link';
+import {useRouter} from 'next/navigation';
 import {Controller, useForm} from 'react-hook-form';
-import {z} from 'zod';
+import {useMutation} from '@tanstack/react-query';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from '@/components/ui/button';
 import {Field, FieldLabel, FieldError} from '@/components/ui/field';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
+import {emailSigninSchema, EmailSigninSchemaType} from '@/lib/db/schema';
+import {emailSigninMutation} from '@/app/(auth)/queries';
+import {APP_ROUTES} from '@/config/routes';
 import {Separator} from '@/components/ui/separator';
 import {Mail, Lock} from 'lucide-react';
 import {GoogleSignIn} from './GoogleSignIn';
-
-const loginSchema = z.object({
-    email: z.email({error: 'Provide a valid email address'}),
-    password: z.string({error: 'Required'}),
-});
-
-type LoginSchemaType = z.infer<typeof loginSchema>;
-
 export function LoginForm() {
-    const form = useForm<LoginSchemaType>({
-        resolver: zodResolver(loginSchema),
+    const router = useRouter();
+    const form = useForm<EmailSigninSchemaType>({
+        resolver: zodResolver(emailSigninSchema),
         defaultValues: {
             email: '',
             password: '',
         },
     });
+
+    const mutation = useMutation({
+        mutationFn: emailSigninMutation,
+        onSuccess: (data) => {
+            console.log(data)
+            router.push(APP_ROUTES.dashboard.base);
+        },
+    });
+
+    const onSubmit = async (values: EmailSigninSchemaType) => {
+        mutation.mutate(values);
+    };
 
     return (
         <Card className="border-indigo-100/60 rounded shadow-sm">
@@ -43,7 +52,7 @@ export function LoginForm() {
                         OR
                     </span>
                 </div>
-                <form className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <Controller
                         control={form.control}
                         name="email"

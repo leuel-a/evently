@@ -1,4 +1,5 @@
 import {IApiResponse} from './utils';
+import {IEventsCategory} from './eventsCategory';
 
 export enum EVENT_STATUS {
     DRAFT = 'draft',
@@ -12,12 +13,6 @@ export enum EVENT_TYPE {
     HYBRID = 'hybrid',
 }
 
-export interface IEventCategory {
-    id: string;
-    name: string;
-    description: string;
-}
-
 export interface IEvent {
     id: string;
     title: string;
@@ -26,7 +21,7 @@ export interface IEvent {
     location?: string;
     price: number;
     capacity: number;
-    category: IEventCategory;
+    category: IEventsCategory;
     checkoutLink?: string;
     status: EVENT_STATUS;
     type: EVENT_TYPE;

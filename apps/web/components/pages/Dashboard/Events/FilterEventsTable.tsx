@@ -2,13 +2,10 @@
 
 import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
 import {SearchEvents} from '../../Common/SearchEvents';
-
-interface EventsCategory {
-    name: string;
-}
+import { IEventsCategory } from '@/types/eventsCategory';
 
 interface EventsFilterTableProps {
-    categories: EventsCategory[];
+    categories: IEventsCategory[];
 }
 
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
