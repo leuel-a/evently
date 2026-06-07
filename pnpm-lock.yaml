@@ -145,6 +145,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@recharts/devtools':
+        specifier: ^0.0.14
+        version: 0.0.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(recharts@3.8.0(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1))
       '@tanstack/react-query':
         specifier: ^5.90.20
         version: 5.90.21(react@19.1.0)
@@ -1750,6 +1753,13 @@ packages:
 
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
+
+  '@recharts/devtools@0.0.14':
+    resolution: {integrity: sha512-FPTpay/nGiULGkGcXSltG6RN0LiQ9wHveLFg/kbD2wWnbZOoKdq/67Xhs4aI9V1D2PPs1VNW+djZ8cw7pNtxiQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+      recharts: ^3.8.0
 
   '@reduxjs/toolkit@2.12.0':
     resolution: {integrity: sha512-KiT+RzZbp6mQET+Mg+h2c97+9j1sNflUxQkIHI7Yuzf6Peu+OYpmkn6nbHWmLLWj+1ZODUJFwGZ7gx3L9R9EOw==}
@@ -6734,6 +6744,12 @@ snapshots:
       '@types/react-dom': 19.2.3(@types/react@19.2.14)
 
   '@radix-ui/rect@1.1.1': {}
+
+  '@recharts/devtools@0.0.14(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(recharts@3.8.0(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1))':
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      recharts: 3.8.0(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react-is@16.13.1)(react@19.1.0)(redux@5.0.1)
 
   '@reduxjs/toolkit@2.12.0(react-redux@9.3.0(@types/react@19.2.14)(react@19.1.0)(redux@5.0.1))(react@19.1.0)':
     dependencies:

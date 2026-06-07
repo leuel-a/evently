@@ -1,97 +1,63 @@
 'use client';
 
+import {useState, type ComponentProps} from 'react';
+import {RECHARTS_DEVTOOLS_PORTAL_ID} from '@recharts/devtools';
 import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
 import {Card, CardHeader, CardTitle, CardContent} from '@/components/ui/card';
-import {
-    ChartConfig,
-    ChartContainer,
-    ChartTooltip,
-    ChartTooltipContent,
-} from '@/components/ui/chart';
-import {Bar, BarChart, Cell, XAxis, YAxis} from 'recharts';
-import {ComponentProps} from 'react';
+import {cn} from '@/lib/utils';
+import {SelectEventsByCategoryChart} from './SelectEventsByCategoryChart';
+import {EventsByCategoryPieChart} from './EventsByCategoryPieChart';
+import {EventsByCategoryBarChart} from './EventsByCategoryBarChart';
+import {CategoryLegend} from './utils';
 
 interface EventsByCategoryChartProps {
     CardProps?: ComponentProps<typeof Card>;
     totalEvents: number;
+    totalCategories: number;
     categories: GetDashboardPageDataResult['categories'];
 }
 
-const chartConfig = {
-    count: {
-        label: 'Events',
-    },
-} satisfies ChartConfig;
-
-// Maps count → CSS variable color so it respects shadcn theming
-function getBarFill(count: number): string {
-    if (count >= 3) return 'hsl(var(--chart-1))';
-    if (count === 2) return 'hsl(var(--chart-2))';
-    return 'hsl(var(--chart-3))';
-}
+const DEFAULT_CHART_VALUE = 'bar';
 
 export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
-    const {categories, totalEvents, CardProps = {}} = props;
-
-    const chartData = categories?.map((cat) => ({
-        name: cat.name,
-        count: cat.count,
-        percent: Math.round((cat.count / totalEvents) * 100),
-    }));
-
-    // Approximate height: 48px per bar + padding
-    const chartHeight = (chartData?.length ?? 0) * 48 + 16;
+    const [chart, setChart] = useState<string>(DEFAULT_CHART_VALUE);
+    const {categories, totalEvents, totalCategories, CardProps = {}} = props;
+    const {className: customCardClassName, ...cardProps} = CardProps;
 
     return (
-        <Card {...CardProps}>
-            <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+        <Card
+            className={cn(
+                'rounded border border-border/60 shadow-none bg-card',
+                customCardClassName,
+            )}
+            {...cardProps}
+        >
+            <CardHeader className="pb-3 pt-4 px-5 flex justify-between">
+                <CardTitle className="font-semibold tracking-tighter uppercase text-muted-foreground/70 leading-none">
                     Events by category
                 </CardTitle>
+                <SelectEventsByCategoryChart
+                    defaultValue={DEFAULT_CHART_VALUE}
+                    setChart={setChart}
+                />
             </CardHeader>
-            <CardContent className="pr-2">
-                <ChartContainer config={chartConfig} style={{height: chartHeight}}>
-                    <BarChart
-                        data={chartData}
-                        layout="vertical"
-                        margin={{top: 0, right: 48, bottom: 0, left: 0}}
-                        barCategoryGap="30%"
-                    >
-                        <XAxis
-                            type="number"
-                            dataKey="count"
-                            hide
-                            domain={[0, 'dataMax']}
-                        />
-                        <YAxis
-                            type="category"
-                            dataKey="name"
-                            width={172}
-                            tick={{fontSize: 12, fill: 'hsl(var(--muted-foreground))'}}
-                            tickLine={false}
-                            axisLine={false}
-                        />
-                        <ChartTooltip
-                            cursor={false}
-                            content={
-                                <ChartTooltipContent
-                                    formatter={(value, name, item) =>
-                                        `${value} event${Number(value) !== 1 ? 's' : ''} · ${item.payload.percent}%`
-                                    }
-                                    hideLabel
-                                />
-                            }
-                        />
-                        <Bar dataKey="count" radius={[0, 4, 4, 0]} minPointSize={4}>
-                            {chartData?.map((entry) => (
-                                <Cell
-                                    key={entry.name}
-                                    fill={getBarFill(entry.count)}
-                                />
-                            ))}
-                        </Bar>
-                    </BarChart>
-                </ChartContainer>
+            <CardContent className="pr-3 pl-5 pb-4">
+                <CategoryLegend totalCategories={totalEvents} />
+                {chart === 'pie' && (
+                    <EventsByCategoryPieChart
+                        categories={categories}
+                        totalEvents={totalEvents}
+                        totalCategories={totalCategories}
+                    />
+                )}
+                {chart === 'bar' && (
+                    <EventsByCategoryBarChart
+                        categories={categories}
+                        totalEvents={totalEvents}
+                        totalCategories={totalEvents}
+                    />
+                )}
+                <div id={RECHARTS_DEVTOOLS_PORTAL_ID} />
             </CardContent>
         </Card>
     );

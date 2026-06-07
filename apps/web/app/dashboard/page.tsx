@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import {getDashboardPageData} from './actions';
 import {LoadingSpinner} from '@/components/blocks/Common/Loading';
-import {EventsByCategoryChart, KpiSection} from '@/components/pages/Dashboard/Stats';
+import {KpiSection, EventsByCategoryChart} from '@/components/pages/Dashboard/Stats';
 
 export default async function Page() {
     const {success, data} = await getDashboardPageData();
@@ -15,11 +15,14 @@ export default async function Page() {
                         totalCategories={data?.data?.totalCategories}
                         categories={data?.data?.categories}
                     />
-                    <EventsByCategoryChart
-                        CardProps={{className: 'w-1/2'}}
-                        categories={data?.data?.categories}
-                        totalEvents={data?.data?.totalEvents}
-                    />
+                    <div className="grid grid-cols-12">
+                        <EventsByCategoryChart
+                            CardProps={{className: 'col-span-12 lg:col-span-6'}}
+                            categories={data?.data?.categories}
+                            totalEvents={data?.data?.totalEvents}
+                            totalCategories={data?.data?.totalCategories}
+                        />
+                    </div>
                 </div>
             )}
         </Suspense>
