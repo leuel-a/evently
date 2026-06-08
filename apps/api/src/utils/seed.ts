@@ -73,9 +73,7 @@ const CATEGORY_COUNTS: Record<string, number> = {
  * Generate `count` dates spread evenly across Jan 2024 – Dec 2025.
  * Each date gets a fixed UTC hour so they're stable across timezones.
  */
-function generateSpacedDates(count: number): Date[] {
-    const start = new Date('2024-01-01T10:00:00.000Z');
-    const end = new Date('2025-12-31T10:00:00.000Z');
+function generateSpacedDates(count: number, start: Date, end: Date): Date[] {
     const totalMs = end.getTime() - start.getTime();
     const intervalMs = totalMs / (count - 1);
 
@@ -823,7 +821,11 @@ const templatesByCategory: Record<string, EventTemplate[]> = {
 
 function buildSeedEventsData() {
     const totalEvents = Object.values(CATEGORY_COUNTS).reduce((a, b) => a + b, 0);
-    const dates = generateSpacedDates(totalEvents);
+    const dates = generateSpacedDates(
+        totalEvents,
+        new Date('2025-01-01T10:00:00.000Z'),
+        new Date('2026-12-31T10:00:00.000Z'),
+    );
 
     const allEvents: Array<{
         title: string;
@@ -870,6 +872,18 @@ function buildPaymentId(index: number) {
 function buildTickets(events: EventDocument[]) {
     const tickets = [];
 
+    const ticketDates = generateSpacedDates(
+        events.length,
+        new Date('2025-01-15T10:00:00.000Z'),
+        new Date('2026-05-20T10:00:00.000Z'), // up to ~last month
+    );
+
+    // Shuffle dates so months aren't evenly spaced (adds realistic skew)
+    for (let i = ticketDates.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [ticketDates[i], ticketDates[j]] = [ticketDates[j]!, ticketDates[i]!];
+    }
+
     for (let i = 0; i < events.length; i++) {
         const purchaser = defaultPurchasers[i % defaultPurchasers.length];
         const event = events[i];
@@ -886,6 +900,7 @@ function buildTickets(events: EventDocument[]) {
             amountPaid: event?.ticketPrice,
             currency: 'Br',
             status,
+            createdAt: ticketDates[i], // <-- explicit timestamp
         });
     }
 
@@ -952,7 +967,9 @@ async function seed() {
 
         /* 6️⃣ Build & insert tickets */
         const tickets = buildTickets(insertedEvents);
-        const insertedTickets = (await Ticket.insertMany(tickets)) as unknown as TicketDocument[];
+        const insertedTickets = (await Ticket.insertMany(tickets, {
+            timestamps: false,
+        })) as unknown as TicketDocument[];
         console.log(`\nInserted ${insertedTickets.length} tickets`);
 
         console.log('\n✅ Seeding complete');

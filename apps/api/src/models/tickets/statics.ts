@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import TicketModel from '.';
-import {TicketDocument} from './schema';
-import {modelNames} from '../../config';
+import {TicketDocument, TICKET_STATUS} from './schema';
+import {modelNames, TIMEZONE} from '../../config';
 import {getPaginationValues} from '../helpers/index';
 
 export interface GetTicketsParams {
@@ -10,7 +10,7 @@ export interface GetTicketsParams {
     size: string;
     status: string;
 }
-export type GetTicketsResult = {data: TicketDocument[]; total: number, page:string , limit: number};
+export type GetTicketsResult = {data: TicketDocument[]; total: number; page: string; limit: number};
 
 export async function getTickets(this: typeof TicketModel, params: GetTicketsParams) {
     const {userId, page, size, status} = params;
@@ -74,4 +74,42 @@ export async function getTickets(this: typeof TicketModel, params: GetTicketsPar
     const resultData = result?.[0]?.data;
     const resultTotal = result?.[0]?.total;
     return {data: resultData, total: resultTotal?.[0].count, page, limit};
+}
+
+export interface GetTicketsRevenueByMonthAndYearParams {}
+export interface GetTicketsRevenueByMonthAndYearResult {
+    data: {revenue: number; year: number; month: 1}[];
+}
+export async function getTicketsRevenueByMonthAndYear(
+    this: typeof TicketModel,
+    _params: GetTicketsRevenueByMonthAndYearParams,
+) {
+    const matchQuery = {status: TICKET_STATUS.PAID};
+    const result = await this.aggregate([
+        {
+            $match: matchQuery,
+        },
+        {
+            $addFields: {
+                year: {$year: {date: '$createdAt', timezone: TIMEZONE}},
+                month: {$month: {date: '$createdAt', timezone: TIMEZONE}},
+            },
+        },
+        {
+            $group: {
+                _id: {year: '$year', month: '$month'},
+                revenue: {$sum: '$amountPaid'},
+            },
+        },
+        {$sort: {'_id.year': 1, '_id.month': 1}},
+        {
+            $project: {
+                _id: 0,
+                year: '$_id.year',
+                month: '$_id.month',
+                revenue: 1,
+            },
+        },
+    ]);
+    return {data: result};
 }

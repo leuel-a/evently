@@ -1,7 +1,11 @@
 import {Suspense} from 'react';
 import {getDashboardPageData} from './actions';
 import {LoadingSpinner} from '@/components/blocks/Common/Loading';
-import {KpiSection, EventsByCategoryChart} from '@/components/pages/Dashboard/Stats';
+import {
+    KpiSection,
+    EventsByCategoryChart,
+    TicketRevenueLineChart,
+} from '@/components/pages/Dashboard/Stats';
 
 export default async function Page() {
     const {success, data} = await getDashboardPageData();
@@ -11,11 +15,16 @@ export default async function Page() {
             {success && data && (
                 <div className="space-y-6">
                     <KpiSection
+                        ContainerProps={{className: 'gap-3'}}
                         totalEvents={data?.data?.totalEvents}
                         totalCategories={data?.data?.totalCategories}
                         categories={data?.data?.categories}
                     />
-                    <div className="grid grid-cols-12">
+                    <div className="grid grid-cols-12 gap-3">
+                        <TicketRevenueLineChart
+                            CardProps={{className: 'col-span-12 lg:col-span-6'}}
+                            revenueData={data?.data?.ticketsRevenueByMonth ?? []}
+                        />
                         <EventsByCategoryChart
                             CardProps={{className: 'col-span-12 lg:col-span-6'}}
                             categories={data?.data?.categories}

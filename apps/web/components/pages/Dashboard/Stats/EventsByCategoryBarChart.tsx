@@ -60,7 +60,7 @@ export function EventsByCategoryBarChart(props: EventsByCategoryChartProps) {
                     <CartesianGrid
                         vertical={true}
                         horizontal={false}
-                        strokeDasharray="3 3"
+                        strokeDasharray="3 3" // WHAT IS GOING ON HERE!!
                         stroke="hsl(var(--border))"
                         opacity={0.6}
                     />

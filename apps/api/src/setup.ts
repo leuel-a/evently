@@ -4,6 +4,7 @@ import express from 'express';
 import morgan from 'morgan';
 import {toNodeHandler} from 'better-auth/node';
 import {getAuth, initAuth} from './lib/auth';
+import {initLLM} from './lib/ai/provider';
 import {logger} from './utils/logger';
 import MongoClient from './lib/mongo-client';
 import {API_ROUTES, API_PREFIX} from './config';
@@ -22,6 +23,7 @@ export async function setup(app: express.Express) {
     try {
         await db.connect();
         initAuth(db);
+        await initLLM();
 
         const auth = getAuth();
 

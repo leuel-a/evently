@@ -29,3 +29,5 @@ export const collectionNames = Object.freeze({
     account: 'account',
     verification: 'verification',
 });
+
+export const TIMEZONE = 'Africa/Addis_Ababa';

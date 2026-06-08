@@ -1,5 +1,6 @@
 'use client';
 
+import {ComponentProps, Dispatch, SetStateAction} from 'react';
 import {
     Select,
     SelectItem,
@@ -7,7 +8,6 @@ import {
     SelectValue,
     SelectContent,
 } from '@/components/ui/select';
-import {ComponentProps, Dispatch, SetStateAction} from 'react';
 
 interface SelectEventsByCategoryChartProps {
     setChart: Dispatch<SetStateAction<string>>;

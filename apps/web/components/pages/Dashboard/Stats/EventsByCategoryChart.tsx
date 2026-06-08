@@ -57,7 +57,6 @@ export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
                         totalCategories={totalEvents}
                     />
                 )}
-                <div id={RECHARTS_DEVTOOLS_PORTAL_ID} />
             </CardContent>
         </Card>
     );

@@ -1,9 +1,11 @@
+import { GetDashboardPageDataResult } from "@/app/dashboard/actions";
+
 export const CATEGORY_COLORS = {
-    high: '#e8642c', // 5+  → vivid orange  (hot)
-    medium: '#f0a045', // 3–4 → amber         (warm)
-    low: '#3aafa9', // 2   → teal           (cool)
-    minimal: '#94a3b8', // 1   → slate-400      (quiet)
-    empty: '#cbd5e1', // 0   → slate-300      (dormant)
+    high: '#e8642c',
+    medium: '#f0a045',
+    low: '#3aafa9',
+    minimal: '#94a3b8',
+    empty: '#cbd5e1',
 } as const;
 
 export function getCategoryColor(count: number, total: number): string {
@@ -62,5 +64,25 @@ export function CategoryLegend(props: CategoryLegendProps) {
                 </span>
             ))}
         </div>
+    );
+}
+
+export function normalizeRevenueData(
+    revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth']
+): GetDashboardPageDataResult['ticketsRevenueByMonth'] {
+    const years = Array.from(new Set(revenueData.map((d) => d.year)));
+
+    return years.flatMap((year) =>
+        Array.from({length: 12}, (_, i) => {
+            const month = i + 1;
+            const found = revenueData.find(
+                (data) => data.year === year && data.month === month
+            );
+            return {
+                year,
+                month,
+                revenue: found?.revenue ?? 0,
+            };
+        })
     );
 }

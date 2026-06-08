@@ -3,4 +3,5 @@ export * from './KpiSection';
 export * from './EventsByCategoryBarChart';
 export * from './EventsByCategoryPieChart';
 export * from './SelectEventsByCategoryChart';
-export * from './EventsByCategoryChart'
+export * from './EventsByCategoryChart';
+export * from './TicketRevenueLineChart';

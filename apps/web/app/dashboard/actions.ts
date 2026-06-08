@@ -26,6 +26,7 @@ export type GetDashboardPageDataResult = {
     totalCategories: number;
     totalEvents: number;
     categories: Array<{name: string; count: number; id: string}>;
+    ticketsRevenueByMonth: Array<{revenue: number; month: number; year: number}>;
 };
 
 export async function getDashboardPageData(): Promise<
