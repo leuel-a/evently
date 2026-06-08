@@ -1,18 +1,15 @@
-'use client';
-
-import {Line, LineChart, CartesianGrid, XAxis, YAxis} from 'recharts';
-import {RechartsDevtools} from '@recharts/devtools';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
+import {BarChart, Bar, CartesianGrid, XAxis, YAxis} from 'recharts';
 import {
     ChartContainer,
     ChartConfig,
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import {cn} from '@/lib/utils';
+import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
 import {normalizeRevenueData} from './utils';
+import {cn} from '@/lib/utils';
 
-interface TicketRevenueLineChartProps {
+interface TicketRevenueBarChartProps {
     year: number;
     revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth'];
 }
@@ -24,7 +21,7 @@ const chartConfig = {
     },
 } satisfies ChartConfig;
 
-export function TicketRevenueLineChart(props: TicketRevenueLineChartProps) {
+export function TicketRevenueBarChart(props: TicketRevenueBarChartProps) {
     const {year: selectedYear, revenueData} = props;
 
     const normalizedData = normalizeRevenueData(revenueData);
@@ -33,14 +30,13 @@ export function TicketRevenueLineChart(props: TicketRevenueLineChartProps) {
 
     return (
         <ChartContainer config={chartConfig}>
-            <LineChart accessibilityLayer data={chartData} className={cn(`min-h-[${chartHeight}]`)}>
-                <CartesianGrid vertical={true} horizontal={false} />
+            <BarChart accessibilityLayer data={chartData} className={cn(`min-h-[${chartHeight}]`)}>
+                <CartesianGrid vertical={false} horizontal={true} />
                 <XAxis dataKey="month" type="auto" tickLine={false} axisLine={false} />
                 <YAxis dataKey="revenue" tickLine={false} axisLine={false} />
                 <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                <Line dataKey="revenue" type="linear" dot={false} strokeWidth={2} />
-                <RechartsDevtools />
-            </LineChart>
+                <Bar dataKey="revenue" fill="var(--chart-3)" radius={[5, 5, 0, 0]} />
+            </BarChart>
         </ChartContainer>
     );
 }

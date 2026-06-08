@@ -4,7 +4,7 @@ import {LoadingSpinner} from '@/components/blocks/Common/Loading';
 import {
     KpiSection,
     EventsByCategoryChart,
-    TicketRevenueLineChart,
+    TicketRevenueChart,
 } from '@/components/pages/Dashboard/Stats';
 
 export default async function Page() {
@@ -21,7 +21,7 @@ export default async function Page() {
                         categories={data?.data?.categories}
                     />
                     <div className="grid grid-cols-12 gap-3">
-                        <TicketRevenueLineChart
+                        <TicketRevenueChart
                             CardProps={{className: 'col-span-12 lg:col-span-6'}}
                             revenueData={data?.data?.ticketsRevenueByMonth ?? []}
                         />
