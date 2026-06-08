@@ -78,7 +78,7 @@ export async function getTickets(this: typeof TicketModel, params: GetTicketsPar
 
 export interface GetTicketsRevenueByMonthAndYearParams {}
 export interface GetTicketsRevenueByMonthAndYearResult {
-    data: {revenue: number; year: number; month: 1}[];
+    data: {revenues: Array<{revenue: number; year: number; month: 1}>; totalRevenue: number};
 }
 export async function getTicketsRevenueByMonthAndYear(
     this: typeof TicketModel,
@@ -101,15 +101,39 @@ export async function getTicketsRevenueByMonthAndYear(
                 revenue: {$sum: '$amountPaid'},
             },
         },
-        {$sort: {'_id.year': 1, '_id.month': 1}},
         {
-            $project: {
-                _id: 0,
-                year: '$_id.year',
-                month: '$_id.month',
-                revenue: 1,
+            $facet: {
+                revenues: [
+                    {$sort: {'_id.year': 1, '_id.month': 1}},
+                    {
+                        $project: {
+                            _id: 0,
+                            year: '$_id.year',
+                            month: '$_id.month',
+                            revenue: 1,
+                        },
+                    },
+                ],
+                totalRevenue: [
+                    {
+                        $group: {
+                            _id: null,
+                            total: {$sum: '$revenue'},
+                        },
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            total: 1,
+                        },
+                    },
+                ],
             },
         },
     ]);
-    return {data: result};
+    const resultData = {
+        ...result?.[0],
+        totalRevenue: result?.[0]?.totalRevenue?.[0]?.total,
+    };
+    return {data: resultData};
 }

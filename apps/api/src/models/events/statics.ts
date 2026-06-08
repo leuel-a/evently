@@ -9,7 +9,13 @@ export type GetEventParams = {id: string};
 export type GetEventResult = {data: IEvent | null};
 
 export type GetEventStatsParams = {userId: string};
-export type GetEventStatsResult = {data: {totalEvents: number}};
+export type GetEventStatsResult = {
+    data: {
+        totalEvents: number;
+        totalCategories: number;
+        categories: Array<{count: number; id: string; name: string}>;
+    };
+};
 export async function getEventStats(this: typeof EventModel, params: GetEventStatsParams) {
     const {userId} = params;
     const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
@@ -55,8 +61,8 @@ export async function getEventStats(this: typeof EventModel, params: GetEventSta
                             _id: 0,
                             name: '$_id.name',
                             count: 1,
-                        }
-                    }
+                        },
+                    },
                 ],
                 totalEvents: [
                     {

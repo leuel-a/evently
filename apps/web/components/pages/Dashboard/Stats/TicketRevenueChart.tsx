@@ -12,7 +12,7 @@ import {TicketRevenueBarChart} from './TicketRevenueBarChart';
 
 interface TicketRevenueChartProps {
     CardProps?: ComponentProps<typeof Card>;
-    revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth'];
+    revenueData: GetDashboardPageDataResult['tickets']['revenues'];
 }
 
 export function TicketRevenueChart(props: TicketRevenueChartProps) {
@@ -21,7 +21,7 @@ export function TicketRevenueChart(props: TicketRevenueChartProps) {
 
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [graphType, setGraphType] = useState<GraphType>('line');
-    const choices = Array.from(new Set(revenueData.map(({year}) => year)));
+    const choices = Array.from(new Set(revenueData?.map(({year}) => year)));
 
     return (
         <Card

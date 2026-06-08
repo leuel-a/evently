@@ -9,7 +9,6 @@ import {
 
 export default async function Page() {
     const {success, data} = await getDashboardPageData();
-
     return (
         <Suspense fallback={<LoadingSpinner />}>
             {success && data && (
@@ -17,13 +16,14 @@ export default async function Page() {
                     <KpiSection
                         ContainerProps={{className: 'gap-3'}}
                         totalEvents={data?.data?.totalEvents}
+                        totalRevenue={data?.data?.tickets?.totalRevenue}
                         totalCategories={data?.data?.totalCategories}
                         categories={data?.data?.categories}
                     />
                     <div className="grid grid-cols-12 gap-3">
                         <TicketRevenueChart
                             CardProps={{className: 'col-span-12 lg:col-span-6'}}
-                            revenueData={data?.data?.ticketsRevenueByMonth ?? []}
+                            revenueData={data?.data?.tickets?.revenues ?? []}
                         />
                         <EventsByCategoryChart
                             CardProps={{className: 'col-span-12 lg:col-span-6'}}

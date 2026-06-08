@@ -1,4 +1,4 @@
-import { GetDashboardPageDataResult } from "@/app/dashboard/actions";
+import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
 
 export const CATEGORY_COLORS = {
     high: '#e8642c',
@@ -68,21 +68,19 @@ export function CategoryLegend(props: CategoryLegendProps) {
 }
 
 export function normalizeRevenueData(
-    revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth']
-): GetDashboardPageDataResult['ticketsRevenueByMonth'] {
-    const years = Array.from(new Set(revenueData.map((d) => d.year)));
+    revenueData: GetDashboardPageDataResult['tickets']['revenues'],
+): GetDashboardPageDataResult['tickets']['revenues'] {
+    const years = Array.from(new Set(revenueData.map((data) => data.year)));
 
     return years.flatMap((year) =>
         Array.from({length: 12}, (_, i) => {
             const month = i + 1;
-            const found = revenueData.find(
-                (data) => data.year === year && data.month === month
-            );
+            const found = revenueData.find((data) => data.year === year && data.month === month);
             return {
                 year,
                 month,
                 revenue: found?.revenue ?? 0,
             };
-        })
+        }),
     );
 }

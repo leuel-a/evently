@@ -14,7 +14,7 @@ import {normalizeRevenueData} from './utils';
 
 interface TicketRevenueLineChartProps {
     year: number;
-    revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth'];
+    revenueData: GetDashboardPageDataResult['tickets']['revenues'];
 }
 
 const chartConfig = {
