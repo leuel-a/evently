@@ -41,8 +41,7 @@ export function TablePagination(props: TablePaginationProps) {
             params.set('page', String(targetPage));
         }
 
-        const queryString = params.toString();
-        return queryString ? `${pathname}?${queryString}` : pathname;
+        return `${pathname}?${params.toString()}`;
     };
 
     return (
