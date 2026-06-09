@@ -1,7 +1,6 @@
 import mongoose, {QueryOptions} from 'mongoose';
 import EventsCategoryModel from './index';
 import {getPaginationValues} from '../helpers/index';
-import {normalizeID} from '../helpers/aggregations';
 import {getEventCategoryProjection} from './utils';
 import {EventCategoryDocument, IEventCategory, IEventCategoryModel} from './schema';
 
@@ -94,4 +93,30 @@ export async function updateEventCategory(
     options: mongoose.QueryOptions = {new: true},
 ): Promise<UpdateEventCategoryResult | null> {
     return this.findByIdAndUpdate(objectId, {...updatedData}, options);
+}
+
+export type GetSettingsForDashboardParams = {userId: string};
+export type GetSettingsForDashboardResult = {categories: Array<{name: string; id: string}>};
+export async function getSettingsForDashboard(
+    this: typeof EventsCategoryModel,
+    params: GetSettingsForDashboardParams,
+) {
+    const {userId} = params;
+    const matchQuery = {user: new mongoose.Types.ObjectId(userId)};
+
+    const categories = await this.aggregate([
+        {
+            $match: matchQuery,
+        },
+        {
+            $project: {
+                _id: 0,
+                id: '$_id',
+                name: 1,
+            },
+        },
+    ]);
+
+    const resultData = {categories};
+    return resultData;
 }

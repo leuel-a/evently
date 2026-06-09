@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
 import {SearchEvents} from '../../Common/SearchEvents';
-import { IEventsCategory } from '@/types/eventsCategory';
+import {IEventsCategory} from '@/types/eventsCategory';
 
 interface EventsFilterTableProps {
-    categories: IEventsCategory[];
+    categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
 }
 
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';

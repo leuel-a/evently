@@ -10,6 +10,6 @@ export const EventsByCategoryContext = createContext<EventsByCategoryContextValu
 
 export function useEventsByCategory() {
     const ctx = useContext(EventsByCategoryContext);
-    if (!ctx) throw new Error('useEventsByCategory must be used inside EventsByCategoryChart');
+    if (!ctx) throw new Error('useEventsByCategory must be used inside EventsByCategoryContext');
     return ctx;
 }

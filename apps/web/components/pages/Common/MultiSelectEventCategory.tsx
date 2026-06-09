@@ -5,18 +5,15 @@ import {useRouter, useSearchParams, usePathname} from 'next/navigation';
 import {MultiSelect} from '@/components/blocks/MultiSelect';
 import {cn} from '@/lib/utils';
 import {removePropertyFromFilter, setValueToFilterParams} from '@/utils/filters';
+import { IEventsCategory } from '@/types/eventsCategory';
 
 export const CATEGORIES_FILTER_PARAM_KEY = 'categories';
 export const CATEGORIES_FILTER_PLACEHOLDER = 'All';
 export const DEFAULT_CATEGORIES_FILTER_PARAM_VALUE = 'All';
 
-interface EventsCategory {
-    name: string;
-}
-
 interface MultiSelectEventCategoryProps {
     MultiSelectProps?: Omit<ComponentProps<typeof MultiSelect>, 'onValueChange' | 'options'>;
-    categories: EventsCategory[];
+    categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
 }
 
 export function MultiSelectEventCategory({

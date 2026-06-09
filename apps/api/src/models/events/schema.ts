@@ -9,6 +9,8 @@ import type {
     GetEventStatsParams,
     GetEventStatsResult,
     GetSettingEventCategoriesResult,
+    GetSettingsForDashboardParams,
+    GetSettingsForDashboardResult,
 } from './statics';
 
 export const EVENT_STATUS = Object.freeze({
@@ -68,7 +70,10 @@ export interface IEventModel extends mongoose.Model<EventDocument> {
 
     deleteEvent(this: IEventModel, objectId: mongoose.Types.ObjectId): Promise<EventDocument>;
 
-    getSettingEventCategories(this: IEventModel): Promise<GetSettingEventCategoriesResult>;
+    getSettingsForDashboard(
+        this: IEventModel,
+        params: GetSettingsForDashboardParams,
+    ): Promise<GetSettingsForDashboardResult>;
 
     getEventStats(this: IEventModel, params: GetEventStatsParams): Promise<GetEventStatsResult>;
 }

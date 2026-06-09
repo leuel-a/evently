@@ -212,56 +212,45 @@ export type GetSettingEventCategoriesResult = {
         active: {id: string; name: string}[];
     };
 };
-export async function getSettingEventCategories(this: typeof EventModel) {
-    const [allCategories, activeCategories] = await Promise.all([
-        mongoose.model(modelNames.eventsCategory).aggregate([
-            {
-                $match: {
-                    isDeleted: false,
-                },
+
+export type GetSettingsForDashboardParams = {userId: string};
+export type GetSettingsForDashboardResult = {};
+
+export async function getSettingsForDashboard(
+    this: typeof EventModel,
+    params: GetSettingsForDashboardParams,
+) {
+    const {userId} = params;
+    const matchQuery = {user: new mongoose.Types.ObjectId(userId), isDeleted: false};
+
+    const result = await this.aggregate([
+        {
+            $match: matchQuery,
+        },
+        {
+            $facet: {
+                priceRange: [
+                    {
+                        $group: {
+                            _id: null,
+                            max: {$max: '$ticketPrice'},
+                            min: {$min: '$ticketPrice'},
+                        },
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            min: 1,
+                            max: 1,
+                        },
+                    },
+                ],
             },
-            {
-                $project: {
-                    id: '$_id',
-                    name: 1,
-                    _id: 0,
-                },
-            },
-        ]),
-        this.aggregate([
-            {
-                $match: {
-                    isDeleted: false,
-                },
-            },
-            {
-                $lookup: {
-                    from: mongoose.model(modelNames.eventsCategory).collection.name,
-                    localField: 'category',
-                    foreignField: '_id',
-                    as: 'category',
-                },
-            },
-            {
-                $unwind: {
-                    path: '$category',
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                // TODO: normalizeID remove implement the proper projection for the id here
-                $project: {
-                    id: '$category._id',
-                    name: '$category.name',
-                },
-            },
-        ]),
+        },
     ]);
 
-    return {
-        category: {
-            all: allCategories,
-            active: activeCategories,
-        },
-    };
+    // THERE MIGHT BE A BETTER WAY TO DO THIS?
+    const priceRangeData = result?.[0].priceRange?.[0] || {min: 0, max: 0};
+    const resultData = {tickets: {priceRange: priceRangeData}};
+    return resultData;
 }

@@ -1,9 +1,7 @@
-import { IResourceModel, ResourceDocument } from './schema';
-import {getResourcesProjection} from './utils';
+import {IResourceModel, ResourceDocument} from './schema';
 
-export type GetResourcesResult = ResourceDocument[]
+export type GetResourcesResult = ResourceDocument[];
 
 export async function getResources(this: IResourceModel) {
-    const projection = getResourcesProjection();
-    return this.find({}, projection);
+    return this.find({}, {_id: 0, id: '$_id', name: 1});
 }

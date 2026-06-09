@@ -20,7 +20,7 @@ export async function getEventsPageData(params: Record<string, string>): Promise
 
         const [events, settings] = await Promise.all([
             makeApiCall<EventApiResponse>({url: `${API_ROUTES.events.base}?${searchParams.toString()}`, headers}),
-            makeApiCall<SettingsApiResponse>({url: API_ROUTES.settings.base}),
+            makeApiCall<SettingsApiResponse>({url: API_ROUTES.settings.base, headers}),
         ]);
 
         return {success: true, data: {events, settings}};
