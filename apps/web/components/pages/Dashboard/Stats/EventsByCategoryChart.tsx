@@ -17,7 +17,7 @@ interface EventsByCategoryChartProps {
     categories: GetDashboardPageDataResult['categories'];
 }
 
-const DEFAULT_CHART_VALUE = 'bar';
+const DEFAULT_CHART_VALUE = 'pie';
 
 export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
     const [chart, setChart] = useState<string>(DEFAULT_CHART_VALUE);
@@ -36,10 +36,12 @@ export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
                 <CardTitle className="font-semibold tracking-tighter uppercase text-muted-foreground/70 leading-none">
                     Events by category
                 </CardTitle>
-                <SelectEventsByCategoryChart
-                    defaultValue={DEFAULT_CHART_VALUE}
-                    setChart={setChart}
-                />
+                <div className='flex gap-2'>
+                    <SelectEventsByCategoryChart
+                        defaultValue={DEFAULT_CHART_VALUE}
+                        onChange={setChart}
+                    />
+                </div>
             </CardHeader>
             <CardContent className="pr-3 pl-5 pb-4">
                 <CategoryLegend totalCategories={totalEvents} />
