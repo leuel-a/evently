@@ -51,7 +51,7 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
 export const getEventsHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {page, limit, filters} = matchedData(req, {locations: ['query']});
+        const {page, limit, filters, q} = matchedData(req, {locations: ['query']});
 
         const results = await EventsModel.getEvents({
             page,

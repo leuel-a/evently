@@ -38,7 +38,9 @@ export function ClearFilters() {
                         <X className="text-gray-500" />
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>{TOOL_TIP_CONTENT}</TooltipContent>
+                <TooltipContent side='left' className="bg-indigo-500 text-white">
+                    {TOOL_TIP_CONTENT}
+                </TooltipContent>
             </Tooltip>
         </div>
     );

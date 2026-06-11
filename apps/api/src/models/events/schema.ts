@@ -116,6 +116,9 @@ const schema = new mongoose.Schema<IEvent>(
     {timestamps: true},
 );
 
+// INFO: read more about indexes
+schema.index({name: 'text', description: 'text'});
+
 schema.virtual('isVirtual').get(function () {
     return this.type === EVENT_TYPE.VIRTUAL;
 });

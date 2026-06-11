@@ -116,14 +116,21 @@ export async function createEvent(this: typeof EventModel, payload: CreateEventP
     return event;
 }
 
-export type GetEventsParams = {page: string; size: string; userId: string; filters?: any};
+export type GetEventsParams = {
+    page: string;
+    size: string;
+    userId: string;
+    filters?: any;
+    q?: string;
+};
 export type GetEventsResult = {data: IEvent[]; total: number; page: string; limit: number};
 export async function getEvents(this: typeof EventModel, params: GetEventsParams) {
-    const {page, size, userId, filters = undefined} = params;
+    const {page, size, userId, filters = undefined, q = undefined} = params;
     const matchQuery = {
         isDeleted: false,
         user: new mongoose.Types.ObjectId(userId),
         ...filtersQuery(filters),
+        ...(q && {$text: {$search: q}}),
     };
 
     const {limit, skip} = getPaginationValues(page, size);
