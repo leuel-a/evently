@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import EventModel from '.';
 import {getPaginationValues} from '../helpers/index';
 import {getEventProjection} from './utils';
+import {filtersQuery} from '../../utils/filters';
 import {modelNames} from '../../config';
 import {EVENT_TYPE, IEvent} from './schema';
 
@@ -115,13 +116,17 @@ export async function createEvent(this: typeof EventModel, payload: CreateEventP
     return event;
 }
 
-export type GetEventsParams = {page: string; size: string; userId: string};
+export type GetEventsParams = {page: string; size: string; userId: string; filters?: any};
 export type GetEventsResult = {data: IEvent[]; total: number; page: string; limit: number};
 export async function getEvents(this: typeof EventModel, params: GetEventsParams) {
-    const {page, size, userId} = params;
-    const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
-    const {limit, skip} = getPaginationValues(page, size);
+    const {page, size, userId, filters = undefined} = params;
+    const matchQuery = {
+        isDeleted: false,
+        user: new mongoose.Types.ObjectId(userId),
+        ...filtersQuery(filters),
+    };
 
+    const {limit, skip} = getPaginationValues(page, size);
     const results = await this.aggregate([
         {
             $lookup: {

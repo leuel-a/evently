@@ -43,6 +43,7 @@
         "@types/express": "^5.0.6",
         "@types/http-errors": "^2.0.5",
         "@types/lodash": "^4.17.20",
+        "@types/mongoose": "^5.11.97",
         "@types/node": "^20.19.37",
         "@types/supertest": "^7.2.0",
         "jsdoc": "^4.0.5",

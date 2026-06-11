@@ -18,7 +18,7 @@ export const createEventHandler: RequestHandler = async (req, res, next) => {
         const result = await EventsModel.createEvent(payload);
         const {_id, ...rest} = result.toObject();
 
-        const resultData = {id: _id.toString(), ...rest}
+        const resultData = {id: _id.toString(), ...rest};
         res.status(httpStatus.CREATED).json({data: resultData});
     } catch (error) {
         next(error);
@@ -51,12 +51,13 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
 export const getEventsHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {page, limit} = matchedData(req, {locations: ['query']});
+        const {page, limit, filters} = matchedData(req, {locations: ['query']});
 
         const results = await EventsModel.getEvents({
             page,
             size: limit,
             userId: user?.id as string,
+            filters,
         });
 
         const currentPage = Number(results?.page ?? 1);

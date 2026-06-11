@@ -176,6 +176,7 @@ export const getEventsValidator = [
     query('limit').default(10),
     query('page').isNumeric().optional(),
     query('page').default(1),
+    query('filters').isString().optional()
 ];
 
 export const getEventValidator = [param('id').isMongoId().withMessage(INVALID_EVENT_ID)];
