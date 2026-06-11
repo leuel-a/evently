@@ -22,14 +22,15 @@ export function ClearFilters() {
     };
 
     if (filters === '') {
-        return <></>
+        return <></>;
     }
+
     return (
         <div className="flex justify-end w-full">
             <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                     <Button
-                        type='button'
+                        type="button"
                         className="rounded-full border border-gray-500 cursor-pointer"
                         variant="ghost"
                         onClick={handleClearFilters}

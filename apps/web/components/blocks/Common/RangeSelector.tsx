@@ -67,6 +67,9 @@ export function RangeSelector(props: RangeSelectorProps) {
                     className={cn(customSliderClassName)}
                     value={rangeValue}
                     onValueChange={handleRangeChange}
+                    min={min}
+                    max={max}
+                    {...sliderProps}
                 />
                 <Input
                     value={rangeValue?.[1]}

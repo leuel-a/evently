@@ -13,8 +13,8 @@ export function filtersQuery(value: any): PipelineStage.Match['$match'] {
             const [min, max] = filters.price;
             const priceQuery: {$gte?: number; $lte?: number} = {};
 
-            if (typeof parseInt(min) === 'number') priceQuery.$gte = parseInt(min);
-            if (typeof parseInt(max) === 'number') priceQuery.$lte = parseInt(max);
+            if (!Number.isNaN(parseInt(min))) priceQuery.$gte = parseInt(min);
+            if (!Number.isNaN(parseInt(max))) priceQuery.$lte = parseInt(max);
 
             if (Object.keys(priceQuery).length > 0) {
                 query.ticketPrice = priceQuery;

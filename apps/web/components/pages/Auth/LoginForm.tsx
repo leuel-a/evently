@@ -15,6 +15,7 @@ import {APP_ROUTES} from '@/config/routes';
 import {Separator} from '@/components/ui/separator';
 import {Mail, Lock} from 'lucide-react';
 import {GoogleSignIn} from './GoogleSignIn';
+
 export function LoginForm() {
     const router = useRouter();
     const form = useForm<EmailSigninSchemaType>({
