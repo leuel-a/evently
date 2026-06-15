@@ -5,7 +5,13 @@ import {API_ROUTES, APP_ROUTES} from '@/config/routes';
 import {CreateEventsCategoryApiResponse} from '@/types/eventsCategory';
 
 export async function GET() {
-    const response = await makeApiCall({url: API_ROUTES.eventCategory.base});
+    const headers = await nextHeaders();
+    const response = await makeApiCall({
+        url: API_ROUTES.eventCategory.base,
+        headers,
+        method: 'GET',
+    });
+
     return Response.json(await response);
 }
 

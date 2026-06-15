@@ -5,7 +5,9 @@ import lodashGet from 'lodash/get';
 import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
+import {countries} from '@/utils/index';
 import type {IEvent} from '@/types/events';
+import {constructFromSymbol} from 'date-fns/constants';
 
 export const columns: ColumnDef<IEvent>[] = [
     {
@@ -71,6 +73,14 @@ export const columns: ColumnDef<IEvent>[] = [
                     </div>
                 </div>
             );
+        },
+    },
+    {
+        accessorKey: 'country',
+        header: 'Country',
+        cell: ({row}) => {
+            const country = countries.find((country) => country?.value === row.getValue('country'));
+            return <div>{country?.label}</div>;
         },
     },
     {

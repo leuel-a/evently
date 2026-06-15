@@ -16,7 +16,6 @@ export const eventsSchema = z
         category: z.string({error: 'Required'}),
         location: z.string().optional(),
         country: z.string().optional(),
-        city: z.string(),
         capacity: z.coerce.number({error: 'Required'}),
         type: z.enum(Object.values(EVENT_TYPE), {error: 'Required'}),
         ticketPrice: z.coerce.number(),
@@ -27,18 +26,17 @@ export const eventsSchema = z
         virtualUrl: z.string().optional(),
     })
     .refine(
-        ({isVirtual, location, country, city}) => {
+        ({isVirtual, location, country}) => {
             if (isVirtual === false) {
                 return (
                     Boolean(location && location.trim()) &&
-                    Boolean(country && country.trim()) &&
-                    Boolean(city && city.trim())
+                    Boolean(country && country.trim())
                 );
             }
             return true;
         },
         {
-            message: 'Location, country, and city are required for in-person events',
+            message: 'Location and country are required for in-person events',
             path: ['location'], // You can point this to any one of the fields
         },
     )

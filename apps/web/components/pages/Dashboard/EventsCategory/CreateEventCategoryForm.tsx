@@ -11,9 +11,9 @@ import {eventCategorySchema, type EventCategorySchemaType} from '@/lib/db/schema
 import { APP_ROUTES } from '@/config/routes';
 import { revalidateEventCategories } from '@/app/dashboard/events-category/actions';
 
-const EVENT_CREATED_SUCCESS_TITLE = 'Event category created';
-const EVENT_CREATED_ERROR_TITLE = 'Failed to create event category';
-const EVENT_CREATED_ERROR_DESCRIPTION = 'Something went wrong. Please try again.';
+const EVENT_CATEGORY_CREATED_SUCCESS_TITLE = 'Event category created';
+const EVENT_CATEGORY_CREATED_ERROR_TITLE = 'Failed to create event category';
+const EVENT_CATEGORY_CREATED_ERROR_DESCRIPTION = 'Something went wrong. Please try again.';
 
 export function CreateEventCategoryForm() {
     const router = useRouter();
@@ -31,15 +31,15 @@ export function CreateEventCategoryForm() {
             await revalidateEventCategories() // TODO: there might be a better way to do this but for not this works
 
             const {data: createdEventCategory} = data;
-            toast.success(EVENT_CREATED_SUCCESS_TITLE, {
+            toast.success(EVENT_CATEGORY_CREATED_SUCCESS_TITLE, {
                 description: `"${createdEventCategory.name}" has been successfully created.`,
             });
 
             router.push(APP_ROUTES.dashboard.eventsCategory.base);
         },
         onError: () => {
-            toast.error(EVENT_CREATED_ERROR_TITLE, {
-                description: EVENT_CREATED_ERROR_DESCRIPTION,
+            toast.error(EVENT_CATEGORY_CREATED_ERROR_TITLE, {
+                description: EVENT_CATEGORY_CREATED_ERROR_DESCRIPTION,
             });
         },
     });

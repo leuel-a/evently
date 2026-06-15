@@ -12,7 +12,7 @@ import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
 import {Textarea} from '@/components/ui/textarea';
 import {TimePicker} from '@/components/blocks/TimePicker';
-import {API_ROUTES, APP_ROUTES} from '@/config/routes';
+import {APP_ROUTES} from '@/config/routes';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {cn} from '@/lib/utils';
 import {EventCategoryInput} from './EventCategoryInput';
@@ -21,6 +21,7 @@ import {EventIsVirtualInput} from './EventIsVirtualInput';
 import {EventIsFreeInput} from './EventIsFreeInput';
 import {EventTicketPriceInput} from './EventTicketPriceInput';
 import {EventCapacityInput} from './EventCapacityInput';
+import {CountriesSelectInput} from '@/components/pages/Common/CountriesSelectInput';
 
 export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
 
@@ -41,6 +42,7 @@ export function EventForm(props: EventFormProps) {
 
     return (
         <form
+            autoComplete='off'
             onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
             className="space-y-10"
             {...formProps}
@@ -87,7 +89,10 @@ export function EventForm(props: EventFormProps) {
                         control={form.control}
                         name="category"
                         render={({field}) => (
-                            <ReferenceInput resource={API_ROUTES.eventCategory.base}>
+                            <ReferenceInput
+                                resource={APP_ROUTES.api.eventsCategory}
+                                internal={true}
+                            >
                                 <EventCategoryInput onChange={field.onChange} value={field.value} />
                             </ReferenceInput>
                         )}
@@ -107,19 +112,28 @@ export function EventForm(props: EventFormProps) {
                             <EventIsVirtualInput field={field} fieldState={fieldState} />
                         )}
                     />
-                    <Controller
-                        control={form.control}
-                        name="location"
-                        render={({field, fieldState}) => (
-                            <EventLocationInput
-                                field={field}
-                                fieldState={fieldState}
-                                CustomAddressAutofillInputProps={{
-                                    InputProps: {disabled: isVirtual},
-                                }}
-                            />
-                        )}
-                    />
+                    <div className="flex gap-2">
+                        <Controller
+                            control={form.control}
+                            name="location"
+                            render={({field, fieldState}) => (
+                                <EventLocationInput
+                                    field={field}
+                                    fieldState={fieldState}
+                                    CustomAddressAutofillInputProps={{
+                                        InputProps: {disabled: isVirtual},
+                                    }}
+                                />
+                            )}
+                        />
+                        <Controller
+                            control={form.control}
+                            name="country"
+                            render={({field, fieldState}) => (
+                                <CountriesSelectInput field={field} fieldState={fieldState} />
+                            )}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">

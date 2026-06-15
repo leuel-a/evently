@@ -35,6 +35,15 @@ const fields = {
             message: 'Location must be a string',
         },
     },
+    country: {
+        name: 'country',
+        isString: {
+            message: 'Country must be a string',
+        },
+        notEmpty: {
+            message: "Country can't be an empty string",
+        },
+    },
     ticketPrice: {
         name: 'ticketPrice',
         isNumeric: {
@@ -123,6 +132,11 @@ const eventFieldsValidators = {
         .withMessage(fields.description.notEmpty.message),
     date: body(fields.date.name).isISO8601().withMessage(fields.date.isISO8601.message).toDate(),
     location: body(fields.location.name).isString().withMessage(fields.location.isString.message),
+    country: body(fields.country.name)
+        .isString()
+        .withMessage(fields.country.isString.message)
+        .notEmpty()
+        .withMessage(fields.country.notEmpty.message),
     ticketPrice: body(fields.ticketPrice.name)
         .isNumeric()
         .withMessage(fields.ticketPrice.isNumeric.message),
@@ -165,6 +179,7 @@ export const createEventValidator = [
     eventFieldsValidators.ticketPrice.optional(),
     eventFieldsValidators.capacity,
     eventFieldsValidators.location.optional(),
+    eventFieldsValidators.country,
     eventFieldsValidators.type,
     eventFieldsValidators.virtualUrl.optional(),
     eventFieldsValidators.category,
@@ -176,7 +191,7 @@ export const getEventsValidator = [
     query('limit').default(10),
     query('page').isNumeric().optional(),
     query('page').default(1),
-    query('filters').isString().optional()
+    query('filters').isString().optional(),
 ];
 
 export const getEventValidator = [param('id').isMongoId().withMessage(INVALID_EVENT_ID)];

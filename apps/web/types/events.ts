@@ -19,6 +19,7 @@ export interface IEvent {
     description: string;
     date: Date;
     location?: string;
+    country: string;
     price: number;
     capacity: number;
     category: IEventsCategory;
@@ -35,10 +36,12 @@ export interface IEvent {
     address: string;
 }
 
-export type EventApiResponse = IApiResponse<IEvent[]> & {
+export type GetEventsApiResponse = IApiResponse<IEvent[]> & {
     page: number;
     total: number;
     limit: number;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
 };
+
+export type CreateEventApiResponse = IApiResponse<IEvent>;

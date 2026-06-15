@@ -6,11 +6,11 @@ import {makeApiCall} from '@/config/api';
 import {API_ROUTES, APP_ROUTES} from '@/config/routes';
 import {ApiError} from '@/lib/error';
 import type {IActionResult} from '@/types/utils';
-import type {EventApiResponse} from '@/types/events';
+import type {GetEventsApiResponse} from '@/types/events';
 import type {SettingsApiResponse} from '@/types/settings';
 
 export type GetEventsPageResultData = {
-    events: EventApiResponse;
+    events: GetEventsApiResponse;
     settings: SettingsApiResponse;
 };
 
@@ -22,7 +22,7 @@ export async function getEventsPageData(
         const headers = await nextHeaders();
 
         const [events, settings] = await Promise.all([
-            makeApiCall<EventApiResponse>({
+            makeApiCall<GetEventsApiResponse>({
                 url: `${API_ROUTES.events.base}?${searchParams.toString()}`,
                 headers,
             }),

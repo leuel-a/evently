@@ -13,6 +13,7 @@ const APP_ROUTES = {
         signup: `${AUTH_PAGE_BASE_ROUTE}signup`,
     },
     api: {
+        events: `/api/events`,
         eventsCategory: `/api/eventsCategory`,
     },
     dashboard: {
@@ -50,7 +51,7 @@ const API_ROUTES = {
     index: INDEX_BASE_API_ROUTE, // INFO: this might never be needed
     stats: {
         base: `${INDEX_BASE_API_ROUTE}/stats`,
-        dashboard: `${INDEX_BASE_API_ROUTE}/stats/dashboard`
+        dashboard: `${INDEX_BASE_API_ROUTE}/stats/dashboard`,
     },
     auth: {
         base: AUTH_API_BASE_ROUTE,

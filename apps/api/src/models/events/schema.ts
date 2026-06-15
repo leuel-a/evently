@@ -34,6 +34,7 @@ export interface IEvent {
     capacity: Number;
     checkoutLink: String;
     status: String;
+    country: String;
     type: String;
     category: mongoose.Schema.Types.ObjectId;
     user: mongoose.Schema.Types.ObjectId;
@@ -84,6 +85,7 @@ const schema = new mongoose.Schema<IEvent>(
         description: {type: String, required: true},
         date: {type: Date, required: true},
         location: {type: String},
+        country: {type: String, required: true},
         ticketPrice: {type: Number, required: false, default: 0},
         capacity: {type: Number, required: true},
         checkoutLink: {type: String, required: false},

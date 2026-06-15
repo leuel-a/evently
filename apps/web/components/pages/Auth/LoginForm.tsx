@@ -28,10 +28,10 @@ export function LoginForm() {
 
     const mutation = useMutation({
         mutationFn: emailSigninMutation,
-        onSuccess: (data) => {
-            console.log(data)
+        onSuccess: (_data) => {
             router.push(APP_ROUTES.dashboard.base);
         },
+        // TODO: handle error case for login
     });
 
     const onSubmit = async (values: EmailSigninSchemaType) => {

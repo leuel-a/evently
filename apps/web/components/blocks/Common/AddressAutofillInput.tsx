@@ -10,15 +10,20 @@ const AddressAutofill = dynamic(
     {ssr: false},
 );
 
+export interface AddressAutofillInputProps {
+    error?: FieldError;
+    InputProps?: Omit<React.ComponentProps<typeof Input>, 'autoComplete'>;
+}
+
 export function AddressAutofillInputComponent(props: AddressAutofillInputProps) {
     const {error, InputProps: inputProps} = props;
     return (
         <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string}>
             <Input
-                {...inputProps}
-                autoComplete="street-address"
+                autoComplete="off"
                 className={cn('h-12', error ? 'border-red-500' : '')}
                 placeholder="Enter address"
+                {...inputProps}
             />
         </AddressAutofill>
     );
@@ -30,8 +35,3 @@ export const AddressAutofillInput = React.memo(
         prev.error?.message === next.error?.message &&
         JSON.stringify(prev.InputProps) === JSON.stringify(next.InputProps),
 );
-
-export interface AddressAutofillInputProps {
-    error?: FieldError;
-    InputProps?: React.ComponentProps<typeof Input>;
-}

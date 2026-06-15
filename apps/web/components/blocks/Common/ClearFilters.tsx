@@ -21,7 +21,7 @@ export function ClearFilters() {
         revalidateEvents();
     };
 
-    if (filters === '') {
+    if (!filters) {
         return <></>;
     }
 

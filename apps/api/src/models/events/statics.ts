@@ -171,6 +171,7 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
                             description: 1,
                             date: 1,
                             location: 1,
+                            country: 1,
                             ticketPrice: 1,
                             capacity: 1,
                             status: 1,

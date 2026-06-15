@@ -1,9 +1,9 @@
 import type {QueryFunction} from '@tanstack/react-query';
-import type {EventApiResponse} from '@/types/events';
+import type {GetEventsApiResponse} from '@/types/events';
 import type {SettingsApiResponse} from '@/types/settings';
 import {API_ROUTES} from '@/config/routes';
 
-export const fetchEvents: QueryFunction<EventApiResponse, ['events']> = async () => {
+export const fetchEvents: QueryFunction<GetEventsApiResponse, ['events']> = async () => {
     const response = await fetch(API_ROUTES.events.base);
 
     if (!response.ok) {

@@ -1,5 +1,4 @@
-import worldCountries from 'world-countries';
-import {useEventFormContext} from '@/components/pages/Dashboard/Form/Event/useEventFormContext';
+import {ControllerFieldState, ControllerRenderProps} from 'react-hook-form';
 import {
     Select,
     SelectTrigger,
@@ -7,45 +6,38 @@ import {
     SelectContent,
     SelectItem,
 } from '@/components/ui/select';
-import {cn} from '@/lib/utils';
+import {EventSchemaType} from '@/lib/db/schema';
+import {Field, FieldLabel, FieldError} from '@/components/ui/field';
+import {countries} from '@/utils/index';
 
-const countries = worldCountries.map((country) => ({
-    value: country.cca3,
-    label: country.name.common,
-}));
 
-export function CountriesSelectInput({onChange, value}: CountriesSelectInputProps) {
-    const {getFieldState} = useEventFormContext();
-    const {error} = getFieldState('country');
-
-    return (
-        <Select
-            onValueChange={onChange}
-            value={value}
-        >
-            <SelectTrigger
-                className={cn(
-                    'w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12',
-                    error ? 'border border-red-500' : '',
-                )}
-            >
-                <SelectValue placeholder="Country" />
-            </SelectTrigger>
-            <SelectContent>
-                {countries.map(({value, label}) => (
-                    <SelectItem
-                        key={value}
-                        value={value}
-                    >
-                        {label}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </Select>
-    );
+interface CountriesSelectInputProps {
+    field: ControllerRenderProps<EventSchemaType, 'country'>;
+    fieldState: ControllerFieldState;
 }
 
-export interface CountriesSelectInputProps {
-    onChange: (value: string) => void;
-    value?: string;
+export function CountriesSelectInput(props: CountriesSelectInputProps) {
+    const {fieldState, field} = props;
+    
+    return (
+        <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Country</FieldLabel>
+            <Select  onValueChange={field.onChange} value={field.value}>
+                <SelectTrigger
+                    className="w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12"
+                    aria-invalid={fieldState.invalid}
+                >
+                    <SelectValue placeholder="Country" />
+                </SelectTrigger>
+                <SelectContent>
+                    {countries.map(({value, label}) => (
+                        <SelectItem key={value} value={value}>
+                            {label}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+        </Field>
+    );
 }

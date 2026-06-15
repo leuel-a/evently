@@ -832,6 +832,7 @@ function buildSeedEventsData() {
         description?: string;
         type?: 'virtual' | 'physical';
         ticketPrice?: number;
+        country: string,
         capacity?: number;
         status: 'active' | 'draft';
         date: Date;
@@ -849,6 +850,7 @@ function buildSeedEventsData() {
 
             allEvents.push({
                 ...template,
+                country: 'ETH', // NEED TO STORE THIS IN A DATABASE
                 title: needsSuffix ? `${template?.title} ${suffix}` : (template?.title as string),
                 status: i % 6 === 0 ? 'draft' : 'active',
                 date: dates[allEvents.length] as Date,
@@ -950,6 +952,7 @@ async function seed() {
                 startTime: '10:00',
                 endTime: '16:00',
                 location: isVirtual ? 'Online' : 'Addis Ababa',
+                country: event.country,
                 address: isVirtual ? 'N/A' : 'Main Conference Center',
                 virtualUrl: isVirtual ? 'https://events.example.com/live' : undefined,
             };
