@@ -3,6 +3,7 @@
 import {useState, useEffect, type ComponentProps} from 'react';
 import {Search} from 'lucide-react';
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
+import {revalidateEvents} from '@/app/dashboard/events/actions';
 import {Input} from '@/components/ui/input';
 import {useDebounce} from '@/hooks/use-debounce';
 import {cn} from '@/lib/utils';
@@ -10,6 +11,8 @@ import {cn} from '@/lib/utils';
 interface SearchEventsProps {
     InputProps?: ComponentProps<typeof Input>;
 }
+
+const EVENT_SEARCH_PARAMS_KEY = 'q';
 
 export function SearchEvents({InputProps}: SearchEventsProps) {
     const router = useRouter();
@@ -20,13 +23,19 @@ export function SearchEvents({InputProps}: SearchEventsProps) {
 
     const handleSearch = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
-        params.set('q', value);
+        params.set(EVENT_SEARCH_PARAMS_KEY, value);
+        revalidateEvents();
         router.replace(`${pathname}?${params.toString()}`);
     };
 
     useEffect(() => {
         handleSearch(debouncedInput);
     }, [debouncedInput]);
+
+    // INFO: I need to check this with AI
+    useEffect(() => {
+        setInput(searchParams.get('q') || '');
+    }, [searchParams]);
 
     return (
         <div className="w-full md:w-96 relative group">

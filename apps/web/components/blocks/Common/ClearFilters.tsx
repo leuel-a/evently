@@ -12,11 +12,12 @@ export function ClearFilters() {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const filters = searchParams.get('filters');
+    const filters = searchParams.get('filters') || searchParams.get('q');
 
     const handleClearFilters = () => {
         const newParams = new URLSearchParams(searchParams.toString());
         newParams.set('filters', '');
+        newParams.set('q', '')
         router.push(`${pathname}?${newParams.toString()}`);
         revalidateEvents();
     };

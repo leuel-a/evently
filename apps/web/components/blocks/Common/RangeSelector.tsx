@@ -17,10 +17,19 @@ interface RangeSelectorProps {
     debounceTimer?: number;
     min: number;
     max: number;
+    label?: string;
 }
 
 export function RangeSelector(props: RangeSelectorProps) {
-    const {value, onValueChange, min, max, debounceTimer = 300, SliderProps = {}} = props;
+    const {
+        label = '',
+        value,
+        onValueChange,
+        min,
+        max,
+        debounceTimer = 300,
+        SliderProps = {},
+    } = props;
     const {className: customSliderClassName, ...sliderProps} = SliderProps;
 
     const [rangeValue, setRangeValue] = useState<number[]>(value as number[]);
@@ -53,9 +62,17 @@ export function RangeSelector(props: RangeSelectorProps) {
         onValueChange?.(debouncedRangeValue);
     }, [debouncedRangeValue]);
 
+    useEffect(() => {
+        if (value && Array.isArray(value)) {
+            if (value[0] !== rangeValue[0] || value[1] !== rangeValue[1]) {
+                setRangeValue(value);
+            }
+        }
+    }, [value]);
+
     return (
         <div className="flex gap-2 w-80 items-center">
-            <Label>Price</Label>
+            {label && <Label>{label}</Label>}
             <div className="flex gap-2 w-full">
                 <Input
                     value={rangeValue?.[0]}

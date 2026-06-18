@@ -10,7 +10,7 @@ const EVENT_CATEGORY_NOT_FOUND_MESSAGE = 'Event Category not found';
 export const getEventCategoriesHandler: express.RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {limit, page} = matchedData(req, {locations: ['query']});
+        const {limit, page, ids} = matchedData(req, {locations: ['query']});
         const results = await EventCategory.getEventCategories({
             page,
             size: limit,
