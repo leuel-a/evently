@@ -19,14 +19,17 @@ export function filtersQuery(filters: any): PipelineStage.Match['$match'] {
             }
         }
 
-        if (filters.status && Array.isArray(filters.status)) {
+        if (filters?.status && Array.isArray(filters?.status)) {
             query.status = {$in: [...filters.status]};
         }
 
-        if (filters.categories && Array.isArray(filters.categories)) {
-            query.category = {$in: [...filters.categories]}
+        if (filters?.categories && Array.isArray(filters?.categories)) {
+            query.category = {$in: [...filters.categories]};
         }
 
+        if (filters?.type && Array.isArray(filters?.type)) {
+            query.type = {$in: [...filters?.type]};
+        }
         return query;
     } catch {
         return {};

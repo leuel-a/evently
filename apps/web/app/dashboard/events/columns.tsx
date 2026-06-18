@@ -6,8 +6,9 @@ import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
 import {countries} from '@/utils/index';
-import type {IEvent} from '@/types/events';
+import {EVENT_STATUS, type IEvent} from '@/types/events';
 import {constructFromSymbol} from 'date-fns/constants';
+import {cn} from '@/lib/utils';
 
 export const columns: ColumnDef<IEvent>[] = [
     {
@@ -135,7 +136,7 @@ export const columns: ColumnDef<IEvent>[] = [
     },
     {
         accessorKey: 'isVirtual',
-        header: 'Mode',
+        header: 'Type',
         cell: ({row}) => {
             const isVirtual = row.getValue<boolean>('isVirtual');
 
@@ -143,27 +144,34 @@ export const columns: ColumnDef<IEvent>[] = [
                 <Badge
                     variant={isVirtual ? 'secondary' : 'default'}
                     className={
-                        isVirtual ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                        isVirtual ? 'bg-amber-100 text-amber-800' : 'bg-cyan-100 text-cyan-800'
                     }
                 >
-                    {isVirtual ? 'Remote' : 'On-Site'}
+                    {isVirtual ? 'Virtual' : 'On-Site'}
                 </Badge>
             );
         },
     },
     {
-        accessorKey: 'id',
+        accessorKey: 'status',
         header: 'Status',
-        cell: ({row: {original}}) => (
-            <Badge
-                className={
-                    original.date < new Date()
-                        ? 'bg-gray-200 text-gray-800'
-                        : 'bg-green-100 text-green-800'
-                }
-            >
-                {original.date < new Date() ? 'Completed' : 'Ongoing'}
-            </Badge>
-        ),
+        cell: ({row}) => {
+            // ACTIVE, DRAFT, CLOSED
+            const status = row.getValue('status') as string;
+            return (
+                <Badge
+                    className={cn(
+                        'capitalize',
+                        status === EVENT_STATUS.DRAFT
+                            ? 'bg-gray-200 text-gray-800'
+                            : status === EVENT_STATUS.ACTIVE
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800',
+                    )}
+                >
+                    {status}
+                </Badge>
+            );
+        },
     },
 ];

@@ -19,6 +19,3 @@ export function getEventProjection() {
 }
 
 export function getEventsProjection() {}
-
-export async function getCategoriesByName(value: string[]) {
-}
