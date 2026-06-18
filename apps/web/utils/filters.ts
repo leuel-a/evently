@@ -10,9 +10,13 @@ export function getValueFromFilterParam(
     params: URLSearchParams,
     key: string,
 ): FilterParams[keyof FilterParams] {
-    return JSON.parse(
-        lodashGet(Object.fromEntries(params.entries()), `${FILTERS_PARAM_KEY}.${key}`, '[]'),
-    );
+    try {
+        const raw = params.get('filters') ?? '{}';
+        return lodashGet(JSON.parse(raw || '{}'), key, []);
+    } catch (error) {
+        console.log(`[ERROR] Unable to parse Filter from Params, ${error}`);
+        return [];
+    }
 }
 
 export function setValueToFilterParams(
@@ -21,21 +25,14 @@ export function setValueToFilterParams(
     value: string | string[],
 ): URLSearchParams {
     const paramsObject = Object.fromEntries(params.entries());
+    paramsObject[FILTERS_PARAM_KEY] = JSON.parse(paramsObject[FILTERS_PARAM_KEY] || '{}');
+
     const filterValue = getValueFromFilterParam(params, key);
     const valuesToAdd = Array.isArray(value) ? value : [value];
 
-    valuesToAdd.forEach((value) => {
-        if (!filterValue.includes(value)) {
-            filterValue.push(value);
-        }
-    });
-
-    lodashSet(
-        paramsObject,
-        `${FILTERS_PARAM_KEY}.${key}`,
-        filterValue,
-        // filterValue.includes(value) ? filterValue : [...filterValue, value],
-    );
+    lodashSet(paramsObject, `${FILTERS_PARAM_KEY}.${key}`, [
+        ...new Set([...filterValue, ...valuesToAdd]),
+    ]);
 
     return convertObjectToURLParams(paramsObject);
 }

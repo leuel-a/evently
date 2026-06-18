@@ -40,6 +40,7 @@ export const getEventCategoriesValidator = [
     query('limit').default(10),
     query('page').isNumeric().optional(),
     query('page').default(1),
+    query('ids').isArray().optional()
 ];
 
 export const getEventCategoryValidator = [

@@ -125,16 +125,56 @@ export type GetEventsParams = {
 };
 export type GetEventsResult = {data: IEvent[]; total: number; page: string; limit: number};
 export async function getEvents(this: typeof EventModel, params: GetEventsParams) {
-    const {page, size, userId, filters = undefined, q = undefined} = params;
+    const {page, size, userId, filters: rawFilters = undefined, q = undefined} = params;
+    let filters;
+
+    try {
+        filters = JSON.parse(rawFilters);
+        if (filters?.categories && Array.isArray(filters?.categories)) {
+            const idsResult = await mongoose.model(modelNames.eventsCategory).aggregate([
+                {
+                    $match: {
+                        name: {
+                            $in: [...filters?.categories],
+                        },
+                    },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        ids: {$push: '$_id'},
+                    },
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        ids: 1,
+                    },
+                },
+            ]);
+            filters.categories = idsResult?.[0]?.ids;
+        }
+    } catch (error) {
+        // TODO: add a better logging system
+        console.log(`[ERROR] unable to parse the filters from query: ${error}`);
+    }
+
     const matchQuery = {
         isDeleted: false,
         user: new mongoose.Types.ObjectId(userId),
         ...filtersQuery(filters),
-        ...(q && {$text: {$search: q}}),
+        // INFO: since there is a $text, the $match pipline stage should
+        // the first stage in the aggregation pipeline
+        // Checkout --> https://www.mongodb.com/docs/upcoming/tutorial/text-search-in-aggregation/
+        ...(q && {$text: {$search: q, $caseSensitive: false, $diacriticSensitive: false}}),
     };
 
     const {limit, skip} = getPaginationValues(page, size);
+
     const results = await this.aggregate([
+        {
+            $match: matchQuery,
+        },
         {
             $lookup: {
                 from: mongoose.model(modelNames.eventsCategory).collection.name,
@@ -154,9 +194,6 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
                 isVirtual: {$eq: ['$type', EVENT_TYPE.VIRTUAL]},
                 isFree: {$eq: ['$ticketPrice', 0]},
             },
-        },
-        {
-            $match: matchQuery,
         },
         {
             $facet: {
@@ -199,7 +236,7 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
 
     const resultData = results?.[0]?.data;
     const resultTotal = results?.[0]?.total;
-    return {data: resultData, total: resultTotal?.[0].count, page, limit};
+    return {data: resultData, total: resultTotal?.[0]?.count, page, limit};
 }
 
 export async function deleteEvent(this: typeof EventModel, objectId: mongoose.Types.ObjectId) {

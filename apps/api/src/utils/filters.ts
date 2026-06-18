@@ -1,9 +1,7 @@
 import type {PipelineStage} from 'mongoose';
 
-export function filtersQuery(value: any): PipelineStage.Match['$match'] {
+export function filtersQuery(filters: any): PipelineStage.Match['$match'] {
     try {
-        const filters = JSON.parse(value);
-
         if (!filters || typeof filters !== 'object') return {};
 
         const query: PipelineStage.Match['$match'] = {};
@@ -19,6 +17,14 @@ export function filtersQuery(value: any): PipelineStage.Match['$match'] {
             if (Object.keys(priceQuery).length > 0) {
                 query.ticketPrice = priceQuery;
             }
+        }
+
+        if (filters.status && Array.isArray(filters.status)) {
+            query.status = {$in: [...filters.status]};
+        }
+
+        if (filters.categories && Array.isArray(filters.categories)) {
+            query.category = {$in: [...filters.categories]}
         }
 
         return query;

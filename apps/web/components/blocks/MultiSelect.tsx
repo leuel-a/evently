@@ -310,6 +310,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             emptyIndicator,
             autoSize = false,
             singleLine = false,
+            value = undefined,
             popoverClassName,
             disabled = false,
             responsive,
@@ -637,6 +638,13 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                 setIsPopoverOpen(false);
             }
         };
+
+        // INFO: custom code to handle filter reset
+        React.useEffect(() => {
+            if (value !== undefined) {
+                setSelectedValues(value as string[]);
+            }
+        }, [value])
 
         React.useEffect(() => {
             if (!resetOnDefaultValueChange) return;

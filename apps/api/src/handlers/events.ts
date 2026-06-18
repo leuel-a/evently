@@ -58,6 +58,7 @@ export const getEventsHandler: RequestHandler = async (req, res, next) => {
             size: limit,
             userId: user?.id as string,
             filters,
+            q,
         });
 
         const currentPage = Number(results?.page ?? 1);

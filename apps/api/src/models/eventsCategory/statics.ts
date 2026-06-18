@@ -38,13 +38,17 @@ export type GetEventCategoriesResult = {
     limit: number;
     total: number;
 };
-export type GetEventCategoriesParams = {page: string; size: string; userId: string};
+export type GetEventCategoriesParams = {page: string; size: string; userId: string; ids?: string[]};
 export async function getEventCategories(
     this: typeof EventsCategoryModel,
     params: GetEventCategoriesParams,
 ): Promise<GetEventCategoriesResult> {
-    const {page, size, userId} = params;
-    const matchQuery = {isDeleted: false, user: new mongoose.Types.ObjectId(userId)};
+    const {page, size, userId, ids} = params;
+    const matchQuery = {
+        isDeleted: false,
+        user: new mongoose.Types.ObjectId(userId),
+        ...(ids && {ids: {$in: [...ids]}}),
+    };
     const {limit, skip} = getPaginationValues(page, size);
 
     const results = await this.aggregate([
