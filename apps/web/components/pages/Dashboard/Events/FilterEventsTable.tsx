@@ -7,6 +7,7 @@ import {IEventsCategory} from '@/types/eventsCategory';
 import {TicketPriceRangeSelector} from './TicketPriceRangeSelector';
 import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
 import {EventStatusSelector} from './EventStatusSelector';
+import { EventModeSelector } from './EventModeSelector';
 
 interface EventsFilterTableProps {
     categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
@@ -23,6 +24,7 @@ export function FilterEventsTable({categories}: EventsFilterTableProps) {
                     <SearchEvents />
                     <div className="flex gap-6 items-center justify-end">
                         <EventStatusSelector />
+                        <EventModeSelector/>
                         {tickets && (
                             <TicketPriceRangeSelector
                                 min={tickets?.priceRange.min}

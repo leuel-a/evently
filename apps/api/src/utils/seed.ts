@@ -834,12 +834,13 @@ function buildSeedEventsData() {
         ticketPrice?: number;
         country: string,
         capacity?: number;
-        status: 'active' | 'draft';
+        status: string;
         date: Date;
         user: string;
         categoryName?: string;
     }> = [];
 
+    const eventStatuses = ['active', 'draft', 'closed'] // TODO: use the one from the events schema
     for (const [categoryName, count] of Object.entries(CATEGORY_COUNTS)) {
         const templates = templatesByCategory[categoryName] as EventTemplate[];
 
@@ -852,7 +853,7 @@ function buildSeedEventsData() {
                 ...template,
                 country: 'ETH', // NEED TO STORE THIS IN A DATABASE
                 title: needsSuffix ? `${template?.title} ${suffix}` : (template?.title as string),
-                status: i % 6 === 0 ? 'draft' : 'active',
+                status: eventStatuses[Math.floor(Math.random() * eventStatuses.length)] as string,
                 date: dates[allEvents.length] as Date,
                 user: defaultUserId,
                 categoryName,
