@@ -952,7 +952,7 @@ async function seed() {
                 category: categoryMap[event.categoryName as string],
                 startTime: '10:00',
                 endTime: '16:00',
-                location: isVirtual ? 'Online' : 'Addis Ababa',
+                location: isVirtual ? undefined : 'Addis Ababa',
                 country: event.country,
                 address: isVirtual ? 'N/A' : 'Main Conference Center',
                 virtualUrl: isVirtual ? 'https://events.example.com/live' : undefined,

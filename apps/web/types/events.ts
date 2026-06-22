@@ -20,13 +20,14 @@ export interface IEvent {
     date: Date;
     location?: string;
     country: string;
-    price: number;
+    ticketPrice: number;
     capacity: number;
     category: IEventsCategory;
     checkoutLink?: string;
     status: EVENT_STATUS;
     type: EVENT_TYPE;
     createdAt: Date;
+    user: string;
     updatedAt: Date;
     virtualUrl?: string;
     startTime: string;
@@ -45,3 +46,4 @@ export type GetEventsApiResponse = IApiResponse<IEvent[]> & {
 };
 
 export type CreateEventApiResponse = IApiResponse<IEvent>;
+export type UpdateEventApiResponse = IApiResponse<IEvent>;

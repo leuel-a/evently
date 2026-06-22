@@ -7,8 +7,8 @@ import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
 import {countries} from '@/utils/index';
 import {EVENT_STATUS, type IEvent} from '@/types/events';
-import {constructFromSymbol} from 'date-fns/constants';
 import {cn} from '@/lib/utils';
+import {EditEventAction} from '@/components/pages/Dashboard/Events/EditEventAction';
 
 export const columns: ColumnDef<IEvent>[] = [
     {
@@ -173,5 +173,9 @@ export const columns: ColumnDef<IEvent>[] = [
                 </Badge>
             );
         },
+    },
+    {
+        id: 'actions',
+        cell: ({row}) => <EditEventAction row={row} />,
     },
 ];

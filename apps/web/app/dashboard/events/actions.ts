@@ -5,8 +5,8 @@ import {headers as nextHeaders} from 'next/headers';
 import {makeApiCall} from '@/config/api';
 import {API_ROUTES, APP_ROUTES} from '@/config/routes';
 import {ApiError} from '@/lib/error';
-import type {IActionResult} from '@/types/utils';
-import type {GetEventsApiResponse} from '@/types/events';
+import type {IActionResult, IApiResponse} from '@/types/utils';
+import type {GetEventsApiResponse, IEvent} from '@/types/events';
 import type {SettingsApiResponse} from '@/types/settings';
 
 export type GetEventsPageResultData = {
@@ -38,4 +38,18 @@ export async function getEventsPageData(
 
 export async function revalidateEvents() {
     revalidatePath(APP_ROUTES.dashboard.events.base);
+}
+
+export type GetEditEventsPageData = IApiResponse<IEvent>;
+export async function getEditEventsPageData(id: string): Promise<IActionResult<GetEditEventsPageData>> {
+    try {
+        const headers = await nextHeaders();
+        const response = await makeApiCall({
+            url: `${API_ROUTES.events.base}/${id}`,
+            headers,
+        });
+        return {success: true, data: response as GetEditEventsPageData}
+    } catch (error) {
+        return {success: false}
+    }
 }

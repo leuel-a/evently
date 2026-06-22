@@ -84,7 +84,7 @@ const schema = new mongoose.Schema<IEvent>(
         title: {type: String, required: true},
         description: {type: String, required: true},
         date: {type: Date, required: true},
-        location: {type: String},
+        location: {type: String, required: false},
         country: {type: String, required: true},
         ticketPrice: {type: Number, required: false, default: 0},
         capacity: {type: Number, required: true},
