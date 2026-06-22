@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import EventModel from '.';
 import {getPaginationValues} from '../helpers/index';
-import {getEventProjection} from './utils';
 import {filtersQuery} from '../../utils/filters';
 import {modelNames} from '../../config';
 import {EVENT_TYPE, IEvent} from './schema';
@@ -86,28 +85,65 @@ export async function getEventStats(this: typeof EventModel, params: GetEventSta
 export async function getEvent(
     this: typeof EventModel,
     params: GetEventParams,
-    opts: mongoose.QueryOptions = {},
 ): Promise<GetEventResult> {
-    const {id: _id} = params;
-    const matchQuery = {_id};
+    const {id} = params;
+    const matchQuery = {_id: new mongoose.Types.ObjectId(id)};
 
-    const projection = getEventProjection();
-    const options = {...opts};
-
-    const event = await this.findOne(matchQuery, projection, options);
-    if (event == null) {
-        return {
-            data: null,
-        };
-    }
-
-    await event.populate([{path: 'category', select: 'name description'}]);
-
-    return {
-        data: {
-            ...event.toObject({versionKey: false}),
+    const result = await this.aggregate([
+        {
+            $match: matchQuery,
         },
-    };
+        {
+            $lookup: {
+                from: mongoose.model(modelNames.eventsCategory).collection.name,
+                localField: 'category',
+                foreignField: '_id',
+                as: 'category',
+            },
+        },
+        {
+            $unwind: {
+                path: '$category',
+                preserveNullAndEmptyArrays: false,
+            },
+        },
+        {
+            $project: {
+                id: '$_id',
+                _id: 0,
+                title: 1,
+                description: 1,
+                date: 1,
+                location: 1,
+                country: 1,
+                ticketPrice: 1,
+                capacity: 1,
+                status: 1,
+                type: 1,
+                category: {
+                    id: '$category._id',
+                    name: '$category.name',
+                    description: '$category.description',
+                },
+                user: 1,
+                virtualUrl: 1,
+                isVirtual: {
+                    $eq: ['$type', EVENT_TYPE.VIRTUAL],
+                },
+                isFree: {
+                    $eq: ['$ticketPrice', 0],
+                },
+                address: 1,
+                startTime: 1,
+                endTime: 1,
+                createdAt: 1,
+                updatedAt: 1,
+            },
+        },
+    ]);
+
+    const resultsData = result?.[0];
+    return {data: resultsData};
 }
 
 export type CreateEventPayload = Omit<IEvent, 'isDeleted'>;
@@ -125,7 +161,7 @@ export type GetEventsParams = {
 };
 export type GetEventsResult = {data: IEvent[]; total: number; page: string; limit: number};
 export async function getEvents(this: typeof EventModel, params: GetEventsParams) {
-    const {page, size, userId, filters: rawFilters = undefined, q = undefined} = params;
+    const {page, size, userId, filters: rawFilters = '{}', q = undefined} = params;
     let filters;
 
     try {
@@ -219,8 +255,12 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
                                 description: '$category.description',
                             },
                             virtualUrl: 1,
-                            isVirtual: 1,
-                            isFree: 1,
+                            isVirtual: {
+                                $eq: ['$type', EVENT_TYPE.VIRTUAL],
+                            },
+                            isFree: {
+                                $eq: ['$ticketPrice', 0],
+                            },
                             address: 1,
                             startTime: 1,
                             endTime: 1,
@@ -240,20 +280,80 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
 }
 
 export async function deleteEvent(this: typeof EventModel, objectId: mongoose.Types.ObjectId) {
-    return this.findByIdAndUpdate(objectId, {isDeleted: true}, {new: true})
-        .populate('category', '_id name description')
-        .exec();
+    return this.findByIdAndUpdate(objectId, {isDeleted: true}, {new: true}).populate(
+        'category',
+        '_id name description',
+    );
 }
 
 export async function updateEvent(
     this: typeof EventModel,
     objectId: mongoose.Types.ObjectId,
     updatedData: Partial<IEvent>,
-    options: mongoose.QueryOptions = {new: true},
+    options: mongoose.QueryOptions = {returnDocument: 'after'},
 ) {
-    return this.findByIdAndUpdate(objectId, {...updatedData}, options)
-        .populate('category', '_id name description')
-        .exec();
+    await this.findByIdAndUpdate(objectId, {...updatedData}, options);
+
+    const result = await this.aggregate([
+        {
+            $match: {_id: new mongoose.Types.ObjectId(objectId)},
+        },
+        {
+            $lookup: {
+                from: mongoose.model(modelNames.eventsCategory).collection.name,
+                localField: 'category',
+                foreignField: '_id',
+                as: 'category',
+            },
+        },
+        {
+            $unwind: {
+                preserveNullAndEmptyArrays: false,
+                path: '$category',
+            },
+        },
+        {
+            $addFields: {
+                isVirtual: {$eq: ['$type', EVENT_TYPE.VIRTUAL]},
+                isFree: {$eq: ['$ticketPrice', 0]},
+            },
+        },
+        {
+            $project: {
+                id: '$_id',
+                _id: 0,
+                title: 1,
+                description: 1,
+                date: 1,
+                location: 1,
+                country: 1,
+                ticketPrice: 1,
+                capacity: 1,
+                status: 1,
+                type: 1,
+                category: {
+                    id: '$category._id',
+                    name: '$category.name',
+                    description: '$category.description',
+                },
+                virtualUrl: 1,
+                isVirtual: {
+                    $eq: ['$type', EVENT_TYPE.VIRTUAL],
+                },
+                isFree: {
+                    $eq: ['$ticketPrice', 0],
+                },
+                address: 1,
+                startTime: 1,
+                endTime: 1,
+                createdAt: 1,
+                updatedAt: 1,
+            },
+        },
+    ]);
+
+    const resultData = result?.[0];
+    return {data: resultData};
 }
 
 export type GetSettingEventCategoriesResult = {

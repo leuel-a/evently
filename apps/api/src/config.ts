@@ -19,7 +19,7 @@ export const modelNames = Object.freeze({
     session: 'sessions',
     account: 'accounts',
     verification: 'verification',
-    user: 'users',
+    user: 'user',
     resource: 'resource',
 });
 

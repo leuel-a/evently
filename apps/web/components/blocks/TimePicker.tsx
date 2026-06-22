@@ -1,22 +1,18 @@
-import {useState} from 'react';
 import type {ComponentProps} from 'react';
 import {Input} from '@/components/ui/input';
 
-export function TimePicker(props: TimePickerProps) {
-    // FIXME: this is not a great solution, but it works for now
-    const [interactedWith, setInteractedWith] = useState(false);
+interface TimePickerProps {
+    InputProps?: ComponentProps<typeof Input>;
+}
 
+export function TimePicker(props: TimePickerProps) {
+    const {InputProps = {}} = props;
     return (
         <Input
-            className={`border-input bg-background h-12 appearance-none border [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none ${
-                !interactedWith ? 'text-muted-foreground' : ''
-            }`}
+            className={`border-input bg-background h-12 appearance-none border [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none`}
             step="1"
             type="time"
-            onFocus={() => setInteractedWith(true)}
-            {...props}
+            {...InputProps}
         />
     );
 }
-
-export type TimePickerProps = ComponentProps<typeof Input>;

@@ -21,7 +21,7 @@ const APP_ROUTES = {
         events: {
             base: `${DASHBOARD_BASE_ROUTE}\/events`,
             create: `${DASHBOARD_BASE_ROUTE}\/events\create`,
-            update: `${DASHBOARD_BASE_ROUTE}\/events\/update\{id}`,
+            edit: `${DASHBOARD_BASE_ROUTE}/events/edit`,
         },
         eventsCategory: {
             base: `${DASHBOARD_BASE_ROUTE}\/events-category`,

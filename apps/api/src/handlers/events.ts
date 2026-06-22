@@ -29,15 +29,14 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
         const {id} = matchedData(req, {locations: ['params']});
-        const result = await EventsModel.getEvent({id});
 
+        const result = await EventsModel.getEvent({id});
         if (!result?.data || Object.keys(result?.data).length === 0) {
             throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
         }
 
-        // INFO: there might be a better way to do this
         const resultData = result?.data;
-        if (resultData?.user.toString() !== user?.id) {
+        if (String(resultData?.user) !== user?.id) {
             throw errors.forbidden(EVENT_USER_NOT_AUTHORIZED_MESSAGE);
         }
 
@@ -58,7 +57,7 @@ export const getEventsHandler: RequestHandler = async (req, res, next) => {
             size: limit,
             userId: user?.id as string,
             filters,
-            q,
+            q
         });
 
         const currentPage = Number(results?.page ?? 1);

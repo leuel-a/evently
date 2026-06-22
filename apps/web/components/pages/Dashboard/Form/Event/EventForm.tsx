@@ -22,30 +22,34 @@ import {EventIsFreeInput} from './EventIsFreeInput';
 import {EventTicketPriceInput} from './EventTicketPriceInput';
 import {EventCapacityInput} from './EventCapacityInput';
 import {CountriesSelectInput} from '@/components/pages/Common/CountriesSelectInput';
+import {EndTimePicker, StartTimePicker} from '../../Events';
 
 export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
 
-export interface EventFormProps extends Omit<DefaultFormProps, 'onSubmit'> {
+export interface EventFormProps {
     CustomAddressAutofillInputProps?: AddressAutofillInputProps;
     onSubmit?: SubmitHandler<EventSchemaType>;
-    SubmitButtonProps?: ComponentProps<typeof Button>;
+    FormProps?: Omit<DefaultFormProps, 'onSubmit'>;
+    SubmitButtonProps?: ComponentProps<typeof Button> & {label?: string};
     defaultValues?: EventSchemaType;
 }
 
-export function EventForm(props: EventFormProps) {
-    const formProps = sanitizeProps(props);
-    const form = useFormContext<EventSchemaType>();
+export const DEFAULT_SUBMIT_BUTTON_LABEL = 'Create';
 
-    const {watch} = form;
-    const isVirtual = watch('isVirtual');
-    const isFree = watch('isFree');
+export function EventForm(props: EventFormProps) {
+    const {FormProps = {}, SubmitButtonProps = {label: DEFAULT_SUBMIT_BUTTON_LABEL}} = props;
+    const {label: submitButtonLabel, ...submitButtonProps} = SubmitButtonProps;
+
+    const form = useFormContext<EventSchemaType>();
+    const isVirtual = form.watch('isVirtual');
+    const isFree = form.watch('isFree');
 
     return (
         <form
-            autoComplete='off'
+            autoComplete="off"
             onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
             className="space-y-10"
-            {...formProps}
+            {...FormProps}
         >
             <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
                 <div>
@@ -163,26 +167,14 @@ export function EventForm(props: EventFormProps) {
                             control={form.control}
                             name="startTime"
                             render={({field, fieldState}) => (
-                                <Field className="flex-1">
-                                    <FieldLabel>Start Time</FieldLabel>
-                                    <TimePicker {...field} />
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
+                                <StartTimePicker field={field} fieldState={fieldState} />
                             )}
                         />
                         <Controller
                             control={form.control}
                             name="endTime"
                             render={({field, fieldState}) => (
-                                <Field className="flex-1">
-                                    <FieldLabel>End Time</FieldLabel>
-                                    <TimePicker {...field} />
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
+                                <EndTimePicker field={field} fieldState={fieldState} />
                             )}
                         />
                     </div>
@@ -242,9 +234,9 @@ export function EventForm(props: EventFormProps) {
                 <Button
                     type="submit"
                     className="h-12 w-80 cursor-pointer rounded bg-indigo-500 hover:bg-indigo-700/80"
-                    {...props.SubmitButtonProps}
+                    {...submitButtonProps}
                 >
-                    Create
+                    {submitButtonLabel}
                 </Button>
             </div>
         </form>
