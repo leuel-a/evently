@@ -1,7 +1,11 @@
 import {Suspense} from 'react';
 import {getEventsCategoryPageData} from './actions';
 import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
-import {DataTable as EventsCategoryTable, TablePagination} from '@/components/pages/Dashboard/Common';
+import {FilterEventsCategoryTable} from '@/components/pages/Dashboard/EventsCategory';
+import {
+    DataTable as EventsCategoryTable,
+    TablePagination,
+} from '@/components/pages/Dashboard/Common';
 import {columns} from './columns';
 
 interface PageProps {
@@ -20,10 +24,13 @@ export default async function Page(props: PageProps) {
                         Error: {error.message}
                     </div>
                 )}
-
                 {success && data && (
-                    <div>
-                        <EventsCategoryTable columns={columns} data={data?.eventsCategory?.data || []} />
+                    <div className="py-10">
+                        <FilterEventsCategoryTable />
+                        <EventsCategoryTable
+                            columns={columns}
+                            data={data?.eventsCategory?.data || []}
+                        />
                         <TablePagination
                             page={data?.eventsCategory?.page}
                             limit={data?.eventsCategory?.limit}

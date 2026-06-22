@@ -38,19 +38,29 @@ export type GetEventCategoriesResult = {
     limit: number;
     total: number;
 };
-export type GetEventCategoriesParams = {page: string; size: string; userId: string; ids?: string[]};
+export type GetEventCategoriesParams = {
+    page: string;
+    size: string;
+    userId: string;
+    ids?: string[];
+    q?: string;
+};
 export async function getEventCategories(
     this: typeof EventsCategoryModel,
     params: GetEventCategoriesParams,
 ): Promise<GetEventCategoriesResult> {
-    const {page, size, userId, ids} = params;
+    const {page, size, userId, ids, q} = params;
     const matchQuery = {
         isDeleted: false,
         user: new mongoose.Types.ObjectId(userId),
         ...(ids && {ids: {$in: [...ids]}}),
+        // INFO: since there is a $text, the $match pipline stage should
+        // the first stage in the aggregation pipeline
+        // Checkout --> https://www.mongodb.com/docs/upcoming/tutorial/text-search-in-aggregation/
+        ...(q && {$text: {$search: q, $caseSensitive: false, $diacriticSensitive: false}})
     };
-    const {limit, skip} = getPaginationValues(page, size);
 
+    const {limit, skip} = getPaginationValues(page, size);
     const results = await this.aggregate([
         {
             $match: matchQuery,
@@ -78,7 +88,7 @@ export async function getEventCategories(
 
     const resultData = results?.[0]?.data;
     const resultTotal = results?.[0]?.total;
-    return {data: resultData, total: resultTotal?.[0].count, page, limit};
+    return {data: resultData, total: resultTotal?.[0]?.count, page, limit};
 }
 
 export type DeleteEventCategoryResult = IEventCategory;

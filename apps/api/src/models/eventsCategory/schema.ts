@@ -74,4 +74,8 @@ const schema = new mongoose.Schema<IEventCategory>(
     {timestamps: true},
 );
 
+// INFO: read more about indexes
+// Checkout this link: https://www.mongodb.com/docs/manual/indexes/
+schema.index({name: 'text', description: 'text'});
+
 export default schema;

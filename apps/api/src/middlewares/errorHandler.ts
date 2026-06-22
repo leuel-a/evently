@@ -4,7 +4,6 @@ import createError, {isHttpError} from 'http-errors';
 /** Express global error handler. */
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     let error = err;
-    console.log(error);
 
     if (!isHttpError(error)) {
         error = createError(error);

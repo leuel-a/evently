@@ -32,9 +32,10 @@ export function SearchEvents({InputProps}: SearchEventsProps) {
         handleSearch(debouncedInput);
     }, [debouncedInput]);
 
-    // INFO: I need to check this with AI
     useEffect(() => {
-        setInput(searchParams.get('q') || '');
+        if (input !== searchParams.get('q')) {
+            setInput(searchParams.get('q') || '');
+        }
     }, [searchParams]);
 
     return (

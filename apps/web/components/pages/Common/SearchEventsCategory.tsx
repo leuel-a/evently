@@ -2,7 +2,7 @@
 
 import {useEffect, useState, type ComponentProps} from 'react';
 import {Search} from 'lucide-react';
-import {useRouter, usePathname} from 'next/navigation';
+import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {Input} from '@/components/ui/input';
 import {useDebounce} from '@/hooks/use-debounce';
 import {cn} from '@/lib/utils';
@@ -17,18 +17,25 @@ export function SearchEventsCategory(props: SearchEventsCategoryProps) {
     const {InputProps} = props;
     const router = useRouter();
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const [input, setInput] = useState<string>('');
     const debouncedInput = useDebounce(input);
 
     const handleSearch = (value: string) => {
-        const params = new URLSearchParams();
-        params.append('q', value);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('q', value);
         router.replace(`${pathname}?${params.toString()}`);
     };
 
     useEffect(() => {
         handleSearch(debouncedInput);
     }, [debouncedInput]);
+
+    useEffect(() => {
+        if (input !== searchParams.get('q')) {
+            setInput(searchParams.get('q') || '')
+        }
+    }, [searchParams])
 
     return (
         <div className="w-full md:w-96 relative group">
