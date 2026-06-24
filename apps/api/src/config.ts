@@ -1,13 +1,22 @@
 export const API_PREFIX = '/api';
 
 export const API_ROUTES = Object.freeze({
-    users: {base: '/users', me: '/me', linkedAccounts: '/me/linked-accounts'},
     auth: {base: '/auth'},
-    stats: {base: '/stats', dashboard: '/stats/dashboard'},
-    events: {base: '/events'},
-    eventsCategory: {base: '/eventsCategory'},
-    tickets: {base: '/tickets'},
-    settings: {base: '/settings'},
+    users: {
+        base: '/users',
+        me: '/me',
+        linkedAccounts: '/me/linked-accounts',
+    },
+    public: {
+        events: {base: '/events'},
+    },
+    dashboard: {
+        stats: {base: '/dashboard/stats', dashboard: '/stats/dashboard'},
+        events: {base: '/dashboard/events'},
+        eventsCategory: {base: '/dashboard/eventsCategory'},
+        tickets: {base: '/dashboard/tickets'},
+        settings: {base: '/dashboard/settings'},
+    },
 });
 
 export const modelNames = Object.freeze({

@@ -1,7 +1,7 @@
 'use client';
 
 import {useRouter, useSearchParams} from 'next/navigation';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {RangeSelector} from '@/components/blocks/Common/RangeSelector';
 import {APP_ROUTES} from '@/config/routes';
 import {
@@ -35,7 +35,7 @@ export function TicketPriceRangeSelector(props: TicketPriceRangeSelectorProps) {
             );
         }
 
-        await revalidateEvents();
+        await revalidateDashboardEventsPage();
         router.push(`${APP_ROUTES.dashboard.events.base}?${params.toString()}`);
     };
 

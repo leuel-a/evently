@@ -8,7 +8,7 @@ import {EventForm} from '../Form/Event/EventForm';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {EventSchemaType, eventsSchema} from '@/lib/db/schema';
 import {GetEditEventsPageData} from '@/app/dashboard/events/actions';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {updateEventMutation} from '@/app/dashboard/events/edit/[id]/queries';
 import {APP_ROUTES} from '@/config/routes';
 
@@ -37,7 +37,7 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
     const mutation = useMutation({
         mutationFn: updateEventMutation,
         onSuccess: async (data) => {
-            await revalidateEvents();
+            await revalidateDashboardEventsPage();
             const {data: updatedEvent} = data;
 
             toast.success(EVENT_UPDATED_SUCCESS_TITLE, {
@@ -46,8 +46,7 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
 
             router.push(APP_ROUTES.dashboard.events.base);
         },
-        onError: (error) => {
-            console.log(error);
+        onError: (_error) => {
             toast.error(EVENT_UPDATED_ERROR_TITLE, {
                 description: EVENT_UPDATED_ERROR_DESCRIPTION,
             });

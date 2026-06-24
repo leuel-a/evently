@@ -1,7 +1,7 @@
 import express from 'express';
-import {getTicketsValidator} from '../validators/tickets';
-import {requireUser} from '../middlewares/requireUser';
-import {getTicketsHandler} from '../handlers/tickets';
+import {getTicketsValidator} from '../../validators/tickets';
+import {requireUser} from '../../middlewares/requireUser';
+import {getTicketsHandler} from '../../handlers/dashboard/tickets';
 
 const BASE_URL = '';
 // const BASE_URL_WITH_ID = `${BASE_URL}/:id`;

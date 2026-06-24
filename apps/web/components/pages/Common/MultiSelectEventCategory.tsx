@@ -3,7 +3,7 @@
 import {type ComponentProps, useRef, useEffect} from 'react';
 import {useRouter, useSearchParams, usePathname} from 'next/navigation';
 import {MultiSelectRef} from '@/components/blocks/MultiSelect';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {MultiSelect} from '@/components/blocks/MultiSelect';
 import {cn} from '@/lib/utils';
 import {
@@ -44,7 +44,7 @@ export function MultiSelectEventCategory({
             newParams = setValueToFilterParams(newParams, CATEGORIES_FILTER_PARAM_KEY, value);
         }
 
-        await revalidateEvents();
+        await revalidateDashboardEventsPage();
         router.replace(`${pathname}?${newParams.toString()}`);
     };
 

@@ -1,6 +1,6 @@
 import express from 'express';
-import {getSettingsHandler} from '../handlers/settings';
-import {requireUser} from '../middlewares/requireUser';
+import {getSettingsHandler} from '../../handlers/dashboard/settings';
+import {requireUser} from '../../middlewares/requireUser';
 
 const router: express.Router = express.Router();
 const BASE_URL = '';

@@ -11,7 +11,7 @@ import {EventForm} from '@/components/pages/Dashboard/Form/Event/EventForm';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {EVENT_TYPE} from '@/types/events';
 import {createEventMutation} from '@/app/dashboard/events/create/queries';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {APP_ROUTES} from '@/config/routes';
 
 const EVENT_CREATED_SUCCESS_TITLE = '';
@@ -47,7 +47,7 @@ export function CreateEventForm() {
     const mutation = useMutation({
         mutationFn: createEventMutation,
         onSuccess: async (data) => {
-            await revalidateEvents(); // TODO: there might be a better way to do this but for now this works
+            await revalidateDashboardEventsPage(); // TODO: there might be a better way to do this but for now this works
             const {data: createdEvent} = data;
 
             toast.success(EVENT_CREATED_SUCCESS_TITLE, {

@@ -20,7 +20,7 @@ export async function getEventsCategoryPageData(
         const headers = await nextHeaders();
         const [eventsCategory] = await Promise.all([
             makeApiCall<GetEventsCategoryApiResponse>({
-                url: `${API_ROUTES.eventCategory.base}?${searchParams.toString()}`,
+                url: `${API_ROUTES.dashboard.eventCategory.base}?${searchParams.toString()}`,
                 headers,
             }),
         ]);

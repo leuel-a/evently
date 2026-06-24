@@ -1,5 +1,6 @@
 'use client';
 
+import {type ComponentProps} from 'react';
 import {useSearchParams, useRouter} from 'next/navigation';
 import {
     Select,
@@ -9,6 +10,7 @@ import {
     SelectContent,
 } from '@/components/ui/select';
 import {Label} from '@/components/ui/label';
+import {cn} from '@/lib/utils';
 import {EVENT_STATUS} from '@/types/events';
 import {
     getValueFromFilterParam,
@@ -16,12 +18,19 @@ import {
     setValueToFilterParams,
 } from '@/utils/filters';
 import {APP_ROUTES} from '@/config/routes';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 
 const EVENT_STATUS_FILTER_PARAM_KEY = 'status';
 const EVENT_STATUS_FILTER_LABEL = 'Status';
 
-export function EventStatusSelector() {
+interface EventStatusSelectorProps {
+    SelectTriggerProps?: ComponentProps<typeof SelectTrigger>;
+}
+
+export function EventStatusSelector(props: EventStatusSelectorProps) {
+    const {SelectTriggerProps = {}} = props;
+    const {className: customSelectTriggerClass, ...selectTriggerProps} = SelectTriggerProps;
+
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -32,7 +41,7 @@ export function EventStatusSelector() {
         let params = new URLSearchParams(searchParams.toString());
         params = removePropertyFromFilter(params, EVENT_STATUS_FILTER_PARAM_KEY);
         params = setValueToFilterParams(params, EVENT_STATUS_FILTER_PARAM_KEY, value);
-        await revalidateEvents();
+        await revalidateDashboardEventsPage();
         router.push(`${APP_ROUTES.dashboard.events.base}?${params.toString()}`);
     };
 
@@ -41,7 +50,11 @@ export function EventStatusSelector() {
             <Label>{EVENT_STATUS_FILTER_LABEL}</Label>
             <div className="flex-1">
                 <Select value={selectedStatus} onValueChange={handleValueChange}>
-                    <SelectTrigger type="button" className="w-full capitalize cursor-pointer">
+                    <SelectTrigger
+                        type="button"
+                        className={cn('w-full capitalize cursor-pointer', customSelectTriggerClass)}
+                        {...selectTriggerProps}
+                    >
                         <SelectValue placeholder="All" />
                     </SelectTrigger>
                     <SelectContent>

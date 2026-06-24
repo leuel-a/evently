@@ -1,9 +1,9 @@
 import express from 'express';
 import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
-import {errors} from '../errors/utils';
-import EventCategory from '../models/eventsCategory';
-import {IEventCategory} from '../models/eventsCategory/schema';
+import {errors} from '../../errors/utils';
+import EventCategory from '../../models/eventsCategory';
+import {IEventCategory} from '../../models/eventsCategory/schema';
 
 const EVENT_CATEGORY_NOT_FOUND_MESSAGE = 'Event Category not found';
 

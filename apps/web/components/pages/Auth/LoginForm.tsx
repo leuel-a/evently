@@ -28,7 +28,7 @@ export function LoginForm() {
 
     const mutation = useMutation({
         mutationFn: emailSigninMutation,
-        onSuccess: (_data) => {
+        onSuccess: () => {
             router.push(APP_ROUTES.dashboard.base);
         },
         // TODO: handle error case for login

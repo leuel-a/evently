@@ -8,12 +8,13 @@ import {initLLM} from './lib/ai/provider';
 import {logger} from './utils/logger';
 import MongoClient from './lib/mongo-client';
 import {API_ROUTES, API_PREFIX} from './config';
-import eventsRoutes from './routes/events';
+import eventsRoutes from './routes/dashboard/events';
 import usersRoutes from './routes/users';
-import ticketsRoutes from './routes/tickets';
-import settingsRoutes from './routes/settings';
-import statsRoutes from './routes/stats';
-import eventsCategoryRoutes from './routes/eventsCategory';
+import ticketsRoutes from './routes/dashboard/tickets';
+import settingsRoutes from './routes/dashboard/settings';
+import statsRoutes from './routes/dashboard/stats';
+import eventsCategoryRoutes from './routes/dashboard/eventsCategory';
+import publicEventsRoutes from './routes/events';
 import {errorHandler} from './middlewares/errorHandler';
 
 export const MORGAN_FORMAT = ':timestamp [http] :method :url :status - :response-time ms';
@@ -52,12 +53,16 @@ export async function setup(app: express.Express) {
         // or only apply it to routes that don't interact with better auth
         app.use(express.json());
 
+        // PUBLIC ROUTES
         app.use(`${API_PREFIX}${API_ROUTES.users.base}`, usersRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.events.base}`, eventsRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.tickets.base}`, ticketsRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.eventsCategory.base}`, eventsCategoryRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.settings.base}`, settingsRoutes);
-        app.use(`${API_PREFIX}${API_ROUTES.stats.base}`, statsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.public.events.base}`, publicEventsRoutes);
+
+        // DASHBOARD ROUTES
+        app.use(`${API_PREFIX}${API_ROUTES.dashboard.events.base}`, eventsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.dashboard.tickets.base}`, ticketsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.dashboard.eventsCategory.base}`, eventsCategoryRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.dashboard.settings.base}`, settingsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.dashboard.stats.base}`, statsRoutes);
 
         // Mount the error handler
         app.use(errorHandler);

@@ -1,7 +1,7 @@
 import {RequestHandler} from 'express'
 import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
-import TicketsModel from '../models/tickets';
+import TicketsModel from '../../models/tickets';
 
 export const getTicketsHandler: RequestHandler = async (req, res, next) => {
     try {

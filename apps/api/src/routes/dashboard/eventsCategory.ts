@@ -4,15 +4,15 @@ import {
     getEventCategoriesValidator,
     getEventCategoryValidator,
     deleteEventCategoryValidator,
-} from '../validators/eventsCategory';
-import {validateRequest} from '../middlewares/validateRequest';
-import {requireUser} from '../middlewares/requireUser';
+} from '../../validators/eventsCategory';
+import {validateRequest} from '../../middlewares/validateRequest';
+import {requireUser} from '../../middlewares/requireUser';
 import {
     createEventCategoryHandler,
     getEventCategoriesHandler,
     getEventCategoryHandler,
     deleteEventHandler,
-} from '../handlers/eventsCategory';
+} from '../../handlers/dashboard/eventsCategory';
 
 const router: express.Router = express.Router();
 

@@ -3,7 +3,7 @@
 import {useState, useEffect, type ComponentProps} from 'react';
 import {Search} from 'lucide-react';
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {Input} from '@/components/ui/input';
 import {useDebounce} from '@/hooks/use-debounce';
 import {cn} from '@/lib/utils';
@@ -24,7 +24,7 @@ export function SearchEvents({InputProps}: SearchEventsProps) {
     const handleSearch = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set(EVENT_SEARCH_PARAMS_KEY, value);
-        revalidateEvents();
+        revalidateDashboardEventsPage();
         router.replace(`${pathname}?${params.toString()}`);
     };
 

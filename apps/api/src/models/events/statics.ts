@@ -155,7 +155,7 @@ export async function createEvent(this: typeof EventModel, payload: CreateEventP
 export type GetEventsParams = {
     page: string;
     size: string;
-    userId: string;
+    userId?: string;
     filters?: any;
     q?: string;
 };
@@ -197,7 +197,7 @@ export async function getEvents(this: typeof EventModel, params: GetEventsParams
 
     const matchQuery = {
         isDeleted: false,
-        user: new mongoose.Types.ObjectId(userId),
+        ...(userId && {user: new mongoose.Types.ObjectId(userId)}),
         ...filtersQuery(filters),
         // INFO: since there is a $text, the $match pipline stage should
         // the first stage in the aggregation pipeline

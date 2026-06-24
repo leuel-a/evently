@@ -4,7 +4,7 @@ import {useSearchParams, useRouter, usePathname} from 'next/navigation';
 import {X} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {Tooltip, TooltipTrigger, TooltipContent} from '@/components/ui/tooltip';
-import {revalidateEvents} from '@/app/dashboard/events/actions';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 
 const TOOL_TIP_CONTENT = 'Clear Filters';
 
@@ -19,7 +19,7 @@ export function ClearFilters() {
         newParams.set('filters', '');
         newParams.set('q', '')
         router.push(`${pathname}?${newParams.toString()}`);
-        revalidateEvents();
+        revalidateDashboardEventsPage();
     };
 
     if (!filters) {

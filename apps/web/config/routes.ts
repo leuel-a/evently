@@ -1,74 +1,49 @@
-const INDEX_BASE_ROUTE = '';
 const DASHBOARD_BASE_ROUTE = '/dashboard';
-const AUTH_PAGE_BASE_ROUTE = '/';
 
 const APP_ROUTES = {
-    base: `/${INDEX_BASE_ROUTE}`,
-    events: {
-        base: `${INDEX_BASE_ROUTE}/events`,
-    },
-    auth: {
-        base: AUTH_PAGE_BASE_ROUTE,
-        login: `${AUTH_PAGE_BASE_ROUTE}login`,
-        signup: `${AUTH_PAGE_BASE_ROUTE}signup`,
-    },
-    api: {
-        events: `/api/events`,
-        eventsCategory: `/api/eventsCategory`,
-    },
+    events: {base: '/events'},
+    auth: {login: '/login', signup: '/signup'},
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,
         events: {
-            base: `${DASHBOARD_BASE_ROUTE}\/events`,
-            create: `${DASHBOARD_BASE_ROUTE}\/events\create`,
-            edit: `${DASHBOARD_BASE_ROUTE}/events/edit`,
+            base: '/dashboard/events',
+            create: '/dashboard/events/create',
+            edit: '/dashboard/events/edit',
         },
-        eventsCategory: {
-            base: `${DASHBOARD_BASE_ROUTE}\/events-category`,
-        },
-        tickets: {
-            base: `${DASHBOARD_BASE_ROUTE}/tickets`,
-        },
+        eventsCategory: {base: '/dashboard/events-category'},
+        tickets: {base: '/dashboard/tickets'},
         settings: {
-            base: `${DASHBOARD_BASE_ROUTE}/settings`, // TODO: this route does not exists
-            general: `${DASHBOARD_BASE_ROUTE}/settings/general`,
-            accounts: `${DASHBOARD_BASE_ROUTE}/settings/accounts`,
+            base: '/dashboard/settings',
+            general: '/dashboard/settings/general',
+            accounts: '/dashboard/settings/accounts',
         },
     },
 } as const;
-
 type AppRoutes = typeof APP_ROUTES;
 
-const INDEX_BASE_API_ROUTE = '/api';
-const USERS_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/users`;
-const AUTH_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/auth`;
-const EVENTS_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/events`;
-const EVENT_CATEGORIES_API_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/eventsCategory`;
-const SETTINGS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/settings`;
-const TICKETS_BASE_ROUTE = `${INDEX_BASE_API_ROUTE}/tickets`;
-
 const API_ROUTES = {
-    index: INDEX_BASE_API_ROUTE, // INFO: this might never be needed
-    stats: {
-        base: `${INDEX_BASE_API_ROUTE}/stats`,
-        dashboard: `${INDEX_BASE_API_ROUTE}/stats/dashboard`,
-    },
-    auth: {
-        base: AUTH_API_BASE_ROUTE,
-        me: {
-            base: `${AUTH_API_BASE_ROUTE}/me`,
-            linkedAccounts: `${AUTH_API_BASE_ROUTE}/me/linked-accounts`,
-        },
-    },
     users: {
-        base: USERS_API_BASE_ROUTE,
-        me: `${USERS_API_BASE_ROUTE}/me`,
-        linkedAccounts: `${USERS_API_BASE_ROUTE}/me/linked-accounts`,
+        base: '/users',
+        me: '/users/me',
+        linkedAccounts: '/users/me/linked-accounts',
     },
-    tickets: {base: TICKETS_BASE_ROUTE},
-    events: {base: EVENTS_API_BASE_ROUTE},
-    eventCategory: {base: EVENT_CATEGORIES_API_BASE_ROUTE},
-    settings: {base: SETTINGS_BASE_ROUTE},
+    public: {
+        events: {base: '/events'}
+    },
+    dashboard: {
+        // FIXME: this is weird
+        stats: {dashboard: '/dashboard/stats/dashboard'},
+        auth: {
+            me: {
+                base: '/auth/me', // TODO: this might not be needed
+                linkedAccounts: '/auth/me/linked-accounts',
+            },
+        },
+        tickets: {base: '/dashboard/tickets'},
+        events: {base: '/dashboard/events'},
+        eventCategory: {base: '/dashboard/eventsCategory'},
+        settings: {base: '/dashboard/settings'},
+    },
 } as const;
 
 type ApiRoutes = typeof API_ROUTES;

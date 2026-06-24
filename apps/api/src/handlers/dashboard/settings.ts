@@ -1,8 +1,8 @@
 import {RequestHandler} from 'express';
 import httpStatus from 'http-status';
-import ResourceModel from '../models/resources';
-import EventsModel from '../models/events';
-import EventsCategoryModel from '../models/eventsCategory';
+import ResourceModel from '../../models/resources';
+import EventsModel from '../../models/events';
+import EventsCategoryModel from '../../models/eventsCategory';
 
 export const getSettingsHandler: RequestHandler = async (_req, res, next) => {
     try {

@@ -39,7 +39,7 @@ export async function getDashboardPageData(): Promise<
     try {
         const headers = await nextHeaders();
         const response = await makeApiCall<IApiResponse<GetDashboardPageDataResult>>({
-            url: API_ROUTES.stats.dashboard,
+            url: API_ROUTES.dashboard.stats.dashboard,
             headers,
         });
         return {success: true, data: response};
@@ -52,7 +52,7 @@ export async function getDashboardSettings(): Promise<IActionResult<GetDashboard
     try {
         const headers = await nextHeaders();
         const response = await makeApiCall<GetDashboardSettingsResult>({
-            url: API_ROUTES.settings.base,
+            url: API_ROUTES.dashboard.settings.base,
             headers,
         });
         return {success: true, data: response};
