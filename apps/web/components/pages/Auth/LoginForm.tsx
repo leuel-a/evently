@@ -9,6 +9,7 @@ import {Button} from '@/components/ui/button';
 import {Field, FieldLabel, FieldError} from '@/components/ui/field';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
+import {PasswordInput} from '@/components/blocks/Common';
 import {emailSigninSchema, EmailSigninSchemaType} from '@/lib/db/schema';
 import {emailSigninMutation} from '@/app/(auth)/queries';
 import {APP_ROUTES} from '@/config/routes';
@@ -100,7 +101,7 @@ export function LoginForm() {
                                     <Field>
                                         <div className="relative">
                                             <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                                            <Input
+                                            <PasswordInput
                                                 aria-invalid={fieldState.invalid}
                                                 id="password"
                                                 type="password"

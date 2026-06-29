@@ -1,6 +1,6 @@
 'use client';
 
-import {useRouter} from 'next/navigation'
+import {useRouter} from 'next/navigation';
 import {Controller, useForm} from 'react-hook-form';
 import {Mail, Lock, User} from 'lucide-react';
 import {useMutation} from '@tanstack/react-query';
@@ -9,11 +9,12 @@ import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Field, FieldLabel, FieldError, FieldDescription} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
+import {PasswordInput} from '@/components/blocks/Common';
 import {Separator} from '@/components/ui/separator';
 import {emailSignupSchema, type EmailSignupSchemaType} from '@/lib/db/schema';
 import {GoogleSignIn} from './GoogleSignIn';
 import {emailSignupMutation} from '@/app/(auth)/queries';
-import { APP_ROUTES } from '@/config/routes';
+import {APP_ROUTES} from '@/config/routes';
 
 export function SignupForm() {
     const router = useRouter();
@@ -114,7 +115,7 @@ export function SignupForm() {
                                     <div className="space-y-1">
                                         <div className="relative">
                                             <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                                            <Input
+                                            <PasswordInput
                                                 aria-invalid={fieldState.invalid}
                                                 id="password"
                                                 type="password"
@@ -146,7 +147,7 @@ export function SignupForm() {
                                     <FieldLabel>Confirm password</FieldLabel>
                                     <div className="relative">
                                         <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                                        <Input
+                                        <PasswordInput
                                             id="confirm"
                                             type="password"
                                             placeholder="Repeat it"
