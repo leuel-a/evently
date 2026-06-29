@@ -1,1 +1,1 @@
-export * from './EventsHeader';
+export * from './Header';

@@ -28,10 +28,7 @@ export const eventsSchema = z
     .refine(
         ({isVirtual, location, country}) => {
             if (isVirtual === false) {
-                return (
-                    Boolean(location && location.trim()) &&
-                    Boolean(country && country.trim())
-                );
+                return Boolean(location && location.trim()) && Boolean(country && country.trim());
             }
             return true;
         },
@@ -67,14 +64,14 @@ export const eventCategorySchema = z.object({
 
 export type EmailSignupSchemaType = z.infer<typeof emailSignupSchema>;
 export const emailSignupSchema = z.object({
-    email: z.string({error: 'Required'}),
+    email: z.email({error: 'Required'}),
     password: z.string({error: 'Required'}),
     fullName: z.string({error: 'Required'}),
     confirmPassword: z.string({error: 'Required'}),
-})
+});
 
 export type EmailSigninSchemaType = z.infer<typeof emailSigninSchema>;
 export const emailSigninSchema = z.object({
-    email: z.string({error: 'Required'}),
-    password: z.string({error: 'Required'}),
-})
+    email: z.email({error: 'Required'}).min(1, {error: 'Required'}),
+    password: z.string({error: 'Required'}).min(1, {error: 'Required'}),
+});

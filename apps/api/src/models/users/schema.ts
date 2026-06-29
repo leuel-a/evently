@@ -27,7 +27,7 @@ const schema = new mongoose.Schema<IUser>(
             unique: true,
         },
         emailVerified: {type: Boolean, default: false},
-        isOrganizer: {type: Boolean, default: false},
+        isOrganizer: {type: Boolean, default: false, required: false},
         organizationName: {type: String},
         image: {type: String},
         sessions: [

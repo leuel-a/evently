@@ -10,7 +10,7 @@ import EventCategory from '../models/eventsCategory/index';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const defaultUserId = '6a1eaba394754e77c069b33a';
+const defaultUserId = '6a42dee8464931cd3236ae0d';
 const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
 
 const defaultPurchasers = [

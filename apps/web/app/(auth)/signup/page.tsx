@@ -5,13 +5,20 @@ import {AuthFinePrint, AuthHeader, SignupForm} from '@/components/pages/Auth';
 const SIGNUP_HEADER_TITLE = 'Sign up';
 const SIGNUP_HEADER_SUBTITLE = 'Set up your event HQ in under a minute.';
 
-export default function Page() {
+interface PageProps {
+    searchParams: Promise<Record<string, string>>;
+}
+
+export default async function Page(props: PageProps) {
+    const searchParams = await props?.searchParams;
+    const isOrganizer = searchParams?.organizer === "true";
+
     return (
         <div className="min-h-dvh bg-linear-to-b from-indigo-50 via-white to-indigo-50">
             <div className="mx-auto flex min-h-dvh max-w-lg items-center px-4">
                 <div className="w-full">
                     <AuthHeader title={SIGNUP_HEADER_TITLE} subtitle={SIGNUP_HEADER_SUBTITLE} />
-                    <SignupForm />
+                    <SignupForm isOrganizer={isOrganizer} />
                     <p className="mt-6 text-center text-sm text-slate-600">
                         Already have an account?{' '}
                         <NextLink

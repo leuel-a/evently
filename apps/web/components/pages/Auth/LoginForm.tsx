@@ -17,7 +17,13 @@ import {Separator} from '@/components/ui/separator';
 import {Mail, Lock} from 'lucide-react';
 import {GoogleSignIn} from './GoogleSignIn';
 
-export function LoginForm() {
+interface LoginFormProps {
+    isOrganizer: boolean;
+}
+
+export function LoginForm(props: LoginFormProps) {
+    const {isOrganizer} = props;
+
     const router = useRouter();
     const form = useForm<EmailSigninSchemaType>({
         resolver: zodResolver(emailSigninSchema),
@@ -47,7 +53,7 @@ export function LoginForm() {
             </CardHeader>
 
             <CardContent className="space-y-5">
-                <GoogleSignIn />
+                <GoogleSignIn isOrganizer={isOrganizer} />
                 <div className="relative">
                     <Separator className="bg-indigo-100" />
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-500">
@@ -60,19 +66,20 @@ export function LoginForm() {
                         name="email"
                         render={({field, fieldState}) => {
                             return (
-                                <Field className="space-y-2">
-                                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                                    <div className="relative">
-                                        <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                                        <Input
-                                            aria-invalid={fieldState.invalid}
-                                            id="email"
-                                            type="email"
-                                            placeholder="leuel.asfaw@gmail.com"
-                                            className="pl-9 focus-visible:ring-indigo-500"
-                                            autoComplete="email"
-                                            {...field}
-                                        />
+                                <Field>
+                                    <div className="space-y-2">
+                                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                                        <div className="relative">
+                                            <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                                            <Input
+                                                aria-invalid={fieldState.invalid}
+                                                id="email"
+                                                type="email"
+                                                placeholder="leuel.asfaw@gmail.com"
+                                                className="pl-9 focus-visible:ring-indigo-500"
+                                                {...field}
+                                            />
+                                        </div>
                                     </div>
                                     {fieldState.invalid && (
                                         <FieldError errors={[fieldState.error]} />
@@ -107,7 +114,6 @@ export function LoginForm() {
                                                 type="password"
                                                 placeholder="Password123"
                                                 className="pl-9 focus-visible:ring-indigo-500"
-                                                autoComplete="current-password"
                                                 {...field}
                                             />
                                         </div>

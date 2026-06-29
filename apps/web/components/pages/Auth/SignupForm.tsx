@@ -16,7 +16,13 @@ import {GoogleSignIn} from './GoogleSignIn';
 import {emailSignupMutation} from '@/app/(auth)/queries';
 import {APP_ROUTES} from '@/config/routes';
 
-export function SignupForm() {
+interface SignupFormProps {
+    isOrganizer: boolean;
+}
+
+export function SignupForm(props: SignupFormProps) {
+    const {isOrganizer} = props;
+
     const router = useRouter();
     const form = useForm<EmailSignupSchemaType>({
         resolver: zodResolver(emailSignupSchema),
@@ -48,7 +54,7 @@ export function SignupForm() {
 
             <CardContent className="space-y-5">
                 {/* TODO: MAKE THIS WORK FOR BOTH SIGNUP AND SIGNIN */}
-                <GoogleSignIn />
+                <GoogleSignIn isOrganizer={isOrganizer}/>
                 <div className="relative">
                     <Separator className="bg-indigo-100" />
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-500">

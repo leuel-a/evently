@@ -1,4 +1,4 @@
-import {EventsHeader} from '@/components/pages/Public/Common';
+import {Header} from '@/components/pages/Public/Common';
 import {EventCard} from '@/components/pages/Public/Events/EventCard';
 import {getEvents} from './actions';
 import {NoEvents} from '@/components/pages/Public/Events';
@@ -15,7 +15,7 @@ export default async function Page(props: PageProps) {
 
     return (
         <main className="min-h-screen bg-[#f8f8fc]">
-            <EventsHeader data={data?.data} />
+            <Header data={data?.data} />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
                 <FilterEvents categories={[]} />
                 {!success && <FailedToLoadEvents error={error} />}

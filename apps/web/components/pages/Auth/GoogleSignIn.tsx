@@ -6,12 +6,18 @@ import {APP_ROUTES} from '@/config/routes';
 
 const GOOGLE_PROVIDER = 'google';
 
-export function GoogleSignIn() {
+interface GoogleSignInProps {
+    isOrganizer?: boolean;
+}
+
+export function GoogleSignIn(props: GoogleSignInProps) {
+    const {isOrganizer = false} = props;
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         await authClient.signIn.social({
             provider: GOOGLE_PROVIDER,
             callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}${APP_ROUTES.dashboard.events.base}`,
+            additionalData: {isOrganizer},
         });
     };
 

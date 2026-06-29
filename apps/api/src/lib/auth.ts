@@ -2,18 +2,45 @@ import mongodb from 'mongodb';
 import {betterAuth} from 'better-auth';
 import {mongodbAdapter} from 'better-auth/adapters/mongodb';
 import MongoClient from './mongo-client';
+import {getOAuthState} from 'better-auth/api';
 
 let auth: ReturnType<typeof createAuth> | undefined = undefined;
 
-/** Create a Better Auth instance using native handles from Mongoose. */
 export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
     return betterAuth({
         emailAndPassword: {enabled: true},
         database: mongodbAdapter(db, {client}),
+        databaseHooks: {
+            user: {
+                create: {
+                    before: async (user, context) => {
+                        if (context?.path === '/callback/:id') {
+                            const additionalData = await getOAuthState();
+                            return {
+                                data: {
+                                    ...user,
+                                    isOrganizer: additionalData?.isOrganizer ?? false,
+                                },
+                            };
+                        }
+                    },
+                },
+            },
+        },
+        user: {
+            additionalFields: {
+                isOrganizer: {
+                    type: 'boolean',
+                    required: false,
+                    default: false,
+                    input: false,
+                },
+            },
+        },
         socialProviders: {
             google: {
                 prompt: 'select_account',
-                clientId: process.env.GOOGLE_CLIENT_ID as string, // TODO: this needs to be improved by sanitizing the env
+                clientId: process.env.GOOGLE_CLIENT_ID as string,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             },
         },
@@ -21,13 +48,11 @@ export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
     });
 }
 
-/** Initialize the Auth instance */
 export async function initAuth(db: MongoClient) {
     auth = createAuth(db.getDb(), db.getNativeClient());
     return auth;
 }
 
-/** Get the current auth instance */
 export function getAuth() {
     if (!auth) {
         throw new Error('Auth has not been initialized. Call initAuth() first.');

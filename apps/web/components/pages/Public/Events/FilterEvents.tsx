@@ -27,7 +27,7 @@ export function FilterEvents({categories}: EventsFilterTableProps) {
         params = setValueToFilterParams(params, EVENT_TYPE_FILTER_PARAM_KEY, value);
         await revalidateEventsPage();
         router.push(`${APP_ROUTES.events.base}?${params.toString()}`);
-    };
+    }
 
     return (
         <div className="mb-4">

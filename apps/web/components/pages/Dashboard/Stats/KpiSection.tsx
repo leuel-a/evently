@@ -22,7 +22,7 @@ export function KpiSection(props: KpiSectionProps) {
             <KpiCard title="Total Revenue" value={totalRevenue} />
             <KpiCard title="Categories" value={totalCategories} />
             <KpiCard title="Avg per category" value={average} />
-            <KpiCard title="Top category" value={categories?.[0].name} />
+            <KpiCard title="Top category" value={categories?.[0]?.name} />
         </div>
     );
 }
