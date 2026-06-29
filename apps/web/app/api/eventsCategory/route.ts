@@ -7,7 +7,7 @@ import {CreateEventsCategoryApiResponse} from '@/types/eventsCategory';
 export async function GET() {
     const headers = await nextHeaders();
     const response = await makeApiCall({
-        url: API_ROUTES.eventCategory.base,
+        url: API_ROUTES.dashboard.eventCategory.base,
         headers,
         method: 'GET',
     });
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const requestBody = await request.json();
 
     const response = await makeApiCall<CreateEventsCategoryApiResponse>({
-        url: API_ROUTES.eventCategory.base,
+        url: API_ROUTES.dashboard.eventCategory.base,
         body: JSON.stringify(requestBody),
         method: 'POST',
         headers,
