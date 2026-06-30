@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "nodemon --config nodemon.json",
         "build": "tsc",
-        "start": "node ./src/app.js",
+        "start": "node ./dist/app.js",
         "docs": "jsdoc -c jsdoc.conf.json",
         "docs:watch": "jsdoc -c jsdoc.conf.json --watch",
         "test": "vitest run",

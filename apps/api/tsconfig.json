@@ -7,7 +7,6 @@
         "module": "nodenext",
         "target": "esnext",
         "lib": ["esnext"],
-        "types": ["node"],
         "typeRoots": ["./src/types"],
 
         "sourceMap": true,
@@ -18,7 +17,6 @@
 
         "allowJs": true,
         "strict": true,
-        // "verbatimModuleSyntax": true,
         "isolatedModules": true,
         "noUncheckedSideEffectImports": true,
         "moduleDetection": "force",

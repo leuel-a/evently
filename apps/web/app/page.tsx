@@ -1,11 +1,21 @@
-import NextLink from 'next/link';
+import {
+    Hero,
+    DiscoverSection,
+    OrganizerSection,
+    AttendeeSection,
+    DashboardSection,
+    CTASection,
+} from '@/components/pages/Landing';
 
-export default function Home() {
+export default function HomePage() {
     return (
-        <div className="p-10">
-            <NextLink className="border border-green-200 h-12 p-2" href={'/dashboard'}>
-                Dashboard
-            </NextLink>
-        </div>
+        <main>
+            <Hero />
+            <DiscoverSection />
+            <OrganizerSection />
+            <AttendeeSection />
+            <DashboardSection />
+            <CTASection />
+        </main>
     );
 }

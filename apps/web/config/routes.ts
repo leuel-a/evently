@@ -4,7 +4,7 @@ const APP_ROUTES = {
     events: {base: '/events'},
     auth: {login: '/login', signup: '/signup'},
     api: {
-        eventsCategory: '/api/eventsCategory'
+        eventsCategory: '/api/eventsCategory',
     },
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,
@@ -30,18 +30,9 @@ const API_ROUTES = {
         me: '/users/me',
         linkedAccounts: '/users/me/linked-accounts',
     },
-    public: {
-        events: {base: '/events'}
-    },
+    public: {events: {base: '/events'}},
     dashboard: {
-        // FIXME: this is weird
         stats: {dashboard: '/dashboard/stats/dashboard'},
-        auth: {
-            me: {
-                base: '/auth/me', // TODO: this might not be needed
-                linkedAccounts: '/auth/me/linked-accounts',
-            },
-        },
         tickets: {base: '/dashboard/tickets'},
         events: {base: '/dashboard/events'},
         eventCategory: {base: '/dashboard/eventsCategory'},
