@@ -12,6 +12,12 @@ interface PageProps {
 export default async function Page(props: PageProps) {
     const searchParams = await props?.searchParams;
     const isOrganizer = searchParams?.organizer === "true";
+
+    const createOneLink = () => {
+        const params = new URLSearchParams(searchParams);
+        return `${APP_ROUTES.auth.signup}?${params.toString()}`
+    }
+
     return (
         <div className="min-h-dvh bg-linear-to-b from-indigo-50 via-white to-indigo-50">
             <div className="mx-auto flex min-h-dvh max-w-md items-center px-4">
@@ -21,7 +27,7 @@ export default async function Page(props: PageProps) {
                     <p className="mt-6 text-center text-sm text-slate-600">
                         Don&apos;t have an account?{' '}
                         <NextLink
-                            href={APP_ROUTES.auth.signup}
+                            href={createOneLink()}
                             className="font-medium text-indigo-700 hover:text-indigo-800 underline underline-offset-4"
                         >
                             Create one

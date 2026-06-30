@@ -11,7 +11,12 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
     const searchParams = await props?.searchParams;
-    const isOrganizer = searchParams?.organizer === "true";
+    const isOrganizer = searchParams?.organizer === 'true';
+
+    const signInLink = () => {
+        const params = new URLSearchParams(searchParams);
+        return `${APP_ROUTES.auth.login}?${params.toString()}`;
+    };
 
     return (
         <div className="min-h-dvh bg-linear-to-b from-indigo-50 via-white to-indigo-50">
@@ -22,7 +27,7 @@ export default async function Page(props: PageProps) {
                     <p className="mt-6 text-center text-sm text-slate-600">
                         Already have an account?{' '}
                         <NextLink
-                            href={APP_ROUTES.auth.login}
+                            href={signInLink()}
                             className="font-medium text-indigo-700 hover:text-indigo-800 underline underline-offset-4"
                         >
                             Sign in

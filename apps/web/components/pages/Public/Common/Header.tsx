@@ -7,7 +7,7 @@ interface HeaderProps {
     data: GetEventsPageResult['data'] | undefined;
 }
 
-const authLink = (path: string) => `${path}?organizer=true`;
+const authLink = (path: string) => `${path}?organizer=false`;
 
 export function Header({data}: HeaderProps) {
     const total = data?.length ?? 0;

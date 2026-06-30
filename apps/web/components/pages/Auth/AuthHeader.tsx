@@ -1,3 +1,6 @@
+import NextLink from 'next/link';
+import {APP_ROUTES} from '@/config/routes';
+
 interface AuthHeaderProps {
     title: string;
     subtitle: string;
@@ -9,7 +12,9 @@ export function AuthHeader(props: AuthHeaderProps) {
     return (
         <div className="mb-6 text-center">
             <div className="mx-auto mb-3 h-8 w-32 rounded bg-indigo-600/10 ring-1 ring-indigo-600/20 flex items-center justify-center">
-                <span className="text-indigo-700 font-semibold">Evently</span>
+                <NextLink href={APP_ROUTES.events.base} className="text-indigo-700 font-semibold">
+                    Evently
+                </NextLink>
             </div>
             <h1 className="text-2xl font-semibold tracking-tight text-slate-900">{title}</h1>
             <p className="mt-1 text-sm text-slate-600">{subtitle}</p>

@@ -15,7 +15,7 @@ export default async function DashboardLayout({children}: DashboardLayoutProps) 
     const {data: getDashboardSettingsData} = await getDashboardSettings();
 
     if (!getSessionSuccess || getSessionError) {
-        return redirect(APP_ROUTES.auth.login);
+        return redirect(`${APP_ROUTES.auth.login}?organizer=true`);
     }
 
     return (
