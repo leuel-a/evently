@@ -38,7 +38,10 @@ export async function getTickets(
             },
         },
         {
-            $unwind: '$event',
+            $unwind: {
+                path: '$event',
+                preserveNullAndEmptyArrays: true,
+            },
         },
         {
             $match: matchQuery,
@@ -101,10 +104,24 @@ export async function getTicketsRevenueByMonthAndYear(
     const {userId} = params;
     const matchQuery = {
         status: TICKET_STATUS.PAID,
-        user: new mongoose.Types.ObjectId(userId),
+        'event.user': new mongoose.Types.ObjectId(userId),
     };
 
     const result = await this.aggregate([
+        {
+            $lookup: {
+                from: mongoose.model(modelNames.events).collection.name,
+                localField: 'event',
+                foreignField: '_id',
+                as: 'event',
+            },
+        },
+        {
+            $unwind: {
+                path: '$event',
+                preserveNullAndEmptyArrays: true,
+            },
+        },
         {
             $match: matchQuery,
         },
