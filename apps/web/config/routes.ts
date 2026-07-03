@@ -13,7 +13,7 @@ const APP_ROUTES = {
             create: '/dashboard/events/create',
             edit: '/dashboard/events/edit',
         },
-        eventsCategory: {base: '/dashboard/events-category'},
+        eventsCategory: {base: '/dashboard/events-category', create: '/dashboard/events-category/create'},
         tickets: {base: '/dashboard/tickets'},
         settings: {
             base: '/dashboard/settings',

@@ -167,7 +167,7 @@ export function EmptyRevenueChart() {
                     <Button
                         type="button"
                         variant="link"
-                        className="border shadow-none bg-indigo-500"
+                        className="border shadow-none bg-indigo-500 rounded w-56 h-10"
                     >
                         <Link
                             href={APP_ROUTES.dashboard.events.create}

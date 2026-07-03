@@ -8,6 +8,7 @@ import {SelectEventsByCategoryChart} from './SelectEventsByCategoryChart';
 import {EventsByCategoryPieChart} from './EventsByCategoryPieChart';
 import {EventsByCategoryBarChart} from './EventsByCategoryBarChart';
 import {CategoryLegend} from './utils';
+import {EmptyEventsByCategoryChart} from './EmptyEventsByCategoryChart';
 
 interface EventsByCategoryChartProps {
     CardProps?: ComponentProps<typeof Card>;
@@ -23,6 +24,8 @@ export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
     const {categories, totalEvents, totalCategories, CardProps = {}} = props;
     const {className: customCardClassName, ...cardProps} = CardProps;
 
+    const hasData = categories && categories.length > 0;
+
     return (
         <Card
             className={cn(
@@ -35,28 +38,36 @@ export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
                 <CardTitle className="font-semibold tracking-tighter uppercase text-muted-foreground/70 leading-none">
                     Events by category
                 </CardTitle>
-                <div className='flex gap-2'>
-                    <SelectEventsByCategoryChart
-                        defaultValue={DEFAULT_CHART_VALUE}
-                        onChange={setChart}
-                    />
-                </div>
+                {hasData && (
+                    <div className="flex gap-2">
+                        <SelectEventsByCategoryChart
+                            defaultValue={DEFAULT_CHART_VALUE}
+                            onChange={setChart}
+                        />
+                    </div>
+                )}
             </CardHeader>
             <CardContent className="pr-3 pl-5 pb-4">
-                <CategoryLegend totalCategories={totalEvents} />
-                {chart === 'pie' && (
-                    <EventsByCategoryPieChart
-                        categories={categories}
-                        totalEvents={totalEvents}
-                        totalCategories={totalCategories}
-                    />
-                )}
-                {chart === 'bar' && (
-                    <EventsByCategoryBarChart
-                        categories={categories}
-                        totalEvents={totalEvents}
-                        totalCategories={totalEvents}
-                    />
+                {!hasData ? (
+                    <EmptyEventsByCategoryChart />
+                ) : (
+                    <>
+                        <CategoryLegend totalCategories={totalEvents} />
+                        {chart === 'pie' && (
+                            <EventsByCategoryPieChart
+                                categories={categories}
+                                totalEvents={totalEvents}
+                                totalCategories={totalCategories}
+                            />
+                        )}
+                        {chart === 'bar' && (
+                            <EventsByCategoryBarChart
+                                categories={categories}
+                                totalEvents={totalEvents}
+                                totalCategories={totalEvents}
+                            />
+                        )}
+                    </>
                 )}
             </CardContent>
         </Card>
