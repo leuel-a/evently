@@ -14,7 +14,7 @@ interface KpiSectionProps {
 export function KpiSection(props: KpiSectionProps) {
     const {totalCategories, totalEvents, categories, totalRevenue, ContainerProps = {}} = props;
     const {className: customContainerClassName} = ContainerProps;
-    const average = (totalEvents / totalCategories).toFixed(1);
+    const average = (Number.isNaN(totalEvents/totalCategories)) ? 0 : (totalEvents/totalCategories).toFixed(1);
 
     return (
         <div className={cn('grid grid-cols-2 sm:grid-cols-5', customContainerClassName)}>
@@ -22,7 +22,7 @@ export function KpiSection(props: KpiSectionProps) {
             <KpiCard title="Total Revenue" value={totalRevenue} />
             <KpiCard title="Categories" value={totalCategories} />
             <KpiCard title="Avg per category" value={average} />
-            <KpiCard title="Top category" value={categories?.[0]?.name} />
+            <KpiCard title="Top category" value={categories?.[0]?.name ?? ''} />
         </div>
     );
 }

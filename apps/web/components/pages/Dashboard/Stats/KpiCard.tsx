@@ -17,7 +17,7 @@ export function KpiCard(props: KpiCardProps) {
                     </p>
                     {icon && <span className="text-muted-foreground/50">{icon}</span>}
                 </div>
-                <p className="text-2xl font-medium tracking-tight text-foreground">{value}</p>
+                <p className="text-2xl font-medium tracking-tight text-foreground">{value ?? 0}</p>
             </CardContent>
         </Card>
     );

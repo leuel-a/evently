@@ -81,7 +81,7 @@ export async function getTickets(
 
     const resultData = result?.[0]?.data;
     const resultTotal = result?.[0]?.total;
-    return {data: resultData, total: resultTotal?.[0].count, page, limit};
+    return {data: resultData, total: resultTotal?.[0]?.count ?? 0, page, limit};
 }
 
 export interface GetTicketsRevenueByMonthAndYearParams {
@@ -103,6 +103,7 @@ export async function getTicketsRevenueByMonthAndYear(
         status: TICKET_STATUS.PAID,
         user: new mongoose.Types.ObjectId(userId),
     };
+
     const result = await this.aggregate([
         {
             $match: matchQuery,

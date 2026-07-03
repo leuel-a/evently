@@ -1,9 +1,9 @@
 'use client';
 
+import NextLink from 'next/link';
+import {TrendingUp, ArrowRight} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {APP_ROUTES} from '@/config/routes';
-import {TrendingUp, ArrowRight} from 'lucide-react';
-import Link from 'next/link';
 
 const BARS = [28, 42, 35, 58, 50, 78, 65, 82, 70, 55, 44, 38];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -161,13 +161,13 @@ export function EmptyRevenueChart() {
                         variant="link"
                         className="border shadow-none bg-indigo-500 rounded w-56 h-10"
                     >
-                        <Link
+                        <NextLink
                             href={APP_ROUTES.dashboard.events.create}
                             className="inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-medium text-white"
                         >
                             Create an event
                             <ArrowRight className="size-3.5" />
-                        </Link>
+                        </NextLink>
                     </Button>
                 </div>
             </div>

@@ -19,7 +19,7 @@ export async function getTicketsPageData(
         const headers = await nextHeaders();
         const searchParams = new URLSearchParams(params);
         const tickets = await makeApiCall<GetTicketsApiResponse>({
-            url: `${API_ROUTES.tickets.base}?${searchParams}`,
+            url: `${API_ROUTES.dashboard.tickets.base}?${searchParams}`,
             headers,
         });
 
