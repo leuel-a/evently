@@ -11,7 +11,7 @@ export const API_ROUTES = Object.freeze({
         events: {base: '/events'},
     },
     dashboard: {
-        stats: {base: '/dashboard/stats', dashboard: '/stats/dashboard'},
+        stats: {base: '/dashboard/stats'},
         events: {base: '/dashboard/events'},
         eventsCategory: {base: '/dashboard/eventsCategory'},
         tickets: {base: '/dashboard/tickets'},

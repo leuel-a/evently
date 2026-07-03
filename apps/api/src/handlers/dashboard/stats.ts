@@ -6,8 +6,8 @@ import TicketsModel from '../../models/tickets';
 export const getDashboardStatsHandler: RequestHandler = async (_req, res, _next) => {
     const user = res.locals.user;
     const [eventsStats, ticketsStats] = await Promise.all([
-        EventsModel.getEventStats({userId: user.id}),
-        TicketsModel.getTicketsRevenueByMonthAndYear({}),
+        EventsModel.getEventStats({userId: user?.id}),
+        TicketsModel.getTicketsRevenueByMonthAndYear({userId: user?.id}),
     ]);
 
     const resultData = {

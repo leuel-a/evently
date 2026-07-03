@@ -32,7 +32,7 @@ const API_ROUTES = {
     },
     public: {events: {base: '/events'}},
     dashboard: {
-        stats: {dashboard: '/dashboard/stats/dashboard'},
+        stats: {base: '/dashboard/stats'},
         tickets: {base: '/dashboard/tickets'},
         events: {base: '/dashboard/events'},
         eventCategory: {base: '/dashboard/eventsCategory'},

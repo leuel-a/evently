@@ -10,9 +10,17 @@ export interface GetTicketsParams {
     size: string;
     status: string;
 }
-export type GetTicketsResult = {data: TicketDocument[]; total: number; page: string; limit: number};
+export type GetTicketsResult = {
+    data: TicketDocument[];
+    total: number;
+    page: string;
+    limit: number;
+};
 
-export async function getTickets(this: typeof TicketModel, params: GetTicketsParams) {
+export async function getTickets(
+    this: typeof TicketModel,
+    params: GetTicketsParams,
+) {
     const {userId, page, size, status} = params;
     const matchQuery = {
         'event.user': new mongoose.Types.ObjectId(userId),
@@ -76,15 +84,25 @@ export async function getTickets(this: typeof TicketModel, params: GetTicketsPar
     return {data: resultData, total: resultTotal?.[0].count, page, limit};
 }
 
-export interface GetTicketsRevenueByMonthAndYearParams {}
-export interface GetTicketsRevenueByMonthAndYearResult {
-    data: {revenues: Array<{revenue: number; year: number; month: 1}>; totalRevenue: number};
+export interface GetTicketsRevenueByMonthAndYearParams {
+    userId: string;
 }
+export interface GetTicketsRevenueByMonthAndYearResult {
+    data: {
+        revenues: Array<{revenue: number; year: number; month: 1}>;
+        totalRevenue: number;
+    };
+}
+
 export async function getTicketsRevenueByMonthAndYear(
     this: typeof TicketModel,
-    _params: GetTicketsRevenueByMonthAndYearParams,
+    params: GetTicketsRevenueByMonthAndYearParams,
 ) {
-    const matchQuery = {status: TICKET_STATUS.PAID};
+    const {userId} = params;
+    const matchQuery = {
+        status: TICKET_STATUS.PAID,
+        user: new mongoose.Types.ObjectId(userId),
+    };
     const result = await this.aggregate([
         {
             $match: matchQuery,

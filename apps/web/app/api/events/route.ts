@@ -1,10 +1,10 @@
 import {headers as nextHeaders} from 'next/headers';
 import {makeApiCall} from '@/config/api';
-import {API_ROUTES, APP_ROUTES} from '@/config/routes';
-import {CreateEventApiResponse, UpdateEventApiResponse} from '@/types/events';
+import {API_ROUTES} from '@/config/routes';
+import {CreateEventApiResponse} from '@/types/events';
 
 export async function GET() {
-    const response = await makeApiCall({url: API_ROUTES.events.base});
+    const response = await makeApiCall({url: API_ROUTES.dashboard.events.base});
     return Response.json(response);
 }
 
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     const requestBody = await request.json();
 
     const response = await makeApiCall<CreateEventApiResponse>({
-        url: API_ROUTES.events.base,
+        url: API_ROUTES.dashboard.events.base,
         body: JSON.stringify(requestBody),
         method: 'POST',
         headers,

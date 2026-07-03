@@ -9,6 +9,7 @@ import {SelectTicketRevenueYear} from './SelectTicketRevenueYear';
 import {GraphType, SelectRevenueGraphType} from './SelectRevenueGraphType';
 import {TicketRevenueLineChart} from './TicketRevenueLineChart';
 import {TicketRevenueBarChart} from './TicketRevenueBarChart';
+import {EmptyRevenueChart} from './EmptyRevenueChart';
 
 interface TicketRevenueChartProps {
     CardProps?: ComponentProps<typeof Card>;
@@ -23,6 +24,8 @@ export function TicketRevenueChart(props: TicketRevenueChartProps) {
     const [graphType, setGraphType] = useState<GraphType>('line');
     const choices = Array.from(new Set(revenueData?.map(({year}) => year)));
 
+    const hasData = revenueData && revenueData.length > 0;
+
     return (
         <Card
             className={cn(
@@ -35,20 +38,23 @@ export function TicketRevenueChart(props: TicketRevenueChartProps) {
                 <CardTitle className="font-semibold tracking-tighter uppercase text-muted-foreground/70 leading-none">
                     Revenue
                 </CardTitle>
-                <div className="flex gap-2">
-                    <SelectRevenueGraphType onChange={setGraphType} />
-                    <SelectTicketRevenueYear
-                        setYear={setSelectedYear}
-                        defaultValue={'2026'}
-                        choices={choices}
-                    />
-                </div>
-            </CardHeader>
-            <CardContent>
-                {graphType === 'line' && (
-                    <TicketRevenueLineChart revenueData={revenueData} year={selectedYear} />
+                {hasData && (
+                    <div className="flex gap-2">
+                        <SelectRevenueGraphType onChange={setGraphType} />
+                        <SelectTicketRevenueYear
+                            setYear={setSelectedYear}
+                            defaultValue={'2026'}
+                            choices={choices}
+                        />
+                    </div>
                 )}
-                {graphType === 'bar' && (
+            </CardHeader>
+            <CardContent className="h-full">
+                {!hasData ? (
+                    <EmptyRevenueChart />
+                ) : graphType === 'line' ? (
+                    <TicketRevenueLineChart revenueData={revenueData} year={selectedYear} />
+                ) : (
                     <TicketRevenueBarChart revenueData={revenueData} year={selectedYear} />
                 )}
             </CardContent>

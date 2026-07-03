@@ -1,7 +1,6 @@
 'use client';
 
 import {useState, type ComponentProps} from 'react';
-import {RECHARTS_DEVTOOLS_PORTAL_ID} from '@recharts/devtools';
 import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
 import {Card, CardHeader, CardTitle, CardContent} from '@/components/ui/card';
 import {cn} from '@/lib/utils';
