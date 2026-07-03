@@ -60,11 +60,7 @@ export function EmptyRevenueChart() {
                             <polygon points={areaPoints} />
                         </clipPath>
                     </defs>
-
-                    {/* filled area */}
                     <polygon points={areaPoints} fill="url(#ghostArea)" />
-
-                    {/* line */}
                     <polyline
                         points={linePoints}
                         fill="none"
@@ -74,8 +70,6 @@ export function EmptyRevenueChart() {
                         strokeLinejoin="round"
                         opacity="0.5"
                     />
-
-                    {/* shimmer sweep over the area */}
                     <rect
                         x="0"
                         y="0"
@@ -86,9 +80,8 @@ export function EmptyRevenueChart() {
                     />
                 </svg>
 
-                {/* Ghost bars row */}
                 <div
-                    className="absolute inset-x-4 bottom-8 flex items-end gap-[3px]"
+                    className="absolute inset-x-4 bottom-8 flex items-end gap-0.75"
                     style={{height: '7rem'}}
                 >
                     {BARS.map((h, i) => (
@@ -101,7 +94,6 @@ export function EmptyRevenueChart() {
                                     'linear-gradient(to top, rgba(99,102,241,0.20), rgba(165,180,252,0.08))',
                             }}
                         >
-                            {/* shimmer on each bar */}
                             <span
                                 className="absolute inset-0"
                                 style={{
