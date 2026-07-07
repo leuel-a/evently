@@ -1,9 +1,11 @@
 'use client';
 
+import NextLink from 'next/link';
+import {Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight, Link} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {Button} from '@/components/ui/button';
 import {IEvent, EVENT_STATUS} from '@/types/events';
-import {Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight} from 'lucide-react';
+import {APP_ROUTES} from '@/config/routes';
 
 interface EventCardProps {
     event: IEvent;
@@ -76,7 +78,7 @@ export function EventCard({event}: EventCardProps) {
     const isDisabled = status === EVENT_STATUS.CLOSED || status === EVENT_STATUS.DRAFT;
 
     return (
-        <div className="flex h-44 rounded-lg border border-slate-200 bg-white overflow-hidden hover:border-indigo-300 transition-colors duration-150">
+        <div className="flex h-44 rounded border border-slate-200 bg-white overflow-hidden hover:border-indigo-300 transition-colors duration-150">
             <div className="hidden sm:flex flex-col items-center justify-center w-20 shrink-0 border-r border-slate-200 bg-slate-50 py-5 gap-0">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                     {formatted.day}
@@ -165,10 +167,10 @@ export function EventCard({event}: EventCardProps) {
                 </div>
 
                 <Button
+                    asChild
                     size="sm"
-                    disabled={isDisabled}
-                    onClick={() => checkoutLink && window.open(checkoutLink, '_blank')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-md gap-1 disabled:opacity-40 disabled:cursor-not-allowed"
+                    variant="link"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded gap-1"
                 >
                     {isDisabled ? (
                         status === EVENT_STATUS.CLOSED ? (
@@ -177,9 +179,10 @@ export function EventCard({event}: EventCardProps) {
                             'Unavailable'
                         )
                     ) : (
-                        <>
-                            Get Tickets <ArrowRight className="h-3 w-3" />
-                        </>
+                        <NextLink href={`${APP_ROUTES.events.base}/${event.id}/checkout`}>
+                            Get Tickets
+                            <ArrowRight className="h-3 w-3" />
+                        </NextLink>
                     )}
                 </Button>
             </div>
@@ -193,12 +196,15 @@ export function EventCard({event}: EventCardProps) {
                     {formatPrice(ticketPrice, isFree)}
                 </p>
                 <Button
+                    asChild
                     size="sm"
-                    disabled={isDisabled}
-                    onClick={() => checkoutLink && window.open(checkoutLink, '_blank')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-md gap-1 disabled:opacity-40"
+                    variant="link"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded gap-1"
                 >
-                    Get Tickets <ArrowRight className="h-3 w-3" />
+                    <NextLink href={`/${APP_ROUTES.events.base}/${event.id}/checkout`}>
+                        Get Tickets
+                        <ArrowRight className="h-3 w-3" />
+                    </NextLink>
                 </Button>
             </div>
         </div>

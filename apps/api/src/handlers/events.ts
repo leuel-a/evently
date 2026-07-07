@@ -3,10 +3,21 @@ import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
 import EventsModel from '../models/events';
 
-export const getEventsHandler: express.RequestHandler = async (req, res, next) => {
+export const getEventsHandler: express.RequestHandler = async (
+    req,
+    res,
+    next,
+) => {
     try {
-        const {page, limit, filters, q} = matchedData(req, {locations: ['query']});
-        const results = await EventsModel.getEvents({page, size: limit, filters, q});
+        const {page, limit, filters, q} = matchedData(req, {
+            locations: ['query'],
+        });
+        const results = await EventsModel.getEvents({
+            page,
+            size: limit,
+            filters,
+            q,
+        });
 
         const currentPage = Number(results?.page ?? 1);
         const currentLimit = Number(results?.limit ?? 10);
@@ -22,6 +33,21 @@ export const getEventsHandler: express.RequestHandler = async (req, res, next) =
         };
 
         res.status(httpStatus.OK).json(responseRaw);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getEventHandler: express.RequestHandler = async (
+    req,
+    res,
+    next,
+) => {
+    try {
+        const {id} = matchedData(req, {locations: ['params']});
+        const result = await EventsModel.getEvent({id});
+
+        res.status(httpStatus.OK).json(result);
     } catch (error) {
         next(error);
     }

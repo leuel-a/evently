@@ -59,6 +59,7 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
         <FormProvider {...form}>
             <div className="flex flex-col gap-6 p-8 pl-4 w-7xl">
                 <EventForm
+                    isUpdateEvent
                     SubmitButtonProps={{label: UPDATE_EVENT_FORM_SUBMIT_BUTTON_LABEL}}
                     onSubmit={handleSubmit}
                 />

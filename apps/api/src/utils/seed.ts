@@ -835,6 +835,7 @@ function buildSeedEventsData() {
         country: string,
         capacity?: number;
         status: string;
+        checkoutLink?: string;
         date: Date;
         user: string;
         categoryName?: string;

@@ -23,7 +23,7 @@ export default async function Page(props: PageProps) {
                 {success && data?.data && data?.data?.length > 0 && (
                     <div className="flex flex-col gap-4">
                         {data.data.map((event) => (
-                            <EventCard key={event.id} event={event} />
+                            <EventCard key={event.id}  event={event} />
                         ))}
                     </div>
                 )}

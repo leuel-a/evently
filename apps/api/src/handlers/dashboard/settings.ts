@@ -14,7 +14,6 @@ export const getSettingsHandler: RequestHandler = async (_req, res, next) => {
         ]);
         res.status(httpStatus.OK).json({resources, ...eventsSettings, ...eventsCategorySettings});
     } catch (error) {
-        console.log({error});
         next(error);
     }
 };

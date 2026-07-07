@@ -37,6 +37,8 @@ export interface IEvent {
     address: string;
 }
 
+export type GetEventApiResponse = IApiResponse<IEvent>;
+
 export type GetEventsApiResponse = IApiResponse<IEvent[]> & {
     page: number;
     total: number;

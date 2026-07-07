@@ -11,7 +11,6 @@ import {Field, FieldLabel, FieldError} from '@/components/ui/field';
 import {Input} from '@/components/ui/input';
 import {Separator} from '@/components/ui/separator';
 import {Textarea} from '@/components/ui/textarea';
-import {TimePicker} from '@/components/blocks/TimePicker';
 import {APP_ROUTES} from '@/config/routes';
 import type {EventSchemaType} from '@/lib/db/schema';
 import {cn} from '@/lib/utils';
@@ -32,6 +31,7 @@ export interface EventFormProps {
     FormProps?: Omit<DefaultFormProps, 'onSubmit'>;
     SubmitButtonProps?: ComponentProps<typeof Button> & {label?: string};
     defaultValues?: EventSchemaType;
+    isUpdateEvent?: boolean;
 }
 
 export const DEFAULT_SUBMIT_BUTTON_LABEL = 'Create';

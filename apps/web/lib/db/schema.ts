@@ -20,6 +20,7 @@ export const eventsSchema = z
         type: z.enum(Object.values(EVENT_TYPE), {error: 'Required'}),
         ticketPrice: z.coerce.number(),
         isFree: z.boolean().default(false),
+        checkoutLink: z.url().optional(),
         isVirtual: z
             .preprocess((v) => (v === 'true' ? true : v === 'false' ? false : v), z.boolean())
             .optional(),
@@ -75,3 +76,15 @@ export const emailSigninSchema = z.object({
     email: z.email({error: 'Required'}).min(1, {error: 'Required'}),
     password: z.string({error: 'Required'}).min(1, {error: 'Required'}),
 });
+
+export type CheckoutSchemaType = z.infer<typeof checkoutSchema>;
+export const checkoutSchema = z
+    .object({
+        name: z.string().min(1, {error: 'Full name can not be empty'}),
+        email: z.email({error: 'Provide a valid email'}),
+        confirmEmail: z.email(),
+    })
+    .refine(({email, confirmEmail}) => email !== confirmEmail, {
+        error: 'Please check your email',
+        path: ['email'],
+    });

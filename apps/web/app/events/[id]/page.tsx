@@ -1,192 +1,212 @@
-'use client';
-
-import {useParams, useRouter} from 'next/navigation';
-import {useQuery} from '@tanstack/react-query';
-import {CalendarDays, Clock, MapPin, Globe, Users, Tag, ArrowRight, Ticket} from 'lucide-react';
-import {Badge} from '@/components/ui/badge';
+import NextLink from 'next/link';
+import {
+    CalendarDays,
+    Clock,
+    MapPin,
+    Globe,
+    Users,
+    Tag,
+    ArrowRight,
+    Ticket,
+    AlertCircle,
+} from 'lucide-react';
+import {APP_ROUTES} from '@/config/routes';
 import {Button} from '@/components/ui/button';
 import {Separator} from '@/components/ui/separator';
-import {Skeleton} from '@/components/ui/skeleton';
 import {formatDate} from '@/utils/date';
-import {makeApiCall} from '@/config/api';
+import {typeLabel, formatPrice, StatusPip} from './utils';
+import {getEvent} from '../actions';
 
-async function fetchEvent(id: string): Promise<Event> {
-    const res = await makeApiCall(`/api/events/${id}`);
-    if (!res.ok) throw new Error('Failed to fetch event');
-    const data = await res.json();
-    return data.event ?? data;
+interface PageProps {
+    params: Promise<{id: string}>;
 }
 
-function formatPrice(price: number) {
-    if (price === 0) return 'Free';
-    return `ETB ${price.toLocaleString()}`;
-}
+export default async function Page(props: PageProps) {
+    const {id} = await props.params;
+    const {error, data} = await getEvent(id);
 
-function statusColor(status: string) {
-    return (
-        {
-            active: 'bg-emerald-500/10 text-emerald-600 border-emerald-200',
-            draft: 'bg-yellow-500/10 text-yellow-600 border-yellow-200',
-            closed: 'bg-red-500/10 text-red-600 border-red-200',
-        }[status] ?? 'bg-muted text-muted-foreground'
-    );
-}
-
-function typeLabel(type: string) {
-    return {physical: 'In Person', virtual: 'Virtual', hybrid: 'Hybrid'}[type] ?? type;
-}
-
-function EventPageSkeleton() {
-    return (
-        <div className="min-h-screen bg-background">
-            <div className="h-64 bg-muted w-full" />
-            <div className="max-w-3xl mx-auto px-4 py-8 space-y-4">
-                <Skeleton className="h-10 w-2/3" />
-                <Skeleton className="h-4 w-1/3" />
-                <Skeleton className="h-4 w-1/2" />
-                <Skeleton className="h-32 w-full" />
-            </div>
-        </div>
-    );
-}
-
-// TODO: just make this a server component
-export default function PublicEventPage() {
-    const {id} = useParams<{id: string}>();
-    const router = useRouter();
-
-    const {
-        data: event,
-        isLoading,
-        isError,
-    } = useQuery({
-        queryKey: ['public-event', id],
-        queryFn: () => fetchEvent(id),
-        enabled: !!id,
-    });
-
-    if (isLoading) return <EventPageSkeleton />;
-
-    if (isError || !event) {
+    if (error || !data?.data) {
         return (
-            <div className="min-h-screen flex flex-col items-center justify-center gap-3 text-center px-4">
-                <Ticket className="w-10 h-10 text-muted-foreground" />
-                <h1 className="text-xl font-semibold">Event not found</h1>
-                <p className="text-muted-foreground text-sm">
-                    This event may have been removed or the link is incorrect.
-                </p>
+            <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-indigo-950 px-4 text-center">
+                <div className="flex size-16 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-400/10">
+                    <AlertCircle className="size-7 text-indigo-300" strokeWidth={1.5} />
+                </div>
+                <div>
+                    <h1 className="font-serif text-2xl text-white">Event not found</h1>
+                    <p className="mt-2 text-sm text-indigo-300/60">
+                        This event may have been removed or the link is incorrect.
+                    </p>
+                </div>
+                <NextLink
+                    href={APP_ROUTES.events?.base ?? '/events'}
+                    className="mt-2 inline-flex items-center gap-1.5 text-sm text-indigo-400 underline-offset-2 hover:underline"
+                >
+                    Browse all events <ArrowRight className="size-3.5" />
+                </NextLink>
             </div>
         );
     }
 
+    const event = data.data;
     const isFree = event.ticketPrice === 0;
     const isClosed = event.status === 'closed';
     const isVirtual = event.type === 'virtual';
     const isHybrid = event.type === 'hybrid';
 
     return (
-        <div className="min-h-screen bg-background">
-            {/* Cover — placeholder gradient until cover image is added */}
-            <div className="w-full h-56 md:h-72 bg-gradient-to-br from-primary/20 via-primary/10 to-background flex items-end">
-                <div className="max-w-3xl mx-auto w-full px-4 pb-6">
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <Badge className={`text-xs border ${statusColor(event.status)}`}>
-                            {event.status}
-                        </Badge>
-                        <Badge variant="outline" className="text-xs">
-                            {typeLabel(event.type)}
-                        </Badge>
-                        {event.category?.name && (
-                            <Badge variant="outline" className="text-xs">
-                                <Tag className="w-3 h-3 mr-1" />
-                                {event.category.name}
-                            </Badge>
-                        )}
-                    </div>
-                </div>
-            </div>
+        <div className="min-h-screen bg-indigo-50">
+            <section className="relative overflow-hidden bg-indigo-950 text-indigo-50">
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 opacity-[0.06]"
+                    style={{
+                        backgroundImage:
+                            'linear-gradient(to right,white 1px,transparent 1px),linear-gradient(to bottom,white 1px,transparent 1px)',
+                        backgroundSize: '48px 48px',
+                    }}
+                />
 
-            {/* Content */}
-            <div className="max-w-3xl mx-auto px-4 py-8 space-y-8">
-                {/* Title */}
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-bold tracking-tight">{event.title}</h1>
-                </div>
-
-                {/* Meta */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                        <CalendarDays className="w-4 h-4 shrink-0 text-primary" />
-                        <span>{formatDate(event.date)}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 shrink-0 text-primary" />
-                        <span>
-                            {event.startTime} – {event.endTime}
+                <div className="relative mx-auto max-w-3xl px-6 pb-14 pt-20">
+                    <div className="mb-8 flex items-center gap-2 text-xs text-indigo-400/60">
+                        <NextLink
+                            href={APP_ROUTES.events?.base ?? '/events'}
+                            className="hover:text-indigo-300 transition-colors"
+                        >
+                            Events
+                        </NextLink>
+                        <span>/</span>
+                        <span className="text-indigo-300/80 truncate max-w-[18rem]">
+                            {String(event.title)}
                         </span>
                     </div>
-                    {(event.location || event.address) && (
-                        <div className="flex items-center gap-2">
-                            <MapPin className="w-4 h-4 shrink-0 text-primary" />
-                            <span>
-                                {event.address || event.location}, {event.country}
+
+                    <div className="mb-6 flex flex-wrap items-center gap-2">
+                        <StatusPip status={event.status} />
+                        <span className="inline-flex items-center gap-1 rounded-full border border-indigo-400/25 bg-indigo-400/8 px-3 py-1 text-xs font-medium uppercase tracking-[0.15em] text-indigo-300">
+                            {typeLabel(event.type)}
+                        </span>
+                        {event.category?.name && (
+                            <span className="inline-flex items-center gap-1 rounded-full border border-indigo-400/25 bg-indigo-400/8 px-3 py-1 text-xs font-medium text-indigo-300">
+                                <Tag className="size-3" />
+                                {event.category.name}
                             </span>
-                        </div>
-                    )}
-                    {(isVirtual || isHybrid) && event.virtualUrl && (
-                        <div className="flex items-center gap-2">
-                            <Globe className="w-4 h-4 shrink-0 text-primary" />
-                            <a
-                                href={event.virtualUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="underline underline-offset-2 hover:text-foreground transition-colors truncate"
-                            >
-                                {event.virtualUrl}
-                            </a>
-                        </div>
-                    )}
-                    <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 shrink-0 text-primary" />
-                        <span>{event.capacity.toLocaleString()} capacity</span>
-                    </div>
-                </div>
-
-                <Separator />
-
-                {/* Description */}
-                <div className="space-y-2">
-                    <h2 className="font-semibold text-base">About this event</h2>
-                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                        {event.description}
-                    </p>
-                </div>
-
-                <Separator />
-
-                {/* Ticket CTA */}
-                <div className="rounded-xl border bg-card p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="space-y-1">
-                        <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">
-                            Ticket price
-                        </p>
-                        <p className="text-2xl font-bold">{formatPrice(event.ticketPrice)}</p>
-                        {isFree && (
-                            <p className="text-xs text-muted-foreground">No payment required</p>
                         )}
                     </div>
 
-                    <Button
-                        size="lg"
-                        disabled={isClosed}
-                        className="w-full sm:w-auto gap-2"
-                        onClick={() => router.push(`/events/${id}/checkout`)}
-                    >
-                        {isClosed ? 'Event Closed' : isFree ? 'Reserve a Spot' : 'Get Ticket'}
-                        {!isClosed && <ArrowRight className="w-4 h-4" />}
-                    </Button>
+                    <h1 className="font-serif text-4xl leading-[1.08] tracking-tight text-white sm:text-5xl">
+                        {String(event.title)}
+                    </h1>
+
+                    <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <MetaRow icon={CalendarDays}>{formatDate(event.date)}</MetaRow>
+                        <MetaRow icon={Clock}>
+                            {String(event.startTime)} – {String(event.endTime)}
+                        </MetaRow>
+                        {(event.location || event.address) && (
+                            <MetaRow icon={MapPin}>
+                                {String(event.address || event.location)}, {String(event.country)}
+                            </MetaRow>
+                        )}
+                        {(isVirtual || isHybrid) && event.virtualUrl && (
+                            <MetaRow icon={Globe}>
+                                <a
+                                    href={String(event.virtualUrl)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="underline underline-offset-2 hover:text-white transition-colors truncate"
+                                >
+                                    {String(event.virtualUrl)}
+                                </a>
+                            </MetaRow>
+                        )}
+                        <MetaRow icon={Users}>
+                            {Number(event.capacity).toLocaleString()} capacity
+                        </MetaRow>
+                    </div>
                 </div>
+            </section>
+
+            <div className="mx-auto max-w-3xl px-6 py-12 space-y-12">
+                <section className="space-y-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-indigo-400">
+                        About this event
+                    </p>
+                    <p className="text-base leading-8 text-indigo-950/70 whitespace-pre-line">
+                        {String(event.description)}
+                    </p>
+                </section>
+
+                <Separator className="bg-indigo-100" />
+
+                <section>
+                    <div className="overflow-hidden rounded-2xl border border-indigo-100 bg-white shadow-sm shadow-indigo-100">
+                        <div className="flex items-center gap-2 border-b border-dashed border-indigo-100 bg-indigo-50/60 px-6 py-3">
+                            <Ticket className="size-4 text-indigo-300" strokeWidth={1.5} />
+                            <span className="text-xs font-medium uppercase tracking-[0.18em] text-indigo-400">
+                                Ticket
+                            </span>
+
+                            <span
+                                className="absolute left-0 size-4 -translate-x-1/2 rounded-full bg-indigo-50"
+                                aria-hidden
+                            />
+                            <span
+                                className="absolute right-0 size-4 translate-x-1/2 rounded-full bg-indigo-50"
+                                aria-hidden
+                            />
+                        </div>
+
+                        <div className="flex flex-col items-start justify-between gap-6 px-6 py-6 sm:flex-row sm:items-center">
+                            <div className="space-y-1">
+                                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-indigo-400">
+                                    {isFree ? 'Free entry' : 'Ticket price'}
+                                </p>
+                                <p className="font-serif text-4xl text-indigo-950">
+                                    {isFree ? 'Free' : formatPrice(event.ticketPrice)}
+                                </p>
+                                {isFree && (
+                                    <p className="text-xs text-indigo-950/40">
+                                        No payment required — just reserve your spot.
+                                    </p>
+                                )}
+                            </div>
+
+                            {isClosed ? (
+                                <div className="flex flex-col items-start gap-1 sm:items-end">
+                                    <span className="rounded-full bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-400">
+                                        Event closed
+                                    </span>
+                                    <p className="text-xs text-indigo-950/40">
+                                        Ticket sales have ended.
+                                    </p>
+                                </div>
+                            ) : (
+                                <Button
+                                    asChild
+                                    size="lg"
+                                    className="w-full bg-indigo-600 text-white shadow-md shadow-indigo-200 hover:bg-indigo-500 sm:w-auto"
+                                >
+                                    <NextLink
+                                        href={`${APP_ROUTES.events.base}/${event.id}/checkout`}
+                                    >
+                                        {isFree ? 'Reserve a spot' : 'Get ticket'}
+                                        <ArrowRight className="size-4" />
+                                    </NextLink>
+                                </Button>
+                            )}
+                        </div>
+                    </div>
+                </section>
             </div>
+        </div>
+    );
+}
+
+function MetaRow({icon: Icon, children}: {icon: React.ElementType; children: React.ReactNode}) {
+    return (
+        <div className="flex items-start gap-2.5 text-sm text-indigo-200/75">
+            <Icon className="mt-0.5 size-4 shrink-0 text-indigo-400" strokeWidth={1.5} />
+            <span className="leading-snug">{children}</span>
         </div>
     );
 }
