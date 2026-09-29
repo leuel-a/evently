@@ -30,6 +30,7 @@ export default async function Page(props: PageProps) {
                         <EventsCategoryTable
                             columns={columns}
                             data={data?.eventsCategory?.data || []}
+                            ContainerProps={{className: 'max-w-7xl'}}
                         />
                         <TablePagination
                             page={data?.eventsCategory?.page}

@@ -39,6 +39,9 @@ export function SignupForm(props: SignupFormProps) {
         onSuccess: () => {
             router.push(APP_ROUTES.dashboard.base);
         },
+        onError: (err) => {
+            console.log(err?.message);
+        },
     });
 
     const handleSubmit = async (values: EmailSignupSchemaType) => {
@@ -54,7 +57,7 @@ export function SignupForm(props: SignupFormProps) {
 
             <CardContent className="space-y-5">
                 {/* TODO: MAKE THIS WORK FOR BOTH SIGNUP AND SIGNIN */}
-                <GoogleSignIn isOrganizer={isOrganizer}/>
+                <GoogleSignIn isOrganizer={isOrganizer} />
                 <div className="relative">
                     <Separator className="bg-indigo-100" />
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-500">

@@ -20,7 +20,7 @@ export const columns: ColumnDef<IEventsCategory>[] = [
         cell: ({row}) => (
             <div className="flex items-center gap-2 text-gray-600 max-w-xs">
                 <FileText className="w-4 h-4 shrink-0 text-gray-400" />
-                <span className="line-clamp-2 text-sm">{row.getValue('description')}</span>
+                <span className="line-clamp-2">{row.getValue('description')}</span>
             </div>
         ),
     },

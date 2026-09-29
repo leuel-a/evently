@@ -1,0 +1,18 @@
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.development
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      EDITOR: vim
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+
+volumes:
+  mongo_data:
+  mongo_config:

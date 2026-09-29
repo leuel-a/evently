@@ -5,6 +5,8 @@ import createError, {isHttpError} from 'http-errors';
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     let error = err;
 
+    console.log("error: ", error)
+
     if (!isHttpError(error)) {
         error = createError(error);
     }

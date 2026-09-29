@@ -8,11 +8,19 @@ export const emailSignupMutation: MutationFunction<
     EmailSignupSchemaType
 > = async (input) => {
     const {email, password, fullName} = input;
-    const response = await authClient.signUp.email({email, password, name: fullName});
-    return response as unknown as EmailSignupResponse;
+    const {data, error} = await authClient.signUp.email({email, password, name: fullName});
+
+    if (error) {
+        console.log(error);
+        throw new Error(error?.message ?? 'Signup Failed');
+    }
+
+    return data as EmailSignupResponse;
 };
 
-export const emailSigninMutation: MutationFunction<unknown, EmailSigninSchemaType> = async (input) => {
+export const emailSigninMutation: MutationFunction<unknown, EmailSigninSchemaType> = async (
+    input,
+) => {
     const {email, password} = input;
     const response = await authClient.signIn.email({email, password});
     return response;

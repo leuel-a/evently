@@ -9,7 +9,8 @@ let auth: ReturnType<typeof createAuth> | undefined = undefined;
 export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
     return betterAuth({
         emailAndPassword: {enabled: true},
-        database: mongodbAdapter(db, {client}),
+        database: mongodbAdapter(db, {client, transaction: false}), // for standalone mongodb database dont use transactions
+        onAPIError: {throw: false}, // this will make better-auth handle the error handling
         databaseHooks: {
             user: {
                 create: {
@@ -19,7 +20,8 @@ export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
                             return {
                                 data: {
                                     ...user,
-                                    isOrganizer: additionalData?.isOrganizer ?? false,
+                                    isOrganizer:
+                                        additionalData?.isOrganizer ?? false,
                                 },
                             };
                         }
@@ -55,7 +57,9 @@ export async function initAuth(db: MongoClient) {
 
 export function getAuth() {
     if (!auth) {
-        throw new Error('Auth has not been initialized. Call initAuth() first.');
+        throw new Error(
+            'Auth has not been initialized. Call initAuth() first.',
+        );
     }
     return auth;
 }

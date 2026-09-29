@@ -1,6 +1,7 @@
 {
     "name": "evently",
     "private": true,
+    "workspaces": [ "apps/*", "packages/*" ],
     "scripts": {
         "build": "turbo run build",
         "dev": "turbo run dev",
@@ -15,7 +16,7 @@
         "typescript": "5.9.2"
     },
     "engines": { "node": ">=18" },
-    "packageManager": "pnpm@10.32.1",
+    "packageManager": "npm@24.16.0",
     "dependencies": {
         "@better-auth/mongo-adapter": "^1.5.4",
         "mongoose": "^8.23.0"

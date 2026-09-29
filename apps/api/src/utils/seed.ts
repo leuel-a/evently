@@ -10,7 +10,7 @@ import EventCategory from '../models/eventsCategory/index';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const defaultUserId = '6a42dee8464931cd3236ae0d';
+const defaultUserId = '6abb84027306b586ec2f5388';
 const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
 
 const defaultPurchasers = [
@@ -972,9 +972,7 @@ async function seed() {
 
         /* 6️⃣ Build & insert tickets */
         const tickets = buildTickets(insertedEvents);
-        const insertedTickets = (await Ticket.insertMany(tickets, {
-            timestamps: false,
-        })) as unknown as TicketDocument[];
+        const insertedTickets = (await Ticket.insertMany(tickets)) as unknown as TicketDocument[];
         console.log(`\nInserted ${insertedTickets.length} tickets`);
 
         console.log('\n✅ Seeding complete');
