@@ -18,7 +18,6 @@ export function PasswordInput(props: PasswordInputProps) {
 
     return (
         <div
-            tabIndex={0}
             className={cn(
                 'flex shadow-xs items-center border rounded border-input pr-2 ', 
                 'focus-within:border-ring focus-within:ring-indigo-500 focus-within:ring-[3px]',
@@ -35,6 +34,7 @@ export function PasswordInput(props: PasswordInputProps) {
                 {...customProps}
             />
             <Button
+                tabIndex={-1}
                 onClick={handleClick}
                 type="button"
                 variant="ghost"

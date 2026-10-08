@@ -33,12 +33,18 @@ export function LoginForm(props: LoginFormProps) {
         },
     });
 
+    const {
+        formState: {errors},
+    } = form;
+
     const mutation = useMutation({
         mutationFn: emailSigninMutation,
         onSuccess: () => {
             router.push(APP_ROUTES.dashboard.base);
         },
-        // TODO: handle error case for login
+        onError: (error) => {
+            form.setError('root', {message: error?.message});
+        },
     });
 
     const onSubmit = async (values: EmailSigninSchemaType) => {
@@ -93,6 +99,7 @@ export function LoginForm(props: LoginFormProps) {
                         <div className="flex items-center justify-between">
                             <FieldLabel htmlFor="password">Password</FieldLabel>
                             <NextLink
+                                tabIndex={-1}
                                 href="/forgot-password"
                                 className="text-xs font-medium text-indigo-700 hover:text-indigo-800 underline underline-offset-4"
                             >
@@ -125,6 +132,12 @@ export function LoginForm(props: LoginFormProps) {
                             }}
                         />
                     </div>
+
+                    {errors?.root && (
+                        <div className='text-center'>
+                            <FieldError errors={[form.formState?.errors?.root]} />
+                        </div>
+                    )}
 
                     <Button
                         type="submit"
