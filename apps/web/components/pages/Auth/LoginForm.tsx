@@ -60,12 +60,14 @@ export function LoginForm(props: LoginFormProps) {
 
             <CardContent className="space-y-5">
                 <GoogleSignIn isOrganizer={isOrganizer} />
+
                 <div className="relative">
                     <Separator className="bg-indigo-100" />
                     <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-xs text-slate-500">
                         OR
                     </span>
                 </div>
+
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <Controller
                         control={form.control}
