@@ -1,6 +1,7 @@
 {
-  "name": "web",
+  "name": "@evently/web",
   "version": "0.1.0",
+  "description": "Web for the Evently Platform",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--dns-result-order=ipv4first' next dev --turbopack",
@@ -10,6 +11,8 @@
     "prettier": "prettier . --write ",
     "test": ""
   },
+  "author": "github.com/leuel-a",
+  "packageManager": "npm@24.16.0",
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@mapbox/search-js-react": "^1.5.1",

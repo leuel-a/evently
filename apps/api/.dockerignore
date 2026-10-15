@@ -1,2 +1,10 @@
+node_modules/
 tests/
 logs/
+dist/
+
+.editorconfig
+.prettierignore
+.prettierrc
+.env
+nodemon.json
