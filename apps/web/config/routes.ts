@@ -5,6 +5,7 @@ const APP_ROUTES = {
     auth: {login: '/login', signup: '/signup'},
     api: {
         eventsCategory: '/api/eventsCategory',
+        events: '/api/eventsCategory',
     },
     dashboard: {
         base: DASHBOARD_BASE_ROUTE,

@@ -3,7 +3,7 @@ import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
 import {DataTable as TicketsTable, TablePagination} from '@/components/pages/Dashboard/Common';
 import {columns} from './columns';
 import {getTicketsPageData} from './actions';
-import {FilterTicketsTable} from '@/components/pages/Dashboard/Tickets/FilterTicketsTable';
+import {FilterTicketsTable} from '@/components/pages/Dashboard/Tickets';
 
 export interface PageProps {
     searchParams: Promise<{status: string}>;

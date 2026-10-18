@@ -1,0 +1,9 @@
+.editorconfig
+.prettierignore
+.prettierrc
+.rgignore
+.env
+client_secret.json
+
+node_modules/
+

@@ -9,7 +9,7 @@ export async function PUT(request: Request, {params}: {params: Promise<{id: stri
     const requestBody = await request.json();
 
     const response = await makeApiCall<UpdateEventApiResponse>({
-        url: `${API_ROUTES.events.base}/${id}`,
+        url: `${API_ROUTES.dashboard.events.base}/${id}`,
         body: JSON.stringify(requestBody),
         method: 'PUT',
         headers,

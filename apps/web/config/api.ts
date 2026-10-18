@@ -73,7 +73,6 @@ export async function makeApiCall<T>({
             message: errorMessage,
             status: response.status,
             statusText: response.statusText,
-            url: callURL,
             data: errorData,
         });
     }

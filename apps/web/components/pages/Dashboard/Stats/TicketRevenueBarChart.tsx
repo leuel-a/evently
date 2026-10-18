@@ -11,7 +11,7 @@ import {cn} from '@/lib/utils';
 
 interface TicketRevenueBarChartProps {
     year: number;
-    revenueData: GetDashboardPageDataResult['ticketsRevenueByMonth'];
+    revenueData: GetDashboardPageDataResult['tickets']['revenues'];
 }
 
 const chartConfig = {

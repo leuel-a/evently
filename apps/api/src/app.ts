@@ -3,7 +3,7 @@ import './env';
 import {logger} from './utils/logger';
 import { createApp } from './app.factory';
 
-const PORT = process.env.PORT;
+const PORT = process.env.NODE_PORT;
 
 async function startServer() {
     try {

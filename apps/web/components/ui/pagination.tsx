@@ -62,6 +62,7 @@ function PaginationLink({
         className
       )}
       {...props}
+      href={props.href ?? ''}
     />
   )
 }

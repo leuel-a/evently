@@ -6,5 +6,6 @@ dist/
 .editorconfig
 .prettierignore
 .prettierrc
+.rgignore
 .env
 nodemon.json
