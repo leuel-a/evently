@@ -22,8 +22,8 @@ class MongoClient {
 
         await mongoose.connect(this.dbUrl);
         this.connection = mongoose.connection;
-        this.nativeClient = this.connection.getClient() as unknown as NativeMongoClient; // TODO: this type issue must be fixed, mongoose version
-        this.db = this.connection.db! as unknown as Db; // TODO: this type issue must be fixed, mongoose version
+        this.nativeClient = this.connection.getClient();
+        this.db = this.connection.db!;
         logger.info('MongoDB connected successfully');
     }
 
