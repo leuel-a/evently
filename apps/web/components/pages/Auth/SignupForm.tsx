@@ -36,8 +36,12 @@ export function SignupForm(props: SignupFormProps) {
 
     const mutation = useMutation({
         mutationFn: emailSignupMutation,
-        onSuccess: () => {
-            router.push(APP_ROUTES.dashboard.base);
+        onSuccess: (data) => {
+            if (data?.user && data?.user?.isOrganizer) {
+                router.push(APP_ROUTES.dashboard.base);
+            } else {
+                router.push(APP_ROUTES.events.base);
+            }
         },
         onError: (err) => {
             console.log(err?.message);

@@ -1,15 +1,14 @@
 import Link from 'next/link';
-import {Button} from '@/components/ui/button';
-import {GetEventsPageResult} from '@/app/events/actions';
-import {APP_ROUTES} from '@/config/routes';
+import { AuthenticatedUser } from './AuthenticatedUser'
+import { GetEventsPageResult, GetSessionResult } from '@/app/events/actions';
+import { APP_ROUTES } from '@/config/routes';
 
 interface HeaderProps {
     data: GetEventsPageResult['data'] | undefined;
+    session?: GetSessionResult;
 }
 
-const authLink = (path: string) => `${path}?organizer=false`;
-
-export function Header({data}: HeaderProps) {
+export function Header({ data, session }: HeaderProps) {
     const total = data?.length ?? 0;
     const free = data?.filter((e) => e.isFree).length ?? 0;
     const virtual = data?.filter((e) => e.isVirtual).length ?? 0;
@@ -31,15 +30,7 @@ export function Header({data}: HeaderProps) {
                                 Events
                             </Link>
                         </nav>
-
-                        <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="sm" className="text-sm text-slate-600 hover:text-slate-900" asChild>
-                                <Link href={authLink(APP_ROUTES.auth.login)}>Sign in</Link>
-                            </Button>
-                            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-md" asChild>
-                                <Link href={authLink(APP_ROUTES.auth.signup)}>Sign up</Link>
-                            </Button>
-                        </div>
+                        <AuthenticatedUser data={session} />
                     </div>
                 </div>
             </div>
@@ -62,7 +53,7 @@ export function Header({data}: HeaderProps) {
     );
 }
 
-function Stat({value, label, valueClass = 'text-slate-900'}: {
+function Stat({ value, label, valueClass = 'text-slate-900' }: {
     value: number;
     label: string;
     valueClass?: string;

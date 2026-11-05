@@ -39,8 +39,12 @@ export function LoginForm(props: LoginFormProps) {
 
     const mutation = useMutation({
         mutationFn: emailSigninMutation,
-        onSuccess: () => {
-            router.push(APP_ROUTES.dashboard.base);
+        onSuccess: (data) => {
+            if (data?.user && data?.user?.isOrganizer) {
+                router.push(APP_ROUTES.dashboard.base);
+            } else {
+                router.push(APP_ROUTES.events.base);
+            }
         },
         onError: (error) => {
             form.setError('root', {message: error?.message});

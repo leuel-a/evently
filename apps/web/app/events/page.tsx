@@ -1,9 +1,9 @@
-import {Header} from '@/components/pages/Public/Common';
-import {EventCard} from '@/components/pages/Public/Events/EventCard';
-import {getEvents} from './actions';
-import {NoEvents} from '@/components/pages/Public/Events';
-import {FailedToLoadEvents} from '@/components/pages/Public/Events';
-import {FilterEvents} from '@/components/pages/Public/Events';
+import { Header } from '@/components/pages/Public/Common';
+import { EventCard } from '@/components/pages/Public/Events/EventCard';
+import { getEvents, getSession } from './actions';
+import { NoEvents } from '@/components/pages/Public/Events';
+import { FailedToLoadEvents } from '@/components/pages/Public/Events';
+import { FilterEvents } from '@/components/pages/Public/Events';
 
 interface PageProps {
     searchParams: Promise<Record<string, string>>;
@@ -11,11 +11,12 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
-    const {success, data, error} = await getEvents(searchParams);
+    const { data: sessionData } = await getSession();
+    const { success, data, error } = await getEvents(searchParams);
 
     return (
         <main className="min-h-screen bg-[#f8f8fc]">
-            <Header data={data?.data} />
+            <Header data={data?.data} session={sessionData} />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
                 <FilterEvents categories={[]} />
                 {!success && <FailedToLoadEvents error={error} />}
@@ -23,7 +24,7 @@ export default async function Page(props: PageProps) {
                 {success && data?.data && data?.data?.length > 0 && (
                     <div className="flex flex-col gap-4">
                         {data.data.map((event) => (
-                            <EventCard key={event.id}  event={event} />
+                            <EventCard key={event.id} event={event} />
                         ))}
                     </div>
                 )}

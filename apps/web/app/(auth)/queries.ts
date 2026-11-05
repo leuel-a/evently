@@ -1,11 +1,11 @@
 import type {MutationFunction} from '@tanstack/react-query';
 import {EmailSignupSchemaType, EmailSigninSchemaType} from '@/lib/db/schema';
 import {authClient} from '@/lib/auth';
-import {EmailSignupResponse} from '@/types/auth';
+import {UserSigninResponse} from '@/types/auth';
 import {ApiError} from '@/lib/error';
 
 export const emailSignupMutation: MutationFunction<
-    EmailSignupResponse,
+    UserSigninResponse,
     EmailSignupSchemaType
 > = async (input) => {
     const {email, password, fullName} = input;
@@ -16,10 +16,10 @@ export const emailSignupMutation: MutationFunction<
         throw new Error(error?.message ?? 'Signup Failed');
     }
 
-    return data as EmailSignupResponse;
+    return data as UserSigninResponse;
 };
 
-export const emailSigninMutation: MutationFunction<unknown, EmailSigninSchemaType> = async (
+export const emailSigninMutation: MutationFunction<UserSigninResponse, EmailSigninSchemaType> = async (
     input,
 ) => {
     const {email, password} = input;
@@ -32,5 +32,6 @@ export const emailSigninMutation: MutationFunction<unknown, EmailSigninSchemaTyp
             statusText: error?.statusText,
         });
     }
-    return data;
+
+    return data as UserSigninResponse;
 };

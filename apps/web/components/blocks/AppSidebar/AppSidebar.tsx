@@ -15,7 +15,7 @@ import {AppSidebarMenu} from './AppSidebarMenu';
 import {AppSidebarGroupMenu} from './AppSidebarGroupMenu';
 import {Resource} from './types';
 import {authClient, useSession} from '@/lib/auth';
-import {UserAvatarMenu} from '../Common/UserAvatar';
+import {UserAvatarMenu} from '../Common/UserAvatarMenu';
 
 const groups = Object.freeze({
     independent: 'independent',
