@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames, collectionNames} from '../../config';
+import {modelNames, collectionNames} from '../../config/routes';
 import { GetLinkedAccountsResult } from './statics';
 
 export interface IAccount {

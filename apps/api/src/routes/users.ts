@@ -1,5 +1,5 @@
 import express from 'express';
-import {API_ROUTES} from '../config';
+import {API_ROUTES} from '../config/routes';
 import {getAuthenticatedUser, getLinkedAccountsHandler} from '../handlers/users';
 import {requireUser} from '../middlewares/requireUser';
 

@@ -9,6 +9,12 @@ export const API_ROUTES = Object.freeze({
     },
     public: {
         events: {base: '/events'},
+        payments: {
+            base: '/payments',
+            chapa: {
+                initialize: '/payments/chapa/initialize',
+            }
+        },
     },
     dashboard: {
         stats: {base: '/dashboard/stats'},

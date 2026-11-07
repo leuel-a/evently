@@ -12,7 +12,6 @@ interface CheckoutPageProps {
 export function CheckoutPage(props: CheckoutPageProps) {
     const {event} = props;
     const [quantity, setQuantity] = useState(1);
-    const [discountAmount, setDiscountAmount] = useState(0);
 
     return (
         <div className="min-h-screen bg-indigo-50 flex items-center">
@@ -20,14 +19,12 @@ export function CheckoutPage(props: CheckoutPageProps) {
                 <EventSummaryPanel
                     event={event}
                     quantity={quantity}
-                    discountAmount={discountAmount}
                 />
 
                 <CheckoutForm
                     event={event}
                     quantity={quantity}
                     onQuantityChange={setQuantity}
-                    onDiscountChange={setDiscountAmount}
                 />
             </div>
         </div>

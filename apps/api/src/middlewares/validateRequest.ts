@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
-import {type RequestHandler} from 'express';
-import {validationResult} from 'express-validator';
-import {ERROR_LOG_TYPES} from '../utils/constants';
+import { type RequestHandler } from 'express';
+import { validationResult } from 'express-validator';
+import { ApiErrorCode, ERROR_LOG_TYPES } from '../utils/constants';
 import winstonLogger from '../config/winston';
 
 /** Middleware to run validation and handle errors before controllers. */
@@ -25,7 +25,8 @@ export const validateRequest: RequestHandler = async (req, res, next) => {
     });
 
     return res.status(httpStatus.BAD_REQUEST).json({
-        success: false,
+        code: ApiErrorCode.VALIDATION_FAILED,
+        succes: false,
         errors: result.array(),
     });
 };

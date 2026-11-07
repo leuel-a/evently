@@ -33,5 +33,6 @@ export default async function Page(props: PageProps) {
         }
         return <CheckoutPage event={data?.data} />;
     }
+    // TODO: this should not happend, or should it??
     return <></>
 }

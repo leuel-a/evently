@@ -29,6 +29,7 @@ export async function getEvents(
         });
         return { success: true, data: response };
     } catch (error) {
+        console.log(error);
         return { success: false };
     }
 }

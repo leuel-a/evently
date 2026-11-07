@@ -1,12 +1,12 @@
 import cors from 'cors';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 import express from 'express';
 import morgan from 'morgan';
-import {toNodeHandler} from 'better-auth/node';
-import {getAuth, initAuth} from './lib/auth';
-import {logger} from './utils/logger';
+import { toNodeHandler } from 'better-auth/node';
+import { getAuth, initAuth } from './lib/auth';
+import { logger } from './utils/logger';
 import MongoClient from './lib/mongo-client';
-import {API_ROUTES, API_PREFIX} from './config';
+import { API_ROUTES, API_PREFIX } from './config/routes';
 import eventsRoutes from './routes/dashboard/events';
 import usersRoutes from './routes/users';
 import ticketsRoutes from './routes/dashboard/tickets';
@@ -14,7 +14,8 @@ import settingsRoutes from './routes/dashboard/settings';
 import statsRoutes from './routes/dashboard/stats';
 import eventsCategoryRoutes from './routes/dashboard/eventsCategory';
 import publicEventsRoutes from './routes/events';
-import {errorHandler} from './middlewares/errorHandler';
+import publicPayemntRoutes from './routes/payments';
+import { errorHandler } from './middlewares/errorHandler';
 
 export const MORGAN_FORMAT = ':timestamp [http] :method :url :status - :response-time ms';
 export const db = new MongoClient();
@@ -61,6 +62,7 @@ export async function setup(app: express.Express) {
         app.use(`${API_PREFIX}${API_ROUTES.dashboard.eventsCategory.base}`, eventsCategoryRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.dashboard.settings.base}`, settingsRoutes);
         app.use(`${API_PREFIX}${API_ROUTES.dashboard.stats.base}`, statsRoutes);
+        app.use(`${API_PREFIX}${API_ROUTES.public.payments.base}`, publicPayemntRoutes);
 
         // Mount the error handler
         app.use(errorHandler);

@@ -10,7 +10,7 @@ import {
     GetSettingsForDashboardResult,
     UpdateEventCategoryResult,
 } from './statics';
-import {modelNames} from '../../config';
+import {modelNames} from '../../config/routes';
 
 export interface IEventCategory {
     name: string;

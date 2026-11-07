@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../../config';
+import {modelNames} from '../../config/routes';
 import {
     GetTicketsParams,
     GetTicketsResult,

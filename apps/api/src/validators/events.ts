@@ -47,7 +47,7 @@ const fields = {
     ticketPrice: {
         name: 'ticketPrice',
         isNumeric: {
-            message: 'Tickeet price must be a number',
+            message: 'Ticket price must be a number',
         },
     },
     capacity: {

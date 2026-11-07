@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import EventModel from '.';
 import {getPaginationValues} from '../helpers/index';
 import {filtersQuery} from '../../utils/filters';
-import {modelNames} from '../../config';
+import {modelNames} from '../../config/routes';
 import {EVENT_TYPE, IEvent} from './schema';
 
 export type GetEventParams = {id: string};

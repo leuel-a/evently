@@ -1,6 +1,6 @@
-import {ApiError} from '@/lib/error';
+import { ApiError } from '@/lib/error';
 
-const API_BASE_URL = process.env.API_URL;
+const API_BASE_URL = process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export type MakeApiCallConfig = RequestInit & {
     url: string;
@@ -9,14 +9,16 @@ export type MakeApiCallConfig = RequestInit & {
 };
 
 function resolveURL(url: string, internal: boolean): string {
-    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+    }
+
     const base = internal ? '' : API_BASE_URL;
     return `${base}${url}`;
 }
 
 export async function makeApiCall<T>({
     url,
-    isSecure = false,
     internal = false,
     headers,
     ...init

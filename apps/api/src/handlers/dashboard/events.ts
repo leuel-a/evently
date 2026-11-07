@@ -4,10 +4,8 @@ import {matchedData} from 'express-validator';
 import EventsModel from '../../models/events';
 import type {IEvent} from '../../models/events/schema';
 import {errors} from '../../errors/utils';
+import { ApiErrorCode } from '../../utils/constants';
 
-// INFO: organize the messages better in another file
-const EVENT_NOT_FOUND_MESSAGE = 'Event not found';
-const EVENT_USER_NOT_AUTHORIZED_MESSAGE = 'Forbidden';
 
 export const createEventHandler: RequestHandler = async (req, res, next) => {
     try {
@@ -32,12 +30,12 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
 
         const result = await EventsModel.getEvent({id});
         if (!result?.data || Object.keys(result?.data).length === 0) {
-            throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
+            throw errors.notFound(ApiErrorCode.EVENT_NOT_FOUND);
         }
 
         const resultData = result?.data;
         if (String(resultData?.user) !== user?.id) {
-            throw errors.forbidden(EVENT_USER_NOT_AUTHORIZED_MESSAGE);
+            throw errors.forbidden(ApiErrorCode.EVENT_USER_NOT_AUTHORIZED);
         }
 
         res.status(httpStatus.OK).json(result);
@@ -97,7 +95,7 @@ export const deleteEventHandler: RequestHandler = async (req, res, next) => {
         const result = await EventsModel.deleteEvent(id);
 
         if (!result) {
-            throw errors.notFound(EVENT_NOT_FOUND_MESSAGE);
+            throw errors.notFound(ApiErrorCode.EVENT_NOT_FOUND);
         }
 
         res.status(httpStatus.OK).json(result);

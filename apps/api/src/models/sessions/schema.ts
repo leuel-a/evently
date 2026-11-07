@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../../config.js';
+import {modelNames} from '../../config/routes.js';
 
 export interface ISession {
     expiresAt: Date;

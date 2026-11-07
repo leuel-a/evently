@@ -1,19 +1,19 @@
-import {Calendar, Clock, MapPin, Globe, Ticket, Tag} from 'lucide-react';
-import {Badge} from '@/components/ui/badge';
-import {Separator} from '@/components/ui/separator';
-import {GetEventPageResult} from '@/app/events/actions';
-import {formatDate} from '@/utils/date';
+import { Calendar, Clock, MapPin, Globe, Ticket, Tag } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { GetEventPageResult } from '@/app/events/actions';
+import { formatDate } from '@/utils/date';
 
 interface EventSummaryPanelProps {
-    event: GetEventPageResult['data'];
+    event: GetEventPageResult["data"];
     quantity: number;
-    discountAmount: number;
 }
 
-export function EventSummaryPanel({event, quantity, discountAmount}: EventSummaryPanelProps) {
+export function EventSummaryPanel(props: EventSummaryPanelProps) {
+    const { event, quantity } = props;
+
     const unitPrice = Number(event.ticketPrice ?? 0);
-    const subtotal = unitPrice * quantity;
-    const total = Math.max(0, subtotal - discountAmount);
+    const total = unitPrice * quantity;
     const isFree = unitPrice === 0;
 
     return (
@@ -24,19 +24,19 @@ export function EventSummaryPanel({event, quantity, discountAmount}: EventSummar
                         <Ticket className="size-3" />
                         Evently
                     </span>
-                    {event.category?.name && (
+                    {event?.category?.name && (
                         <Badge
                             variant="outline"
                             className="border-indigo-400/20 bg-indigo-400/10 text-indigo-300"
                         >
-                            {event.category.name}
+                            {event?.category?.name}
                         </Badge>
                     )}
                 </div>
 
                 <div>
                     <p className="text-xs font-medium uppercase tracking-[0.18em] text-indigo-400">
-                        You're buying a ticket to
+                        You&apos;re buying a ticket to
                     </p>
                     <h1 className="mt-3 font-serif text-3xl leading-snug tracking-tight text-white lg:text-4xl">
                         {String(event.title)}
@@ -94,33 +94,22 @@ export function EventSummaryPanel({event, quantity, discountAmount}: EventSummar
                 </p>
                 <div className="space-y-2.5 text-sm">
                     <SummaryRow
-                        label={`${
-                            isFree
-                                ? 'Free ticket'
-                                : `${unitPrice.toLocaleString('en-US', {
-                                      style: 'currency',
-                                      currency: 'USD',
-                                  })} × ${quantity}`
-                        }`}
+                        label={`${isFree
+                            ? 'Free ticket'
+                            : `${unitPrice.toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                            })} × ${quantity}`
+                            }`}
                         value={
                             isFree
                                 ? 'Free'
-                                : subtotal.toLocaleString('en-US', {
-                                      style: 'currency',
-                                      currency: 'USD',
-                                  })
+                                : total.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                })
                         }
                     />
-                    {discountAmount > 0 && (
-                        <SummaryRow
-                            label="Promo discount"
-                            value={`−${discountAmount.toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                            })}`}
-                            valueClassName="text-emerald-400"
-                        />
-                    )}
                 </div>
                 <Separator className="my-4 bg-indigo-400/20" />
                 <div className="flex items-baseline justify-between">
@@ -128,7 +117,7 @@ export function EventSummaryPanel({event, quantity, discountAmount}: EventSummar
                     <span className="font-serif text-2xl text-white">
                         {isFree
                             ? 'Free'
-                            : total.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+                            : total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
                     </span>
                 </div>
             </div>
@@ -142,7 +131,7 @@ const EVENT_TYPE_LABELS: Record<string, string> = {
     hybrid: 'Hybrid',
 };
 
-function MetaRow({icon: Icon, children}: {icon: React.ElementType; children: React.ReactNode}) {
+function MetaRow({ icon: Icon, children }: { icon: React.ElementType; children: React.ReactNode }) {
     return (
         <div className="flex items-start gap-3 text-sm text-indigo-200/80">
             <Icon className="mt-px size-4 shrink-0 text-indigo-400" strokeWidth={1.5} />
