@@ -4,7 +4,8 @@
   "description": "Shared Models for the Evently Platform",
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
   },
   "exports": {
     "./events": {

@@ -3,6 +3,7 @@ import eventsSchema from './schema'
 import {
     type IEvent,
     type IEventModel,
+    type EventDocument,
     EVENT_STATUS,
     EVENT_TYPE
 } from './schema';
@@ -16,5 +17,5 @@ Object.assign(eventsSchema.methods, methods);
 const EventsModel = mongoose.model<IEvent, IEventModel>(modelNames.events, eventsSchema);
 
 export { EVENT_STATUS, EVENT_TYPE };
-export type { IEvent, IEventModel };
+export type { IEvent, IEventModel, EventDocument };
 export default EventsModel;

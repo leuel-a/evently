@@ -32,6 +32,8 @@ FROM base AS runner
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 --ingroup nodejs api
 
+COPY --from=builder --chown=api:nodejs /app/packages/models/package.json ./packages/models/package.json
+COPY --from=builder --chown=api:nodejs /app/packages/models/dist ./packages/models/dist
 COPY --from=builder --chown=api:nodejs /app/apps/api/dist ./api
 COPY --from=builder --chown=api:nodejs /app/node_modules ./node_modules
 

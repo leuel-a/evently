@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node ./dist/app.js",
     "test": "vitest run",
-    "seed": "ts-node ./src/utils/seed.ts"
+    "seed": "ts-node ./src/utils/seed.ts",
+    "type-check": "tsc --noEmit"
   },
   "author": "github.com/leuel-a",
   "packageManager": "npm@24.16.0",
