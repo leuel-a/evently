@@ -1,4 +1,4 @@
-import type {PipelineStage} from 'mongoose';
+import type { PipelineStage } from 'mongoose';
 
 export function filtersQuery(filters: any): PipelineStage.Match['$match'] {
     try {
@@ -9,7 +9,7 @@ export function filtersQuery(filters: any): PipelineStage.Match['$match'] {
         // INFO: this should be documented
         if (filters.price) {
             const [min, max] = filters.price;
-            const priceQuery: {$gte?: number; $lte?: number} = {};
+            const priceQuery: { $gte?: number; $lte?: number } = {};
 
             if (!Number.isNaN(parseInt(min))) priceQuery.$gte = parseInt(min);
             if (!Number.isNaN(parseInt(max))) priceQuery.$lte = parseInt(max);
@@ -20,15 +20,15 @@ export function filtersQuery(filters: any): PipelineStage.Match['$match'] {
         }
 
         if (filters?.status && Array.isArray(filters?.status)) {
-            query.status = {$in: [...filters.status]};
+            query.status = { $in: [...filters.status] };
         }
 
         if (filters?.categories && Array.isArray(filters?.categories)) {
-            query.category = {$in: [...filters.categories]};
+            query.category = { $in: [...filters.categories] };
         }
 
         if (filters?.type && Array.isArray(filters?.type)) {
-            query.type = {$in: [...filters?.type]};
+            query.type = { $in: [...filters?.type] };
         }
         return query;
     } catch {

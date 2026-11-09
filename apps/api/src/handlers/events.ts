@@ -1,7 +1,7 @@
 import express from 'express';
 import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
-import EventsModel from '../models/events';
+import EventsModel from '@evently/models/events';
 
 export const getEventsHandler: express.RequestHandler = async (
     req,

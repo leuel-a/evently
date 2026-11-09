@@ -8,10 +8,26 @@
   },
   "exports": {
     "./events": {
-      "types": "./src/events/index.ts",
+      "types": "./dist/events/index.d.ts",
       "default": "./dist/events/index.js"
+    },
+    "./eventsCategory": {
+      "types": "./dist/eventsCategory/index.d.ts",
+      "default": "./dist/eventsCategory/index.js"
+    },
+    "./accounts": {
+      "types": "./dist/accounts/index.d.ts",
+      "default": "./dist/accounts/index.js"
+    },
+    "./tickets": {
+      "types": "./dist/tickets/index.d.ts",
+      "default": "./dist/tickets/index.js"
+    },
+    "./resources": {
+      "types": "./dist/resources/index.d.ts",
+      "default": "./dist/resources/index.js"
     }
-  },
+ },
   "author": "github.com/leuel-a",
   "packageManager": "npm@24.16.0",
   "dependencies": {

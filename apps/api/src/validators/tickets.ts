@@ -1,5 +1,5 @@
 import {query} from 'express-validator';
-import {TICKET_STATUS} from '../models/tickets/schema';
+import {TICKET_STATUS} from '@evently/models/tickets';
 
 export const getTicketsValidator = [
     query('limit').isNumeric().optional(),

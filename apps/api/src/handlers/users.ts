@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import type {RequestHandler} from 'express';
-import AccountsModel from '../models/accounts';
+import AccountsModel from '@evently/models/accounts';
 
 export const getLinkedAccountsHandler: RequestHandler = async (_req, res, next) => {
     try {

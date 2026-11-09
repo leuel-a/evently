@@ -1,5 +1,5 @@
 import {body, query, param} from 'express-validator';
-import {EVENT_STATUS, EVENT_TYPE} from '../models/events/schema';
+import {EVENT_STATUS, EVENT_TYPE} from '@evently/models/events';
 import {optionalize} from './utils';
 
 const INVALID_EVENT_ID = 'Event ID is not a valid Mongo ID';

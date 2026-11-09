@@ -12,4 +12,5 @@ const EventsCategoryModel = mongoose.model<IEventCategory, IEventCategoryModel>(
     eventsCategorySchema,
 );
 
+export type {IEventCategory, IEventCategoryModel};
 export default EventsCategoryModel;

@@ -1,23 +1,22 @@
-import type {RequestHandler} from 'express';
+import type { RequestHandler } from 'express';
 import httpStatus from 'http-status';
-import {matchedData} from 'express-validator';
-import EventsModel from '../../models/events';
-import type {IEvent} from '../../models/events/schema';
-import {errors} from '../../errors/utils';
+import { matchedData } from 'express-validator';
+import EventsModel, { type IEvent } from '@evently/models/events';
+import { errors } from '../../errors/utils';
 import { ApiErrorCode } from '../../utils/constants';
 
 
 export const createEventHandler: RequestHandler = async (req, res, next) => {
     try {
         const currentUser = res.locals.user;
-        const body = matchedData(req, {locations: ['body']}) as IEvent;
+        const body = matchedData(req, { locations: ['body'] }) as IEvent;
 
-        const payload = {...body, user: currentUser?.id};
+        const payload = { ...body, user: currentUser?.id };
         const result = await EventsModel.createEvent(payload);
-        const {_id, ...rest} = result.toObject();
+        const { _id, ...rest } = result.toObject();
 
-        const resultData = {id: _id.toString(), ...rest};
-        res.status(httpStatus.CREATED).json({data: resultData});
+        const resultData = { id: _id.toString(), ...rest };
+        res.status(httpStatus.CREATED).json({ data: resultData });
     } catch (error) {
         next(error);
     }
@@ -26,9 +25,9 @@ export const createEventHandler: RequestHandler = async (req, res, next) => {
 export const getEventHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {id} = matchedData(req, {locations: ['params']});
+        const { id } = matchedData(req, { locations: ['params'] });
 
-        const result = await EventsModel.getEvent({id});
+        const result = await EventsModel.getEvent({ id });
         if (!result?.data || Object.keys(result?.data).length === 0) {
             throw errors.notFound(ApiErrorCode.EVENT_NOT_FOUND);
         }
@@ -48,7 +47,7 @@ export const getEventHandler: RequestHandler = async (req, res, next) => {
 export const getEventsHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {page, limit, filters, q} = matchedData(req, {locations: ['query']});
+        const { page, limit, filters, q } = matchedData(req, { locations: ['query'] });
 
         const results = await EventsModel.getEvents({
             page,
@@ -79,8 +78,8 @@ export const getEventsHandler: RequestHandler = async (req, res, next) => {
 
 export const updateEventHandler: RequestHandler = async (req, res, next) => {
     try {
-        const body = matchedData(req, {locations: ['body']});
-        const {id} = matchedData(req, {locations: ['params']});
+        const body = matchedData(req, { locations: ['body'] });
+        const { id } = matchedData(req, { locations: ['params'] });
 
         const result = await EventsModel.updateEvent(id, body);
         res.status(httpStatus.OK).json(result);
@@ -91,7 +90,7 @@ export const updateEventHandler: RequestHandler = async (req, res, next) => {
 
 export const deleteEventHandler: RequestHandler = async (req, res, next) => {
     try {
-        const {id} = matchedData(req, {locations: ['params']});
+        const { id } = matchedData(req, { locations: ['params'] });
         const result = await EventsModel.deleteEvent(id);
 
         if (!result) {
