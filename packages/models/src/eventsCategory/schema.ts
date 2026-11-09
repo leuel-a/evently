@@ -16,7 +16,7 @@ export interface IEventCategory {
     name: string;
     description: string;
     isDeleted: boolean;
-    user: mongoose.Schema.Types.ObjectId;
+    user: mongoose.Types.ObjectId;
 }
 
 export type EventCategoryDocument = IEventCategory &

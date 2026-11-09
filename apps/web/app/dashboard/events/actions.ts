@@ -1,13 +1,13 @@
 'use server';
 
-import {revalidatePath} from 'next/cache';
-import {headers as nextHeaders} from 'next/headers';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES, APP_ROUTES} from '@/config/routes';
-import {ApiError} from '@/lib/error';
-import type {IActionResult, IApiResponse} from '@/types/utils';
-import type {GetEventsApiResponse, IEvent} from '@/types/events';
-import type {SettingsApiResponse} from '@/types/settings';
+import { revalidatePath } from 'next/cache';
+import { headers as nextHeaders } from 'next/headers';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES, APP_ROUTES } from '@/config/routes';
+import { ApiError } from '@/lib/error';
+import type { IActionResult } from '@/types/utils';
+import type { GetEventApiResponse, GetEventsApiResponse } from '@/types/events';
+import type { SettingsApiResponse } from '@/types/settings';
 
 export type GetEventsPageResultData = {
     events: GetEventsApiResponse;
@@ -26,13 +26,13 @@ export async function getEventsPageData(
                 url: `${API_ROUTES.dashboard.events.base}?${searchParams.toString()}`,
                 headers,
             }),
-            makeApiCall<SettingsApiResponse>({url: API_ROUTES.dashboard.settings.base, headers}),
+            makeApiCall<SettingsApiResponse>({ url: API_ROUTES.dashboard.settings.base, headers }),
         ]);
 
-        return {success: true, data: {events, settings}};
+        return { success: true, data: { events, settings } };
     } catch (err) {
         const error = err as ApiError;
-        return {success: false, error: error};
+        return { success: false, error: error };
     }
 }
 
@@ -40,18 +40,18 @@ export async function revalidateDashboardEventsPage() {
     revalidatePath(APP_ROUTES.dashboard.events.base);
 }
 
-export type GetEditEventsPageData = IApiResponse<IEvent>;
-export async function getEditEventsPageData(
+export type GetEditEventPageData = GetEventApiResponse;
+export async function getEditEventPageData(
     id: string,
-): Promise<IActionResult<GetEditEventsPageData>> {
+): Promise<IActionResult<GetEditEventPageData>> {
     try {
         const headers = await nextHeaders();
         const response = await makeApiCall({
             url: `${API_ROUTES.dashboard.events.base}/${id}`,
             headers,
         });
-        return {success: true, data: response as GetEditEventsPageData};
+        return { success: true, data: response as GetEditEventPageData };
     } catch (error) {
-        return {success: false};
+        return { success: false };
     }
 }

@@ -8,8 +8,8 @@ export interface IUser {
     isOrganizer: boolean;
     organizationName: string;
     image: string;
-    sessions: mongoose.Schema.Types.ObjectId[];
-    accounts: mongoose.Schema.Types.ObjectId[];
+    sessions: mongoose.Types.ObjectId[];
+    accounts: mongoose.Types.ObjectId[];
 }
 
 export type UserDocument = IUser &

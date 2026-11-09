@@ -1,6 +1,7 @@
 'use client';
 
-import {usePathname, useSearchParams} from 'next/navigation';
+import React from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
     Pagination,
     PaginationContent,
@@ -9,17 +10,12 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
-import {Fragment} from 'react/jsx-runtime';
+import type { IPageResultData } from '@/types/utils';
 
-interface TablePaginationProps {
-    page: number;
-    limit: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-}
+type TablePaginationProps = Omit<IPageResultData, 'total'>
 
 export function TablePagination(props: TablePaginationProps) {
-    const {page, hasNextPage, hasPreviousPage} = props;
+    const { page, hasNextPage, hasPreviousPage } = props;
 
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -48,7 +44,7 @@ export function TablePagination(props: TablePaginationProps) {
         <Pagination className="pt-10">
             <PaginationContent>
                 {hasPreviousPage && (
-                    <Fragment>
+                    <React.Fragment>
                         <PaginationItem>
                             <PaginationPrevious
                                 href={
@@ -65,7 +61,7 @@ export function TablePagination(props: TablePaginationProps) {
                                 {previousPage}
                             </PaginationLink>
                         </PaginationItem>
-                    </Fragment>
+                    </React.Fragment>
                 )}
 
                 <PaginationItem>
@@ -75,7 +71,7 @@ export function TablePagination(props: TablePaginationProps) {
                 </PaginationItem>
 
                 {hasNextPage && (
-                    <Fragment>
+                    <React.Fragment>
                         <PaginationItem>
                             <PaginationLink href={createPageHref(nextPage)}>
                                 {nextPage}
@@ -92,7 +88,7 @@ export function TablePagination(props: TablePaginationProps) {
                                 className={!hasNextPage ? 'pointer-events-none opacity-50' : ''}
                             />
                         </PaginationItem>
-                    </Fragment>
+                    </React.Fragment>
                 )}
             </PaginationContent>
         </Pagination>

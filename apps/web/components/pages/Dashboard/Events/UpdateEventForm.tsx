@@ -7,7 +7,7 @@ import {toast} from 'sonner';
 import {EventForm} from '../Form/Event/EventForm';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {EventSchemaType, eventsSchema} from '@/lib/db/schema';
-import {GetEditEventsPageData} from '@/app/dashboard/events/actions';
+import {GetEditEventPageData} from '@/app/dashboard/events/actions';
 import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {updateEventMutation} from '@/app/dashboard/events/edit/[id]/queries';
 import {APP_ROUTES} from '@/config/routes';
@@ -17,7 +17,7 @@ const EVENT_UPDATED_ERROR_TITLE = 'Unable to update event';
 const EVENT_UPDATED_ERROR_DESCRIPTION = ''; // TODO: this is a dynamic error
 
 export interface UpdateEventFormProps {
-    defaultValues: GetEditEventsPageData['data'];
+    defaultValues: GetEditEventPageData['data'];
 }
 
 export const UPDATE_EVENT_FORM_SUBMIT_BUTTON_LABEL = 'Edit';
@@ -68,7 +68,7 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
     );
 }
 
-function getDefaultValues(data: GetEditEventsPageData['data']): EventSchemaType {
+function getDefaultValues(data: GetEditEventPageData['data']): EventSchemaType {
     const {
         title,
         description,

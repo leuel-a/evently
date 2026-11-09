@@ -1,16 +1,16 @@
-import {useRouter} from 'next/navigation';
-import {SquarePen} from 'lucide-react';
-import type {Row} from '@tanstack/react-table';
-import {Button} from '@/components/ui/button';
-import {APP_ROUTES} from '@/config/routes';
-import {IEvent} from '@/types/events';
+import { useRouter } from 'next/navigation';
+import { SquarePen } from 'lucide-react';
+import type { Row } from '@tanstack/react-table';
+import { Button } from '@/components/ui/button';
+import { APP_ROUTES } from '@/config/routes';
+import { IEventApiResponse } from '@/types/events';
 
 interface EditEventActionProps {
-    row: Row<IEvent>;
+    row: Row<IEventApiResponse>;
 }
 
 export function EditEventAction(props: EditEventActionProps) {
-    const {row} = props;
+    const { row } = props;
 
     const router = useRouter();
     const handleClick = () => {

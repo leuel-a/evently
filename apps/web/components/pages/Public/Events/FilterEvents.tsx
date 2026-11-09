@@ -3,7 +3,7 @@
 import {useRouter, useSearchParams} from 'next/navigation';
 import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
 import {SearchEvents} from '../../Common/SearchEvents';
-import {IEventsCategory} from '@/types/eventsCategory';
+import {IEventCategoryApiResponse} from '@/types/eventsCategory';
 import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
 import {EventTypeSelector} from '../../Dashboard/Events';
 import {removePropertyFromFilter, setValueToFilterParams} from '@/utils/filters';
@@ -11,7 +11,7 @@ import {APP_ROUTES} from '@/config/routes';
 import {revalidateEventsPage} from '@/app/events/actions';
 
 interface EventsFilterTableProps {
-    categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
+    categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;
 }
 
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';

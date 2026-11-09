@@ -14,7 +14,8 @@ import { modelNames } from '../config';
 Object.assign(eventsSchema.statics, statics);
 Object.assign(eventsSchema.methods, methods);
 
-const EventsModel = mongoose.model<IEvent, IEventModel>(modelNames.events, eventsSchema);
+const EventsModel = (mongoose.models[modelNames.events] as IEventModel | undefined)
+    ?? mongoose.model<IEvent, IEventModel>(modelNames.events, eventsSchema);
 
 export { EVENT_STATUS, EVENT_TYPE };
 export type { IEvent, IEventModel, EventDocument };

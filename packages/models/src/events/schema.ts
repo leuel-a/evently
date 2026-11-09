@@ -25,23 +25,23 @@ export const EVENT_TYPE = Object.freeze({
 });
 
 export interface IEvent {
-    title: String;
-    description: String;
+    title: string;
+    description: string;
     date: Date;
-    location: String;
-    ticketPrice: Number;
-    capacity: Number;
-    checkoutLink: String;
-    status: String;
-    country: String;
-    type: String;
-    category: mongoose.Schema.Types.ObjectId;
-    user: mongoose.Schema.Types.ObjectId;
+    location: string;
+    ticketPrice: number;
+    capacity: number;
+    checkoutLink: string;
+    status: string;
+    country: string;
+    type: string;
+    category: mongoose.Types.ObjectId;
+    user: mongoose.Types.ObjectId;
     isDeleted: Boolean;
-    virtualUrl: String;
-    address: String;
-    startTime: String;
-    endTime: String;
+    virtualUrl: string;
+    address: string;
+    startTime: string;
+    endTime: string;
 }
 
 export type EventDocument = IEvent &

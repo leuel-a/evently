@@ -1,12 +1,10 @@
-import type { IApiResponse } from './utils';
 import type { IEventCategory } from '@evently/models/eventsCategory';
+import type { IApiResponse, IBaseModel, IPageResultData } from './utils';
 
-export type CreateEventsCategoryApiResponse = IApiResponse<Omit<IEventCategory, 'isDeleted'>>;
+export type IEventCategoryApiResponse = IBaseModel & IEventCategory & { id: string };
 
-export type GetEventsCategoryApiResponse = IApiResponse<IEventCategory[]> & {
-    page: number;
-    total: number;
-    limit: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-};
+export type GetEventCategoryApiResponse = IApiResponse<IEventCategoryApiResponse>;
+
+export type CreateEventsCategoryApiResponse = IApiResponse<Omit<IEventCategoryApiResponse, 'isDeleted'>>;
+
+export type GetEventsCategoryApiResponse = IApiResponse<IEventCategoryApiResponse[]> & IPageResultData;

@@ -14,13 +14,13 @@ export const TICKET_STATUS = Object.freeze({
 });
 
 export interface ITicket {
-    event: mongoose.Schema.Types.ObjectId;
-    purchaserName: String;
-    purchaserEmail: String;
-    paymentId: String;
-    amountPaid: Number;
-    currency: String;
-    status: String;
+    event: mongoose.Types.ObjectId;
+    purchaserName: string;
+    purchaserEmail: string;
+    paymentId: string;
+    amountPaid: number;
+    currency: string;
+    status: string;
 }
 
 export type TicketDocument = ITicket &

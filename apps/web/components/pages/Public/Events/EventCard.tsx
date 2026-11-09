@@ -66,7 +66,6 @@ export function EventCard({event}: EventCardProps) {
         ticketPrice,
         capacity,
         category,
-        checkoutLink,
         status,
     } = event;
 

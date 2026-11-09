@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import verificationSchema from './schema.js';
+import verificationSchema, { IVerification, IVerificationModel } from './schema';
 import * as statics from './statics';
 import * as methods from './methods';
 import { modelNames } from '../config';
@@ -7,7 +7,7 @@ import { modelNames } from '../config';
 Object.assign(verificationSchema.statics, statics);
 Object.assign(verificationSchema.methods, methods);
 
-/** @type {import('mongoose').Model} */
-const SessionsModel = mongoose.model(modelNames.verification, verificationSchema);
+const SessionsModel = (mongoose.models[modelNames.verification] as IVerificationModel | undefined)
+    ?? mongoose.model<IVerification, IVerificationModel>(modelNames.verification, verificationSchema);
 
 export default SessionsModel;

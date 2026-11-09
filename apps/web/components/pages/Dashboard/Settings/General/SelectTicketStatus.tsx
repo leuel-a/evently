@@ -2,7 +2,7 @@
 
 import {useRouter, usePathname, useSearchParams} from 'next/navigation';
 import {Select, SelectContent, SelectTrigger, SelectItem} from '@/components/ui/select';
-import {TICKET_STATUS} from '@/types/tickets';
+import {TICKET_STATUS} from '@evently/models/tickets';
 
 export function SelectTicketStatus() {
     const router = useRouter();
@@ -27,7 +27,7 @@ export function SelectTicketStatus() {
             <SelectContent>
                 <SelectItem value="ALL">All Statuses</SelectItem>
 
-                {TICKET_STATUS.map((value) => (
+                {Object.values(TICKET_STATUS).map((value) => (
                     <SelectItem key={value} value={value}>
                         {value}
                     </SelectItem>

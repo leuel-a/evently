@@ -1,21 +1,11 @@
-import { IApiResponse } from './utils';
+import type { ITicket } from '@evently/models/tickets';
 import { IEventApiResponse } from './events';
-import { TICKET_STATUS } from '@evently/models/tickets';
+import { IApiResponse, IPageResultData, IBaseModel } from './utils';
 
-export interface ITicket {
-    event: Partial<IEventApiResponse>;
-    purchaserName: string;
-    purchaserEmail: string;
-    paymentId: string;
-    amountPaid: number;
-    currency: string;
-    status: (typeof TICKET_STATUS)[keyof typeof TICKET_STATUS];
-}
-
-export type GetTicketsApiResponse = IApiResponse<ITicket[]> & {
-    page: number;
-    total: number;
-    limit: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
+export type ITicketApiResponse = IBaseModel & Omit<ITicket, 'event'> & {
+    event: Partial<IEventApiResponse>
 };
+
+export type GetTicketApiResponse = IApiResponse<ITicketApiResponse>;
+
+export type GetTicketsApiResponse = IApiResponse<ITicketApiResponse[]> & IPageResultData;

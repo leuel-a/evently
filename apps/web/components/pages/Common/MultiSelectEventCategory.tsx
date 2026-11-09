@@ -1,6 +1,6 @@
 'use client';
 
-import {type ComponentProps, useRef, useEffect} from 'react';
+import {type ComponentProps, useRef} from 'react';
 import {useRouter, useSearchParams, usePathname} from 'next/navigation';
 import {MultiSelectRef} from '@/components/blocks/MultiSelect';
 import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
@@ -11,7 +11,7 @@ import {
     removePropertyFromFilter,
     setValueToFilterParams,
 } from '@/utils/filters';
-import {IEventsCategory} from '@/types/eventsCategory';
+import {IEventCategoryApiResponse} from '@/types/eventsCategory';
 
 export const CATEGORIES_FILTER_PARAM_KEY = 'categories';
 export const CATEGORIES_FILTER_PLACEHOLDER = 'All';
@@ -19,7 +19,7 @@ export const DEFAULT_CATEGORIES_FILTER_PARAM_VALUE = 'All';
 
 interface MultiSelectEventCategoryProps {
     MultiSelectProps?: Omit<ComponentProps<typeof MultiSelect>, 'onValueChange' | 'options'>;
-    categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
+    categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;
 }
 
 export function MultiSelectEventCategory({

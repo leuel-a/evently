@@ -13,6 +13,8 @@ export type VerificationDocument = IVerification &
         updatedAt: string;
     };
 
+export interface IVerificationModel extends mongoose.Model<IVerification> {}
+
 const schema = new mongoose.Schema(
     {
         identifier: {type: String, required: true},

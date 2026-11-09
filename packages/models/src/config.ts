@@ -5,10 +5,10 @@ export const modelNames = Object.freeze({
     tickets: 'tickets',
     organizers: 'organizers',
     session: 'sessions',
-    account: 'accounts',
+    account: 'account',
     verification: 'verification',
     user: 'user',
-    resource: 'resource',
+    resource: 'resources',
 });
 
 export const collectionNames = Object.freeze({

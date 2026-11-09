@@ -8,7 +8,8 @@ import { modelNames } from '../config';
 Object.assign(ticketsSchema.statics, statics)
 Object.assign(ticketsSchema.methods, methods)
 
-const TicketsModel = mongoose.model<ITicket, ITicketModel>(modelNames.tickets, ticketsSchema);
+const TicketsModel = (mongoose.models[modelNames.tickets] as ITicketModel | undefined)
+    ?? mongoose.model<ITicket, ITicketModel>(modelNames.tickets, ticketsSchema);
 
 export type { ITicket, ITicketModel, TicketDocument };
 export { TICKET_STATUS };

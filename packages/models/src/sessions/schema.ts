@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../config';
+import { modelNames } from '../config';
 
 export interface ISession {
     expiresAt: Date;
     token: string;
     ipAddress: string;
     userAgent: string;
-    userId: mongoose.Schema.Types.ObjectId;
+    userId: mongoose.Types.ObjectId;
 }
 
 export type SessionDocument = ISession &
@@ -15,15 +15,18 @@ export type SessionDocument = ISession &
         updatedAt: string;
     };
 
+export interface ISessionModel extends mongoose.Model<SessionDocument> {
+}
+
 const schema = new mongoose.Schema<ISession>(
     {
-        expiresAt: {type: Date, required: true},
-        token: {type: String, required: true, unique: true},
-        ipAddress: {type: String},
-        userAgent: {type: String},
-        userId: {type: mongoose.Schema.Types.ObjectId, ref: modelNames.user, required: true},
+        expiresAt: { type: Date, required: true },
+        token: { type: String, required: true, unique: true },
+        ipAddress: { type: String },
+        userAgent: { type: String },
+        userId: { type: mongoose.Schema.Types.ObjectId, ref: modelNames.user, required: true },
     },
-    {timestamps: true},
+    { timestamps: true },
 );
 
 export default schema;

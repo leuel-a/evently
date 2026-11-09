@@ -1,18 +1,25 @@
 'use client';
-import {Mail, User, CreditCard, Ticket as TicketIcon, Wallet, Hash} from 'lucide-react';
-import {ColumnDef} from '@tanstack/react-table';
-import {type ITicket, TICKET_STATUS} from '@/types/tickets';
-import {Badge} from '@/components/ui/badge';
-import {Select, SelectContent, SelectItem, SelectTrigger} from '@/components/ui/select';
-import {SelectTicketStatus} from '@/components/pages/Dashboard/Settings/General/SelectTicketStatus';
 
-export const columns: ColumnDef<ITicket>[] = [
+import { ColumnDef } from '@tanstack/react-table';
+import {
+    Mail,
+    User,
+    CreditCard,
+    Ticket as TicketIcon,
+    Wallet,
+    Hash
+} from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import type { ITicketApiResponse } from '@/types/tickets';
+import { SelectTicketStatus } from '@/components/pages/Dashboard/Settings/General';
+
+export const columns: ColumnDef<ITicketApiResponse>[] = [
     {
         accessorKey: 'purchaserName',
         header: () => {
             return <div className="px-4">Purchaser</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="px-4 py-2 flex flex-col gap-1">
                     <div className="flex items-center gap-2">
@@ -34,7 +41,7 @@ export const columns: ColumnDef<ITicket>[] = [
         header: () => {
             return <div>Event</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2 max-w-[220px]">
                     <TicketIcon className="w-4 h-4 text-gray-700 shrink-0" />
@@ -50,7 +57,7 @@ export const columns: ColumnDef<ITicket>[] = [
         header: () => {
             return <div>Payment</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2">
                     <Hash className="w-4 h-4 text-gray-700" />
@@ -66,7 +73,7 @@ export const columns: ColumnDef<ITicket>[] = [
         header: () => {
             return <div>Amount</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const amount = row.original.amountPaid;
             const currency = row.original.currency;
 
@@ -89,7 +96,7 @@ export const columns: ColumnDef<ITicket>[] = [
         header: () => {
             return <div>Currency</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <Badge variant="outline" className="rounded px-2 py-1 font-medium">
                     {row.original.currency}
@@ -100,10 +107,10 @@ export const columns: ColumnDef<ITicket>[] = [
     {
         accessorKey: 'status',
         header: () => <SelectTicketStatus />,
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const status = row.original.status;
 
-            const statusMap: Record<ITicket['status'], {label: string; className: string}> = {
+            const statusMap: Record<ITicketApiResponse['status'], { label: string; className: string }> = {
                 PAID: {
                     label: 'PAID',
                     className: 'bg-green-100 text-green-800',

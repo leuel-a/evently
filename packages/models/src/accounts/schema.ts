@@ -5,7 +5,7 @@ import { GetLinkedAccountsResult } from './statics';
 export interface IAccount {
     accountId: string;
     providerId: string;
-    userId: mongoose.Schema.Types.ObjectId;
+    userId: mongoose.Types.ObjectId;
     accessToken: string;
     refreshToken: string;
     idToken: string;

@@ -4,7 +4,7 @@ import {useSearchParams, useRouter} from 'next/navigation';
 import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
 import {useDashboardSettings} from '@/context/DashboardSettingsContext';
 import {SearchEvents} from '../../Common/SearchEvents';
-import {IEventsCategory} from '@/types/eventsCategory';
+import {IEventCategoryApiResponse} from '@/types/eventsCategory';
 import {TicketPriceRangeSelector} from './TicketPriceRangeSelector';
 import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
 import {EventStatusSelector} from './EventStatusSelector';
@@ -14,9 +14,10 @@ import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
 import { APP_ROUTES } from '@/config/routes';
 
 interface EventsFilterTableProps {
-    categories: Array<Pick<IEventsCategory, 'id' | 'name'>>;
+    categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;
 }
 
+// TODO: this should be in some other config file? or should it?
 const EVENT_TYPE_FILTER_PARAM_KEY = 'type';
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
 
