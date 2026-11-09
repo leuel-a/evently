@@ -1,4 +1,4 @@
-import { EVENT_TYPE } from '@/types/events';
+import { EVENT_TYPE } from '@evently/models/events';
 import { z } from 'zod';
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;

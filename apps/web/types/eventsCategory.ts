@@ -1,17 +1,9 @@
-import type {IApiResponse} from './utils';
+import type { IApiResponse } from './utils';
+import type { IEventCategory } from '@evently/models/eventsCategory';
 
-export interface IEventsCategory {
-    id: string;
-    name: string;
-    description: string;
-    isDeleted: boolean;
-    createdAt: string;
-    updateAt: string;
-}
+export type CreateEventsCategoryApiResponse = IApiResponse<Omit<IEventCategory, 'isDeleted'>>;
 
-export type CreateEventsCategoryApiResponse = IApiResponse<Omit<IEventsCategory, 'isDeleted'>>;
-
-export type GetEventsCategoryApiResponse = IApiResponse<IEventsCategory[]> & {
+export type GetEventsCategoryApiResponse = IApiResponse<IEventCategory[]> & {
     page: number;
     total: number;
     limit: number;

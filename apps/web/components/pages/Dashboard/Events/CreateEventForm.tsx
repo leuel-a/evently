@@ -1,6 +1,5 @@
 'use client';
 
-import {useState} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
 import {useRouter} from 'next/navigation';
 import {useMutation} from '@tanstack/react-query';
@@ -9,7 +8,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {eventsSchema} from '@/lib/db/schema';
 import {EventForm} from '@/components/pages/Dashboard/Form/Event/EventForm';
 import type {EventSchemaType} from '@/lib/db/schema';
-import {EVENT_TYPE} from '@/types/events';
+import {EVENT_TYPE} from '@evently/models/events';
 import {createEventMutation} from '@/app/dashboard/events/create/queries';
 import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
 import {APP_ROUTES} from '@/config/routes';
@@ -41,7 +40,6 @@ export function CreateEventForm() {
         },
     });
 
-    const [_submitting, _setSubmitting] = useState<boolean>();
     const {error: locationInputError} = form.getFieldState('location');
 
     const mutation = useMutation({

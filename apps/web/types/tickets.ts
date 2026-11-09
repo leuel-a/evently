@@ -1,16 +1,15 @@
-import {IEvent} from './events';
-import {IApiResponse} from './utils';
-
-export const TICKET_STATUS = ['PAID', 'REFUNDED', 'PENDING'] as const;
+import { IApiResponse } from './utils';
+import { IEventApiResponse } from './events';
+import { TICKET_STATUS } from '@evently/models/tickets';
 
 export interface ITicket {
-    event: Partial<IEvent>;
+    event: Partial<IEventApiResponse>;
     purchaserName: string;
     purchaserEmail: string;
     paymentId: string;
     amountPaid: number;
     currency: string;
-    status: (typeof TICKET_STATUS)[number];
+    status: (typeof TICKET_STATUS)[keyof typeof TICKET_STATUS];
 }
 
 export type GetTicketsApiResponse = IApiResponse<ITicket[]> & {

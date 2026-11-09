@@ -6,7 +6,7 @@ import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {formatDate} from '@/utils/date';
 import {countries} from '@/utils/index';
-import {EVENT_STATUS, type IEvent} from '@/types/events';
+import {EVENT_STATUS, type IEvent} from '@evently/models/events'
 import {cn} from '@/lib/utils';
 import {EditEventAction} from '@/components/pages/Dashboard/Events/EditEventAction';
 

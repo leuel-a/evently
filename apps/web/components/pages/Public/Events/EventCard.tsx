@@ -1,14 +1,15 @@
 'use client';
 
 import NextLink from 'next/link';
-import {Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight, Link} from 'lucide-react';
+import {Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight} from 'lucide-react';
 import {Badge} from '@/components/ui/badge';
 import {Button} from '@/components/ui/button';
-import {IEvent, EVENT_STATUS} from '@/types/events';
+import {EVENT_STATUS} from '@evently/models/events';
+import {IEventApiResponse} from '@/types/events';
 import {APP_ROUTES} from '@/config/routes';
 
 interface EventCardProps {
-    event: IEvent;
+    event: IEventApiResponse;
 }
 
 function formatDate(date: Date) {

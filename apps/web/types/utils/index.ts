@@ -1,6 +1,6 @@
 import {ApiError} from '@/lib/error';
 
-export type IApiResponse<T = any> = {
+export type IApiResponse<T = unknown> = {
     data: T;
 };
 

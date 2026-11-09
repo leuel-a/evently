@@ -1,45 +1,15 @@
-import {IApiResponse} from './utils';
-import {IEventsCategory} from './eventsCategory';
+import { IApiResponse } from './utils';
+import type { IEvent } from '@evently/models/events';
 
-export enum EVENT_STATUS {
-    DRAFT = 'draft',
-    ACTIVE = 'active',
-    CLOSED = 'closed',
-}
-
-export enum EVENT_TYPE {
-    PHYSICAL = 'physical',
-    VIRTUAL = 'virtual',
-    HYBRID = 'hybrid',
-}
-
-export interface IEvent {
+export type IEventApiResponse = IEvent & {
     id: string;
-    title: string;
-    description: string;
-    date: Date;
-    location?: string;
-    country: string;
-    ticketPrice: number;
-    capacity: number;
-    category: IEventsCategory;
-    checkoutLink?: string;
-    status: EVENT_STATUS;
-    type: EVENT_TYPE;
-    createdAt: Date;
-    user: string;
-    updatedAt: Date;
-    virtualUrl?: string;
-    startTime: string;
-    endTime: string;
     isVirtual: boolean;
     isFree: boolean;
-    address: string;
-}
+};
 
-export type GetEventApiResponse = IApiResponse<IEvent>;
+export type GetEventApiResponse = IApiResponse<IEventApiResponse>;
 
-export type GetEventsApiResponse = IApiResponse<IEvent[]> & {
+export type GetEventsApiResponse = IApiResponse<IEventApiResponse> & {
     page: number;
     total: number;
     limit: number;

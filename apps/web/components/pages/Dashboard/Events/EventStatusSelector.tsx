@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select';
 import {Label} from '@/components/ui/label';
 import {cn} from '@/lib/utils';
-import {EVENT_STATUS} from '@/types/events';
+import {EVENT_STATUS} from '@evently/models/events';
 import {
     getValueFromFilterParam,
     removePropertyFromFilter,

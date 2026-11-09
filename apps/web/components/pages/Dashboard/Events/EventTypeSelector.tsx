@@ -11,7 +11,7 @@ import {
     getValueFromFilterParam,
 } from '@/utils/filters';
 import {cn} from '@/lib/utils';
-import {EVENT_TYPE} from '@/types/events';
+import {EVENT_TYPE} from '@evently/models/events';
 
 const EVENT_MODE_FILTER_PARAM_KEY = 'type';
 
