@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import sessionsSchema from './schema.js';
 import * as statics from './statics.js';
 import * as methods from './methods.js';
-import {modelNames} from '../../config/routes.js';
+import {modelNames} from '../config';
 
 Object.assign(sessionsSchema.statics, statics);
 Object.assign(sessionsSchema.methods, methods);

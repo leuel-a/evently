@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {collectionNames} from '../../config/routes';
+import {collectionNames} from '../config';
 
 export interface IVerification {
     identifier: string;

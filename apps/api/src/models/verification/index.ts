@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import verificationSchema from './schema.js';
-import * as statics from './statics.js';
-import * as methods from './methods.js';
-import {modelNames} from '../../config/routes.js';
+import * as statics from './statics';
+import * as methods from './methods';
+import { modelNames } from '../config';
 
 Object.assign(verificationSchema.statics, statics);
 Object.assign(verificationSchema.methods, methods);

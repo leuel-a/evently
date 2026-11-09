@@ -1,0 +1,23 @@
+{
+  "name": "@evently/models",
+  "version": "0.1.0",
+  "description": "Shared Models for the Evently Platform",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    "./events": {
+      "types": "./src/events/index.ts",
+      "default": "./dist/events/index.js"
+    }
+  },
+  "author": "github.com/leuel-a",
+  "packageManager": "npm@24.16.0",
+  "dependencies": {
+    "mongoose": "8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}

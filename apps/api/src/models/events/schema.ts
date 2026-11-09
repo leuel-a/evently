@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../../config/routes';
+import {modelNames} from '../config';
 import type {
     CreateEventPayload,
     GetEventParams,
@@ -8,7 +8,6 @@ import type {
     GetEventsResult,
     GetEventStatsParams,
     GetEventStatsResult,
-    GetSettingEventCategoriesResult,
     GetSettingsForDashboardParams,
     GetSettingsForDashboardResult,
 } from './statics';

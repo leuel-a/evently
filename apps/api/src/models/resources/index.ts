@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import resourcesSchema, {IResource, IResourceModel} from './schema';
 import * as statics from './statics';
-import {modelNames} from '../../config/routes';
+import {modelNames} from '../config';
 
 Object.assign(resourcesSchema.statics, statics);
 

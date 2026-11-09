@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import TicketModel from '.';
 import {TicketDocument, TICKET_STATUS} from './schema';
-import {modelNames, TIMEZONE} from '../../config/routes';
+import {modelNames, TIMEZONE} from '../config';
 import {getPaginationValues} from '../helpers/index';
 
 export interface GetTicketsParams {

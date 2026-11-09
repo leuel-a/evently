@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import eventsCategorySchema, {IEventCategory, IEventCategoryModel} from './schema';
 import * as statics from './statics';
 import * as methods from './methods';
-import {modelNames} from '../../config/routes';
+import {modelNames} from '../config';
 
 Object.assign(eventsCategorySchema.statics, statics);
 Object.assign(eventsCategorySchema.methods, methods);

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../../config/routes';
+import {modelNames} from '../config';
 import UserModel from '.';
 
 /**

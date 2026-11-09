@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames, collectionNames} from '../../config/routes';
+import {modelNames, collectionNames} from '../config';
 
 export interface IUser {
     name: string;
