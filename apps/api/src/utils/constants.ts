@@ -9,6 +9,5 @@ export enum ApiErrorCode {
 
     // Events
     EVENT_NOT_FOUND = 'Event not found',
-    EVENT_USER_NOT_AUTHORIZED = 'Forbidden'
-};
-
+    EVENT_USER_NOT_AUTHORIZED = 'Forbidden',
+}

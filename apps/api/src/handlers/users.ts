@@ -2,7 +2,11 @@ import httpStatus from 'http-status';
 import type {RequestHandler} from 'express';
 import AccountsModel from '@evently/models/accounts';
 
-export const getLinkedAccountsHandler: RequestHandler = async (_req, res, next) => {
+export const getLinkedAccountsHandler: RequestHandler = async (
+    _req,
+    res,
+    next,
+) => {
     try {
         const user = res.locals.user;
         const result = await AccountsModel.getLinkedAccounts(user.id);

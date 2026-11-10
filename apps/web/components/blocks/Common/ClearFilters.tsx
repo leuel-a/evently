@@ -17,7 +17,7 @@ export function ClearFilters() {
     const handleClearFilters = () => {
         const newParams = new URLSearchParams(searchParams.toString());
         newParams.set('filters', '');
-        newParams.set('q', '')
+        newParams.set('q', '');
         router.push(`${pathname}?${newParams.toString()}`);
         revalidateDashboardEventsPage();
     };
@@ -39,7 +39,7 @@ export function ClearFilters() {
                         <X className="text-gray-500" />
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent side='left' className="bg-indigo-500 text-white">
+                <TooltipContent side="left" className="bg-indigo-500 text-white">
                     {TOOL_TIP_CONTENT}
                 </TooltipContent>
             </Tooltip>

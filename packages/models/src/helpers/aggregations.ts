@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 /**
  * Appends stages that rename _id → id and (optionally) remove _id

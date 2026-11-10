@@ -1,21 +1,8 @@
 import mongoose from 'mongoose';
 import {collectionNames} from '../config';
+import type {IVerification} from './types';
 
-export interface IVerification {
-    identifier: string;
-    value: string;
-    expiresAt: Date;
-}
-
-export type VerificationDocument = IVerification &
-    mongoose.Document & {
-        createdAt: string;
-        updatedAt: string;
-    };
-
-export interface IVerificationModel extends mongoose.Model<IVerification> {}
-
-const schema = new mongoose.Schema(
+const schema = new mongoose.Schema<IVerification>(
     {
         identifier: {type: String, required: true},
         value: {type: String, required: true},

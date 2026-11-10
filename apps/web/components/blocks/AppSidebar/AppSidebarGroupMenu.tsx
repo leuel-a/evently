@@ -6,11 +6,11 @@ import {
     SidebarMenu,
 } from '@/components/ui/sidebar';
 import {capitalizeFirstLetter} from '@/lib/utils';
-import { Resource } from './types';
+import {Resource} from './types';
 
 interface AppSidebarGroupMenuProps {
-    group: string
-    resources: Resource[]
+    group: string;
+    resources: Resource[];
 }
 
 export function AppSidebarGroupMenu({resources, group}: AppSidebarGroupMenuProps) {

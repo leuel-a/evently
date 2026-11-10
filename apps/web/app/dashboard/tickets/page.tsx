@@ -13,7 +13,7 @@ export default async function Page(props: PageProps) {
     const params = await props.searchParams;
     const {success, data, error} = await getTicketsPageData(params);
 
-    console.log({tickets: data})
+    console.log({tickets: data});
 
     return (
         <Suspense fallback={<LoadingSpinner />}>

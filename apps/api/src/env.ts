@@ -1,2 +1,2 @@
 import dotenv from 'dotenv';
-dotenv.config({ quiet: process.env.NODE_ENV != 'production' });
+dotenv.config({quiet: process.env.NODE_ENV != 'production'});

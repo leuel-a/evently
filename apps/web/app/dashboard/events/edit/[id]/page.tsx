@@ -1,6 +1,4 @@
-import {
-    UpdateEventForm,
-} from '@/components/pages/Dashboard/Events/UpdateEventForm';
+import {UpdateEventForm} from '@/components/pages/Dashboard/Events/UpdateEventForm';
 import {getEditEventPageData} from '../../actions';
 
 interface PageProps {
@@ -17,4 +15,3 @@ export default async function Page(props: PageProps) {
 
     return <></>;
 }
-

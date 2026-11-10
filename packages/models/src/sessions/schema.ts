@@ -1,32 +1,20 @@
 import mongoose from 'mongoose';
-import { modelNames } from '../config';
-
-export interface ISession {
-    expiresAt: Date;
-    token: string;
-    ipAddress: string;
-    userAgent: string;
-    userId: mongoose.Types.ObjectId;
-}
-
-export type SessionDocument = ISession &
-    mongoose.Document & {
-        createdAt: string;
-        updatedAt: string;
-    };
-
-export interface ISessionModel extends mongoose.Model<SessionDocument> {
-}
+import {modelNames} from '../config';
+import type {ISession} from './types';
 
 const schema = new mongoose.Schema<ISession>(
     {
-        expiresAt: { type: Date, required: true },
-        token: { type: String, required: true, unique: true },
-        ipAddress: { type: String },
-        userAgent: { type: String },
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: modelNames.user, required: true },
+        expiresAt: {type: Date, required: true},
+        token: {type: String, required: true, unique: true},
+        ipAddress: {type: String},
+        userAgent: {type: String},
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: modelNames.user,
+            required: true,
+        },
     },
-    { timestamps: true },
+    {timestamps: true},
 );
 
 export default schema;

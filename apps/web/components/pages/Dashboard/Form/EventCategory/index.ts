@@ -1,1 +1,1 @@
-export * from './EventCategoryForm'
+export * from './EventCategoryForm';

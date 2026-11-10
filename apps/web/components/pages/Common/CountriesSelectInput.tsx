@@ -10,7 +10,6 @@ import {EventSchemaType} from '@/lib/db/schema';
 import {Field, FieldLabel, FieldError} from '@/components/ui/field';
 import {countries} from '@/utils/index';
 
-
 interface CountriesSelectInputProps {
     field: ControllerRenderProps<EventSchemaType, 'country'>;
     fieldState: ControllerFieldState;
@@ -18,11 +17,11 @@ interface CountriesSelectInputProps {
 
 export function CountriesSelectInput(props: CountriesSelectInputProps) {
     const {fieldState, field} = props;
-    
+
     return (
         <Field data-invalid={fieldState.invalid}>
             <FieldLabel htmlFor={field.name}>Country</FieldLabel>
-            <Select  onValueChange={field.onChange} value={field.value}>
+            <Select onValueChange={field.onChange} value={field.value}>
                 <SelectTrigger
                     className="w-full rounded shadow-none focus-visible:ring-0 data-[size=default]:h-12"
                     aria-invalid={fieldState.invalid}

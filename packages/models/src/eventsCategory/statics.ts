@@ -2,7 +2,11 @@ import mongoose, {QueryOptions} from 'mongoose';
 import EventsCategoryModel from './index';
 import {getPaginationValues} from '../helpers/index';
 import {getEventCategoryProjection} from './utils';
-import {EventCategoryDocument, IEventCategory, IEventCategoryModel} from './schema';
+import type {
+    EventCategoryDocument,
+    IEventCategory,
+    IEventCategoryModel,
+} from './types';
 
 export type GetEventCategoryResult = {data: IEventCategory};
 export type GetEventCategoryParams = {id: string};
@@ -21,7 +25,10 @@ export async function getEventCategory(
     return {data: eventCategory};
 }
 
-export type CreateEventCategoryResult = Omit<IEventCategory, '_id' | 'isDeleted'> & {id: string};
+export type CreateEventCategoryResult = Omit<
+    IEventCategory,
+    '_id' | 'isDeleted'
+> & {id: string};
 export type CreateEventCategoryPayload = Omit<IEventCategory, 'isDeleted'>;
 export async function createEventCategory(
     this: IEventCategoryModel,
@@ -57,7 +64,13 @@ export async function getEventCategories(
         // INFO: since there is a $text, the $match pipline stage should
         // the first stage in the aggregation pipeline
         // Checkout --> https://www.mongodb.com/docs/upcoming/tutorial/text-search-in-aggregation/
-        ...(q && {$text: {$search: q, $caseSensitive: false, $diacriticSensitive: false}})
+        ...(q && {
+            $text: {
+                $search: q,
+                $caseSensitive: false,
+                $diacriticSensitive: false,
+            },
+        }),
     };
 
     const {limit, skip} = getPaginationValues(page, size);
@@ -110,7 +123,9 @@ export async function updateEventCategory(
 }
 
 export type GetSettingsForDashboardParams = {userId: string};
-export type GetSettingsForDashboardResult = {categories: Array<{name: string; id: string}>};
+export type GetSettingsForDashboardResult = {
+    categories: Array<{name: string; id: string}>;
+};
 export async function getSettingsForDashboard(
     this: typeof EventsCategoryModel,
     params: GetSettingsForDashboardParams,

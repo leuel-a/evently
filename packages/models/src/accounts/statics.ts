@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import type {IAccountModel, AccountDocument} from './schema';
+import type {IAccountModel, AccountDocument} from './types';
 
 export type GetLinkedAccountsResult = {
-    data: Array<Pick<AccountDocument, 'accountId' | 'providerId'>>
+    data: Array<Pick<AccountDocument, 'accountId' | 'providerId'>>;
 };
 
 export async function getLinkedAccounts(this: IAccountModel, id: string) {

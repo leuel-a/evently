@@ -1,4 +1,4 @@
-import {RequestHandler} from 'express'
+import {RequestHandler} from 'express';
 import httpStatus from 'http-status';
 import {matchedData} from 'express-validator';
 import TicketsModel from '@evently/models/tickets';
@@ -32,4 +32,4 @@ export const getTicketsHandler: RequestHandler = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};

@@ -2,39 +2,81 @@
   "name": "@evently/models",
   "version": "0.1.0",
   "description": "Shared Models for the Evently Platform",
+  "private": true,
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc",
     "type-check": "tsc --noEmit"
   },
+  "author": "github.com/leuel-a",
+  "packageManager": "npm@24.16.0",
   "exports": {
     "./events": {
       "types": "./dist/events/index.d.ts",
       "default": "./dist/events/index.js"
     },
+    "./events/types": {
+      "types": "./dist/events/types.d.ts",
+      "default": "./dist/events/types.js"
+    },
+    "./events/constants": {
+      "types": "./dist/events/constants.d.ts",
+      "default": "./dist/events/constants.js"
+    },
     "./eventsCategory": {
       "types": "./dist/eventsCategory/index.d.ts",
       "default": "./dist/eventsCategory/index.js"
     },
-    "./accounts": {
-      "types": "./dist/accounts/index.d.ts",
-      "default": "./dist/accounts/index.js"
+    "./eventsCategory/types": {
+      "types": "./dist/eventsCategory/types.d.ts",
+      "default": "./dist/eventsCategory/types.js"
+    },
+    "./eventsCategory/constants": {
+      "types": "./dist/eventsCategory/constants.d.ts",
+      "default": "./dist/eventsCategory/constants.js"
     },
     "./tickets": {
       "types": "./dist/tickets/index.d.ts",
       "default": "./dist/tickets/index.js"
     },
+    "./tickets/types": {
+      "types": "./dist/tickets/types.d.ts",
+      "default": "./dist/tickets/types.js"
+    },
+    "./tickets/constants": {
+      "types": "./dist/tickets/constants.d.ts",
+      "default": "./dist/tickets/constants.js"
+    },
     "./resources": {
       "types": "./dist/resources/index.d.ts",
       "default": "./dist/resources/index.js"
+    },
+    "./resources/types": {
+      "types": "./dist/resources/types.d.ts",
+      "default": "./dist/resources/types.js"
+    },
+    "./resources/constants": {
+      "types": "./dist/resources/constants.d.ts",
+      "default": "./dist/resources/constants.js"
+    },
+    "./accounts": {
+      "types": "./dist/accounts/index.d.ts",
+      "default": "./dist/accounts/index.js"
+    },
+    "./accounts/types": {
+      "types": "./dist/accounts/types.d.ts",
+      "default": "./dist/accounts/types.js"
+    },
+    "./accounts/constants": {
+      "types": "./dist/accounts/constants.d.ts",
+      "default": "./dist/accounts/constants.js"
     }
- },
-  "author": "github.com/leuel-a",
-  "packageManager": "npm@24.16.0",
+  },
   "dependencies": {
     "mongoose": "8.0.0"
   },
   "devDependencies": {
+    "prettier": "^3.9.10",
     "typescript": "5.9.3"
   }
 }

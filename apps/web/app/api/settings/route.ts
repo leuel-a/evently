@@ -1,4 +1,4 @@
-import { makeApiCall } from "@/config/api";
+import {makeApiCall} from '@/config/api';
 import {API_ROUTES} from '@/config/routes';
 
 export async function GET() {

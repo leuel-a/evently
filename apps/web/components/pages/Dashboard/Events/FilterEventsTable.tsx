@@ -9,9 +9,9 @@ import {TicketPriceRangeSelector} from './TicketPriceRangeSelector';
 import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
 import {EventStatusSelector} from './EventStatusSelector';
 import {EventTypeSelector} from './EventTypeSelector';
-import { removePropertyFromFilter, setValueToFilterParams } from '@/utils/filters';
-import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
-import { APP_ROUTES } from '@/config/routes';
+import {removePropertyFromFilter, setValueToFilterParams} from '@/utils/filters';
+import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
+import {APP_ROUTES} from '@/config/routes';
 
 interface EventsFilterTableProps {
     categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;

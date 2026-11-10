@@ -4,8 +4,8 @@ import * as React from 'react';
 import {BadgeCheck, Cable, Disc3, MessageCircle, Twitter, Video} from 'lucide-react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Separator} from '@/components/ui/separator';
-import { LinkedAccountsResponse, ProviderConfig, ProviderKey } from './types';
-import { ProviderRow } from './ProviderRow';
+import {LinkedAccountsResponse, ProviderConfig, ProviderKey} from './types';
+import {ProviderRow} from './ProviderRow';
 
 const PROVIDERS: ProviderConfig[] = [
     {
@@ -82,4 +82,3 @@ export function AccountConnectionsSection({data, onConnect}: AccountConnectionsS
         </Card>
     );
 }
-

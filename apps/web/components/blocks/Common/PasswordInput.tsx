@@ -19,9 +19,9 @@ export function PasswordInput(props: PasswordInputProps) {
     return (
         <div
             className={cn(
-                'flex shadow-xs items-center border rounded border-input pr-2 ', 
+                'flex shadow-xs items-center border rounded border-input pr-2 ',
                 'focus-within:border-ring focus-within:ring-indigo-500 focus-within:ring-[3px]',
-                containerClassName
+                containerClassName,
             )}
             {...containerProps}
         >

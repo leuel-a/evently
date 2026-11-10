@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import {usePathname, useSearchParams} from 'next/navigation';
 import {
     Pagination,
     PaginationContent,
@@ -10,12 +10,12 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
-import type { IPageResultData } from '@/types/utils';
+import type {IPageResultData} from '@/types/utils';
 
-type TablePaginationProps = Omit<IPageResultData, 'total'>
+type TablePaginationProps = Omit<IPageResultData, 'total'>;
 
 export function TablePagination(props: TablePaginationProps) {
-    const { page, hasNextPage, hasPreviousPage } = props;
+    const {page, hasNextPage, hasPreviousPage} = props;
 
     const pathname = usePathname();
     const searchParams = useSearchParams();

@@ -19,9 +19,10 @@ export const emailSignupMutation: MutationFunction<
     return data as UserSigninResponse;
 };
 
-export const emailSigninMutation: MutationFunction<UserSigninResponse, EmailSigninSchemaType> = async (
-    input,
-) => {
+export const emailSigninMutation: MutationFunction<
+    UserSigninResponse,
+    EmailSigninSchemaType
+> = async (input) => {
     const {email, password} = input;
     const {data, error} = await authClient.signIn.email({email, password});
 

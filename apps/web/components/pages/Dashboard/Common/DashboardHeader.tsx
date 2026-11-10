@@ -1,4 +1,3 @@
-
 'use client';
 
 import {usePathname} from 'next/navigation';
@@ -7,7 +6,7 @@ import {useResourcesContext} from '@/context/ResourcesContext';
 import {removeEmptyStringsFromArray} from '@/utils/functions';
 import {CreateResourceButton} from './CreateResourceButton';
 import {DashboardBreadcrumb} from './DashboardBreadCrumb';
-import { normalizeResourceName } from '@/config/resource-defnitions';
+import {normalizeResourceName} from '@/config/resource-defnitions';
 
 export interface DashboardHeaderProps {}
 

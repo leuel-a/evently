@@ -1,14 +1,20 @@
-import { LogOut, ShieldCheck } from 'lucide-react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
-import { UserAvatar } from '@/components/blocks/Common/UserAvatar';
-import { GetSessionResult } from '@/app/dashboard/actions';
+import {LogOut, ShieldCheck} from 'lucide-react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
+import {UserAvatar} from '@/components/blocks/Common/UserAvatar';
+import {GetSessionResult} from '@/app/dashboard/actions';
 
 interface IPublicUserAvatar {
-    user: NonNullable<GetSessionResult["user"]>;
+    user: NonNullable<GetSessionResult['user']>;
     onSignOut: () => void;
 }
 export function PublicUserAvatar(props: IPublicUserAvatar) {
-    const { onSignOut, user } = props;
+    const {onSignOut, user} = props;
 
     return (
         <DropdownMenu>
@@ -30,6 +36,5 @@ export function PublicUserAvatar(props: IPublicUserAvatar) {
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
-
-    )
+    );
 }

@@ -9,7 +9,7 @@ interface SearchTicketsProps {
     InputProps?: ComponentProps<typeof Input>;
 }
 
-const SEARCH_TICKETS_PLACEHOLDER = 'Search Tickets...'
+const SEARCH_TICKETS_PLACEHOLDER = 'Search Tickets...';
 
 export function SearchTickets(props: SearchTicketsProps) {
     const {InputProps = {}} = props;

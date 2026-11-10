@@ -21,9 +21,27 @@ const BASE_URL_WITH_ID = `${BASE_URL}/:id`;
 
 const router: express.Router = express.Router();
 
-router.post(BASE_URL, requireUser, createEventValidator, validateRequest, createEventHandler);
-router.get(BASE_URL_WITH_ID, requireUser, getEventValidator, validateRequest, getEventHandler);
-router.get(BASE_URL, requireUser, getEventsValidator, validateRequest, getEventsHandler);
+router.post(
+    BASE_URL,
+    requireUser,
+    createEventValidator,
+    validateRequest,
+    createEventHandler,
+);
+router.get(
+    BASE_URL_WITH_ID,
+    requireUser,
+    getEventValidator,
+    validateRequest,
+    getEventHandler,
+);
+router.get(
+    BASE_URL,
+    requireUser,
+    getEventsValidator,
+    validateRequest,
+    getEventsHandler,
+);
 router.put(
     BASE_URL_WITH_ID,
     requireUser,

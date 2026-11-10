@@ -1,5 +1,4 @@
-import { User, Session } from 'better-auth'
-
+import {User, Session} from 'better-auth';
 
 export interface BaseUserResponse extends User {
     isOrganizer?: boolean;
@@ -13,6 +12,6 @@ export interface AuthSessionData {
 
 export interface UserSigninResponse {
     redirect: boolean;
-    token: string,
+    token: string;
     user: BaseUserResponse;
 }

@@ -6,8 +6,6 @@ services:
     image: web
     ports:
       - "3000:3000"
-    environment:
-      API_URL: http://api:5000/api
     env_file: .env
     restart: unless-stopped
 

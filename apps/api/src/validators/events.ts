@@ -1,5 +1,5 @@
 import {body, query, param} from 'express-validator';
-import {EVENT_STATUS, EVENT_TYPE} from '@evently/models/events';
+import {EVENT_STATUS, EVENT_TYPE} from '@evently/models/events/constants';
 import {optionalize} from './utils';
 
 const INVALID_EVENT_ID = 'Event ID is not a valid Mongo ID';
@@ -130,8 +130,13 @@ const eventFieldsValidators = {
         .bail()
         .notEmpty()
         .withMessage(fields.description.notEmpty.message),
-    date: body(fields.date.name).isISO8601().withMessage(fields.date.isISO8601.message).toDate(),
-    location: body(fields.location.name).isString().withMessage(fields.location.isString.message),
+    date: body(fields.date.name)
+        .isISO8601()
+        .withMessage(fields.date.isISO8601.message)
+        .toDate(),
+    location: body(fields.location.name)
+        .isString()
+        .withMessage(fields.location.isString.message),
     country: body(fields.country.name)
         .isString()
         .withMessage(fields.country.isString.message)
@@ -140,7 +145,9 @@ const eventFieldsValidators = {
     ticketPrice: body(fields.ticketPrice.name)
         .isNumeric()
         .withMessage(fields.ticketPrice.isNumeric.message),
-    capacity: body(fields.capacity.name).isNumeric().withMessage(fields.capacity.isNumeric.message),
+    capacity: body(fields.capacity.name)
+        .isNumeric()
+        .withMessage(fields.capacity.isNumeric.message),
     checkoutLink: body(fields.checkoutLink.name)
         .isURL()
         .withMessage(fields.checkoutLink.isURL.message),
@@ -150,7 +157,9 @@ const eventFieldsValidators = {
     type: body(fields.type.name)
         .isIn(Object.values(EVENT_TYPE))
         .withMessage(fields.type.isIn.message),
-    virtualUrl: body(fields.virtualUrl.name).isURL().withMessage(fields.virtualUrl.isURL.message),
+    virtualUrl: body(fields.virtualUrl.name)
+        .isURL()
+        .withMessage(fields.virtualUrl.isURL.message),
     isVirtual: body(fields.isVirtual.name)
         .isBoolean()
         .withMessage(fields.isVirtual.isBoolean.message)
@@ -166,8 +175,12 @@ const eventFieldsValidators = {
     startTime: body(fields.startTime.name)
         .isString()
         .withMessage(fields.startTime.isString.message),
-    endTime: body(fields.endTime.name).isString().withMessage(fields.endTime.isString.message),
-    category: body(fields.category.name).isMongoId().withMessage(fields.category.isMongoId.message),
+    endTime: body(fields.endTime.name)
+        .isString()
+        .withMessage(fields.endTime.isString.message),
+    category: body(fields.category.name)
+        .isMongoId()
+        .withMessage(fields.category.isMongoId.message),
 };
 
 export const createEventValidator = [
@@ -194,7 +207,9 @@ export const getEventsValidator = [
     query('filters').isString().optional(),
 ];
 
-export const getEventValidator = [param('id').isMongoId().withMessage(INVALID_EVENT_ID)];
+export const getEventValidator = [
+    param('id').isMongoId().withMessage(INVALID_EVENT_ID),
+];
 
 export const updateEventValidator = [
     param('id').isMongoId().withMessage(INVALID_EVENT_ID),
@@ -207,4 +222,6 @@ export const updateEventValidator = [
     }),
 ];
 
-export const deleteEventValidator = [param('id').isMongoId().withMessage(INVALID_EVENT_ID)];
+export const deleteEventValidator = [
+    param('id').isMongoId().withMessage(INVALID_EVENT_ID),
+];

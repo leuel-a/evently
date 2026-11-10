@@ -3,7 +3,7 @@
 import {ColumnDef, useReactTable, getCoreRowModel, flexRender} from '@tanstack/react-table';
 import {Table, TableHeader, TableBody, TableRow, TableHead, TableCell} from '@/components/ui/table';
 import {ComponentProps} from 'react';
-import { cn } from '@/lib/utils';
+import {cn} from '@/lib/utils';
 
 interface DataTableProps<TData, TValue> {
     ContainerProps?: ComponentProps<'div'>;
@@ -24,7 +24,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <div className={cn("overflow-hidden rounded-md border", containerClassName)}>
+        <div className={cn('overflow-hidden rounded-md border', containerClassName)}>
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (

@@ -1,16 +1,16 @@
-import { Calendar, Clock, MapPin, Globe, Ticket, Tag } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { GetEventPageResult } from '@/app/events/actions';
-import { formatDate } from '@/utils/date';
+import {Calendar, Clock, MapPin, Globe, Ticket, Tag} from 'lucide-react';
+import {Badge} from '@/components/ui/badge';
+import {Separator} from '@/components/ui/separator';
+import {GetEventPageResult} from '@/app/events/actions';
+import {formatDate} from '@/utils/date';
 
 interface EventSummaryPanelProps {
-    event: GetEventPageResult["data"];
+    event: GetEventPageResult['data'];
     quantity: number;
 }
 
 export function EventSummaryPanel(props: EventSummaryPanelProps) {
-    const { event, quantity } = props;
+    const {event, quantity} = props;
 
     const unitPrice = Number(event.ticketPrice ?? 0);
     const total = unitPrice * quantity;
@@ -94,20 +94,21 @@ export function EventSummaryPanel(props: EventSummaryPanelProps) {
                 </p>
                 <div className="space-y-2.5 text-sm">
                     <SummaryRow
-                        label={`${isFree
-                            ? 'Free ticket'
-                            : `${unitPrice.toLocaleString('en-US', {
-                                style: 'currency',
-                                currency: 'USD',
-                            })} × ${quantity}`
-                            }`}
+                        label={`${
+                            isFree
+                                ? 'Free ticket'
+                                : `${unitPrice.toLocaleString('en-US', {
+                                      style: 'currency',
+                                      currency: 'USD',
+                                  })} × ${quantity}`
+                        }`}
                         value={
                             isFree
                                 ? 'Free'
                                 : total.toLocaleString('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                })
+                                      style: 'currency',
+                                      currency: 'USD',
+                                  })
                         }
                     />
                 </div>
@@ -117,7 +118,7 @@ export function EventSummaryPanel(props: EventSummaryPanelProps) {
                     <span className="font-serif text-2xl text-white">
                         {isFree
                             ? 'Free'
-                            : total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                            : total.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
                     </span>
                 </div>
             </div>
@@ -131,7 +132,7 @@ const EVENT_TYPE_LABELS: Record<string, string> = {
     hybrid: 'Hybrid',
 };
 
-function MetaRow({ icon: Icon, children }: { icon: React.ElementType; children: React.ReactNode }) {
+function MetaRow({icon: Icon, children}: {icon: React.ElementType; children: React.ReactNode}) {
     return (
         <div className="flex items-start gap-3 text-sm text-indigo-200/80">
             <Icon className="mt-px size-4 shrink-0 text-indigo-400" strokeWidth={1.5} />

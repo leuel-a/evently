@@ -1,42 +1,7 @@
 import mongoose from 'mongoose';
 import {modelNames} from '../config';
-import {
-    GetTicketsParams,
-    GetTicketsResult,
-    GetTicketsRevenueByMonthAndYearParams,
-    GetTicketsRevenueByMonthAndYearResult,
-} from './statics';
-
-export const TICKET_STATUS = Object.freeze({
-    PAID: 'PAID',
-    REFUNDED: 'REFUNDED',
-    PENDING: 'PENDING',
-});
-
-export interface ITicket {
-    event: mongoose.Types.ObjectId;
-    purchaserName: string;
-    purchaserEmail: string;
-    paymentId: string;
-    amountPaid: number;
-    currency: string;
-    status: string;
-}
-
-export type TicketDocument = ITicket &
-    mongoose.Document & {
-        createdAt: string;
-        updatedAt: string;
-    };
-
-export interface ITicketModel extends mongoose.Model<TicketDocument> {
-    getTickets(this: ITicketModel, params: GetTicketsParams): Promise<GetTicketsResult>;
-
-    getTicketsRevenueByMonthAndYear(
-        this: ITicketModel,
-        _params: GetTicketsRevenueByMonthAndYearParams,
-    ): Promise<GetTicketsRevenueByMonthAndYearResult>;
-}
+import type {ITicket} from './types';
+import {TICKET_STATUS} from './constants';
 
 const schema = new mongoose.Schema<ITicket>(
     {

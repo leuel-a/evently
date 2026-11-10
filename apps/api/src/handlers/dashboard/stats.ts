@@ -3,7 +3,11 @@ import {RequestHandler} from 'express';
 import EventsModel from '@evently/models/events';
 import TicketsModel from '@evently/models/tickets';
 
-export const getDashboardStatsHandler: RequestHandler = async (_req, res, _next) => {
+export const getDashboardStatsHandler: RequestHandler = async (
+    _req,
+    res,
+    _next,
+) => {
     const user = res.locals.user;
     const [eventsStats, ticketsStats] = await Promise.all([
         EventsModel.getEventStats({userId: user?.id}),

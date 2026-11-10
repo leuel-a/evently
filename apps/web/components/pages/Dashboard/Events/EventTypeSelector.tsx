@@ -7,9 +7,7 @@ import {
     SelectContent,
     SelectItem,
 } from '@/components/ui/select';
-import {
-    getValueFromFilterParam,
-} from '@/utils/filters';
+import {getValueFromFilterParam} from '@/utils/filters';
 import {cn} from '@/lib/utils';
 import {EVENT_TYPE} from '@evently/models/events';
 

@@ -1,21 +1,7 @@
 import mongoose from 'mongoose';
-import { GetResourcesResult } from './statics';
+import type {IResource} from './types';
 
-export interface IResource {
-    name: string;
-}
-
-export type ResourceDocument = IResource &
-    mongoose.Document & {
-        createdAt: string;
-        updatedAt: string;
-    };
-
-export interface IResourceModel extends mongoose.Model<ResourceDocument> {
-    getResources(): Promise<GetResourcesResult>
-}
-
-const schema = new mongoose.Schema(
+const schema = new mongoose.Schema<IResource>(
     {
         name: {type: String, required: true},
     },

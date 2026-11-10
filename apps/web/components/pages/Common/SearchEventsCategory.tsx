@@ -33,9 +33,9 @@ export function SearchEventsCategory(props: SearchEventsCategoryProps) {
 
     useEffect(() => {
         if (input !== searchParams.get('q')) {
-            setInput(searchParams.get('q') || '')
+            setInput(searchParams.get('q') || '');
         }
-    }, [searchParams])
+    }, [searchParams]);
 
     return (
         <div className="w-full md:w-96 relative group">

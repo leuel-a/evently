@@ -14,7 +14,9 @@ interface KpiSectionProps {
 export function KpiSection(props: KpiSectionProps) {
     const {totalCategories, totalEvents, categories, totalRevenue, ContainerProps = {}} = props;
     const {className: customContainerClassName} = ContainerProps;
-    const average = (Number.isNaN(totalEvents/totalCategories)) ? 0 : (totalEvents/totalCategories).toFixed(1);
+    const average = Number.isNaN(totalEvents / totalCategories)
+        ? 0
+        : (totalEvents / totalCategories).toFixed(1);
 
     return (
         <div className={cn('grid grid-cols-2 sm:grid-cols-5', customContainerClassName)}>

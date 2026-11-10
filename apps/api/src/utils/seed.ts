@@ -2,51 +2,91 @@ import '../env';
 
 import mongoose from 'mongoose';
 import Ticket from '@evently/models/tickets';
-import { TicketDocument } from '@evently/models/tickets';
+import {TicketDocument} from '@evently/models/tickets';
 import Event from '@evently/models/events';
-import { EventDocument } from '@evently/models/events';
+import {EventDocument} from '@evently/models/events';
 import Resource from '@evently/models/resources';
 import EventCategory from '@evently/models/eventsCategory';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
 const defaultUserId = '6aec3b427d828a7c9e90c819';
-const defaultResources = [{ name: 'events' }, { name: 'eventsCategory' }];
+const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
 
 const defaultPurchasers = [
-    { name: 'Abel Tesfaye', email: 'abel.tesfaye@example.com' },
-    { name: 'Hana Bekele', email: 'hana.bekele@example.com' },
-    { name: 'Dawit Alemu', email: 'dawit.alemu@example.com' },
-    { name: 'Selam Tadesse', email: 'selam.tadesse@example.com' },
-    { name: 'Ruth Kebede', email: 'ruth.kebede@example.com' },
-    { name: 'Nati Girma', email: 'nati.girma@example.com' },
-    { name: 'Meron Haile', email: 'meron.haile@example.com' },
-    { name: 'Samuel Worku', email: 'samuel.worku@example.com' },
-    { name: 'Bethel Assefa', email: 'bethel.assefa@example.com' },
-    { name: 'Yonas Fikru', email: 'yonas.fikru@example.com' },
-    { name: 'Lidiya Solomon', email: 'lidiya.solomon@example.com' },
-    { name: 'Henok Bekele', email: 'henok.bekele@example.com' },
-    { name: 'Rahel Getachew', email: 'rahel.getachew@example.com' },
-    { name: 'Biruk Teshome', email: 'biruk.teshome@example.com' },
-    { name: 'Eden Mesfin', email: 'eden.mesfin@example.com' },
-    { name: 'Surafel Abate', email: 'surafel.abate@example.com' },
-    { name: 'Mahi Deribe', email: 'mahi.deribe@example.com' },
-    { name: 'Naol Mebratu', email: 'naol.mebratu@example.com' },
-    { name: 'Saron Desta', email: 'saron.desta@example.com' },
-    { name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com' },
+    {name: 'Abel Tesfaye', email: 'abel.tesfaye@example.com'},
+    {name: 'Hana Bekele', email: 'hana.bekele@example.com'},
+    {name: 'Dawit Alemu', email: 'dawit.alemu@example.com'},
+    {name: 'Selam Tadesse', email: 'selam.tadesse@example.com'},
+    {name: 'Ruth Kebede', email: 'ruth.kebede@example.com'},
+    {name: 'Nati Girma', email: 'nati.girma@example.com'},
+    {name: 'Meron Haile', email: 'meron.haile@example.com'},
+    {name: 'Samuel Worku', email: 'samuel.worku@example.com'},
+    {name: 'Bethel Assefa', email: 'bethel.assefa@example.com'},
+    {name: 'Yonas Fikru', email: 'yonas.fikru@example.com'},
+    {name: 'Lidiya Solomon', email: 'lidiya.solomon@example.com'},
+    {name: 'Henok Bekele', email: 'henok.bekele@example.com'},
+    {name: 'Rahel Getachew', email: 'rahel.getachew@example.com'},
+    {name: 'Biruk Teshome', email: 'biruk.teshome@example.com'},
+    {name: 'Eden Mesfin', email: 'eden.mesfin@example.com'},
+    {name: 'Surafel Abate', email: 'surafel.abate@example.com'},
+    {name: 'Mahi Deribe', email: 'mahi.deribe@example.com'},
+    {name: 'Naol Mebratu', email: 'naol.mebratu@example.com'},
+    {name: 'Saron Desta', email: 'saron.desta@example.com'},
+    {name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com'},
 ];
 
 const seedEventsCategoryData = [
-    { user: defaultUserId, name: 'Technology', description: 'AI, software, and emerging tech.' },
-    { user: defaultUserId, name: 'Business', description: 'Founders, strategy, and startups.' },
-    { user: defaultUserId, name: 'Education', description: 'Workshops, bootcamps, and training.' },
-    { user: defaultUserId, name: 'Health', description: 'Health and wellbeing events.' },
-    { user: defaultUserId, name: 'Arts', description: 'Cultural and creative events.' },
-    { user: defaultUserId, name: 'Music', description: 'Concerts and live shows.' },
-    { user: defaultUserId, name: 'Sports', description: 'Sports and physical activities.' },
-    { user: defaultUserId, name: 'Networking', description: 'Social and professional meetups.' },
-    { user: defaultUserId, name: 'Science', description: 'Scientific talks and conferences.' },
-    { user: defaultUserId, name: 'Lifestyle', description: 'Personal interests and hobbies.' },
+    {
+        user: defaultUserId,
+        name: 'Technology',
+        description: 'AI, software, and emerging tech.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Business',
+        description: 'Founders, strategy, and startups.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Education',
+        description: 'Workshops, bootcamps, and training.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Health',
+        description: 'Health and wellbeing events.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Arts',
+        description: 'Cultural and creative events.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Music',
+        description: 'Concerts and live shows.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Sports',
+        description: 'Sports and physical activities.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Networking',
+        description: 'Social and professional meetups.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Science',
+        description: 'Scientific talks and conferences.',
+    },
+    {
+        user: defaultUserId,
+        name: 'Lifestyle',
+        description: 'Personal interests and hobbies.',
+    },
 ];
 
 /**
@@ -77,7 +117,7 @@ function generateSpacedDates(count: number, start: Date, end: Date): Date[] {
     const totalMs = end.getTime() - start.getTime();
     const intervalMs = totalMs / (count - 1);
 
-    return Array.from({ length: count }, (_, i) => {
+    return Array.from({length: count}, (_, i) => {
         const d = new Date(start.getTime() + i * intervalMs);
         d.setUTCHours(10, 0, 0, 0);
         return d;
@@ -820,7 +860,10 @@ const templatesByCategory: Record<string, EventTemplate[]> = {
 // ─── Build events ──────────────────────────────────────────────────────────────
 
 function buildSeedEventsData() {
-    const totalEvents = Object.values(CATEGORY_COUNTS).reduce((a, b) => a + b, 0);
+    const totalEvents = Object.values(CATEGORY_COUNTS).reduce(
+        (a, b) => a + b,
+        0,
+    );
     const dates = generateSpacedDates(
         totalEvents,
         new Date('2025-01-01T10:00:00.000Z'),
@@ -832,7 +875,7 @@ function buildSeedEventsData() {
         description?: string;
         type?: 'virtual' | 'physical';
         ticketPrice?: number;
-        country: string,
+        country: string;
         capacity?: number;
         status: string;
         checkoutLink?: string;
@@ -841,7 +884,7 @@ function buildSeedEventsData() {
         categoryName?: string;
     }> = [];
 
-    const eventStatuses = ['active', 'draft', 'closed'] // TODO: use the one from the events schema
+    const eventStatuses = ['active', 'draft', 'closed']; // TODO: use the one from the events schema
     for (const [categoryName, count] of Object.entries(CATEGORY_COUNTS)) {
         const templates = templatesByCategory[categoryName] as EventTemplate[];
 
@@ -853,8 +896,12 @@ function buildSeedEventsData() {
             allEvents.push({
                 ...template,
                 country: 'ETH', // NEED TO STORE THIS IN A DATABASE
-                title: needsSuffix ? `${template?.title} ${suffix}` : (template?.title as string),
-                status: eventStatuses[Math.floor(Math.random() * eventStatuses.length)] as string,
+                title: needsSuffix
+                    ? `${template?.title} ${suffix}`
+                    : (template?.title as string),
+                status: eventStatuses[
+                    Math.floor(Math.random() * eventStatuses.length)
+                ] as string,
                 date: dates[allEvents.length] as Date,
                 user: defaultUserId,
                 categoryName,
@@ -930,7 +977,9 @@ async function seed() {
         console.log(`Inserted ${resources.length} resources`);
 
         /* 3️⃣ Insert categories */
-        const categories = await EventCategory.insertMany(seedEventsCategoryData);
+        const categories = await EventCategory.insertMany(
+            seedEventsCategoryData,
+        );
         console.log(`Inserted ${categories.length} categories`);
 
         const categoryMap: Record<string, string> = {};
@@ -956,23 +1005,31 @@ async function seed() {
                 location: isVirtual ? undefined : 'Addis Ababa',
                 country: event.country,
                 address: isVirtual ? 'N/A' : 'Main Conference Center',
-                virtualUrl: isVirtual ? 'https://events.example.com/live' : undefined,
+                virtualUrl: isVirtual
+                    ? 'https://events.example.com/live'
+                    : undefined,
             };
         });
 
-        const insertedEvents = (await Event.insertMany(events)) as unknown as EventDocument[];
+        const insertedEvents = (await Event.insertMany(
+            events,
+        )) as unknown as EventDocument[];
         console.log(`Inserted ${insertedEvents.length} events`);
 
         /* 5️⃣ Log distribution */
         console.log('\nCategory distribution:');
         for (const [cat, count] of Object.entries(CATEGORY_COUNTS)) {
             const bar = '█'.repeat(Math.round(count / 2));
-            console.log(`  ${cat.padEnd(12)} ${String(count).padStart(3)}  ${bar}`);
+            console.log(
+                `  ${cat.padEnd(12)} ${String(count).padStart(3)}  ${bar}`,
+            );
         }
 
         /* 6️⃣ Build & insert tickets */
         const tickets = buildTickets(insertedEvents);
-        const insertedTickets = (await Ticket.insertMany(tickets)) as unknown as TicketDocument[];
+        const insertedTickets = (await Ticket.insertMany(
+            tickets,
+        )) as unknown as TicketDocument[];
         console.log(`\nInserted ${insertedTickets.length} tickets`);
 
         console.log('\n✅ Seeding complete');

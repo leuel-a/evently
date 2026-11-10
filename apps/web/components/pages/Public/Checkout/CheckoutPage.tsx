@@ -16,16 +16,9 @@ export function CheckoutPage(props: CheckoutPageProps) {
     return (
         <div className="min-h-screen bg-indigo-50 flex items-center">
             <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-3 rounded">
-                <EventSummaryPanel
-                    event={event}
-                    quantity={quantity}
-                />
+                <EventSummaryPanel event={event} quantity={quantity} />
 
-                <CheckoutForm
-                    event={event}
-                    quantity={quantity}
-                    onQuantityChange={setQuantity}
-                />
+                <CheckoutForm event={event} quantity={quantity} onQuantityChange={setQuantity} />
             </div>
         </div>
     );

@@ -644,7 +644,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             if (value !== undefined) {
                 setSelectedValues(value as string[]);
             }
-        }, [value])
+        }, [value]);
 
         React.useEffect(() => {
             if (!resetOnDefaultValueChange) return;

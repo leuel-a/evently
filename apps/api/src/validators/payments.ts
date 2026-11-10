@@ -1,10 +1,10 @@
-import { body } from 'express-validator'
+import {body} from 'express-validator';
 
 const chapaFields = {
     amount: {
         name: 'amount',
         isNumeric: {
-            message: 'Amount must be a number'
+            message: 'Amount must be a number',
         },
     },
     phoneNumber: {
@@ -13,9 +13,9 @@ const chapaFields = {
             message: 'Phone Number must be a string',
         },
         notEmpty: {
-            message: 'Phone Number can\'t be empty'
-        }
-    }
+            message: "Phone Number can't be empty",
+        },
+    },
 };
 
 const chapaFieldsValidator = {
@@ -27,10 +27,10 @@ const chapaFieldsValidator = {
         .withMessage(chapaFields.phoneNumber.isString.message)
         .bail()
         .notEmpty()
-        .withMessage(chapaFields.phoneNumber.notEmpty.message)
+        .withMessage(chapaFields.phoneNumber.notEmpty.message),
 };
 
 export const initalizeAcceptPaymentChapaValidator = [
     chapaFieldsValidator.amount,
-    chapaFieldsValidator.phoneNumber
-]
+    chapaFieldsValidator.phoneNumber,
+];

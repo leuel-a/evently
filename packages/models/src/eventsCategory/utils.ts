@@ -8,5 +8,4 @@ export function getEventCategoryProjection() {
     };
 }
 
-export function getEventCategoriesProjection() {
-}
+export function getEventCategoriesProjection() {}

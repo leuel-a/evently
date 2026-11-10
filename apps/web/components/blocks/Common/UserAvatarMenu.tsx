@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, LogOut, ShieldCheck, User as UserIcon } from 'lucide-react';
+import {ChevronDown, LogOut, ShieldCheck, User as UserIcon} from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,9 +9,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { AuthSessionData } from '@/types/auth';
-import { cn } from '@/lib/utils';
-import { UserAvatar } from './UserAvatar';
+import type {AuthSessionData} from '@/types/auth';
+import {cn} from '@/lib/utils';
+import {UserAvatar} from './UserAvatar';
 
 interface UserAvatarMenuProps {
     data: AuthSessionData;
@@ -20,8 +20,8 @@ interface UserAvatarMenuProps {
     className?: string;
 }
 
-export function UserAvatarMenu({ data, onProfile, onSignOut, className }: UserAvatarMenuProps) {
-    const { user } = data;
+export function UserAvatarMenu({data, onProfile, onSignOut, className}: UserAvatarMenuProps) {
+    const {user} = data;
 
     return (
         <DropdownMenu>

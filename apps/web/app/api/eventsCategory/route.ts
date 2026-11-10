@@ -26,7 +26,6 @@ export async function POST(request: Request) {
         headers,
     });
 
-
     revalidatePath(APP_ROUTES.dashboard.eventsCategory.base);
     return Response.json({...response});
 }

@@ -19,7 +19,7 @@ export function EventIsFreeInput(props: EventIsFreeInputProps) {
             </div>
             <BooleanInput
                 aria-invalid={fieldState.invalid}
-                className={cn("data-[state=checked]:bg-indigo-500")}
+                className={cn('data-[state=checked]:bg-indigo-500')}
                 checked={field.value}
                 onCheckedChange={field.onChange}
             />

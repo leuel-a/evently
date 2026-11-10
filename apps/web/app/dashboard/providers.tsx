@@ -24,4 +24,3 @@ export default function DashboardProviders(props: DashboardProvidersProps) {
         </DashboardSettingsProvider>
     );
 }
-

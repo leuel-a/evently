@@ -192,7 +192,11 @@ export function EmptyEventsByCategoryChart() {
                             total.
                         </p>
                     </div>
-                    <Button variant="link" asChild className="bg-indigo-500 border shadow-none rounded w-56 h-10">
+                    <Button
+                        variant="link"
+                        asChild
+                        className="bg-indigo-500 border shadow-none rounded w-56 h-10"
+                    >
                         <NextLink
                             href={APP_ROUTES.dashboard.eventsCategory.create}
                             className="inline-flex items-center gap-1.5 px-5 py-2 text-sm font-medium text-white transition"

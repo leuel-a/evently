@@ -20,6 +20,7 @@ class MongoClient {
             return;
         }
 
+        logger.info(`Attempting to connect to MongoDB: ${this.dbUrl}`);
         await mongoose.connect(this.dbUrl);
         this.connection = mongoose.connection;
         this.nativeClient = this.connection.getClient();

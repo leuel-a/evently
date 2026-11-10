@@ -1,8 +1,8 @@
 const DASHBOARD_BASE_ROUTE = '/dashboard';
 
 const APP_ROUTES = {
-    events: { base: '/events' },
-    auth: { login: '/login', signup: '/signup' },
+    events: {base: '/events'},
+    auth: {login: '/login', signup: '/signup'},
     api: {
         eventsCategory: '/api/eventsCategory',
         events: '/api/eventsCategory',
@@ -14,8 +14,11 @@ const APP_ROUTES = {
             create: '/dashboard/events/create',
             edit: '/dashboard/events/edit',
         },
-        eventsCategory: { base: '/dashboard/events-category', create: '/dashboard/events-category/create' },
-        tickets: { base: '/dashboard/tickets' },
+        eventsCategory: {
+            base: '/dashboard/events-category',
+            create: '/dashboard/events-category/create',
+        },
+        tickets: {base: '/dashboard/tickets'},
         settings: {
             base: '/dashboard/settings',
             general: '/dashboard/settings/general',
@@ -32,20 +35,20 @@ const API_ROUTES = {
         linkedAccounts: '/users/me/linked-accounts',
     },
     public: {
-        events: { base: '/events' },
+        events: {base: '/events'},
         payments: {
             base: '/payments',
             chapa: {
-                initializeAcceptPayment: '/payments/chapa/initialize'
-            }
-        }
+                initializeAcceptPayment: '/payments/chapa/initialize',
+            },
+        },
     },
     dashboard: {
-        stats: { base: '/dashboard/stats' },
-        tickets: { base: '/dashboard/tickets' },
-        events: { base: '/dashboard/events' },
-        eventCategory: { base: '/dashboard/eventsCategory' },
-        settings: { base: '/dashboard/settings' },
+        stats: {base: '/dashboard/stats'},
+        tickets: {base: '/dashboard/tickets'},
+        events: {base: '/dashboard/events'},
+        eventCategory: {base: '/dashboard/eventsCategory'},
+        settings: {base: '/dashboard/settings'},
     },
 } as const;
 
@@ -60,5 +63,5 @@ const HTTP_METHODS = {
 
 type HttpMethods = typeof HTTP_METHODS;
 
-export { APP_ROUTES, API_ROUTES, HTTP_METHODS };
-export type { AppRoutes, ApiRoutes, HttpMethods };
+export {APP_ROUTES, API_ROUTES, HTTP_METHODS};
+export type {AppRoutes, ApiRoutes, HttpMethods};

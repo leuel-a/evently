@@ -140,7 +140,7 @@ export function LoginForm(props: LoginFormProps) {
                     </div>
 
                     {errors?.root && (
-                        <div className='text-center'>
+                        <div className="text-center">
                             <FieldError errors={[form.formState?.errors?.root]} />
                         </div>
                     )}

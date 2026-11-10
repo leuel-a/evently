@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { AuthenticatedUser } from './AuthenticatedUser'
-import { GetEventsPageResult, GetSessionResult } from '@/app/events/actions';
-import { APP_ROUTES } from '@/config/routes';
+import {AuthenticatedUser} from './AuthenticatedUser';
+import {GetEventsPageResult, GetSessionResult} from '@/app/events/actions';
+import {APP_ROUTES} from '@/config/routes';
 
 interface HeaderProps {
     data: GetEventsPageResult['data'] | undefined;
     session?: GetSessionResult;
 }
 
-export function Header({ data, session }: HeaderProps) {
+export function Header({data, session}: HeaderProps) {
     const total = data?.length ?? 0;
     const free = data?.filter((e) => e.isFree).length ?? 0;
     const virtual = data?.filter((e) => e.isVirtual).length ?? 0;
@@ -26,7 +26,10 @@ export function Header({ data, session }: HeaderProps) {
 
                     <div className="flex items-center gap-6">
                         <nav className="hidden sm:flex items-center gap-5 text-sm text-slate-500">
-                            <Link href={APP_ROUTES.events.base} className="text-indigo-600 font-medium">
+                            <Link
+                                href={APP_ROUTES.events.base}
+                                className="text-indigo-600 font-medium"
+                            >
                                 Events
                             </Link>
                         </nav>
@@ -53,7 +56,11 @@ export function Header({ data, session }: HeaderProps) {
     );
 }
 
-function Stat({ value, label, valueClass = 'text-slate-900' }: {
+function Stat({
+    value,
+    label,
+    valueClass = 'text-slate-900',
+}: {
     value: number;
     label: string;
     valueClass?: string;

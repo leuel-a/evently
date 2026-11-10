@@ -5,7 +5,7 @@ import {headers as nextHeaders} from 'next/headers';
 import {makeApiCall} from '@/config/api';
 import {API_ROUTES} from '@/config/routes';
 import type {IActionResult, IApiResponse} from '@/types/utils';
-import { SettingsApiResponse } from '@/types/settings';
+import {SettingsApiResponse} from '@/types/settings';
 
 export type GetSessionResult = {
     user: User;

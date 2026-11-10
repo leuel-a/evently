@@ -1,23 +1,23 @@
-import { EVENT_TYPE } from '@evently/models/events';
-import { z } from 'zod';
+import {EVENT_TYPE} from '@evently/models/events/constants';
+import {z} from 'zod';
 
 export type EventSchemaType = z.infer<typeof eventsSchema>;
 export const eventsSchema = z
     .object({
         title: z
-            .string({ error: 'Required' })
-            .min(5, { message: 'Title must be a min of 50 characters' }),
+            .string({error: 'Required'})
+            .min(5, {message: 'Title must be a min of 50 characters'}),
         description: z
-            .string({ error: 'Required' })
-            .min(10, { message: 'Description can not be less than 200 characters' }),
+            .string({error: 'Required'})
+            .min(10, {message: 'Description can not be less than 200 characters'}),
         date: z.coerce.date(),
-        startTime: z.string({ error: 'Required' }).min(1),
+        startTime: z.string({error: 'Required'}).min(1),
         endTime: z.string().optional(),
-        category: z.string({ error: 'Required' }),
+        category: z.string({error: 'Required'}),
         location: z.string().optional(),
         country: z.string().optional(),
-        capacity: z.coerce.number({ error: 'Required' }),
-        type: z.enum(Object.values(EVENT_TYPE), { error: 'Required' }),
+        capacity: z.coerce.number({error: 'Required'}),
+        type: z.enum(Object.values(EVENT_TYPE), {error: 'Required'}),
         ticketPrice: z.coerce.number(),
         isFree: z.boolean().default(false),
         checkoutLink: z.url().optional(),
@@ -27,7 +27,7 @@ export const eventsSchema = z
         virtualUrl: z.string().optional(),
     })
     .refine(
-        ({ isVirtual, location, country }) => {
+        ({isVirtual, location, country}) => {
             if (isVirtual === false) {
                 return Boolean(location && location.trim()) && Boolean(country && country.trim());
             }
@@ -38,7 +38,7 @@ export const eventsSchema = z
             path: ['location'], // You can point this to any one of the fields
         },
     )
-    .refine(({ isFree, ticketPrice: price }) => {
+    .refine(({isFree, ticketPrice: price}) => {
         if (isFree === false) {
             return Boolean(price && price > 0);
         }
@@ -54,34 +54,33 @@ export const eventsSchema = z
 export type EventCategorySchemaType = z.infer<typeof eventCategorySchema>;
 export const eventCategorySchema = z.object({
     name: z
-        .string({ error: 'Required' })
-        .min(1, { message: "Name can't be an empty string" })
-        .refine((v) => typeof v === 'string', { message: 'Name must be a string' }),
+        .string({error: 'Required'})
+        .min(1, {message: "Name can't be an empty string"})
+        .refine((v) => typeof v === 'string', {message: 'Name must be a string'}),
     description: z
-        .string({ error: 'Required' })
-        .min(1, { message: "Description can't be an empty string" })
-        .refine((v) => typeof v === 'string', { message: 'Description must be a string' }),
+        .string({error: 'Required'})
+        .min(1, {message: "Description can't be an empty string"})
+        .refine((v) => typeof v === 'string', {message: 'Description must be a string'}),
 });
 
 export type EmailSignupSchemaType = z.infer<typeof emailSignupSchema>;
 export const emailSignupSchema = z.object({
-    email: z.email({ error: 'Required' }),
-    password: z.string({ error: 'Required' }),
-    fullName: z.string({ error: 'Required' }),
-    confirmPassword: z.string({ error: 'Required' }),
+    email: z.email({error: 'Required'}),
+    password: z.string({error: 'Required'}),
+    fullName: z.string({error: 'Required'}),
+    confirmPassword: z.string({error: 'Required'}),
 });
 
 export type EmailSigninSchemaType = z.infer<typeof emailSigninSchema>;
 export const emailSigninSchema = z.object({
-    email: z.email({ error: 'Required' }).min(1, { error: 'Required' }),
-    password: z.string({ error: 'Required' }).min(1, { error: 'Required' }),
+    email: z.email({error: 'Required'}).min(1, {error: 'Required'}),
+    password: z.string({error: 'Required'}).min(1, {error: 'Required'}),
 });
 
 export type CheckoutSchemaType = z.infer<typeof checkoutSchema>;
-export const checkoutSchema = z
-    .object({
-        name: z.string().min(1, { error: 'Full name can not be empty' }),
-        email: z.email({ error: 'Provide a valid email' }),
-        amount: z.number().min(1, { error: 'Need to buy atleast one ticket.' }),
-        phoneNumber: z.string().min(1, { error: 'Phone Number Can\'t be empty' })
-    })
+export const checkoutSchema = z.object({
+    name: z.string().min(1, {error: 'Full name can not be empty'}),
+    email: z.email({error: 'Provide a valid email'}),
+    amount: z.number().min(1, {error: 'Need to buy atleast one ticket.'}),
+    phoneNumber: z.string().min(1, {error: "Phone Number Can't be empty"}),
+});

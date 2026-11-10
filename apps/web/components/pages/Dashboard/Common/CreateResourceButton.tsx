@@ -5,7 +5,7 @@ import {Button} from '@/components/ui/button';
 import {DASHBOARD_PREFIX} from '@/config/constants';
 import {useResourceContext} from '@/context/ResourceContext';
 import {getLabelForResource} from '@/utils';
-import { normalizeResourceName } from '@/config/resource-defnitions';
+import {normalizeResourceName} from '@/config/resource-defnitions';
 
 export function CreateResourceButton() {
     const resource = useResourceContext();

@@ -1,15 +1,15 @@
 'use server';
 
-import { headers as nextHeaders } from 'next/headers';
-import { revalidatePath } from 'next/cache';
-import { makeApiCall } from '@/config/api';
-import { API_ROUTES, APP_ROUTES } from '@/config/routes';
-import { EVENT_STATUS } from '@evently/models/events';
-import { GetEventsApiResponse, GetEventApiResponse } from '@/types/events';
-import { IActionResult } from '@/types/utils';
-import { setValueToFilterParams } from '@/utils/filters';
-import { BaseUserResponse } from '@/types/auth';
-import { Session } from 'better-auth';
+import {headers as nextHeaders} from 'next/headers';
+import {revalidatePath} from 'next/cache';
+import {makeApiCall} from '@/config/api';
+import {API_ROUTES, APP_ROUTES} from '@/config/routes';
+import {EVENT_STATUS} from '@evently/models/events';
+import {GetEventsApiResponse, GetEventApiResponse} from '@/types/events';
+import {IActionResult} from '@/types/utils';
+import {setValueToFilterParams} from '@/utils/filters';
+import {BaseUserResponse} from '@/types/auth';
+import {Session} from 'better-auth';
 
 export type GetSessionResult = {
     user: BaseUserResponse;
@@ -21,17 +21,18 @@ export async function getEvents(
     params: Record<string, string>,
 ): Promise<IActionResult<GetEventsPageResult>> {
     try {
-        const searchParams = setValueToFilterParams((new URLSearchParams(params)),
+        const searchParams = setValueToFilterParams(
+            new URLSearchParams(params),
             'status',
             EVENT_STATUS.ACTIVE,
         ).toString();
         const response = await makeApiCall<GetEventsApiResponse>({
             url: `${API_ROUTES.public.events.base}?${searchParams.toString()}`,
         });
-        return { success: true, data: response };
+        return {success: true, data: response};
     } catch (error) {
         console.log(error);
-        return { success: false };
+        return {success: false};
     }
 }
 
@@ -41,9 +42,9 @@ export async function getEvent(id: string): Promise<IActionResult<GetEventPageRe
         const response = await makeApiCall<GetEventApiResponse>({
             url: `${API_ROUTES.public.events.base}/${id}`,
         });
-        return { success: true, data: response }
+        return {success: true, data: response};
     } catch (error) {
-        return { success: false }
+        return {success: false};
     }
 }
 
@@ -54,9 +55,9 @@ export async function revalidateEventsPage() {
 export async function getSession(): Promise<IActionResult<GetSessionResult>> {
     try {
         const headers = await nextHeaders();
-        const response = await makeApiCall<GetSessionResult>({ url: API_ROUTES.users.me, headers });
-        return { success: true, data: response }
+        const response = await makeApiCall<GetSessionResult>({url: API_ROUTES.users.me, headers});
+        return {success: true, data: response};
     } catch (err) {
-        return { success: false }
+        return {success: false};
     }
 }

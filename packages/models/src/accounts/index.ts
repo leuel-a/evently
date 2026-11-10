@@ -1,13 +1,16 @@
 import mongoose from 'mongoose';
-import accountSchema, { IAccount, IAccountModel } from './schema';
+import accountSchema from './schema';
+import {IAccount, IAccountModel} from './types';
 import * as statics from './statics';
 import * as methods from './methods';
-import { modelNames } from '../config';
+import {modelNames} from '../config';
 
 Object.assign(accountSchema.statics, statics);
 Object.assign(accountSchema.methods, methods);
 
-const AccountsModel = (mongoose.models[modelNames.account] as IAccountModel)
-    ?? mongoose.model<IAccount, IAccountModel>(modelNames.account, accountSchema);
+const AccountsModel = mongoose.model<IAccount, IAccountModel>(
+    modelNames.account,
+    accountSchema,
+);
 
 export default AccountsModel;

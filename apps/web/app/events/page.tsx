@@ -1,9 +1,9 @@
-import { Header } from '@/components/pages/Public/Common';
-import { EventCard } from '@/components/pages/Public/Events/EventCard';
-import { getEvents, getSession } from './actions';
-import { NoEvents } from '@/components/pages/Public/Events';
-import { FailedToLoadEvents } from '@/components/pages/Public/Events';
-import { FilterEvents } from '@/components/pages/Public/Events';
+import {Header} from '@/components/pages/Public/Common';
+import {EventCard} from '@/components/pages/Public/Events/EventCard';
+import {getEvents, getSession} from './actions';
+import {NoEvents} from '@/components/pages/Public/Events';
+import {FailedToLoadEvents} from '@/components/pages/Public/Events';
+import {FilterEvents} from '@/components/pages/Public/Events';
 
 interface PageProps {
     searchParams: Promise<Record<string, string>>;
@@ -11,8 +11,8 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
     const searchParams = await props.searchParams;
-    const { data: sessionData } = await getSession();
-    const { success, data, error } = await getEvents(searchParams);
+    const {data: sessionData} = await getSession();
+    const {success, data, error} = await getEvents(searchParams);
 
     return (
         <main className="min-h-screen bg-[#f8f8fc]">

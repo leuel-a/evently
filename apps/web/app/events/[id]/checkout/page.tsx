@@ -1,17 +1,17 @@
-import { redirect } from 'next/navigation';
-import type { Metadata } from 'next';
-import { getEvent } from '../../actions';
-import { CheckoutPage } from '@/components/pages/Public/Checkout/CheckoutPage';
-import { EVENT_STATUS } from '@evently/models/events';
-import { APP_ROUTES } from '@/config/routes';
+import {redirect} from 'next/navigation';
+import type {Metadata} from 'next';
+import {getEvent} from '../../actions';
+import {CheckoutPage} from '@/components/pages/Public/Checkout/CheckoutPage';
+import {EVENT_STATUS} from '@evently/models/events';
+import {APP_ROUTES} from '@/config/routes';
 
 interface PageProps {
-    params: Promise<{ id: string }>;
+    params: Promise<{id: string}>;
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
-    const { id } = await props.params;
-    const { success, data } = await getEvent(id);
+    const {id} = await props.params;
+    const {success, data} = await getEvent(id);
 
     if (success && data?.data) {
         const event = data?.data;
@@ -20,12 +20,12 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         };
     }
 
-    return { title: 'Checkout' };
+    return {title: 'Checkout'};
 }
 
 export default async function Page(props: PageProps) {
-    const { id } = await props.params;
-    const { success, data } = await getEvent(id);
+    const {id} = await props.params;
+    const {success, data} = await getEvent(id);
 
     if (success && data?.data) {
         if (data?.data.status !== EVENT_STATUS.ACTIVE) {
@@ -34,5 +34,5 @@ export default async function Page(props: PageProps) {
         return <CheckoutPage event={data?.data} />;
     }
     // TODO: this should not happend, or should it??
-    return <></>
+    return <></>;
 }

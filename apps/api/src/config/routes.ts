@@ -13,7 +13,7 @@ export const API_ROUTES = Object.freeze({
             base: '/payments',
             chapa: {
                 initialize: '/payments/chapa/initialize',
-            }
+            },
         },
     },
     dashboard: {
