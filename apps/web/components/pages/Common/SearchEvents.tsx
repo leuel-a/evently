@@ -1,12 +1,12 @@
 'use client';
 
-import {useState, useEffect, type ComponentProps} from 'react';
-import {Search} from 'lucide-react';
-import {useRouter, usePathname, useSearchParams} from 'next/navigation';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {Input} from '@/components/ui/input';
-import {useDebounce} from '@/hooks/use-debounce';
-import {cn} from '@/lib/utils';
+import { useState, useEffect, type ComponentProps } from 'react';
+import { Search } from 'lucide-react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { Input } from '@/components/ui/input';
+import { useDebounce } from '@/hooks/use-debounce';
+import { cn } from '@/lib/utils';
 
 interface SearchEventsProps {
     InputProps?: ComponentProps<typeof Input>;
@@ -14,7 +14,7 @@ interface SearchEventsProps {
 
 const EVENT_SEARCH_PARAMS_KEY = 'q';
 
-export function SearchEvents({InputProps}: SearchEventsProps) {
+export function SearchEvents({ InputProps }: SearchEventsProps) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

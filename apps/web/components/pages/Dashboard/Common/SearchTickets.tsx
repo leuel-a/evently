@@ -1,9 +1,9 @@
 'use client';
 
-import {useState, type ComponentProps} from 'react';
-import {Search} from 'lucide-react';
-import {cn} from '@/lib/utils';
-import {Input} from '@/components/ui/input';
+import { useState, type ComponentProps } from 'react';
+import { Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 interface SearchTicketsProps {
     InputProps?: ComponentProps<typeof Input>;
@@ -12,7 +12,7 @@ interface SearchTicketsProps {
 const SEARCH_TICKETS_PLACEHOLDER = 'Search Tickets...';
 
 export function SearchTickets(props: SearchTicketsProps) {
-    const {InputProps = {}} = props;
+    const { InputProps = {} } = props;
     const [input, setInput] = useState<string>('');
 
     return (

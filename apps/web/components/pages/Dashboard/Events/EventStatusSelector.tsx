@@ -1,7 +1,7 @@
 'use client';
 
-import {type ComponentProps} from 'react';
-import {useSearchParams, useRouter} from 'next/navigation';
+import { type ComponentProps } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import {
     Select,
     SelectTrigger,
@@ -9,16 +9,16 @@ import {
     SelectItem,
     SelectContent,
 } from '@/components/ui/select';
-import {Label} from '@/components/ui/label';
-import {cn} from '@/lib/utils';
-import {EVENT_STATUS} from '@evently/models/events';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { EVENT_STATUS } from '@evently/models/events/constants';
 import {
     getValueFromFilterParam,
     removePropertyFromFilter,
     setValueToFilterParams,
 } from '@/utils/filters';
-import {APP_ROUTES} from '@/config/routes';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
+import { APP_ROUTES } from '@/config/routes';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
 
 const EVENT_STATUS_FILTER_PARAM_KEY = 'status';
 const EVENT_STATUS_FILTER_LABEL = 'Status';
@@ -28,8 +28,8 @@ interface EventStatusSelectorProps {
 }
 
 export function EventStatusSelector(props: EventStatusSelectorProps) {
-    const {SelectTriggerProps = {}} = props;
-    const {className: customSelectTriggerClass, ...selectTriggerProps} = SelectTriggerProps;
+    const { SelectTriggerProps = {} } = props;
+    const { className: customSelectTriggerClass, ...selectTriggerProps } = SelectTriggerProps;
 
     const router = useRouter();
     const searchParams = useSearchParams();

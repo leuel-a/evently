@@ -1,10 +1,10 @@
-import {headers as nextHeaders} from 'next/headers';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES} from '@/config/routes';
-import {CreateEventApiResponse} from '@/types/events';
+import { headers as nextHeaders } from 'next/headers';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES } from '@/config/routes';
+import { CreateEventApiResponse } from '@/types/events';
 
 export async function GET() {
-    const response = await makeApiCall({url: API_ROUTES.dashboard.events.base});
+    const response = await makeApiCall({ url: API_ROUTES.dashboard.events.base });
     return Response.json(response);
 }
 
@@ -19,5 +19,5 @@ export async function POST(request: Request) {
         headers,
     });
 
-    return Response.json({...response});
+    return Response.json({ ...response });
 }

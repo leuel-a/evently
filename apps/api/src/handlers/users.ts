@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import type {RequestHandler} from 'express';
+import type { RequestHandler } from 'express';
 import AccountsModel from '@evently/models/accounts';
 
 export const getLinkedAccountsHandler: RequestHandler = async (
@@ -22,7 +22,7 @@ export const getAuthenticatedUser: RequestHandler = async (_req, res, next) => {
         const user = res.locals.user;
         const session = res.locals.session;
 
-        res.status(httpStatus.OK).json({user, session});
+        res.status(httpStatus.OK).json({ user, session });
     } catch (error) {
         next(error);
     }

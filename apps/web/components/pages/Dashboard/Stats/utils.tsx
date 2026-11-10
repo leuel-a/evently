@@ -1,4 +1,4 @@
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
 
 export const CATEGORY_COLORS = {
     high: '#e8642c',
@@ -25,7 +25,7 @@ interface CategoryLegendProps {
 }
 
 export function CategoryLegend(props: CategoryLegendProps) {
-    const {totalCategories} = props;
+    const { totalCategories } = props;
     return (
         <div className="flex flex-wrap gap-x-4 gap-y-1 mb-3">
             {(
@@ -51,14 +51,14 @@ export function CategoryLegend(props: CategoryLegendProps) {
                         color: CATEGORY_COLORS.minimal,
                     },
                 ] as const
-            ).map(({label, color}) => (
+            ).map(({ label, color }) => (
                 <span
                     key={label}
                     className="flex items-center gap-1.5 text-[10px] text-muted-foreground"
                 >
                     <span
                         className="inline-block h-2 w-2 rounded-full shrink-0"
-                        style={{backgroundColor: color}}
+                        style={{ backgroundColor: color }}
                     />
                     {label}
                 </span>
@@ -73,7 +73,7 @@ export function normalizeRevenueData(
     const years = Array.from(new Set(revenueData.map((data) => data.year)));
 
     return years.flatMap((year) =>
-        Array.from({length: 12}, (_, i) => {
+        Array.from({ length: 12 }, (_, i) => {
             const month = i + 1;
             const found = revenueData.find((data) => data.year === year && data.month === month);
             return {

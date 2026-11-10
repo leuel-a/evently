@@ -1,16 +1,16 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
-import {toast} from 'sonner';
-import {EventForm} from '../Form/Event/EventForm';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {EventSchemaType, eventsSchema} from '@/lib/db/schema';
-import {GetEditEventPageData} from '@/app/dashboard/events/actions';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {updateEventMutation} from '@/app/dashboard/events/edit/[id]/queries';
-import {APP_ROUTES} from '@/config/routes';
+import { useRouter } from 'next/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { EventForm } from '../Form/Event/EventForm';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { EventSchemaType, eventsSchema } from '@/lib/db/schema';
+import { GetEditEventPageData } from '@/app/dashboard/events/actions';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { updateEventMutation } from '@/app/dashboard/events/edit/[id]/queries';
+import { APP_ROUTES } from '@/config/routes';
 
 const EVENT_UPDATED_SUCCESS_TITLE = 'Event updated successfully'; // TODO: a better way to do this
 const EVENT_UPDATED_ERROR_TITLE = 'Unable to update event';
@@ -23,7 +23,7 @@ export interface UpdateEventFormProps {
 export const UPDATE_EVENT_FORM_SUBMIT_BUTTON_LABEL = 'Edit';
 
 export function UpdateEventForm(props: UpdateEventFormProps) {
-    const {defaultValues} = props;
+    const { defaultValues } = props;
     const eventId = defaultValues.id;
 
     const router = useRouter();
@@ -38,7 +38,7 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
         mutationFn: updateEventMutation,
         onSuccess: async (data) => {
             await revalidateDashboardEventsPage();
-            const {data: updatedEvent} = data;
+            const { data: updatedEvent } = data;
 
             toast.success(EVENT_UPDATED_SUCCESS_TITLE, {
                 description: `"${updatedEvent.title}" has been successfully created.`,
@@ -53,14 +53,14 @@ export function UpdateEventForm(props: UpdateEventFormProps) {
         },
     });
 
-    const handleSubmit = (values: EventSchemaType) => mutation.mutate({...values, id: eventId});
+    const handleSubmit = (values: EventSchemaType) => mutation.mutate({ ...values, id: eventId });
 
     return (
         <FormProvider {...form}>
             <div className="flex flex-col gap-6 p-8 pl-4 w-7xl">
                 <EventForm
                     isUpdateEvent
-                    SubmitButtonProps={{label: UPDATE_EVENT_FORM_SUBMIT_BUTTON_LABEL}}
+                    SubmitButtonProps={{ label: UPDATE_EVENT_FORM_SUBMIT_BUTTON_LABEL }}
                     onSubmit={handleSubmit}
                 />
             </div>
@@ -86,7 +86,7 @@ function getDefaultValues(data: GetEditEventPageData['data']): EventSchemaType {
         type,
         endTime,
         isVirtual,
-        category: {id: category},
+        category: { id: category },
     } = data;
 
     return {

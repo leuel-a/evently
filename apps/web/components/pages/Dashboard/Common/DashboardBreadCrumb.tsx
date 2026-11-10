@@ -1,8 +1,8 @@
 'use client';
 
-import {Fragment} from 'react';
-import {usePathname} from 'next/navigation';
-import {v4 as uuid} from 'uuid';
+import { Fragment } from 'react';
+import { usePathname } from 'next/navigation';
+import { v4 as uuid } from 'uuid';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -11,9 +11,9 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import {DASHBOARD_PREFIX} from '@/config/constants';
-import {removeEmptyStringsFromArray} from '@/utils/functions';
-import {splitCamelCase} from '@/utils/strings';
+import { DASHBOARD_PREFIX } from '@/config/constants';
+import { removeEmptyStringsFromArray } from '@/utils/functions';
+import { splitCamelCase } from '@/utils/strings';
 
 export function getPathnameArray(pathname: string) {
     return removeEmptyStringsFromArray(pathname.split('/'));
@@ -71,4 +71,4 @@ function DashboardBreadcrumb() {
 }
 
 DashboardBreadcrumb.displayName = 'DashboardBreadcrumb';
-export {DashboardBreadcrumb};
+export { DashboardBreadcrumb };

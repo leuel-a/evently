@@ -1,4 +1,4 @@
-import type {ElementType} from 'react';
+import type { ElementType } from 'react';
 
 // this is not the same as the @evently/models/resource Model, this is used
 // for the dashboard, check implemetation in AppSidebar.tsx

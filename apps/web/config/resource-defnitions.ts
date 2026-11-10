@@ -1,6 +1,6 @@
-import {Calendar, Tag, ChartBarStacked} from 'lucide-react';
-import type {ResourceItems} from '@/types/resources';
-import {capitalizeFirstLetters} from '@/utils/strings';
+import { Calendar, Tag, ChartBarStacked } from 'lucide-react';
+import type { ResourceItems } from '@/types/resources';
+import { capitalizeFirstLetters } from '@/utils/strings';
 
 export function normalizeResourceName(name: string) {
     const resource = name.replaceAll('-', ' ').split(' ');
@@ -25,4 +25,4 @@ const resources: ResourceItems = [
     },
 ];
 
-export {resources};
+export { resources };

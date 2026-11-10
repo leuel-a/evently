@@ -1,4 +1,4 @@
-import {LayoutDashboard, Tag, TrendingUp, Activity} from 'lucide-react';
+import { LayoutDashboard, Tag, TrendingUp, Activity } from 'lucide-react';
 
 const features = [
     {
@@ -42,7 +42,7 @@ export function OrganizerSection() {
                 </div>
 
                 <div className="grid gap-8 sm:grid-cols-2">
-                    {features.map(({icon: Icon, title, body}) => (
+                    {features.map(({ icon: Icon, title, body }) => (
                         <div key={title} className="border-l border-indigo-400/30 pl-5">
                             <Icon className="size-5 text-indigo-300" strokeWidth={1.5} />
                             <h3 className="mt-4 font-medium text-white">{title}</h3>

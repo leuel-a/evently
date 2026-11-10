@@ -1,7 +1,7 @@
-import {Button} from '@/components/ui/button';
-import {Badge} from '@/components/ui/badge';
-import {ConnectAccountDialog} from './ConnectAccountDialog';
-import type {LinkedAccount, ProviderConfig, ProviderKey} from './types';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ConnectAccountDialog } from './ConnectAccountDialog';
+import type { LinkedAccount, ProviderConfig, ProviderKey } from './types';
 
 interface ProviderRowProps {
     provider: ProviderConfig;
@@ -10,7 +10,7 @@ interface ProviderRowProps {
     onConnect?: (provider: ProviderKey) => Promise<void> | void;
 }
 
-export function ProviderRow({provider, isConnected, account, onConnect}: ProviderRowProps) {
+export function ProviderRow({ provider, isConnected, account, onConnect }: ProviderRowProps) {
     const Icon = provider.icon;
 
     return (

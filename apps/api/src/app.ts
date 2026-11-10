@@ -1,8 +1,8 @@
 import './env';
 
-import {env} from './config/env';
-import {logger} from './utils/logger';
-import {createApp} from './app.factory';
+import { env } from './config/env';
+import { logger } from './utils/logger';
+import { createApp } from './app.factory';
 
 async function startServer() {
     try {

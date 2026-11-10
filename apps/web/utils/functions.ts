@@ -1,5 +1,5 @@
 import lodashIsEmpty from 'lodash/isEmpty';
-import {APP_ROUTES} from '@/config/routes';
+import { APP_ROUTES } from '@/config/routes';
 
 export function getInitials(name: string) {
     return name

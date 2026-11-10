@@ -1,9 +1,9 @@
 'use client';
 
-import {Fragment, useState} from 'react';
-import {ChartPie, ChartBar} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {cn} from '@/lib/utils';
+import { Fragment, useState } from 'react';
+import { ChartPie, ChartBar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export type GraphType = 'pie' | 'bar';
 
@@ -13,7 +13,7 @@ interface SelectEventsByCategoryChartProps {
 }
 
 export function SelectEventsByCategoryChart(props: SelectEventsByCategoryChartProps) {
-    const {defaultValue, onChange} = props;
+    const { defaultValue, onChange } = props;
     const [selected, setSelected] = useState<GraphType>(defaultValue);
 
     const handleSelect = (value: GraphType) => {

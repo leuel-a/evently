@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import TicketModel from '.';
-import type {TicketDocument} from './types';
-import {TICKET_STATUS} from './constants';
-import {modelNames, TIMEZONE} from '../config';
-import {getPaginationValues} from '../helpers/index';
+import type { TicketDocument } from './types';
+import { TICKET_STATUS } from './constants';
+import { modelNames, TIMEZONE } from '../config';
+import { getPaginationValues } from '../helpers/index';
 
 export interface GetTicketsParams {
     userId: string;
@@ -22,13 +22,13 @@ export async function getTickets(
     this: typeof TicketModel,
     params: GetTicketsParams,
 ) {
-    const {userId, page, size, status} = params;
+    const { userId, page, size, status } = params;
     const matchQuery = {
         'event.user': new mongoose.Types.ObjectId(userId),
-        ...(status && {status}),
+        ...(status && { status }),
     };
 
-    const {limit, skip} = getPaginationValues(page, size);
+    const { limit, skip } = getPaginationValues(page, size);
     const result = await this.aggregate([
         {
             $lookup: {
@@ -50,8 +50,8 @@ export async function getTickets(
         {
             $facet: {
                 data: [
-                    {$skip: skip},
-                    {$limit: limit},
+                    { $skip: skip },
+                    { $limit: limit },
                     {
                         $sort: {
                             createdAt: 1,
@@ -78,14 +78,19 @@ export async function getTickets(
                         },
                     },
                 ],
-                total: [{$count: 'count'}],
+                total: [{ $count: 'count' }],
             },
         },
     ]);
 
     const resultData = result?.[0]?.data;
     const resultTotal = result?.[0]?.total;
-    return {data: resultData, total: resultTotal?.[0]?.count ?? 0, page, limit};
+    return {
+        data: resultData,
+        total: resultTotal?.[0]?.count ?? 0,
+        page,
+        limit,
+    };
 }
 
 export interface GetTicketsRevenueByMonthAndYearParams {
@@ -93,7 +98,7 @@ export interface GetTicketsRevenueByMonthAndYearParams {
 }
 export interface GetTicketsRevenueByMonthAndYearResult {
     data: {
-        revenues: Array<{revenue: number; year: number; month: 1}>;
+        revenues: Array<{ revenue: number; year: number; month: 1 }>;
         totalRevenue: number;
     };
 }
@@ -102,7 +107,7 @@ export async function getTicketsRevenueByMonthAndYear(
     this: typeof TicketModel,
     params: GetTicketsRevenueByMonthAndYearParams,
 ) {
-    const {userId} = params;
+    const { userId } = params;
     const matchQuery = {
         status: TICKET_STATUS.PAID,
         'event.user': new mongoose.Types.ObjectId(userId),
@@ -128,20 +133,20 @@ export async function getTicketsRevenueByMonthAndYear(
         },
         {
             $addFields: {
-                year: {$year: {date: '$createdAt', timezone: TIMEZONE}},
-                month: {$month: {date: '$createdAt', timezone: TIMEZONE}},
+                year: { $year: { date: '$createdAt', timezone: TIMEZONE } },
+                month: { $month: { date: '$createdAt', timezone: TIMEZONE } },
             },
         },
         {
             $group: {
-                _id: {year: '$year', month: '$month'},
-                revenue: {$sum: '$amountPaid'},
+                _id: { year: '$year', month: '$month' },
+                revenue: { $sum: '$amountPaid' },
             },
         },
         {
             $facet: {
                 revenues: [
-                    {$sort: {'_id.year': 1, '_id.month': 1}},
+                    { $sort: { '_id.year': 1, '_id.month': 1 } },
                     {
                         $project: {
                             _id: 0,
@@ -155,7 +160,7 @@ export async function getTicketsRevenueByMonthAndYear(
                     {
                         $group: {
                             _id: null,
-                            total: {$sum: '$revenue'},
+                            total: { $sum: '$revenue' },
                         },
                     },
                     {
@@ -172,5 +177,5 @@ export async function getTicketsRevenueByMonthAndYear(
         ...result?.[0],
         totalRevenue: result?.[0]?.totalRevenue?.[0]?.total,
     };
-    return {data: resultData};
+    return { data: resultData };
 }

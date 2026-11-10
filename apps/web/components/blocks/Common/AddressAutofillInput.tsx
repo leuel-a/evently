@@ -1,13 +1,13 @@
 import * as React from 'react';
-import type {FieldError} from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
 import dynamic from 'next/dynamic';
-import {Input} from '@/components/ui/input';
-import {cn} from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 // Mapbox.AddressAutofill does not support SSR, so we need to dynamically import it for it to work with next.js
 const AddressAutofill = dynamic(
     () => import('@mapbox/search-js-react').then((mapbox) => mapbox.AddressAutofill),
-    {ssr: false},
+    { ssr: false },
 );
 
 export interface AddressAutofillInputProps {
@@ -16,7 +16,7 @@ export interface AddressAutofillInputProps {
 }
 
 export function AddressAutofillInputComponent(props: AddressAutofillInputProps) {
-    const {error, InputProps: inputProps} = props;
+    const { error, InputProps: inputProps } = props;
     return (
         <AddressAutofill accessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string}>
             <Input

@@ -1,4 +1,4 @@
-import createError, {type HttpError} from 'http-errors';
+import createError, { type HttpError } from 'http-errors';
 
 export function httpError(
     status: number,

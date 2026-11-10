@@ -1,6 +1,6 @@
-import type {Metadata} from 'next';
-import {Toaster} from '@/components/ui/sonner';
-import {ComposeProviders} from './providers';
+import type { Metadata } from 'next';
+import { Toaster } from '@/components/ui/sonner';
+import { ComposeProviders } from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {

@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import {AuthenticatedUser} from './AuthenticatedUser';
-import {GetEventsPageResult, GetSessionResult} from '@/app/events/actions';
-import {APP_ROUTES} from '@/config/routes';
+import { AuthenticatedUser } from './AuthenticatedUser';
+import { GetEventsPageResult, GetSessionResult } from '@/app/events/actions';
+import { APP_ROUTES } from '@/config/routes';
 
 interface HeaderProps {
     data: GetEventsPageResult['data'] | undefined;
     session?: GetSessionResult;
 }
 
-export function Header({data, session}: HeaderProps) {
+export function Header({ data, session }: HeaderProps) {
     const total = data?.length ?? 0;
     const free = data?.filter((e) => e.isFree).length ?? 0;
     const virtual = data?.filter((e) => e.isVirtual).length ?? 0;

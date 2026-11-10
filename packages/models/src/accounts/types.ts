@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type {GetLinkedAccountsResult} from './statics';
+import type { GetLinkedAccountsResult } from './statics';
 
 export interface IAccount {
     accountId: string;

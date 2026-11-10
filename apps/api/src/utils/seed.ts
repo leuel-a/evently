@@ -1,39 +1,39 @@
 import '../env';
 
 import mongoose from 'mongoose';
-import Ticket from '@evently/models/tickets';
-import {TicketDocument} from '@evently/models/tickets';
-import Event from '@evently/models/events';
-import {EventDocument} from '@evently/models/events';
-import Resource from '@evently/models/resources';
-import EventCategory from '@evently/models/eventsCategory';
+import EventsModel from '@evently/models/events';
+import TicketsModel from '@evently/models/tickets';
+import ResourcesModel from '@evently/models/resources';
+import EventCategoriesModel from '@evently/models/eventsCategory';
+import type { EventDocument } from '@evently/models/events/types';
+import type { TicketDocument } from '@evently/models/tickets/types';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
 const defaultUserId = '6aec3b427d828a7c9e90c819';
-const defaultResources = [{name: 'events'}, {name: 'eventsCategory'}];
+const defaultResources = [{ name: 'events' }, { name: 'eventsCategory' }];
 
 const defaultPurchasers = [
-    {name: 'Abel Tesfaye', email: 'abel.tesfaye@example.com'},
-    {name: 'Hana Bekele', email: 'hana.bekele@example.com'},
-    {name: 'Dawit Alemu', email: 'dawit.alemu@example.com'},
-    {name: 'Selam Tadesse', email: 'selam.tadesse@example.com'},
-    {name: 'Ruth Kebede', email: 'ruth.kebede@example.com'},
-    {name: 'Nati Girma', email: 'nati.girma@example.com'},
-    {name: 'Meron Haile', email: 'meron.haile@example.com'},
-    {name: 'Samuel Worku', email: 'samuel.worku@example.com'},
-    {name: 'Bethel Assefa', email: 'bethel.assefa@example.com'},
-    {name: 'Yonas Fikru', email: 'yonas.fikru@example.com'},
-    {name: 'Lidiya Solomon', email: 'lidiya.solomon@example.com'},
-    {name: 'Henok Bekele', email: 'henok.bekele@example.com'},
-    {name: 'Rahel Getachew', email: 'rahel.getachew@example.com'},
-    {name: 'Biruk Teshome', email: 'biruk.teshome@example.com'},
-    {name: 'Eden Mesfin', email: 'eden.mesfin@example.com'},
-    {name: 'Surafel Abate', email: 'surafel.abate@example.com'},
-    {name: 'Mahi Deribe', email: 'mahi.deribe@example.com'},
-    {name: 'Naol Mebratu', email: 'naol.mebratu@example.com'},
-    {name: 'Saron Desta', email: 'saron.desta@example.com'},
-    {name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com'},
+    { name: 'Abel Tesfaye', email: 'abel.tesfaye@example.com' },
+    { name: 'Hana Bekele', email: 'hana.bekele@example.com' },
+    { name: 'Dawit Alemu', email: 'dawit.alemu@example.com' },
+    { name: 'Selam Tadesse', email: 'selam.tadesse@example.com' },
+    { name: 'Ruth Kebede', email: 'ruth.kebede@example.com' },
+    { name: 'Nati Girma', email: 'nati.girma@example.com' },
+    { name: 'Meron Haile', email: 'meron.haile@example.com' },
+    { name: 'Samuel Worku', email: 'samuel.worku@example.com' },
+    { name: 'Bethel Assefa', email: 'bethel.assefa@example.com' },
+    { name: 'Yonas Fikru', email: 'yonas.fikru@example.com' },
+    { name: 'Lidiya Solomon', email: 'lidiya.solomon@example.com' },
+    { name: 'Henok Bekele', email: 'henok.bekele@example.com' },
+    { name: 'Rahel Getachew', email: 'rahel.getachew@example.com' },
+    { name: 'Biruk Teshome', email: 'biruk.teshome@example.com' },
+    { name: 'Eden Mesfin', email: 'eden.mesfin@example.com' },
+    { name: 'Surafel Abate', email: 'surafel.abate@example.com' },
+    { name: 'Mahi Deribe', email: 'mahi.deribe@example.com' },
+    { name: 'Naol Mebratu', email: 'naol.mebratu@example.com' },
+    { name: 'Saron Desta', email: 'saron.desta@example.com' },
+    { name: 'Bamlak Kassahun', email: 'bamlak.kassahun@example.com' },
 ];
 
 const seedEventsCategoryData = [
@@ -117,7 +117,7 @@ function generateSpacedDates(count: number, start: Date, end: Date): Date[] {
     const totalMs = end.getTime() - start.getTime();
     const intervalMs = totalMs / (count - 1);
 
-    return Array.from({length: count}, (_, i) => {
+    return Array.from({ length: count }, (_, i) => {
         const d = new Date(start.getTime() + i * intervalMs);
         d.setUTCHours(10, 0, 0, 0);
         return d;
@@ -966,18 +966,18 @@ async function seed() {
         console.log('Connected to DB');
 
         /* 1️⃣ Clear collections */
-        await Ticket.deleteMany({});
-        await Resource.deleteMany({});
-        await Event.deleteMany({});
-        await EventCategory.deleteMany({});
+        await TicketsModel.deleteMany({});
+        await ResourcesModel.deleteMany({});
+        await EventsModel.deleteMany({});
+        await EventCategoriesModel.deleteMany({});
         console.log('Cleared events, categories & tickets');
 
         /* 2️⃣ Insert resources */
-        const resources = await Resource.insertMany(defaultResources);
+        const resources = await ResourcesModel.insertMany(defaultResources);
         console.log(`Inserted ${resources.length} resources`);
 
         /* 3️⃣ Insert categories */
-        const categories = await EventCategory.insertMany(
+        const categories = await EventCategoriesModel.insertMany(
             seedEventsCategoryData,
         );
         console.log(`Inserted ${categories.length} categories`);
@@ -1011,7 +1011,7 @@ async function seed() {
             };
         });
 
-        const insertedEvents = (await Event.insertMany(
+        const insertedEvents = (await EventsModel.insertMany(
             events,
         )) as unknown as EventDocument[];
         console.log(`Inserted ${insertedEvents.length} events`);
@@ -1027,7 +1027,7 @@ async function seed() {
 
         /* 6️⃣ Build & insert tickets */
         const tickets = buildTickets(insertedEvents);
-        const insertedTickets = (await Ticket.insertMany(
+        const insertedTickets = (await TicketsModel.insertMany(
             tickets,
         )) as unknown as TicketDocument[];
         console.log(`\nInserted ${insertedTickets.length} tickets`);

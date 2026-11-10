@@ -1,5 +1,5 @@
-import {createContext, useContext} from 'react';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
+import { createContext, useContext } from 'react';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
 
 interface EventsByCategoryContextValue {
     totalEvents: number;

@@ -1,14 +1,14 @@
 export const API_PREFIX = '/api';
 
 export const API_ROUTES = Object.freeze({
-    auth: {base: '/auth'},
+    auth: { base: '/auth' },
     users: {
         base: '/users',
         me: '/me',
         linkedAccounts: '/me/linked-accounts',
     },
     public: {
-        events: {base: '/events'},
+        events: { base: '/events' },
         payments: {
             base: '/payments',
             chapa: {
@@ -17,10 +17,10 @@ export const API_ROUTES = Object.freeze({
         },
     },
     dashboard: {
-        stats: {base: '/dashboard/stats'},
-        events: {base: '/dashboard/events'},
-        eventsCategory: {base: '/dashboard/eventsCategory'},
-        tickets: {base: '/dashboard/tickets'},
-        settings: {base: '/dashboard/settings'},
+        stats: { base: '/dashboard/stats' },
+        events: { base: '/dashboard/events' },
+        eventsCategory: { base: '/dashboard/eventsCategory' },
+        tickets: { base: '/dashboard/tickets' },
+        settings: { base: '/dashboard/settings' },
     },
 });

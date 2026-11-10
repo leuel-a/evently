@@ -1,4 +1,4 @@
-import {ControllerFieldState, ControllerRenderProps} from 'react-hook-form';
+import { ControllerFieldState, ControllerRenderProps } from 'react-hook-form';
 import {
     Select,
     SelectTrigger,
@@ -6,9 +6,9 @@ import {
     SelectContent,
     SelectItem,
 } from '@/components/ui/select';
-import {EventSchemaType} from '@/lib/db/schema';
-import {Field, FieldLabel, FieldError} from '@/components/ui/field';
-import {countries} from '@/utils/index';
+import { EventSchemaType } from '@/lib/db/schema';
+import { Field, FieldLabel, FieldError } from '@/components/ui/field';
+import { countries } from '@/utils/index';
 
 interface CountriesSelectInputProps {
     field: ControllerRenderProps<EventSchemaType, 'country'>;
@@ -16,7 +16,7 @@ interface CountriesSelectInputProps {
 }
 
 export function CountriesSelectInput(props: CountriesSelectInputProps) {
-    const {fieldState, field} = props;
+    const { fieldState, field } = props;
 
     return (
         <Field data-invalid={fieldState.invalid}>
@@ -29,7 +29,7 @@ export function CountriesSelectInput(props: CountriesSelectInputProps) {
                     <SelectValue placeholder="Country" />
                 </SelectTrigger>
                 <SelectContent>
-                    {countries.map(({value, label}) => (
+                    {countries.map(({ value, label }) => (
                         <SelectItem key={value} value={value}>
                             {label}
                         </SelectItem>

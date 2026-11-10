@@ -1,4 +1,4 @@
-import {Radio} from 'lucide-react';
+import { Radio } from 'lucide-react';
 
 export function formatPrice(price: number) {
     if (price === 0) return 'Free';
@@ -16,10 +16,10 @@ export function statusColor(status: string) {
 }
 
 export function typeLabel(type: string) {
-    return {physical: 'In Person', virtual: 'Virtual', hybrid: 'Hybrid'}[type] ?? type;
+    return { physical: 'In Person', virtual: 'Virtual', hybrid: 'Hybrid' }[type] ?? type;
 }
 
-export function StatusPip({status}: {status: string}) {
+export function StatusPip({ status }: { status: string }) {
     if (status === 'active') {
         return (
             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.15em] text-emerald-300">

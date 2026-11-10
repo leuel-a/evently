@@ -1,14 +1,14 @@
-import type {FormHTMLAttributes, ComponentProps} from 'react';
-import {useFormContext, Controller} from 'react-hook-form';
-import type {SubmitHandler} from 'react-hook-form';
+import type { FormHTMLAttributes, ComponentProps } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import NextLink from 'next/link';
-import {Button} from '@/components/ui/button';
-import {Field, FieldLabel, FieldError} from '@/components/ui/field';
-import {Input} from '@/components/ui/input';
-import {Separator} from '@/components/ui/separator';
-import {Textarea} from '@/components/ui/textarea';
-import {APP_ROUTES} from '@/config/routes';
-import {cn} from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel, FieldError } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
+import { APP_ROUTES } from '@/config/routes';
+import { cn } from '@/lib/utils';
 
 export type EventCategorySchemaType = {
     name: string;
@@ -43,7 +43,7 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
                     <Controller
                         control={form.control}
                         name="name"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <Field>
                                 <FieldLabel>Name</FieldLabel>
                                 <Input
@@ -58,7 +58,7 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
                     <Controller
                         control={form.control}
                         name="description"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <Field>
                                 <FieldLabel>Description</FieldLabel>
                                 <Textarea
@@ -104,6 +104,6 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
 }
 
 export const sanitizeProps = (props: EventCategoryFormProps) => {
-    const {onSubmit, defaultValues, SubmitButtonProps, ...defaultFormProps} = props;
+    const { onSubmit, defaultValues, SubmitButtonProps, ...defaultFormProps } = props;
     return defaultFormProps;
 };

@@ -1,4 +1,4 @@
-import {Datepicker, type DatepickerProps} from '../Datepicker';
+import { Datepicker, type DatepickerProps } from '../Datepicker';
 
 export function FormDatepicker(props: FormDatepickerProps) {
     return (

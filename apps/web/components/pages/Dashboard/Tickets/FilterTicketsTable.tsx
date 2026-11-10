@@ -1,6 +1,6 @@
 'use client';
 
-import {SearchTickets} from '../Common';
+import { SearchTickets } from '../Common';
 
 export function FilterTicketsTable() {
     return (

@@ -1,9 +1,9 @@
 'use client';
 
-import {useRouter, useSearchParams} from 'next/navigation';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {RangeSelector} from '@/components/blocks/Common/RangeSelector';
-import {APP_ROUTES} from '@/config/routes';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { RangeSelector } from '@/components/blocks/Common/RangeSelector';
+import { APP_ROUTES } from '@/config/routes';
 import {
     getValueFromFilterParam,
     removePropertyFromFilter,
@@ -18,7 +18,7 @@ interface TicketPriceRangeSelectorProps {
 export const PRICE_FILTER_PARAM_KEY = 'price';
 
 export function TicketPriceRangeSelector(props: TicketPriceRangeSelectorProps) {
-    const {min, max} = props;
+    const { min, max } = props;
     const router = useRouter();
     const searchParams = useSearchParams();
 

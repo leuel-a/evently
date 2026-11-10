@@ -1,13 +1,13 @@
-import {UpdateEventForm} from '@/components/pages/Dashboard/Events/UpdateEventForm';
-import {getEditEventPageData} from '../../actions';
+import { UpdateEventForm } from '@/components/pages/Dashboard/Events/UpdateEventForm';
+import { getEditEventPageData } from '../../actions';
 
 interface PageProps {
-    params: Promise<{id: string}>;
+    params: Promise<{ id: string }>;
 }
 
 export default async function Page(props: PageProps) {
-    const {id} = await props.params;
-    const {data} = await getEditEventPageData(id);
+    const { id } = await props.params;
+    const { data } = await getEditEventPageData(id);
 
     if (data?.data) {
         return <UpdateEventForm defaultValues={data?.data} />;

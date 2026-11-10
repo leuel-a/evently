@@ -1,6 +1,6 @@
-import {body, query, param} from 'express-validator';
-import {EVENT_STATUS, EVENT_TYPE} from '@evently/models/events/constants';
-import {optionalize} from './utils';
+import { body, query, param } from 'express-validator';
+import { EVENT_STATUS, EVENT_TYPE } from '@evently/models/events/constants';
+import { optionalize } from './utils';
 
 const INVALID_EVENT_ID = 'Event ID is not a valid Mongo ID';
 
@@ -214,7 +214,7 @@ export const getEventValidator = [
 export const updateEventValidator = [
     param('id').isMongoId().withMessage(INVALID_EVENT_ID),
     ...Object.values(eventFieldsValidators).map(optionalize),
-    body().custom((_, {req}) => {
+    body().custom((_, { req }) => {
         if (req?.body && Object.keys(req?.body).length === 0) {
             throw new Error('At least one field must be provided');
         }

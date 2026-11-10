@@ -1,4 +1,4 @@
-import {Search, CreditCard, MailCheck} from 'lucide-react';
+import { Search, CreditCard, MailCheck } from 'lucide-react';
 
 const steps = [
     {
@@ -36,7 +36,7 @@ export function AttendeeSection() {
                         className="absolute top-6 left-0 right-0 hidden h-px bg-indigo-200 sm:block"
                         aria-hidden
                     />
-                    {steps.map(({icon: Icon, title, body}, _) => (
+                    {steps.map(({ icon: Icon, title, body }, _) => (
                         <div key={title} className="relative bg-indigo-50">
                             <div className="flex size-12 items-center justify-center rounded-full border border-indigo-200 bg-white">
                                 <Icon className="size-5 text-indigo-500" strokeWidth={1.5} />

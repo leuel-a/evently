@@ -1,9 +1,9 @@
 'use client';
 
-import {useQuery, type QueryFunction} from '@tanstack/react-query';
-import {API_ROUTES} from '@/config/routes';
-import {AccountConnectionsSection} from '@/components/pages/Dashboard/Settings/Accounts/AccountConnectionsSection';
-import {LinkedAccountsResponse} from '@/components/pages/Dashboard/Settings/Accounts/types';
+import { useQuery, type QueryFunction } from '@tanstack/react-query';
+import { API_ROUTES } from '@/config/routes';
+import { AccountConnectionsSection } from '@/components/pages/Dashboard/Settings/Accounts/AccountConnectionsSection';
+import { LinkedAccountsResponse } from '@/components/pages/Dashboard/Settings/Accounts/types';
 
 const getMyLinkedAccounts: QueryFunction<LinkedAccountsResponse> = async () => {
     const response = await fetch(API_ROUTES.users.linkedAccounts);
@@ -14,7 +14,7 @@ const getMyLinkedAccounts: QueryFunction<LinkedAccountsResponse> = async () => {
 };
 
 export default function Page() {
-    const {data: linkedAccountsData} = useQuery({
+    const { data: linkedAccountsData } = useQuery({
         queryKey: ['user-accounts'],
         queryFn: getMyLinkedAccounts,
     });

@@ -13,8 +13,8 @@ import {
     updateEventHandler,
     deleteEventHandler,
 } from '../../handlers/dashboard/events';
-import {requireUser} from '../../middlewares/requireUser';
-import {validateRequest} from '../../middlewares/validateRequest';
+import { requireUser } from '../../middlewares/requireUser';
+import { validateRequest } from '../../middlewares/validateRequest';
 
 const BASE_URL = '';
 const BASE_URL_WITH_ID = `${BASE_URL}/:id`;

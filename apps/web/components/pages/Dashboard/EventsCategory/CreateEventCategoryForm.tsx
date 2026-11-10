@@ -1,15 +1,15 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
-import {toast} from 'sonner';
-import {createEventCategoryMutation} from '@/app/dashboard/events-category/create/queries';
-import {EventCategoryForm} from '@/components/pages/Dashboard/Form/EventCategory';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {eventCategorySchema, type EventCategorySchemaType} from '@/lib/db/schema';
-import {APP_ROUTES} from '@/config/routes';
-import {revalidateEventCategories} from '@/app/dashboard/events-category/actions';
+import { useRouter } from 'next/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { createEventCategoryMutation } from '@/app/dashboard/events-category/create/queries';
+import { EventCategoryForm } from '@/components/pages/Dashboard/Form/EventCategory';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { eventCategorySchema, type EventCategorySchemaType } from '@/lib/db/schema';
+import { APP_ROUTES } from '@/config/routes';
+import { revalidateEventCategories } from '@/app/dashboard/events-category/actions';
 
 const EVENT_CATEGORY_CREATED_SUCCESS_TITLE = 'Event category created';
 const EVENT_CATEGORY_CREATED_ERROR_TITLE = 'Failed to create event category';
@@ -30,7 +30,7 @@ export function CreateEventCategoryForm() {
         onSuccess: async (data) => {
             await revalidateEventCategories(); // TODO: there might be a better way to do this but for not this works
 
-            const {data: createdEventCategory} = data;
+            const { data: createdEventCategory } = data;
             toast.success(EVENT_CATEGORY_CREATED_SUCCESS_TITLE, {
                 description: `"${createdEventCategory.name}" has been successfully created.`,
             });

@@ -1,7 +1,7 @@
-import axios, {AxiosError} from 'axios';
-import {RequestHandler} from 'express';
-import {matchedData} from 'express-validator';
-import {env} from '../config/env';
+import axios, { AxiosError } from 'axios';
+import { RequestHandler } from 'express';
+import { matchedData } from 'express-validator';
+import { env } from '../config/env';
 
 type InitializeChapaAcceptPaymentResponseMessage =
     'Hosted Link' | 'Authorization required';
@@ -10,7 +10,7 @@ type InitializeChapaAcceptPaymentResponseStatus = 'success' | 'failed';
 export interface InitializeChapaAcceptPaymentResponse {
     message: InitializeChapaAcceptPaymentResponseMessage;
     status: InitializeChapaAcceptPaymentResponseStatus;
-    data: {checkout_url: string} | undefined;
+    data: { checkout_url: string } | undefined;
 }
 
 export const initializeChapaAcceptPaymentHandler: RequestHandler = async (
@@ -18,7 +18,7 @@ export const initializeChapaAcceptPaymentHandler: RequestHandler = async (
     res,
     next,
 ) => {
-    const data = matchedData(req, {locations: ['body']});
+    const data = matchedData(req, { locations: ['body'] });
 
     const initalizeAcceptPaymentURL = `${env.CHAPA_BASE_API_URL}/transaction/initialize`;
     const initalizeAcceptPaymentHeaders = {

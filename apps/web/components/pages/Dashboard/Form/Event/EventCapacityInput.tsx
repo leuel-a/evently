@@ -1,8 +1,8 @@
-import type {ComponentProps} from 'react';
-import {ControllerRenderProps, ControllerFieldState} from 'react-hook-form';
-import {Input} from '@/components/ui/input';
-import {Field, FieldLabel, FieldError, FieldDescription} from '@/components/ui/field';
-import type {EventSchemaType} from '@/lib/db/schema';
+import type { ComponentProps } from 'react';
+import { ControllerRenderProps, ControllerFieldState } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
+import type { EventSchemaType } from '@/lib/db/schema';
 
 interface EventCapacityInputProps extends Omit<ComponentProps<typeof Input>, 'value' | 'onChange'> {
     field: ControllerRenderProps<EventSchemaType, 'capacity'>;
@@ -10,7 +10,7 @@ interface EventCapacityInputProps extends Omit<ComponentProps<typeof Input>, 'va
 }
 
 export function EventCapacityInput(props: EventCapacityInputProps) {
-    const {field, fieldState, ...inputProps} = props;
+    const { field, fieldState, ...inputProps } = props;
 
     return (
         <Field className="flex-1">

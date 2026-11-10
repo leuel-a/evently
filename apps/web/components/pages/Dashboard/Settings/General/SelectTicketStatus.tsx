@@ -1,8 +1,8 @@
 'use client';
 
-import {useRouter, usePathname, useSearchParams} from 'next/navigation';
-import {Select, SelectContent, SelectTrigger, SelectItem} from '@/components/ui/select';
-import {TICKET_STATUS} from '@evently/models/tickets';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { TICKET_STATUS } from '@evently/models/tickets/constants';
+import { Select, SelectContent, SelectTrigger, SelectItem } from '@/components/ui/select';
 
 export function SelectTicketStatus() {
     const router = useRouter();

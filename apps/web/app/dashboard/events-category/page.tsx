@@ -1,12 +1,12 @@
-import {Suspense} from 'react';
-import {getEventsCategoryPageData} from './actions';
-import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
-import {FilterEventsCategoryTable} from '@/components/pages/Dashboard/EventsCategory';
+import { Suspense } from 'react';
+import { getEventsCategoryPageData } from './actions';
+import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { FilterEventsCategoryTable } from '@/components/pages/Dashboard/EventsCategory';
 import {
     DataTable as EventsCategoryTable,
     TablePagination,
 } from '@/components/pages/Dashboard/Common';
-import {columns} from './columns';
+import { columns } from './columns';
 
 interface PageProps {
     searchParams: Promise<Record<string, string>>;
@@ -14,7 +14,7 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
     const params = await props.searchParams;
-    const {success, data, error} = await getEventsCategoryPageData(params);
+    const { success, data, error } = await getEventsCategoryPageData(params);
 
     return (
         <Suspense fallback={<LoadingSpinner />}>
@@ -30,7 +30,7 @@ export default async function Page(props: PageProps) {
                         <EventsCategoryTable
                             columns={columns}
                             data={data?.eventsCategory?.data || []}
-                            ContainerProps={{className: 'max-w-7xl'}}
+                            ContainerProps={{ className: 'max-w-7xl' }}
                         />
                         <TablePagination
                             page={data?.eventsCategory?.page}

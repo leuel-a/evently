@@ -1,4 +1,4 @@
-import {Search, MapPin, CalendarDays} from 'lucide-react';
+import { Search, MapPin, CalendarDays } from 'lucide-react';
 
 const cards = [
     {
@@ -36,7 +36,7 @@ export function DiscoverSection() {
                 </div>
 
                 <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-indigo-100 bg-indigo-100 sm:grid-cols-3">
-                    {cards.map(({icon: Icon, title, body}) => (
+                    {cards.map(({ icon: Icon, title, body }) => (
                         <div key={title} className="bg-white p-8">
                             <Icon className="size-5 text-indigo-500" strokeWidth={1.5} />
                             <h3 className="mt-5 font-medium text-indigo-950">{title}</h3>

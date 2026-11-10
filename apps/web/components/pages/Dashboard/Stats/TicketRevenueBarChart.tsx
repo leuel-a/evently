@@ -1,13 +1,13 @@
-import {BarChart, Bar, CartesianGrid, XAxis, YAxis} from 'recharts';
+import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from 'recharts';
 import {
     ChartContainer,
     ChartConfig,
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
-import {normalizeRevenueData} from './utils';
-import {cn} from '@/lib/utils';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
+import { normalizeRevenueData } from './utils';
+import { cn } from '@/lib/utils';
 
 interface TicketRevenueBarChartProps {
     year: number;
@@ -22,7 +22,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function TicketRevenueBarChart(props: TicketRevenueBarChartProps) {
-    const {year: selectedYear, revenueData} = props;
+    const { year: selectedYear, revenueData } = props;
 
     const normalizedData = normalizeRevenueData(revenueData);
     const chartData = normalizedData.filter((data) => data?.year == selectedYear);

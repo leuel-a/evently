@@ -1,5 +1,5 @@
-import {User, Session} from 'better-auth';
-import {Types} from 'mongoose';
+import { User, Session } from 'better-auth';
+import { Types } from 'mongoose';
 
 declare global {
     namespace Express {

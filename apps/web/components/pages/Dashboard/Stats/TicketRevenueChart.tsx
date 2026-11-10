@@ -1,15 +1,15 @@
 'use client';
 
-import {useState} from 'react';
-import type {ComponentProps} from 'react';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {cn} from '@/lib/utils';
-import {SelectTicketRevenueYear} from './SelectTicketRevenueYear';
-import {GraphType, SelectRevenueGraphType} from './SelectRevenueGraphType';
-import {TicketRevenueLineChart} from './TicketRevenueLineChart';
-import {TicketRevenueBarChart} from './TicketRevenueBarChart';
-import {EmptyRevenueChart} from './EmptyRevenueChart';
+import { useState } from 'react';
+import type { ComponentProps } from 'react';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { SelectTicketRevenueYear } from './SelectTicketRevenueYear';
+import { GraphType, SelectRevenueGraphType } from './SelectRevenueGraphType';
+import { TicketRevenueLineChart } from './TicketRevenueLineChart';
+import { TicketRevenueBarChart } from './TicketRevenueBarChart';
+import { EmptyRevenueChart } from './EmptyRevenueChart';
 
 interface TicketRevenueChartProps {
     CardProps?: ComponentProps<typeof Card>;
@@ -17,12 +17,12 @@ interface TicketRevenueChartProps {
 }
 
 export function TicketRevenueChart(props: TicketRevenueChartProps) {
-    const {CardProps = {}, revenueData} = props;
-    const {className: customCardClassName, ...cardProps} = CardProps;
+    const { CardProps = {}, revenueData } = props;
+    const { className: customCardClassName, ...cardProps } = CardProps;
 
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
     const [graphType, setGraphType] = useState<GraphType>('line');
-    const choices = Array.from(new Set(revenueData?.map(({year}) => year)));
+    const choices = Array.from(new Set(revenueData?.map(({ year }) => year)));
 
     const hasData = revenueData && revenueData.length > 0;
 

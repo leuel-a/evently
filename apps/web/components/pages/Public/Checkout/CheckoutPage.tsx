@@ -1,16 +1,16 @@
 'use client';
 
-import {useState} from 'react';
-import {EventSummaryPanel} from './EventsSummaryPanel';
-import {CheckoutForm} from './CheckoutForm';
-import {GetEventPageResult} from '@/app/events/actions';
+import { useState } from 'react';
+import { EventSummaryPanel } from './EventsSummaryPanel';
+import { CheckoutForm } from './CheckoutForm';
+import { GetEventPageResult } from '@/app/events/actions';
 
 interface CheckoutPageProps {
     event: GetEventPageResult['data'];
 }
 
 export function CheckoutPage(props: CheckoutPageProps) {
-    const {event} = props;
+    const { event } = props;
     const [quantity, setQuantity] = useState(1);
 
     return (

@@ -1,27 +1,27 @@
 import mongoose from 'mongoose';
 import EventModel from '.';
-import {getPaginationValues} from '../helpers/index';
-import {filtersQuery} from '../utils/filters';
-import {modelNames} from '../config';
-import {EVENT_TYPE} from './constants';
-import type {IEvent} from './types';
+import { getPaginationValues } from '../helpers/index';
+import { filtersQuery } from '../utils/filters';
+import { modelNames } from '../config';
+import { EVENT_TYPE } from './constants';
+import type { IEvent } from './types';
 
-export type GetEventParams = {id: string};
-export type GetEventResult = {data: IEvent | null};
+export type GetEventParams = { id: string };
+export type GetEventResult = { data: IEvent | null };
 
-export type GetEventStatsParams = {userId: string};
+export type GetEventStatsParams = { userId: string };
 export type GetEventStatsResult = {
     data: {
         totalEvents: number;
         totalCategories: number;
-        categories: Array<{count: number; id: string; name: string}>;
+        categories: Array<{ count: number; id: string; name: string }>;
     };
 };
 export async function getEventStats(
     this: typeof EventModel,
     params: GetEventStatsParams,
 ) {
-    const {userId} = params;
+    const { userId } = params;
     const matchQuery = {
         isDeleted: false,
         user: new mongoose.Types.ObjectId(userId),
@@ -56,11 +56,11 @@ export async function getEventStats(
                                 id: '$category._id',
                                 name: '$category.name',
                             },
-                            count: {$sum: 1},
+                            count: { $sum: 1 },
                         },
                     },
                     {
-                        $sort: {count: -1}, // INFO: this might need to be passed as a parameter
+                        $sort: { count: -1 }, // INFO: this might need to be passed as a parameter
                     },
                     {
                         $project: {
@@ -86,15 +86,15 @@ export async function getEventStats(
         totalCategories: (raw?.categories ?? []).length,
         categories: raw?.categories ?? [],
     };
-    return {data: resultsData};
+    return { data: resultsData };
 }
 
 export async function getEvent(
     this: typeof EventModel,
     params: GetEventParams,
 ): Promise<GetEventResult> {
-    const {id} = params;
-    const matchQuery = {_id: new mongoose.Types.ObjectId(id)};
+    const { id } = params;
+    const matchQuery = { _id: new mongoose.Types.ObjectId(id) };
 
     const result = await this.aggregate([
         {
@@ -150,7 +150,7 @@ export async function getEvent(
     ]);
 
     const resultsData = result?.[0];
-    return {data: resultsData};
+    return { data: resultsData };
 }
 
 export type CreateEventPayload = Omit<IEvent, 'isDeleted'>;
@@ -162,7 +162,10 @@ export async function createEvent(
     return event;
 }
 
-export type GetEventsResponse = IEvent & {isVirtual: boolean; isFree: boolean};
+export type GetEventsResponse = IEvent & {
+    isVirtual: boolean;
+    isFree: boolean;
+};
 export type GetEventsParams = {
     page: string;
     size: string;
@@ -205,7 +208,7 @@ export async function getEvents(
                     {
                         $group: {
                             _id: null,
-                            ids: {$push: '$_id'},
+                            ids: { $push: '$_id' },
                         },
                     },
                     {
@@ -224,7 +227,7 @@ export async function getEvents(
 
     const matchQuery = {
         isDeleted: false,
-        ...(userId && {user: new mongoose.Types.ObjectId(userId)}),
+        ...(userId && { user: new mongoose.Types.ObjectId(userId) }),
         ...filtersQuery(filters),
         // INFO: since there is a $text, the $match pipline stage should
         // the first stage in the aggregation pipeline
@@ -238,7 +241,7 @@ export async function getEvents(
         }),
     };
 
-    const {limit, skip} = getPaginationValues(page, size);
+    const { limit, skip } = getPaginationValues(page, size);
 
     const results = await this.aggregate([
         {
@@ -260,15 +263,15 @@ export async function getEvents(
         },
         {
             $addFields: {
-                isVirtual: {$eq: ['$type', EVENT_TYPE.VIRTUAL]},
-                isFree: {$eq: ['$ticketPrice', 0]},
+                isVirtual: { $eq: ['$type', EVENT_TYPE.VIRTUAL] },
+                isFree: { $eq: ['$ticketPrice', 0] },
             },
         },
         {
             $facet: {
                 data: [
-                    {$skip: skip},
-                    {$limit: limit},
+                    { $skip: skip },
+                    { $limit: limit },
                     {
                         $project: {
                             id: '$_id',
@@ -302,14 +305,14 @@ export async function getEvents(
                         },
                     },
                 ],
-                total: [{$count: 'count'}],
+                total: [{ $count: 'count' }],
             },
         },
     ]);
 
     const resultData = results?.[0]?.data;
     const resultTotal = results?.[0]?.total;
-    return {data: resultData, total: resultTotal?.[0]?.count, page, limit};
+    return { data: resultData, total: resultTotal?.[0]?.count, page, limit };
 }
 
 export async function deleteEvent(
@@ -318,8 +321,8 @@ export async function deleteEvent(
 ) {
     return this.findByIdAndUpdate(
         objectId,
-        {isDeleted: true},
-        {new: true},
+        { isDeleted: true },
+        { new: true },
     ).populate('category', '_id name description');
 }
 
@@ -327,13 +330,13 @@ export async function updateEvent(
     this: typeof EventModel,
     objectId: mongoose.Types.ObjectId,
     updatedData: Partial<IEvent>,
-    options: mongoose.QueryOptions = {returnDocument: 'after'},
+    options: mongoose.QueryOptions = { returnDocument: 'after' },
 ) {
-    await this.findByIdAndUpdate(objectId, {...updatedData}, options);
+    await this.findByIdAndUpdate(objectId, { ...updatedData }, options);
 
     const result = await this.aggregate([
         {
-            $match: {_id: new mongoose.Types.ObjectId(objectId)},
+            $match: { _id: new mongoose.Types.ObjectId(objectId) },
         },
         {
             $lookup: {
@@ -351,8 +354,8 @@ export async function updateEvent(
         },
         {
             $addFields: {
-                isVirtual: {$eq: ['$type', EVENT_TYPE.VIRTUAL]},
-                isFree: {$eq: ['$ticketPrice', 0]},
+                isVirtual: { $eq: ['$type', EVENT_TYPE.VIRTUAL] },
+                isFree: { $eq: ['$ticketPrice', 0] },
             },
         },
         {
@@ -390,24 +393,24 @@ export async function updateEvent(
     ]);
 
     const resultData = result?.[0];
-    return {data: resultData};
+    return { data: resultData };
 }
 
 export type GetSettingEventCategoriesResult = {
     category: {
-        all: {id: string; name: string}[];
-        active: {id: string; name: string}[];
+        all: { id: string; name: string }[];
+        active: { id: string; name: string }[];
     };
 };
 
-export type GetSettingsForDashboardParams = {userId: string};
+export type GetSettingsForDashboardParams = { userId: string };
 export type GetSettingsForDashboardResult = {};
 
 export async function getSettingsForDashboard(
     this: typeof EventModel,
     params: GetSettingsForDashboardParams,
 ) {
-    const {userId} = params;
+    const { userId } = params;
     const matchQuery = {
         user: new mongoose.Types.ObjectId(userId),
         isDeleted: false,
@@ -423,8 +426,8 @@ export async function getSettingsForDashboard(
                     {
                         $group: {
                             _id: null,
-                            max: {$max: '$ticketPrice'},
-                            min: {$min: '$ticketPrice'},
+                            max: { $max: '$ticketPrice' },
+                            min: { $min: '$ticketPrice' },
                         },
                     },
                     {
@@ -440,7 +443,7 @@ export async function getSettingsForDashboard(
     ]);
 
     // THERE MIGHT BE A BETTER WAY TO DO THIS?
-    const priceRangeData = result?.[0].priceRange?.[0] || {min: 0, max: 0};
-    const resultData = {tickets: {priceRange: priceRangeData}};
+    const priceRangeData = result?.[0].priceRange?.[0] || { min: 0, max: 0 };
+    const resultData = { tickets: { priceRange: priceRangeData } };
     return resultData;
 }

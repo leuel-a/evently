@@ -1,6 +1,6 @@
-import mongoose, {type Connection} from 'mongoose';
-import type {MongoClient as NativeMongoClient, Db} from 'mongodb';
-import {logger} from '../utils/logger';
+import mongoose, { type Connection } from 'mongoose';
+import type { MongoClient as NativeMongoClient, Db } from 'mongodb';
+import { logger } from '../utils/logger';
 
 class MongoClient {
     connection: Connection | undefined = undefined;

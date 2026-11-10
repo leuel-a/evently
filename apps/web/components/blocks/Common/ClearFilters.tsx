@@ -1,10 +1,10 @@
 'use client';
 
-import {useSearchParams, useRouter, usePathname} from 'next/navigation';
-import {X} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {Tooltip, TooltipTrigger, TooltipContent} from '@/components/ui/tooltip';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
 
 const TOOL_TIP_CONTENT = 'Clear Filters';
 

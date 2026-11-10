@@ -1,4 +1,12 @@
 package.json
 package-lock.json
+tsconfig.json
 
+# config files
+.editorconfig
+.prettierignore
+.prettierrc
+
+# build outputs
 dist/
+.turbo/

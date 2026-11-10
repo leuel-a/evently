@@ -1,7 +1,7 @@
-import {Fragment, useState} from 'react';
-import {ChartLine, ChartBar} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {cn} from '@/lib/utils';
+import { Fragment, useState } from 'react';
+import { ChartLine, ChartBar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export type GraphType = 'line' | 'bar';
 

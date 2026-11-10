@@ -1,27 +1,27 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
-import {Controller, useForm} from 'react-hook-form';
-import {Mail, Lock, User} from 'lucide-react';
-import {useMutation} from '@tanstack/react-query';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {Field, FieldLabel, FieldError, FieldDescription} from '@/components/ui/field';
-import {Input} from '@/components/ui/input';
-import {PasswordInput} from '@/components/blocks/Common';
-import {Separator} from '@/components/ui/separator';
-import {emailSignupSchema, type EmailSignupSchemaType} from '@/lib/db/schema';
-import {GoogleSignIn} from './GoogleSignIn';
-import {emailSignupMutation} from '@/app/(auth)/queries';
-import {APP_ROUTES} from '@/config/routes';
+import { useRouter } from 'next/navigation';
+import { Controller, useForm } from 'react-hook-form';
+import { Mail, Lock, User } from 'lucide-react';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/blocks/Common';
+import { Separator } from '@/components/ui/separator';
+import { emailSignupSchema, type EmailSignupSchemaType } from '@/lib/db/schema';
+import { GoogleSignIn } from './GoogleSignIn';
+import { emailSignupMutation } from '@/app/(auth)/queries';
+import { APP_ROUTES } from '@/config/routes';
 
 interface SignupFormProps {
     isOrganizer: boolean;
 }
 
 export function SignupForm(props: SignupFormProps) {
-    const {isOrganizer} = props;
+    const { isOrganizer } = props;
 
     const router = useRouter();
     const form = useForm<EmailSignupSchemaType>({
@@ -72,7 +72,7 @@ export function SignupForm(props: SignupFormProps) {
                     <Controller
                         control={form.control}
                         name="fullName"
-                        render={({field, fieldState}) => {
+                        render={({ field, fieldState }) => {
                             return (
                                 <Field className="space-y-2">
                                     <FieldLabel>Full Name</FieldLabel>
@@ -97,7 +97,7 @@ export function SignupForm(props: SignupFormProps) {
                     <Controller
                         control={form.control}
                         name="email"
-                        render={({field, fieldState}) => {
+                        render={({ field, fieldState }) => {
                             return (
                                 <Field className="space-y-2">
                                     <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -121,7 +121,7 @@ export function SignupForm(props: SignupFormProps) {
                     <Controller
                         control={form.control}
                         name="password"
-                        render={({field, fieldState}) => {
+                        render={({ field, fieldState }) => {
                             return (
                                 <Field className="space-y-2">
                                     <FieldLabel htmlFor="password">Password</FieldLabel>
@@ -154,7 +154,7 @@ export function SignupForm(props: SignupFormProps) {
                     <Controller
                         control={form.control}
                         name="confirmPassword"
-                        render={({field, fieldState}) => {
+                        render={({ field, fieldState }) => {
                             return (
                                 <Field className="space-y-2">
                                     <FieldLabel>Confirm password</FieldLabel>

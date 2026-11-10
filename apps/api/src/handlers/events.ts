@@ -1,6 +1,6 @@
 import express from 'express';
 import httpStatus from 'http-status';
-import {matchedData} from 'express-validator';
+import { matchedData } from 'express-validator';
 import EventsModel from '@evently/models/events';
 
 export const getEventsHandler: express.RequestHandler = async (
@@ -9,7 +9,7 @@ export const getEventsHandler: express.RequestHandler = async (
     next,
 ) => {
     try {
-        const {page, limit, filters, q} = matchedData(req, {
+        const { page, limit, filters, q } = matchedData(req, {
             locations: ['query'],
         });
         const results = await EventsModel.getEvents({
@@ -44,8 +44,8 @@ export const getEventHandler: express.RequestHandler = async (
     next,
 ) => {
     try {
-        const {id} = matchedData(req, {locations: ['params']});
-        const result = await EventsModel.getEvent({id});
+        const { id } = matchedData(req, { locations: ['params'] });
+        const result = await EventsModel.getEvent({ id });
 
         res.status(httpStatus.OK).json(result);
     } catch (error) {

@@ -1,17 +1,17 @@
 'use client';
 
-import {Fragment} from 'react';
-import {Bar, BarChart, BarShapeProps, CartesianGrid, Rectangle, XAxis, YAxis} from 'recharts';
-import {RechartsDevtools} from '@recharts/devtools';
-import {cn} from '@/lib/utils';
+import { Fragment } from 'react';
+import { Bar, BarChart, BarShapeProps, CartesianGrid, Rectangle, XAxis, YAxis } from 'recharts';
+import { RechartsDevtools } from '@recharts/devtools';
+import { cn } from '@/lib/utils';
 import {
     ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
-import {CATEGORY_COLORS, getCategoryColor} from './utils';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
+import { CATEGORY_COLORS, getCategoryColor } from './utils';
 
 interface EventsByCategoryChartProps {
     totalEvents: number;
@@ -27,7 +27,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function EventsByCategoryBarChart(props: EventsByCategoryChartProps) {
-    const {categories, totalEvents} = props;
+    const { categories, totalEvents } = props;
 
     const chartData = categories?.map((category) => ({
         name: category.name,
@@ -89,7 +89,7 @@ export function EventsByCategoryBarChart(props: EventsByCategoryChartProps) {
                         }}
                     />
                     <ChartTooltip
-                        cursor={{fill: 'hsl(var(--muted))', opacity: 0.5, radius: 4}}
+                        cursor={{ fill: 'hsl(var(--muted))', opacity: 0.5, radius: 4 }}
                         content={
                             <ChartTooltipContent
                                 formatter={(value, _, item) => {
@@ -99,7 +99,7 @@ export function EventsByCategoryBarChart(props: EventsByCategoryChartProps) {
                                         <span className="flex items-center gap-1.5">
                                             <span
                                                 className="inline-block h-2 w-2 rounded-full shrink-0"
-                                                style={{backgroundColor: color}}
+                                                style={{ backgroundColor: color }}
                                             />
                                             <span>
                                                 {count} event{count !== 1 ? 's' : ''}

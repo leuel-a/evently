@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../config';
+import { modelNames } from '../config';
 import resourcesSchema from './schema';
 import * as statics from './statics';
 import * as methods from './methods';
-import type {IResource, IResourceModel} from './types';
+import type { IResource, IResourceModel } from './types';
 
 Object.assign(resourcesSchema.statics, statics);
 Object.assign(resourcesSchema.methods, methods);

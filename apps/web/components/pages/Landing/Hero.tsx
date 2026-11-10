@@ -1,7 +1,7 @@
 import NextLink from 'next/link';
-import {Button} from '@/components/ui/button';
-import {ArrowRight, Ticket} from 'lucide-react';
-import {APP_ROUTES} from '@/config/routes';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Ticket } from 'lucide-react';
+import { APP_ROUTES } from '@/config/routes';
 
 export function Hero() {
     return (
@@ -45,7 +45,7 @@ export function Hero() {
                                 <ArrowRight className="size-4" />
                             </Button>
                         </NextLink>
-                        <NextLink style={{cursor: 'pointer'}} href={APP_ROUTES.events.base}>
+                        <NextLink style={{ cursor: 'pointer' }} href={APP_ROUTES.events.base}>
                             <Button
                                 type="button"
                                 size="lg"

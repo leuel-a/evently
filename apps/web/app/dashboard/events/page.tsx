@@ -1,9 +1,9 @@
-import {Suspense} from 'react';
-import {DataTable as EventTable, TablePagination} from '@/components/pages/Dashboard/Common';
-import {FilterEventsTable} from '@/components/pages/Dashboard/Events/FilterEventsTable';
-import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
-import {getEventsPageData} from './actions';
-import {columns} from './columns';
+import { Suspense } from 'react';
+import { DataTable as EventTable, TablePagination } from '@/components/pages/Dashboard/Common';
+import { FilterEventsTable } from '@/components/pages/Dashboard/Events/FilterEventsTable';
+import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { getEventsPageData } from './actions';
+import { columns } from './columns';
 
 interface PageProps {
     searchParams: Promise<Record<string, string>>;
@@ -11,7 +11,7 @@ interface PageProps {
 
 export default async function Page(props: PageProps) {
     const params = await props.searchParams;
-    const {success, data, error} = await getEventsPageData(params);
+    const { success, data, error } = await getEventsPageData(params);
 
     // TODO: create a common component to show errors
 

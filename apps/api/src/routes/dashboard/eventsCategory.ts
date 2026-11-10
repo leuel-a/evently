@@ -5,8 +5,8 @@ import {
     getEventCategoryValidator,
     deleteEventCategoryValidator,
 } from '../../validators/eventsCategory';
-import {validateRequest} from '../../middlewares/validateRequest';
-import {requireUser} from '../../middlewares/requireUser';
+import { validateRequest } from '../../middlewares/validateRequest';
+import { requireUser } from '../../middlewares/requireUser';
 import {
     createEventCategoryHandler,
     getEventCategoriesHandler,

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames, collectionNames} from '../config';
+import { modelNames, collectionNames } from '../config';
 
 export interface IUser {
     name: string;
@@ -20,16 +20,16 @@ export type UserDocument = IUser &
 
 const schema = new mongoose.Schema<IUser>(
     {
-        name: {type: String, required: true},
+        name: { type: String, required: true },
         email: {
             type: String,
             required: true,
             unique: true,
         },
-        emailVerified: {type: Boolean, default: false},
-        isOrganizer: {type: Boolean, default: false, required: false},
-        organizationName: {type: String},
-        image: {type: String},
+        emailVerified: { type: Boolean, default: false },
+        isOrganizer: { type: Boolean, default: false, required: false },
+        organizationName: { type: String },
+        image: { type: String },
         sessions: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -43,7 +43,7 @@ const schema = new mongoose.Schema<IUser>(
             },
         ],
     },
-    {timestamps: true, collection: collectionNames.user},
+    { timestamps: true, collection: collectionNames.user },
 );
 
 export default schema;

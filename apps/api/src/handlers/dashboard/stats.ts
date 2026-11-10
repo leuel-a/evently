@@ -1,5 +1,5 @@
 import httpStatus from 'http-status';
-import {RequestHandler} from 'express';
+import { RequestHandler } from 'express';
 import EventsModel from '@evently/models/events';
 import TicketsModel from '@evently/models/tickets';
 
@@ -10,8 +10,8 @@ export const getDashboardStatsHandler: RequestHandler = async (
 ) => {
     const user = res.locals.user;
     const [eventsStats, ticketsStats] = await Promise.all([
-        EventsModel.getEventStats({userId: user?.id}),
-        TicketsModel.getTicketsRevenueByMonthAndYear({userId: user?.id}),
+        EventsModel.getEventStats({ userId: user?.id }),
+        TicketsModel.getTicketsRevenueByMonthAndYear({ userId: user?.id }),
     ]);
 
     const resultData = {

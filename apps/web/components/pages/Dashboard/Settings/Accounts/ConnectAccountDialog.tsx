@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import { useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -10,16 +10,16 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import {Button} from '@/components/ui/button';
-import type {ProviderConfig, ProviderKey} from './types';
-import {cn} from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import type { ProviderConfig, ProviderKey } from './types';
+import { cn } from '@/lib/utils';
 
 export interface ConnectAccountDialogProps {
     provider: ProviderConfig;
     onConnect?: (provider: ProviderKey) => Promise<void> | void;
 }
 
-export function ConnectAccountDialog({provider, onConnect}: ConnectAccountDialogProps) {
+export function ConnectAccountDialog({ provider, onConnect }: ConnectAccountDialogProps) {
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 

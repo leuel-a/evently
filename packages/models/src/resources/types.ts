@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type {GetResourcesResult} from './statics';
+import type { GetResourcesResult } from './statics';
 
 export interface IResource {
     name: string;

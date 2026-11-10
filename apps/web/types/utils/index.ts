@@ -1,4 +1,4 @@
-import {ApiError} from '@/lib/error';
+import { ApiError } from '@/lib/error';
 
 export interface IApiResponse<T = unknown> {
     data: T;

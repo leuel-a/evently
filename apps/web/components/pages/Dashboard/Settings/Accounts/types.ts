@@ -4,7 +4,7 @@ export type ProviderConfig = {
     id: ProviderKey;
     label: string;
     description: string;
-    icon: React.ComponentType<{className?: string}>;
+    icon: React.ComponentType<{ className?: string }>;
 };
 
 export type LinkedAccount = {

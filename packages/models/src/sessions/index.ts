@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import sessionsSchema from './schema';
-import type {ISession, ISessionModel} from './types';
+import type { ISession, ISessionModel } from './types';
 import * as statics from './statics';
 import * as methods from './methods';
-import {modelNames} from '../config';
+import { modelNames } from '../config';
 
 Object.assign(sessionsSchema.statics, statics);
 Object.assign(sessionsSchema.methods, methods);

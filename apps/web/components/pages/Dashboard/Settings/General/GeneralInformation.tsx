@@ -1,21 +1,21 @@
 import Image from 'next/image';
-import {Mail, User as LaUser, ShieldCheck, Calendar, Fingerprint} from 'lucide-react';
-import {GetSessionResult} from '@/app/dashboard/actions';
-import {Badge} from '@/components/ui/badge';
-import {formatDate} from '@/utils/date';
+import { Mail, User as LaUser, ShieldCheck, Calendar, Fingerprint } from 'lucide-react';
+import { GetSessionResult } from '@/app/dashboard/actions';
+import { Badge } from '@/components/ui/badge';
+import { formatDate } from '@/utils/date';
 
 export interface GeneralInformationProps {
     data: GetSessionResult;
 }
 
 export interface InfoRowProps {
-    icon: React.ComponentType<{className?: string}>;
+    icon: React.ComponentType<{ className?: string }>;
     label: string;
     value: React.ReactNode;
     mono?: boolean;
 }
 
-export function InfoRow({icon: Icon, label, value, mono = false}: InfoRowProps) {
+export function InfoRow({ icon: Icon, label, value, mono = false }: InfoRowProps) {
     return (
         <div className="flex items-start gap-3 rounded-xl px-1 py-3">
             <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white">
@@ -36,8 +36,8 @@ export function InfoRow({icon: Icon, label, value, mono = false}: InfoRowProps) 
     );
 }
 
-export function GeneralInformation({data}: GeneralInformationProps) {
-    const {user} = data;
+export function GeneralInformation({ data }: GeneralInformationProps) {
+    const { user } = data;
 
     return (
         <div className="overflow-hidden rounded border border-slate-200 bg-white shadow-sm">

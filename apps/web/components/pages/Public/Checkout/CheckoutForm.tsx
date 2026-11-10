@@ -1,18 +1,18 @@
 'use client';
 
-import {ArrowRight, Minus, Plus, ShieldCheck} from 'lucide-react';
-import {useForm, Controller} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {initializeChapaAcceptPaymentMutation} from '@/app/events/[id]/checkout/queries';
-import {Field, FieldError, FieldLabel} from '@/components/ui/field';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
-import {Separator} from '@/components/ui/separator';
-import {GetEventPageResult} from '@/app/events/actions';
-import {checkoutSchema, CheckoutSchemaType} from '@/lib/db/schema';
-import {MouseEventHandler} from 'react';
+import { ArrowRight, Minus, Plus, ShieldCheck } from 'lucide-react';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { initializeChapaAcceptPaymentMutation } from '@/app/events/[id]/checkout/queries';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { GetEventPageResult } from '@/app/events/actions';
+import { checkoutSchema, CheckoutSchemaType } from '@/lib/db/schema';
+import { MouseEventHandler } from 'react';
 
 interface CheckoutFormProps {
     event: GetEventPageResult['data'];
@@ -20,7 +20,7 @@ interface CheckoutFormProps {
     quantity: number;
 }
 
-export function CheckoutForm({event, onQuantityChange, quantity}: CheckoutFormProps) {
+export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutFormProps) {
     const form = useForm<CheckoutSchemaType>({
         resolver: zodResolver(checkoutSchema),
         defaultValues: {
@@ -83,7 +83,7 @@ export function CheckoutForm({event, onQuantityChange, quantity}: CheckoutFormPr
                 <Controller
                     control={form.control}
                     name="amount"
-                    render={({field, fieldState}) => {
+                    render={({ field, fieldState }) => {
                         return (
                             <Field>
                                 <FieldLabel className="mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-indigo-950/50">
@@ -124,7 +124,7 @@ export function CheckoutForm({event, onQuantityChange, quantity}: CheckoutFormPr
                 <Controller
                     control={form.control}
                     name="phoneNumber"
-                    render={({field, fieldState}) => (
+                    render={({ field, fieldState }) => (
                         <Field>
                             <FieldLabel>Phone Number</FieldLabel>
                             <Input
@@ -140,7 +140,7 @@ export function CheckoutForm({event, onQuantityChange, quantity}: CheckoutFormPr
                 <Controller
                     control={form.control}
                     name="name"
-                    render={({field, fieldState}) => {
+                    render={({ field, fieldState }) => {
                         return (
                             <Field>
                                 <FieldLabel>Full name</FieldLabel>
@@ -154,7 +154,7 @@ export function CheckoutForm({event, onQuantityChange, quantity}: CheckoutFormPr
                 <Controller
                     control={form.control}
                     name="email"
-                    render={({field, fieldState}) => {
+                    render={({ field, fieldState }) => {
                         return (
                             <Field>
                                 <FieldLabel>Email address</FieldLabel>

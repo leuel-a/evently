@@ -1,4 +1,4 @@
-import {Card, CardContent} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface KpiCardProps {
     title: string;
@@ -7,7 +7,7 @@ interface KpiCardProps {
 }
 
 export function KpiCard(props: KpiCardProps) {
-    const {title, value, icon} = props;
+    const { title, value, icon } = props;
     return (
         <Card className="bg-background border border-border shadow-none rounded transition-colors hover:bg-muted/30">
             <CardContent className="p-5">

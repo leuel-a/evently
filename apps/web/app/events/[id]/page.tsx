@@ -10,20 +10,20 @@ import {
     Ticket,
     AlertCircle,
 } from 'lucide-react';
-import {APP_ROUTES} from '@/config/routes';
-import {Button} from '@/components/ui/button';
-import {Separator} from '@/components/ui/separator';
-import {formatDate} from '@/utils/date';
-import {typeLabel, formatPrice, StatusPip} from './utils';
-import {getEvent} from '../actions';
+import { APP_ROUTES } from '@/config/routes';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { formatDate } from '@/utils/date';
+import { typeLabel, formatPrice, StatusPip } from './utils';
+import { getEvent } from '../actions';
 
 interface PageProps {
-    params: Promise<{id: string}>;
+    params: Promise<{ id: string }>;
 }
 
 export default async function Page(props: PageProps) {
-    const {id} = await props.params;
-    const {error, data} = await getEvent(id);
+    const { id } = await props.params;
+    const { error, data } = await getEvent(id);
 
     if (error || !data?.data) {
         return (
@@ -202,7 +202,7 @@ export default async function Page(props: PageProps) {
     );
 }
 
-function MetaRow({icon: Icon, children}: {icon: React.ElementType; children: React.ReactNode}) {
+function MetaRow({ icon: Icon, children }: { icon: React.ElementType; children: React.ReactNode }) {
     return (
         <div className="flex items-start gap-2.5 text-sm text-indigo-200/75">
             <Icon className="mt-0.5 size-4 shrink-0 text-indigo-400" strokeWidth={1.5} />

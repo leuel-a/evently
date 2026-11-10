@@ -1,5 +1,5 @@
 import worldCountries from 'world-countries';
-import {splitCamelCase, capitalizeFirstLetters} from './strings';
+import { splitCamelCase, capitalizeFirstLetters } from './strings';
 
 export function getLabelForResource(resource: string): string {
     const resourceString = splitCamelCase(resource);

@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
-import {type RequestHandler} from 'express';
-import {validationResult} from 'express-validator';
-import {ApiErrorCode, ERROR_LOG_TYPES} from '../utils/constants';
+import { type RequestHandler } from 'express';
+import { validationResult } from 'express-validator';
+import { ApiErrorCode, ERROR_LOG_TYPES } from '../utils/constants';
 import winstonLogger from '../config/winston';
 
 /** Middleware to run validation and handle errors before controllers. */

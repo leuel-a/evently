@@ -1,8 +1,8 @@
-import {MutationFunction} from '@tanstack/react-query';
-import {InitializeChapaAcceptPaymentApiResponse} from '@/types/payments';
-import {CheckoutSchemaType} from '@/lib/db/schema';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES} from '@/config/routes';
+import { MutationFunction } from '@tanstack/react-query';
+import { InitializeChapaAcceptPaymentApiResponse } from '@/types/payments';
+import { CheckoutSchemaType } from '@/lib/db/schema';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES } from '@/config/routes';
 
 export const initializeChapaAcceptPaymentMutation: MutationFunction<
     InitializeChapaAcceptPaymentApiResponse,

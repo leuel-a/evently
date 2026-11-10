@@ -1,12 +1,12 @@
 import cors from 'cors';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 import express from 'express';
 import morgan from 'morgan';
-import {toNodeHandler} from 'better-auth/node';
-import {getAuth, initAuth} from './lib/auth';
-import {logger} from './utils/logger';
+import { toNodeHandler } from 'better-auth/node';
+import { getAuth, initAuth } from './lib/auth';
+import { logger } from './utils/logger';
 import MongoClient from './lib/mongo-client';
-import {API_ROUTES, API_PREFIX} from './config/routes';
+import { API_ROUTES, API_PREFIX } from './config/routes';
 import eventsRoutes from './routes/dashboard/events';
 import usersRoutes from './routes/users';
 import ticketsRoutes from './routes/dashboard/tickets';
@@ -15,7 +15,7 @@ import statsRoutes from './routes/dashboard/stats';
 import eventsCategoryRoutes from './routes/dashboard/eventsCategory';
 import publicEventsRoutes from './routes/events';
 import publicPayemntRoutes from './routes/payments';
-import {errorHandler} from './middlewares/errorHandler';
+import { errorHandler } from './middlewares/errorHandler';
 
 export const MORGAN_FORMAT =
     ':timestamp [http] :method :url :status - :response-time ms';

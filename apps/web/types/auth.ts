@@ -1,4 +1,4 @@
-import {User, Session} from 'better-auth';
+import { User, Session } from 'better-auth';
 
 export interface BaseUserResponse extends User {
     isOrganizer?: boolean;

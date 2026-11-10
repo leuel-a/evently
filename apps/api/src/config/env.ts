@@ -1,4 +1,4 @@
-import {cleanEnv, str, num} from 'envalid';
+import { cleanEnv, str, num } from 'envalid';
 
 const env = cleanEnv(process.env, {
     CHAPA_BASE_API_URL: str(),
@@ -6,4 +6,4 @@ const env = cleanEnv(process.env, {
     NODE_PORT: num(),
 });
 
-export {env};
+export { env };

@@ -1,5 +1,5 @@
-import {type ComponentProps} from 'react';
-import {useSearchParams} from 'next/navigation';
+import { type ComponentProps } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
     Select,
     SelectTrigger,
@@ -7,9 +7,9 @@ import {
     SelectContent,
     SelectItem,
 } from '@/components/ui/select';
-import {getValueFromFilterParam} from '@/utils/filters';
-import {cn} from '@/lib/utils';
-import {EVENT_TYPE} from '@evently/models/events';
+import { getValueFromFilterParam } from '@/utils/filters';
+import { cn } from '@/lib/utils';
+import { EVENT_TYPE } from '@evently/models/events/constants';
 
 const EVENT_MODE_FILTER_PARAM_KEY = 'type';
 
@@ -21,8 +21,8 @@ interface EventTypeSelectorProps {
 const EVENT_TYPE_PLACEHOLDER = 'Status';
 
 export function EventTypeSelector(props: EventTypeSelectorProps) {
-    const {SelectTriggerProps = {}, onValueChange} = props;
-    const {className: customSelectTriggerClass, ...selectTriggerProps} = SelectTriggerProps;
+    const { SelectTriggerProps = {}, onValueChange } = props;
+    const { className: customSelectTriggerClass, ...selectTriggerProps } = SelectTriggerProps;
 
     const searchParams = useSearchParams();
     const mode = getValueFromFilterParam(searchParams, EVENT_MODE_FILTER_PARAM_KEY);

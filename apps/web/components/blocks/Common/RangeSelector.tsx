@@ -1,12 +1,12 @@
 'use client';
 
-import {useState, useEffect} from 'react';
-import type {ChangeEvent, ComponentProps} from 'react';
-import {useDebounce} from '@/hooks/use-debounce';
-import {Slider} from '@/components/ui/slider';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
-import {cn} from '@/lib/utils';
+import { useState, useEffect } from 'react';
+import type { ChangeEvent, ComponentProps } from 'react';
+import { useDebounce } from '@/hooks/use-debounce';
+import { Slider } from '@/components/ui/slider';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 const NUMBER_INPUT_WIDTH = 'w-20';
 
@@ -30,7 +30,7 @@ export function RangeSelector(props: RangeSelectorProps) {
         debounceTimer = 300,
         SliderProps = {},
     } = props;
-    const {className: customSliderClassName, ...sliderProps} = SliderProps;
+    const { className: customSliderClassName, ...sliderProps } = SliderProps;
 
     const [rangeValue, setRangeValue] = useState<number[]>(value as number[]);
     const debouncedRangeValue = useDebounce(rangeValue, debounceTimer);

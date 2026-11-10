@@ -1,6 +1,6 @@
 'use client';
 
-import {type ComponentProps, SetStateAction, Dispatch} from 'react';
+import { type ComponentProps, SetStateAction, Dispatch } from 'react';
 import {
     Select,
     SelectItem,
@@ -16,7 +16,7 @@ interface SelectTicketRevenueYearProps {
 }
 
 export function SelectTicketRevenueYear(props: SelectTicketRevenueYearProps) {
-    const {choices, defaultValue, setYear} = props;
+    const { choices, defaultValue, setYear } = props;
     const handleSelectValueChange = (value: string) => {
         setYear(parseInt(value));
     };

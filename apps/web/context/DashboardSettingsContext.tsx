@@ -1,5 +1,5 @@
-import {createContext, PropsWithChildren, useContext, useMemo} from 'react';
-import {SettingsApiResponse} from '@/types/settings';
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
+import { SettingsApiResponse } from '@/types/settings';
 
 export type DashboardSettingsContextType = Partial<SettingsApiResponse>;
 
@@ -12,8 +12,8 @@ export const DashboardSettingsContext = createContext<DashboardSettingsContextTy
 );
 
 export const DashboardSettingsProvider = (props: DashboardSettingsContextProps) => {
-    const {children, tickets, categories, resources} = props;
-    const value = useMemo(() => ({tickets, categories, resources}), [tickets, categories]);
+    const { children, tickets, categories, resources } = props;
+    const value = useMemo(() => ({ tickets, categories, resources }), [tickets, categories]);
 
     return (
         <DashboardSettingsContext.Provider value={value}>

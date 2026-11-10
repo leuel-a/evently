@@ -1,7 +1,7 @@
-import type {ControllerRenderProps, ControllerFieldState} from 'react-hook-form';
-import {BooleanInput} from '@/components/blocks/BooleanInput';
-import {Field, FieldLabel, FieldDescription, FieldError} from '@/components/ui/field';
-import type {EventSchemaType} from '@/lib/db/schema';
+import type { ControllerRenderProps, ControllerFieldState } from 'react-hook-form';
+import { BooleanInput } from '@/components/blocks/BooleanInput';
+import { Field, FieldLabel, FieldDescription, FieldError } from '@/components/ui/field';
+import type { EventSchemaType } from '@/lib/db/schema';
 
 interface EventIsVirtualInputProps {
     field: ControllerRenderProps<EventSchemaType, 'isVirtual'>;
@@ -9,7 +9,7 @@ interface EventIsVirtualInputProps {
 }
 
 export function EventIsVirtualInput(props: EventIsVirtualInputProps) {
-    const {field, fieldState} = props;
+    const { field, fieldState } = props;
     return (
         <Field
             data-invalid={fieldState.invalid}

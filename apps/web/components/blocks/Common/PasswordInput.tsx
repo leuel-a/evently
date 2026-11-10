@@ -1,18 +1,18 @@
 'use client';
 
-import {useState, type ComponentProps} from 'react';
-import {EyeIcon, EyeClosedIcon} from 'lucide-react';
-import {Input} from '@/components/ui/input';
-import {cn} from '@/lib/utils';
-import {Button} from '@/components/ui/button';
+import { useState, type ComponentProps } from 'react';
+import { EyeIcon, EyeClosedIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface PasswordInputProps extends ComponentProps<typeof Input> {
     ContainerProps?: ComponentProps<'div'>;
 }
 
 export function PasswordInput(props: PasswordInputProps) {
-    const {className, type, ContainerProps = {}, ...customProps} = props;
-    const {className: containerClassName, ...containerProps} = ContainerProps;
+    const { className, type, ContainerProps = {}, ...customProps } = props;
+    const { className: containerClassName, ...containerProps } = ContainerProps;
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const handleClick = () => setShowPassword((prev) => !prev);
 

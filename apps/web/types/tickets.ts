@@ -1,6 +1,6 @@
-import type {ITicket} from '@evently/models/tickets/types';
-import {IEventApiResponse} from './events';
-import {IApiResponse, IPageResultData, IBaseModel} from './utils';
+import type { ITicket } from '@evently/models/tickets/types';
+import { IEventApiResponse } from './events';
+import { IApiResponse, IPageResultData, IBaseModel } from './utils';
 
 export type ITicketApiResponse = IBaseModel &
     Omit<ITicket, 'event'> & {

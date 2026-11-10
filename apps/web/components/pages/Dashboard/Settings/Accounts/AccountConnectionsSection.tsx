@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import {BadgeCheck, Cable, Disc3, MessageCircle, Twitter, Video} from 'lucide-react';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {Separator} from '@/components/ui/separator';
-import {LinkedAccountsResponse, ProviderConfig, ProviderKey} from './types';
-import {ProviderRow} from './ProviderRow';
+import { BadgeCheck, Cable, Disc3, MessageCircle, Twitter, Video } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { LinkedAccountsResponse, ProviderConfig, ProviderKey } from './types';
+import { ProviderRow } from './ProviderRow';
 
 const PROVIDERS: ProviderConfig[] = [
     {
@@ -39,7 +39,7 @@ export interface AccountConnectionsSectionProps {
     onConnect?: (provider: ProviderKey) => Promise<void> | void;
 }
 
-export function AccountConnectionsSection({data, onConnect}: AccountConnectionsSectionProps) {
+export function AccountConnectionsSection({ data, onConnect }: AccountConnectionsSectionProps) {
     const linkedAccounts = data?.data ?? [];
     const linkedProviderMap = new Map(
         linkedAccounts.map((account) => [account.providerId, account]),

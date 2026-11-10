@@ -1,16 +1,16 @@
 'use client';
 
-import {Line, LineChart, CartesianGrid, XAxis, YAxis} from 'recharts';
-import {RechartsDevtools} from '@recharts/devtools';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
+import { Line, LineChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { RechartsDevtools } from '@recharts/devtools';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
 import {
     ChartContainer,
     ChartConfig,
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import {cn} from '@/lib/utils';
-import {normalizeRevenueData} from './utils';
+import { cn } from '@/lib/utils';
+import { normalizeRevenueData } from './utils';
 
 interface TicketRevenueLineChartProps {
     year: number;
@@ -25,7 +25,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function TicketRevenueLineChart(props: TicketRevenueLineChartProps) {
-    const {year: selectedYear, revenueData} = props;
+    const { year: selectedYear, revenueData } = props;
 
     const normalizedData = normalizeRevenueData(revenueData);
     const chartData = normalizedData.filter((data) => data?.year == selectedYear);

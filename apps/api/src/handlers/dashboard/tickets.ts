@@ -1,12 +1,14 @@
-import {RequestHandler} from 'express';
+import { RequestHandler } from 'express';
 import httpStatus from 'http-status';
-import {matchedData} from 'express-validator';
+import { matchedData } from 'express-validator';
 import TicketsModel from '@evently/models/tickets';
 
 export const getTicketsHandler: RequestHandler = async (req, res, next) => {
     try {
         const user = res.locals.user;
-        const {page, limit, status} = matchedData(req, {locations: ['query']});
+        const { page, limit, status } = matchedData(req, {
+            locations: ['query'],
+        });
 
         const results = await TicketsModel.getTickets({
             userId: user?.id as string,

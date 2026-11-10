@@ -1,12 +1,12 @@
 'use server';
 
-import {headers as nextHeaders} from 'next/headers';
-import {ApiError} from '@/lib/error';
-import {IActionResult} from '@/types/utils';
-import {GetTicketsApiResponse} from '@/types/tickets';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES} from '@/config/routes';
-import {PageProps} from './page';
+import { headers as nextHeaders } from 'next/headers';
+import { ApiError } from '@/lib/error';
+import { IActionResult } from '@/types/utils';
+import { GetTicketsApiResponse } from '@/types/tickets';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES } from '@/config/routes';
+import { PageProps } from './page';
 
 export type GetTicketsPageResultData = {
     tickets: GetTicketsApiResponse;
@@ -23,8 +23,8 @@ export async function getTicketsPageData(
             headers,
         });
 
-        return {success: true, data: {tickets}};
+        return { success: true, data: { tickets } };
     } catch (err) {
-        return {success: false};
+        return { success: false };
     }
 }

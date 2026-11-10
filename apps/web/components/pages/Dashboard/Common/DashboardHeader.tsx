@@ -1,12 +1,12 @@
 'use client';
 
-import {usePathname} from 'next/navigation';
-import {useResourceContext} from '@/context/ResourceContext';
-import {useResourcesContext} from '@/context/ResourcesContext';
-import {removeEmptyStringsFromArray} from '@/utils/functions';
-import {CreateResourceButton} from './CreateResourceButton';
-import {DashboardBreadcrumb} from './DashboardBreadCrumb';
-import {normalizeResourceName} from '@/config/resource-defnitions';
+import { usePathname } from 'next/navigation';
+import { useResourceContext } from '@/context/ResourceContext';
+import { useResourcesContext } from '@/context/ResourcesContext';
+import { removeEmptyStringsFromArray } from '@/utils/functions';
+import { CreateResourceButton } from './CreateResourceButton';
+import { DashboardBreadcrumb } from './DashboardBreadCrumb';
+import { normalizeResourceName } from '@/config/resource-defnitions';
 
 export interface DashboardHeaderProps {}
 

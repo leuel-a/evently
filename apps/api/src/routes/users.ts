@@ -1,10 +1,10 @@
 import express from 'express';
-import {API_ROUTES} from '../config/routes';
+import { API_ROUTES } from '../config/routes';
 import {
     getAuthenticatedUser,
     getLinkedAccountsHandler,
 } from '../handlers/users';
-import {requireUser} from '../middlewares/requireUser';
+import { requireUser } from '../middlewares/requireUser';
 
 const router: express.Router = express.Router();
 

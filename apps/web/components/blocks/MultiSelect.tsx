@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {cva, type VariantProps} from 'class-variance-authority';
-import {CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles} from 'lucide-react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles } from 'lucide-react';
 
-import {cn} from '@/lib/utils';
-import {Separator} from '@/components/ui/separator';
-import {Button} from '@/components/ui/button';
-import {Badge} from '@/components/ui/badge';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
     Command,
     CommandEmpty,
@@ -71,7 +71,7 @@ interface MultiSelectOption {
     /** The unique value associated with the option. */
     value: string;
     /** Optional icon component to display alongside the option. */
-    icon?: React.ComponentType<{className?: string}>;
+    icon?: React.ComponentType<{ className?: string }>;
     /** Whether this option is disabled */
     disabled?: boolean;
     /** Custom styling for the option */
@@ -444,9 +444,9 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             }
             if (responsive === true) {
                 const defaultResponsive = {
-                    mobile: {maxCount: 2, hideIcons: false, compactMode: true},
-                    tablet: {maxCount: 4, hideIcons: false, compactMode: false},
-                    desktop: {maxCount: 6, hideIcons: false, compactMode: false},
+                    mobile: { maxCount: 2, hideIcons: false, compactMode: true },
+                    tablet: { maxCount: 4, hideIcons: false, compactMode: false },
+                    desktop: { maxCount: 6, hideIcons: false, compactMode: false },
                 };
                 const currentSettings = defaultResponsive[screenSize];
                 return {
@@ -830,7 +830,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                         key={value}
                                                         className={cn(
                                                             getBadgeAnimationClass(),
-                                                            multiSelectVariants({variant}),
+                                                            multiSelectVariants({ variant }),
                                                             customStyle?.gradient &&
                                                                 'text-white border-transparent',
                                                             responsiveSettings.compactMode &&
@@ -914,7 +914,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                 className={cn(
                                                     'bg-transparent text-foreground border-foreground/1 hover:bg-transparent',
                                                     getBadgeAnimationClass(),
-                                                    multiSelectVariants({variant}),
+                                                    multiSelectVariants({ variant }),
                                                     responsiveSettings.compactMode &&
                                                         'text-xs px-1.5 py-0.5',
                                                     singleLine && 'flex-shrink-0 whitespace-nowrap',
@@ -1213,4 +1213,4 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
 );
 
 MultiSelect.displayName = 'MultiSelect';
-export type {MultiSelectOption, MultiSelectGroup, MultiSelectProps};
+export type { MultiSelectOption, MultiSelectGroup, MultiSelectProps };

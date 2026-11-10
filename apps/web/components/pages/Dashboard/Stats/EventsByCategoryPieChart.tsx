@@ -1,17 +1,17 @@
 'use client';
 
-import {Fragment, useMemo} from 'react';
-import {Pie, PieChart} from 'recharts';
-import {RechartsDevtools} from '@recharts/devtools';
-import {cn} from '@/lib/utils';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
+import { Fragment, useMemo } from 'react';
+import { Pie, PieChart } from 'recharts';
+import { RechartsDevtools } from '@recharts/devtools';
+import { cn } from '@/lib/utils';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
 import {
     ChartConfig,
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
-import {getCategoryColor} from './utils';
+import { getCategoryColor } from './utils';
 
 interface EventsbyCategoryPieChartProps {
     totalCategories: number;
@@ -20,7 +20,7 @@ interface EventsbyCategoryPieChartProps {
 }
 
 export function EventsByCategoryPieChart(props: EventsbyCategoryPieChartProps) {
-    const {categories, totalEvents} = props;
+    const { categories, totalEvents } = props;
     const chartConfig = useMemo(() => {
         return categories.reduce<ChartConfig>((acc, category, _index) => {
             acc[category.name] = {

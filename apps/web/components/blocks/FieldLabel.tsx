@@ -1,8 +1,8 @@
-import {ComponentProps} from 'react';
-import {FieldLabel as CnFieldLabel} from '@/components/ui/field';
-import {cn} from '@/lib/utils';
+import { ComponentProps } from 'react';
+import { FieldLabel as CnFieldLabel } from '@/components/ui/field';
+import { cn } from '@/lib/utils';
 
-export function FieldLabel({children, className, required = true, ...props}: FieldLabelProps) {
+export function FieldLabel({ children, className, required = true, ...props }: FieldLabelProps) {
     if (!required) {
         return <CnFieldLabel {...props}>{children}</CnFieldLabel>;
     }

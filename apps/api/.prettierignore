@@ -1,4 +1,11 @@
 package.json
 package-lock.json
+nodemon.json
+tsconfig.json
+jest.config.js
 
 dist/
+logs/
+docker/
+scripts/
+node_modules/

@@ -1,17 +1,17 @@
 'use client';
 
-import {useForm, FormProvider} from 'react-hook-form';
-import {useRouter} from 'next/navigation';
-import {useMutation} from '@tanstack/react-query';
-import {toast} from 'sonner';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {eventsSchema} from '@/lib/db/schema';
-import {EventForm} from '@/components/pages/Dashboard/Form/Event/EventForm';
-import type {EventSchemaType} from '@/lib/db/schema';
-import {EVENT_TYPE} from '@evently/models/events';
-import {createEventMutation} from '@/app/dashboard/events/create/queries';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {APP_ROUTES} from '@/config/routes';
+import { useForm, FormProvider } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { eventsSchema } from '@/lib/db/schema';
+import { EventForm } from '@/components/pages/Dashboard/Form/Event/EventForm';
+import type { EventSchemaType } from '@/lib/db/schema';
+import { EVENT_TYPE } from '@evently/models/events/constants';
+import { createEventMutation } from '@/app/dashboard/events/create/queries';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { APP_ROUTES } from '@/config/routes';
 
 const EVENT_CREATED_SUCCESS_TITLE = '';
 const EVENT_CREATED_ERROR_TITLE = '';
@@ -40,13 +40,13 @@ export function CreateEventForm() {
         },
     });
 
-    const {error: locationInputError} = form.getFieldState('location');
+    const { error: locationInputError } = form.getFieldState('location');
 
     const mutation = useMutation({
         mutationFn: createEventMutation,
         onSuccess: async (data) => {
             await revalidateDashboardEventsPage(); // TODO: there might be a better way to do this but for now this works
-            const {data: createdEvent} = data;
+            const { data: createdEvent } = data;
 
             toast.success(EVENT_CREATED_SUCCESS_TITLE, {
                 description: `"${createdEvent.title}" has been successfully created.`,
@@ -69,7 +69,7 @@ export function CreateEventForm() {
         <FormProvider {...form}>
             <div className="flex flex-col gap-6 p-8 pl-4 w-7xl">
                 <EventForm
-                    CustomAddressAutofillInputProps={{error: locationInputError}}
+                    CustomAddressAutofillInputProps={{ error: locationInputError }}
                     onSubmit={handleSubmit}
                 />
             </div>

@@ -1,6 +1,6 @@
-import {memo} from 'react';
-import {v4 as uuid} from 'uuid';
-import {Field, FieldDescription, FieldLabel} from '@/components/ui/field';
+import { memo } from 'react';
+import { v4 as uuid } from 'uuid';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import {
     Select,
     SelectContent,
@@ -8,7 +8,7 @@ import {
     SelectValue,
     SelectItem,
 } from '@/components/ui/select';
-import {useChoicesContext} from '@/context/ChoicesContext';
+import { useChoicesContext } from '@/context/ChoicesContext';
 
 interface EventCategory {
     id: string;
@@ -18,8 +18,8 @@ interface EventCategory {
 }
 
 export function EventCategoryInputComponent(props: EventCategoryInputProps) {
-    const {onChange, value} = props;
-    const {choices} = useChoicesContext<EventCategory>();
+    const { onChange, value } = props;
+    const { choices } = useChoicesContext<EventCategory>();
 
     return (
         <div className="w-xl">

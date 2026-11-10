@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../config';
-import type {IEvent} from './types';
-import {EVENT_STATUS, EVENT_TYPE} from './constants';
+import { modelNames } from '../config';
+import type { IEvent } from './types';
+import { EVENT_STATUS, EVENT_TYPE } from './constants';
 
 const schema = new mongoose.Schema<IEvent>(
     {
-        title: {type: String, required: true},
-        description: {type: String, required: true},
-        date: {type: Date, required: true},
-        location: {type: String, required: false},
-        country: {type: String, required: true},
-        ticketPrice: {type: Number, required: false, default: 0},
-        capacity: {type: Number, required: true},
-        checkoutLink: {type: String, required: false},
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        date: { type: Date, required: true },
+        location: { type: String, required: false },
+        country: { type: String, required: true },
+        ticketPrice: { type: Number, required: false, default: 0 },
+        capacity: { type: Number, required: true },
+        checkoutLink: { type: String, required: false },
         status: {
             type: String,
             enum: Object.values(EVENT_STATUS),
@@ -33,18 +33,18 @@ const schema = new mongoose.Schema<IEvent>(
             ref: modelNames.user,
             required: true,
         },
-        isDeleted: {type: Boolean, default: false},
-        virtualUrl: {type: String, required: false},
-        address: {type: String, required: false},
-        startTime: {type: String, required: true},
-        endTime: {type: String, required: true},
+        isDeleted: { type: Boolean, default: false },
+        virtualUrl: { type: String, required: false },
+        address: { type: String, required: false },
+        startTime: { type: String, required: true },
+        endTime: { type: String, required: true },
     },
-    {timestamps: true},
+    { timestamps: true },
 );
 
 // INFO: read more about indexes
 // Checkout this link: https://www.mongodb.com/docs/manual/indexes/
-schema.index({title: 'text', description: 'text'});
+schema.index({ title: 'text', description: 'text' });
 
 schema.virtual('isVirtual').get(function () {
     return this.type === EVENT_TYPE.VIRTUAL;

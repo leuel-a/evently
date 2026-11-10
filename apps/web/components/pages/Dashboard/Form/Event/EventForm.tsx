@@ -1,27 +1,27 @@
-import type {FormHTMLAttributes, ComponentProps} from 'react';
-import {useFormContext, Controller} from 'react-hook-form';
-import type {SubmitHandler} from 'react-hook-form';
+import type { FormHTMLAttributes, ComponentProps } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
 import lodashGet from 'lodash/get';
 import NextLink from 'next/link';
-import type {AddressAutofillInputProps} from '@/components/blocks/Common/AddressAutofillInput';
-import {FormDatepicker} from '@/components/blocks/Form/FormDatepicker';
-import {ReferenceInput} from '@/components/blocks/ReferenceInput';
-import {Button} from '@/components/ui/button';
-import {Field, FieldLabel, FieldError} from '@/components/ui/field';
-import {Input} from '@/components/ui/input';
-import {Separator} from '@/components/ui/separator';
-import {Textarea} from '@/components/ui/textarea';
-import {APP_ROUTES} from '@/config/routes';
-import type {EventSchemaType} from '@/lib/db/schema';
-import {cn} from '@/lib/utils';
-import {EventCategoryInput} from './EventCategoryInput';
-import {EventLocationInput} from './EventLocationInput';
-import {EventIsVirtualInput} from './EventIsVirtualInput';
-import {EventIsFreeInput} from './EventIsFreeInput';
-import {EventTicketPriceInput} from './EventTicketPriceInput';
-import {EventCapacityInput} from './EventCapacityInput';
-import {CountriesSelectInput} from '@/components/pages/Common/CountriesSelectInput';
-import {EndTimePicker, StartTimePicker} from '../../Events';
+import type { AddressAutofillInputProps } from '@/components/blocks/Common/AddressAutofillInput';
+import { FormDatepicker } from '@/components/blocks/Form/FormDatepicker';
+import { ReferenceInput } from '@/components/blocks/ReferenceInput';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel, FieldError } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
+import { APP_ROUTES } from '@/config/routes';
+import type { EventSchemaType } from '@/lib/db/schema';
+import { cn } from '@/lib/utils';
+import { EventCategoryInput } from './EventCategoryInput';
+import { EventLocationInput } from './EventLocationInput';
+import { EventIsVirtualInput } from './EventIsVirtualInput';
+import { EventIsFreeInput } from './EventIsFreeInput';
+import { EventTicketPriceInput } from './EventTicketPriceInput';
+import { EventCapacityInput } from './EventCapacityInput';
+import { CountriesSelectInput } from '@/components/pages/Common/CountriesSelectInput';
+import { EndTimePicker, StartTimePicker } from '../../Events';
 
 export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
 
@@ -29,7 +29,7 @@ export interface EventFormProps {
     CustomAddressAutofillInputProps?: AddressAutofillInputProps;
     onSubmit?: SubmitHandler<EventSchemaType>;
     FormProps?: Omit<DefaultFormProps, 'onSubmit'>;
-    SubmitButtonProps?: ComponentProps<typeof Button> & {label?: string};
+    SubmitButtonProps?: ComponentProps<typeof Button> & { label?: string };
     defaultValues?: EventSchemaType;
     isUpdateEvent?: boolean;
 }
@@ -37,8 +37,8 @@ export interface EventFormProps {
 export const DEFAULT_SUBMIT_BUTTON_LABEL = 'Create';
 
 export function EventForm(props: EventFormProps) {
-    const {FormProps = {}, SubmitButtonProps = {label: DEFAULT_SUBMIT_BUTTON_LABEL}} = props;
-    const {label: submitButtonLabel, ...submitButtonProps} = SubmitButtonProps;
+    const { FormProps = {}, SubmitButtonProps = { label: DEFAULT_SUBMIT_BUTTON_LABEL } } = props;
+    const { label: submitButtonLabel, ...submitButtonProps } = SubmitButtonProps;
 
     const form = useFormContext<EventSchemaType>();
     const isVirtual = form.watch('isVirtual');
@@ -61,7 +61,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="title"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <Field>
                                 <FieldLabel>Title</FieldLabel>
                                 <Input
@@ -76,7 +76,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="description"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <Field>
                                 <FieldLabel>Description</FieldLabel>
                                 <Textarea
@@ -92,7 +92,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="category"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <ReferenceInput
                                 resource={APP_ROUTES.api.eventsCategory}
                                 internal={true}
@@ -112,7 +112,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="isVirtual"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <EventIsVirtualInput field={field} fieldState={fieldState} />
                         )}
                     />
@@ -120,12 +120,12 @@ export function EventForm(props: EventFormProps) {
                         <Controller
                             control={form.control}
                             name="location"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <EventLocationInput
                                     field={field}
                                     fieldState={fieldState}
                                     CustomAddressAutofillInputProps={{
-                                        InputProps: {disabled: isVirtual},
+                                        InputProps: { disabled: isVirtual },
                                     }}
                                 />
                             )}
@@ -133,7 +133,7 @@ export function EventForm(props: EventFormProps) {
                         <Controller
                             control={form.control}
                             name="country"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <CountriesSelectInput field={field} fieldState={fieldState} />
                             )}
                         />
@@ -150,7 +150,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="date"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <Field className="w-full xl:w-1/3">
                                 <FieldLabel>Date</FieldLabel>
                                 <FormDatepicker
@@ -166,14 +166,14 @@ export function EventForm(props: EventFormProps) {
                         <Controller
                             control={form.control}
                             name="startTime"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <StartTimePicker field={field} fieldState={fieldState} />
                             )}
                         />
                         <Controller
                             control={form.control}
                             name="endTime"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <EndTimePicker field={field} fieldState={fieldState} />
                             )}
                         />
@@ -189,7 +189,7 @@ export function EventForm(props: EventFormProps) {
                     <Controller
                         control={form.control}
                         name="isFree"
-                        render={({field, fieldState}) => (
+                        render={({ field, fieldState }) => (
                             <EventIsFreeInput field={field} fieldState={fieldState} />
                         )}
                     />
@@ -197,7 +197,7 @@ export function EventForm(props: EventFormProps) {
                         <Controller
                             control={form.control}
                             name="ticketPrice"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <EventTicketPriceInput
                                     disabled={isFree}
                                     field={field}
@@ -208,7 +208,7 @@ export function EventForm(props: EventFormProps) {
                         <Controller
                             control={form.control}
                             name="capacity"
-                            render={({field, fieldState}) => (
+                            render={({ field, fieldState }) => (
                                 <EventCapacityInput field={field} fieldState={fieldState} />
                             )}
                         />

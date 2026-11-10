@@ -1,12 +1,12 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
-import {APP_ROUTES} from '@/config/routes';
-import {Button} from '@/components/ui/button';
-import {authClient} from '@/lib/auth';
-import {GetSessionResult} from '@/app/events/actions';
-import {PublicUserAvatar} from './PublicUserAvatar';
+import { APP_ROUTES } from '@/config/routes';
+import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth';
+import { GetSessionResult } from '@/app/events/actions';
+import { PublicUserAvatar } from './PublicUserAvatar';
 
 interface IAuthenticatedUser {
     data?: GetSessionResult;
@@ -15,7 +15,7 @@ interface IAuthenticatedUser {
 export function AuthenticatedUser(props: IAuthenticatedUser) {
     const router = useRouter();
 
-    const {data} = props;
+    const { data } = props;
     const generate = (path: string) => `${path}?organizer=false`;
 
     const onSignOut = async () => {

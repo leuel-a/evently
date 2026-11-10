@@ -1,5 +1,5 @@
-import {GetEventsPageResult} from '@/app/events/actions';
-import {IActionResult} from '@/types/utils';
+import { GetEventsPageResult } from '@/app/events/actions';
+import { IActionResult } from '@/types/utils';
 
 interface FailedToLoadEventsProps {
     error: IActionResult<GetEventsPageResult>['error'];
@@ -8,7 +8,7 @@ interface FailedToLoadEventsProps {
 const FAILED_TO_LOAD_EVENTS_MESSAGE = 'Failed to load events';
 
 export function FailedToLoadEvents(props: FailedToLoadEventsProps) {
-    const {error} = props;
+    const { error } = props;
     return (
         <div className="flex flex-col items-center justify-center py-24 text-center">
             <div className="rounded-full bg-red-50 p-4 mb-4">

@@ -1,6 +1,6 @@
-import type {IEvent} from '@evently/models/events/types';
-import type {IEventCategoryApiResponse} from './eventsCategory';
-import type {IApiResponse, IBaseModel, IPageResultData} from './utils';
+import type { IEvent } from '@evently/models/events/types';
+import type { IEventCategoryApiResponse } from './eventsCategory';
+import type { IApiResponse, IBaseModel, IPageResultData } from './utils';
 
 export type IEventApiResponse = IBaseModel &
     Omit<IEvent, 'category'> & {

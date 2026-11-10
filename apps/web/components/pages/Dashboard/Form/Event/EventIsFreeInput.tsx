@@ -1,8 +1,8 @@
-import type {ControllerRenderProps, ControllerFieldState} from 'react-hook-form';
-import {BooleanInput} from '@/components/blocks/BooleanInput';
-import {Field, FieldLabel, FieldDescription, FieldError} from '@/components/ui/field';
-import type {EventSchemaType} from '@/lib/db/schema';
-import {cn} from '@/lib/utils';
+import type { ControllerRenderProps, ControllerFieldState } from 'react-hook-form';
+import { BooleanInput } from '@/components/blocks/BooleanInput';
+import { Field, FieldLabel, FieldDescription, FieldError } from '@/components/ui/field';
+import type { EventSchemaType } from '@/lib/db/schema';
+import { cn } from '@/lib/utils';
 
 interface EventIsFreeInputProps {
     field: ControllerRenderProps<EventSchemaType, 'isFree'>;
@@ -10,7 +10,7 @@ interface EventIsFreeInputProps {
 }
 
 export function EventIsFreeInput(props: EventIsFreeInputProps) {
-    const {field, fieldState} = props;
+    const { field, fieldState } = props;
     return (
         <Field className="flex flex-row items-center justify-between rounded border p-3">
             <div className="space-y-1">

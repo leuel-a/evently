@@ -11,7 +11,7 @@ export class ApiError extends Error {
     public readonly statusText: string;
     public readonly data?: unknown;
 
-    constructor({message, status, statusText, data}: AppErrorOptions) {
+    constructor({ message, status, statusText, data }: AppErrorOptions) {
         super(message);
         this.name = 'ApiError';
         this.statusCode = status;

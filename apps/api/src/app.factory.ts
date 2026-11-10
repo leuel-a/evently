@@ -1,5 +1,5 @@
 import express from 'express';
-import {setup} from './setup';
+import { setup } from './setup';
 
 /**
  * Creates a fully configured Express app (no listen)

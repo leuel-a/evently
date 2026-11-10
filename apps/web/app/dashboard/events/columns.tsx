@@ -1,15 +1,15 @@
 'use client';
 
-import type {ColumnDef} from '@tanstack/react-table';
+import type { ColumnDef } from '@tanstack/react-table';
 import lodashGet from 'lodash/get';
-import {Monitor, MapPin, Clock, Calendar, Users} from 'lucide-react';
-import {Badge} from '@/components/ui/badge';
-import {formatDate} from '@/utils/date';
-import {countries} from '@/utils/index';
-import {EVENT_STATUS} from '@evently/models/events';
-import {IEventApiResponse} from '@/types/events';
-import {cn} from '@/lib/utils';
-import {EditEventAction} from '@/components/pages/Dashboard/Events/EditEventAction';
+import { Monitor, MapPin, Clock, Calendar, Users } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { formatDate } from '@/utils/date';
+import { countries } from '@/utils/index';
+import { EVENT_STATUS } from '@evently/models/events/constants';
+import type { IEventApiResponse } from '@/types/events';
+import { cn } from '@/lib/utils';
+import { EditEventAction } from '@/components/pages/Dashboard/Events/EditEventAction';
 
 export const columns: ColumnDef<IEventApiResponse>[] = [
     {
@@ -17,7 +17,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
         header: () => {
             return <div className="px-8">Events</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="px-8 py-2 flex flex-col">
                     <div>
@@ -35,7 +35,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
         header: () => {
             return <div className="">{'Date & Time'}</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="text-gray-800 flex flex-col gap-2">
                     <div className="flex gap-2 items-center">
@@ -57,7 +57,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
         header: () => {
             return <div>Location</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             if (row.original.isVirtual) {
                 return (
                     <div className="flex gap-2 items-center">
@@ -80,7 +80,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
     {
         accessorKey: 'country',
         header: 'Country',
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const country = countries.find((country) => country?.value === row.getValue('country'));
             return <div>{country?.label}</div>;
         },
@@ -88,7 +88,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
     {
         accessorKey: 'ticketPrice',
         header: 'Price',
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const isFree = lodashGet(row.original, 'isFree', false);
             const price = row.getValue('ticketPrice') as number;
 
@@ -109,7 +109,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
         header: () => {
             return <div>{'Category'}</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div>
                     <Badge variant="outline" className="px-2 py-1 text-md rounded font-medium">
@@ -124,7 +124,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
         header: () => {
             return <div>{'Capacity'}</div>;
         },
-        cell: ({row}) => {
+        cell: ({ row }) => {
             return (
                 <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
@@ -138,7 +138,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
     {
         accessorKey: 'isVirtual',
         header: 'Type',
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const isVirtual = row.getValue<boolean>('isVirtual');
 
             return (
@@ -156,7 +156,7 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
     {
         accessorKey: 'status',
         header: 'Status',
-        cell: ({row}) => {
+        cell: ({ row }) => {
             // ACTIVE, DRAFT, CLOSED
             const status = row.getValue('status') as string;
             return (
@@ -177,6 +177,6 @@ export const columns: ColumnDef<IEventApiResponse>[] = [
     },
     {
         id: 'actions',
-        cell: ({row}) => <EditEventAction row={row} />,
+        cell: ({ row }) => <EditEventAction row={row} />,
     },
 ];

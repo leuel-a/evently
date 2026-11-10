@@ -1,5 +1,5 @@
-import type {ValidationChain} from 'express-validator';
+import type { ValidationChain } from 'express-validator';
 
 export function optionalize(validator: ValidationChain) {
-    return validator.optional({values: 'falsy'});
+    return validator.optional({ values: 'falsy' });
 }

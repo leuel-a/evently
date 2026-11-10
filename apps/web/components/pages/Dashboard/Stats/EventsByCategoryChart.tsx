@@ -1,14 +1,14 @@
 'use client';
 
-import {useState, type ComponentProps} from 'react';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
-import {Card, CardHeader, CardTitle, CardContent} from '@/components/ui/card';
-import {cn} from '@/lib/utils';
-import {SelectEventsByCategoryChart} from './SelectEventsByCategoryChart';
-import {EventsByCategoryPieChart} from './EventsByCategoryPieChart';
-import {EventsByCategoryBarChart} from './EventsByCategoryBarChart';
-import {CategoryLegend} from './utils';
-import {EmptyEventsByCategoryChart} from './EmptyEventsByCategoryChart';
+import { useState, type ComponentProps } from 'react';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { SelectEventsByCategoryChart } from './SelectEventsByCategoryChart';
+import { EventsByCategoryPieChart } from './EventsByCategoryPieChart';
+import { EventsByCategoryBarChart } from './EventsByCategoryBarChart';
+import { CategoryLegend } from './utils';
+import { EmptyEventsByCategoryChart } from './EmptyEventsByCategoryChart';
 
 interface EventsByCategoryChartProps {
     CardProps?: ComponentProps<typeof Card>;
@@ -21,8 +21,8 @@ const DEFAULT_CHART_VALUE = 'pie';
 
 export function EventsByCategoryChart(props: EventsByCategoryChartProps) {
     const [chart, setChart] = useState<string>(DEFAULT_CHART_VALUE);
-    const {categories, totalEvents, totalCategories, CardProps = {}} = props;
-    const {className: customCardClassName, ...cardProps} = CardProps;
+    const { categories, totalEvents, totalCategories, CardProps = {} } = props;
+    const { className: customCardClassName, ...cardProps } = CardProps;
 
     const hasData = categories && categories.length > 0;
 

@@ -1,10 +1,10 @@
 'use client';
 
 import NextLink from 'next/link';
-import {ElementType} from 'react';
-import {usePathname} from 'next/navigation';
-import {SidebarMenuButton, SidebarMenuItem} from '@/components/ui/sidebar';
-import {cn} from '@/lib/utils';
+import { ElementType } from 'react';
+import { usePathname } from 'next/navigation';
+import { SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
 
 interface AppSidebarMenuProps {
     resource: {
@@ -15,9 +15,9 @@ interface AppSidebarMenuProps {
     };
 }
 
-export function AppSidebarMenu({resource}: AppSidebarMenuProps) {
+export function AppSidebarMenu({ resource }: AppSidebarMenuProps) {
     const pathname = usePathname();
-    const {icon: Icon, title, url} = resource;
+    const { icon: Icon, title, url } = resource;
 
     const isActive = pathname === url;
 

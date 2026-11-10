@@ -1,13 +1,13 @@
 'use client';
 
-import {createContext, useContext} from 'react';
-import {usePathname} from 'next/navigation';
+import { createContext, useContext } from 'react';
+import { usePathname } from 'next/navigation';
 
 type ResourceContextType = string;
 
 const ResourceContext = createContext<ResourceContextType | undefined>(undefined);
 
-function ResourceProvider({children}: Readonly<{children: React.ReactNode}>) {
+function ResourceProvider({ children }: Readonly<{ children: React.ReactNode }>) {
     const pathname = usePathname();
 
     if (pathname === '/dashboard') {
@@ -31,4 +31,4 @@ function useResourceContext() {
     return resource;
 }
 
-export {useResourceContext, ResourceProvider};
+export { useResourceContext, ResourceProvider };

@@ -1,19 +1,19 @@
-import {Suspense} from 'react';
-import {LoadingSpinner} from '@/components/blocks/Common/LoadingSpinner';
-import {DataTable as TicketsTable, TablePagination} from '@/components/pages/Dashboard/Common';
-import {columns} from './columns';
-import {getTicketsPageData} from './actions';
-import {FilterTicketsTable} from '@/components/pages/Dashboard/Tickets';
+import { Suspense } from 'react';
+import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { DataTable as TicketsTable, TablePagination } from '@/components/pages/Dashboard/Common';
+import { columns } from './columns';
+import { getTicketsPageData } from './actions';
+import { FilterTicketsTable } from '@/components/pages/Dashboard/Tickets';
 
 export interface PageProps {
-    searchParams: Promise<{status: string}>;
+    searchParams: Promise<{ status: string }>;
 }
 
 export default async function Page(props: PageProps) {
     const params = await props.searchParams;
-    const {success, data, error} = await getTicketsPageData(params);
+    const { success, data, error } = await getTicketsPageData(params);
 
-    console.log({tickets: data});
+    console.log({ tickets: data });
 
     return (
         <Suspense fallback={<LoadingSpinner />}>

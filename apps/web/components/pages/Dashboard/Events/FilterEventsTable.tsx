@@ -1,17 +1,17 @@
 'use client';
 
-import {useSearchParams, useRouter} from 'next/navigation';
-import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
-import {useDashboardSettings} from '@/context/DashboardSettingsContext';
-import {SearchEvents} from '../../Common/SearchEvents';
-import {IEventCategoryApiResponse} from '@/types/eventsCategory';
-import {TicketPriceRangeSelector} from './TicketPriceRangeSelector';
-import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
-import {EventStatusSelector} from './EventStatusSelector';
-import {EventTypeSelector} from './EventTypeSelector';
-import {removePropertyFromFilter, setValueToFilterParams} from '@/utils/filters';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {APP_ROUTES} from '@/config/routes';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { MultiSelectEventCategory } from '@/components/pages/Common/MultiSelectEventCategory';
+import { useDashboardSettings } from '@/context/DashboardSettingsContext';
+import { SearchEvents } from '../../Common/SearchEvents';
+import { IEventCategoryApiResponse } from '@/types/eventsCategory';
+import { TicketPriceRangeSelector } from './TicketPriceRangeSelector';
+import { ClearFilters } from '@/components/blocks/Common/ClearFilters';
+import { EventStatusSelector } from './EventStatusSelector';
+import { EventTypeSelector } from './EventTypeSelector';
+import { removePropertyFromFilter, setValueToFilterParams } from '@/utils/filters';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { APP_ROUTES } from '@/config/routes';
 
 interface EventsFilterTableProps {
     categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;
@@ -21,8 +21,8 @@ interface EventsFilterTableProps {
 const EVENT_TYPE_FILTER_PARAM_KEY = 'type';
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
 
-export function FilterEventsTable({categories}: EventsFilterTableProps) {
-    const {tickets} = useDashboardSettings();
+export function FilterEventsTable({ categories }: EventsFilterTableProps) {
+    const { tickets } = useDashboardSettings();
 
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -51,7 +51,7 @@ export function FilterEventsTable({categories}: EventsFilterTableProps) {
                         )}
                         <div className="w-96">
                             <MultiSelectEventCategory
-                                MultiSelectProps={{placeholder: SELECT_CATEGORIES_PLACEHOLDER}}
+                                MultiSelectProps={{ placeholder: SELECT_CATEGORIES_PLACEHOLDER }}
                                 categories={categories}
                             />
                         </div>

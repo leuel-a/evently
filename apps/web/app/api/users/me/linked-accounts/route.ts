@@ -1,5 +1,5 @@
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES} from '@/config/routes';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES } from '@/config/routes';
 
 export async function GET(req: Request) {
     const response = await makeApiCall({

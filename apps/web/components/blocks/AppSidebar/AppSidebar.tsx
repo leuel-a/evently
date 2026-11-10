@@ -1,6 +1,6 @@
 'use client';
 
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Calendar,
@@ -9,13 +9,13 @@ import {
     UserCogIcon,
     ChartBarStacked,
 } from 'lucide-react';
-import {APP_ROUTES} from '@/config/routes';
-import {Sidebar, SidebarContent, SidebarHeader} from '@/components/ui/sidebar';
-import {AppSidebarMenu} from './AppSidebarMenu';
-import {AppSidebarGroupMenu} from './AppSidebarGroupMenu';
-import {Resource} from './types';
-import {authClient, useSession} from '@/lib/auth';
-import {UserAvatarMenu} from '../Common/UserAvatarMenu';
+import { APP_ROUTES } from '@/config/routes';
+import { Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar';
+import { AppSidebarMenu } from './AppSidebarMenu';
+import { AppSidebarGroupMenu } from './AppSidebarGroupMenu';
+import { Resource } from './types';
+import { authClient, useSession } from '@/lib/auth';
+import { UserAvatarMenu } from '../Common/UserAvatarMenu';
 
 const groups = Object.freeze({
     independent: 'independent',
@@ -64,7 +64,7 @@ const resources: Resource[] = [
 
 export function AppSidebar() {
     const router = useRouter();
-    const {data} = useSession();
+    const { data } = useSession();
     const independentResources = resources.filter((value) => value.group === groups.independent);
 
     const onSignOut = async () => {

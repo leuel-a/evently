@@ -1,24 +1,24 @@
 'use client';
 
 import NextLink from 'next/link';
-import {LayoutGrid, ArrowRight} from 'lucide-react';
-import {APP_ROUTES} from '@/config/routes';
-import {Button} from '@/components/ui/button';
+import { LayoutGrid, ArrowRight } from 'lucide-react';
+import { APP_ROUTES } from '@/config/routes';
+import { Button } from '@/components/ui/button';
 
 const SLICES = [
-    {start: -90, sweep: 110, opacity: 0.22},
-    {start: 20, sweep: 80, opacity: 0.14},
-    {start: 100, sweep: 60, opacity: 0.09},
-    {start: 160, sweep: 50, opacity: 0.06},
-    {start: 210, sweep: 60, opacity: 0.04},
-    {start: 270, sweep: 30, opacity: 0.03},
+    { start: -90, sweep: 110, opacity: 0.22 },
+    { start: 20, sweep: 80, opacity: 0.14 },
+    { start: 100, sweep: 60, opacity: 0.09 },
+    { start: 160, sweep: 50, opacity: 0.06 },
+    { start: 210, sweep: 60, opacity: 0.04 },
+    { start: 270, sweep: 30, opacity: 0.03 },
 ];
 
 const GHOST_LEGEND = [
-    {w: 'w-24', opacity: 0.35},
-    {w: 'w-20', opacity: 0.25},
-    {w: 'w-16', opacity: 0.18},
-    {w: 'w-12', opacity: 0.12},
+    { w: 'w-24', opacity: 0.35 },
+    { w: 'w-20', opacity: 0.25 },
+    { w: 'w-16', opacity: 0.18 },
+    { w: 'w-12', opacity: 0.12 },
 ];
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
@@ -61,7 +61,7 @@ export function EmptyEventsByCategoryChart() {
     return (
         <div
             className="relative select-none overflow-hidden rounded-lg"
-            style={{minHeight: '17rem'}}
+            style={{ minHeight: '17rem' }}
         >
             <div className="absolute inset-0 flex items-center px-6 gap-8">
                 <div className="relative shrink-0">
@@ -132,12 +132,12 @@ export function EmptyEventsByCategoryChart() {
                         <div key={i} className="flex items-center gap-2.5">
                             <span
                                 className="size-2.5 shrink-0 rounded-sm"
-                                style={{background: `rgba(99,102,241,${g.opacity * 2.5})`}}
+                                style={{ background: `rgba(99,102,241,${g.opacity * 2.5})` }}
                             />
                             <div className="flex flex-1 flex-col gap-1">
                                 <div
                                     className={`h-2 rounded-full ${g.w} overflow-hidden`}
-                                    style={{background: `rgba(99,102,241,${g.opacity})`}}
+                                    style={{ background: `rgba(99,102,241,${g.opacity})` }}
                                 >
                                     <div
                                         className="h-full w-full"
@@ -152,12 +152,12 @@ export function EmptyEventsByCategoryChart() {
                                 </div>
                                 <div
                                     className="h-1.5 w-10 rounded-full"
-                                    style={{background: `rgba(99,102,241,${g.opacity * 0.6})`}}
+                                    style={{ background: `rgba(99,102,241,${g.opacity * 0.6})` }}
                                 />
                             </div>
                             <span
                                 className="text-[10px] font-medium tabular-nums"
-                                style={{color: `rgba(99,102,241,${g.opacity * 4})`}}
+                                style={{ color: `rgba(99,102,241,${g.opacity * 4})` }}
                             >
                                 —%
                             </span>

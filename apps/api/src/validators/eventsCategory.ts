@@ -1,18 +1,18 @@
-import {body, query, param} from 'express-validator';
-import {optionalize} from './utils';
+import { body, query, param } from 'express-validator';
+import { optionalize } from './utils';
 
 const INVALID_EVENT_CATEGORY_ID_MESSAGE = 'Event Category ID is not valid';
 
 const fields = {
     name: {
         name: 'name',
-        isString: {message: 'Name must be a string'},
-        notEmpty: {message: "Name can't be an empty string"},
+        isString: { message: 'Name must be a string' },
+        notEmpty: { message: "Name can't be an empty string" },
     },
     description: {
         name: 'description',
-        isString: {message: 'Description must be a string'},
-        notEmpty: {message: "Description can't be an empty string"},
+        isString: { message: 'Description must be a string' },
+        notEmpty: { message: "Description can't be an empty string" },
     },
 };
 
@@ -50,7 +50,7 @@ export const getEventCategoryValidator = [
 export const updateEventCategoryValidator = [
     param('id').isMongoId().withMessage(INVALID_EVENT_CATEGORY_ID_MESSAGE),
     ...Object.values(eventsCategoryFieldsValidators).map(optionalize),
-    body().custom((_, {req}) => {
+    body().custom((_, { req }) => {
         if (req?.body && Object.keys(req?.body).length === 0) {
             throw new Error('At least one field must be provided');
         }

@@ -1,16 +1,16 @@
 import mongodb from 'mongodb';
-import {betterAuth} from 'better-auth';
-import {mongodbAdapter} from 'better-auth/adapters/mongodb';
+import { betterAuth } from 'better-auth';
+import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import MongoClient from './mongo-client';
-import {getOAuthState} from 'better-auth/api';
+import { getOAuthState } from 'better-auth/api';
 
 let auth: ReturnType<typeof createAuth> | undefined = undefined;
 
 export function createAuth(db: mongodb.Db, client: mongodb.MongoClient) {
     return betterAuth({
-        emailAndPassword: {enabled: true},
-        database: mongodbAdapter(db, {client, transaction: false}), // for standalone mongodb database dont use transactions
-        onAPIError: {throw: false}, // this will make better-auth handle the error handling
+        emailAndPassword: { enabled: true },
+        database: mongodbAdapter(db, { client, transaction: false }), // for standalone mongodb database dont use transactions
+        onAPIError: { throw: false }, // this will make better-auth handle the error handling
         databaseHooks: {
             user: {
                 create: {

@@ -1,4 +1,4 @@
-import {Sparkles, Send} from 'lucide-react';
+import { Sparkles, Send } from 'lucide-react';
 
 export function DashboardSection() {
     return (

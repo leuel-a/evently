@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import {APP_ROUTES} from '@/config/routes';
+import { APP_ROUTES } from '@/config/routes';
 
 interface AuthHeaderProps {
     title: string;
@@ -7,7 +7,7 @@ interface AuthHeaderProps {
 }
 
 export function AuthHeader(props: AuthHeaderProps) {
-    const {title, subtitle} = props;
+    const { title, subtitle } = props;
 
     return (
         <div className="mb-6 text-center">

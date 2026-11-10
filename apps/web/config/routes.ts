@@ -1,8 +1,8 @@
 const DASHBOARD_BASE_ROUTE = '/dashboard';
 
 const APP_ROUTES = {
-    events: {base: '/events'},
-    auth: {login: '/login', signup: '/signup'},
+    events: { base: '/events' },
+    auth: { login: '/login', signup: '/signup' },
     api: {
         eventsCategory: '/api/eventsCategory',
         events: '/api/eventsCategory',
@@ -18,7 +18,7 @@ const APP_ROUTES = {
             base: '/dashboard/events-category',
             create: '/dashboard/events-category/create',
         },
-        tickets: {base: '/dashboard/tickets'},
+        tickets: { base: '/dashboard/tickets' },
         settings: {
             base: '/dashboard/settings',
             general: '/dashboard/settings/general',
@@ -35,7 +35,7 @@ const API_ROUTES = {
         linkedAccounts: '/users/me/linked-accounts',
     },
     public: {
-        events: {base: '/events'},
+        events: { base: '/events' },
         payments: {
             base: '/payments',
             chapa: {
@@ -44,11 +44,11 @@ const API_ROUTES = {
         },
     },
     dashboard: {
-        stats: {base: '/dashboard/stats'},
-        tickets: {base: '/dashboard/tickets'},
-        events: {base: '/dashboard/events'},
-        eventCategory: {base: '/dashboard/eventsCategory'},
-        settings: {base: '/dashboard/settings'},
+        stats: { base: '/dashboard/stats' },
+        tickets: { base: '/dashboard/tickets' },
+        events: { base: '/dashboard/events' },
+        eventCategory: { base: '/dashboard/eventsCategory' },
+        settings: { base: '/dashboard/settings' },
     },
 } as const;
 
@@ -63,5 +63,5 @@ const HTTP_METHODS = {
 
 type HttpMethods = typeof HTTP_METHODS;
 
-export {APP_ROUTES, API_ROUTES, HTTP_METHODS};
-export type {AppRoutes, ApiRoutes, HttpMethods};
+export { APP_ROUTES, API_ROUTES, HTTP_METHODS };
+export type { AppRoutes, ApiRoutes, HttpMethods };

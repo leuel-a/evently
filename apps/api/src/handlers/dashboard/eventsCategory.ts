@@ -1,9 +1,9 @@
 import express from 'express';
 import httpStatus from 'http-status';
-import {matchedData} from 'express-validator';
-import {errors} from '../../errors/utils';
+import { matchedData } from 'express-validator';
+import { errors } from '../../errors/utils';
 import EventsCategoryModel from '@evently/models/eventsCategory';
-import type {IEventCategory} from '@evently/models/eventsCategory/types';
+import type { IEventCategory } from '@evently/models/eventsCategory/types';
 
 // TODO: this should be in the globale error messages
 const EVENT_CATEGORY_NOT_FOUND_MESSAGE = 'Event Category not found';
@@ -15,7 +15,9 @@ export const getEventCategoriesHandler: express.RequestHandler = async (
 ) => {
     try {
         const user = res.locals.user;
-        const {limit, page, ids, q} = matchedData(req, {locations: ['query']});
+        const { limit, page, ids, q } = matchedData(req, {
+            locations: ['query'],
+        });
         const results = await EventsCategoryModel.getEventCategories({
             page,
             size: limit,
@@ -48,11 +50,11 @@ export const getEventCategoryHandler: express.RequestHandler = async (
     next,
 ) => {
     try {
-        const {id} = matchedData(req, {locations: ['params']});
+        const { id } = matchedData(req, { locations: ['params'] });
 
         const result = await EventsCategoryModel.getEventCategory(
-            {id},
-            {lean: false},
+            { id },
+            { lean: false },
         );
         if (!result?.data || Object.keys(result?.data).length === 0) {
             throw errors.notFound(EVENT_CATEGORY_NOT_FOUND_MESSAGE);
@@ -71,13 +73,15 @@ export const createEventCategoryHandler: express.RequestHandler = async (
 ) => {
     try {
         const user = res.locals.user;
-        const body = matchedData(req, {locations: ['body']}) as IEventCategory;
+        const body = matchedData(req, {
+            locations: ['body'],
+        }) as IEventCategory;
         const eventCategory = await EventsCategoryModel.createEventCategory({
             ...body,
             user: user?.id,
         });
 
-        res.status(httpStatus.CREATED).json({data: eventCategory});
+        res.status(httpStatus.CREATED).json({ data: eventCategory });
     } catch (error) {
         next(error);
     }
@@ -89,8 +93,8 @@ export const updateEventHandler: express.RequestHandler = async (
     next,
 ) => {
     try {
-        const params = matchedData(req, {locations: ['params']});
-        const body = matchedData(req, {locations: ['body']});
+        const params = matchedData(req, { locations: ['params'] });
+        const body = matchedData(req, { locations: ['body'] });
 
         const result = await EventsCategoryModel.updateEventCategory(
             params?.id,
@@ -108,12 +112,12 @@ export const deleteEventHandler: express.RequestHandler = async (
     next,
 ) => {
     try {
-        const params = matchedData(req, {locations: ['params']});
+        const params = matchedData(req, { locations: ['params'] });
         const result = await EventsCategoryModel.deleteEventCategory(
             params?.id,
         );
 
-        res.status(httpStatus.OK).json({data: result});
+        res.status(httpStatus.OK).json({ data: result });
     } catch (error) {
         next();
     }

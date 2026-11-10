@@ -1,7 +1,7 @@
-import {fromNodeHeaders} from 'better-auth/node';
-import {type RequestHandler} from 'express';
-import {getAuth} from '../lib/auth';
-import {ERROR_MESSAGES, errors} from '../errors/utils';
+import { fromNodeHeaders } from 'better-auth/node';
+import { type RequestHandler } from 'express';
+import { getAuth } from '../lib/auth';
+import { ERROR_MESSAGES, errors } from '../errors/utils';
 
 export const requireUser: RequestHandler = async (req, res, next) => {
     try {

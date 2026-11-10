@@ -4,5 +4,5 @@ type InitializeChapaAcceptPaymentResponseStatus = 'success' | 'failed';
 export interface InitializeChapaAcceptPaymentApiResponse {
     message: InitializeChapaAcceptPaymentResponseMessage;
     status: InitializeChapaAcceptPaymentResponseStatus;
-    data: {checkout_url: string} | undefined;
+    data: { checkout_url: string } | undefined;
 }

@@ -1,11 +1,11 @@
 'use server';
 
-import type {User, Session} from 'better-auth';
-import {headers as nextHeaders} from 'next/headers';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES} from '@/config/routes';
-import type {IActionResult, IApiResponse} from '@/types/utils';
-import {SettingsApiResponse} from '@/types/settings';
+import type { User, Session } from 'better-auth';
+import { headers as nextHeaders } from 'next/headers';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES } from '@/config/routes';
+import type { IActionResult, IApiResponse } from '@/types/utils';
+import { SettingsApiResponse } from '@/types/settings';
 
 export type GetSessionResult = {
     user: User;
@@ -15,20 +15,20 @@ export type GetSessionResult = {
 export async function getSession(): Promise<IActionResult<GetSessionResult>> {
     try {
         const headers = await nextHeaders();
-        const response = await makeApiCall<GetSessionResult>({url: API_ROUTES.users.me, headers});
+        const response = await makeApiCall<GetSessionResult>({ url: API_ROUTES.users.me, headers });
 
-        return {success: true, data: response};
+        return { success: true, data: response };
     } catch (err) {
-        return {success: false};
+        return { success: false };
     }
 }
 
 export type GetDashboardPageDataResult = {
     totalCategories: number;
     totalEvents: number;
-    categories: Array<{name: string; count: number; id: string}>;
+    categories: Array<{ name: string; count: number; id: string }>;
     tickets: {
-        revenues: Array<{revenue: number; year: number; month: number}>;
+        revenues: Array<{ revenue: number; year: number; month: number }>;
         totalRevenue: number;
     };
 };
@@ -42,9 +42,9 @@ export async function getDashboardPageData(): Promise<
             url: API_ROUTES.dashboard.stats.base,
             headers,
         });
-        return {success: true, data: response};
+        return { success: true, data: response };
     } catch (error) {
-        return {success: false};
+        return { success: false };
     }
 }
 
@@ -56,8 +56,8 @@ export async function getDashboardSettings(): Promise<IActionResult<GetDashboard
             url: API_ROUTES.dashboard.settings.base,
             headers,
         });
-        return {success: true, data: response};
+        return { success: true, data: response };
     } catch (error) {
-        return {success: false};
+        return { success: false };
     }
 }

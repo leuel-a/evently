@@ -1,8 +1,8 @@
-import type {ComponentProps} from 'react';
-import type {ControllerFieldState, ControllerRenderProps} from 'react-hook-form';
-import {Input} from '@/components/ui/input';
-import {Field, FieldDescription, FieldError, FieldLabel} from '@/components/ui/field';
-import type {EventSchemaType} from '@/lib/db/schema';
+import type { ComponentProps } from 'react';
+import type { ControllerFieldState, ControllerRenderProps } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
+import type { EventSchemaType } from '@/lib/db/schema';
 
 interface EventTicketPriceInputProps
     extends Omit<ComponentProps<typeof Input>, 'value' | 'onChange'> {
@@ -11,7 +11,7 @@ interface EventTicketPriceInputProps
 }
 
 export function EventTicketPriceInput(props: EventTicketPriceInputProps) {
-    const {field, fieldState, ...inputProps} = props;
+    const { field, fieldState, ...inputProps } = props;
 
     return (
         <Field className="flex-1">

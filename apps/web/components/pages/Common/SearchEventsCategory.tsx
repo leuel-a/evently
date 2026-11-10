@@ -1,11 +1,11 @@
 'use client';
 
-import {useEffect, useState, type ComponentProps} from 'react';
-import {Search} from 'lucide-react';
-import {useRouter, usePathname, useSearchParams} from 'next/navigation';
-import {Input} from '@/components/ui/input';
-import {useDebounce} from '@/hooks/use-debounce';
-import {cn} from '@/lib/utils';
+import { useEffect, useState, type ComponentProps } from 'react';
+import { Search } from 'lucide-react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { useDebounce } from '@/hooks/use-debounce';
+import { cn } from '@/lib/utils';
 
 interface SearchEventsCategoryProps {
     InputProps?: ComponentProps<typeof Input>;
@@ -14,7 +14,7 @@ interface SearchEventsCategoryProps {
 const SEARCH_EVENTS_CATEGORY_INPUT_PLACEHOLDER = 'Search event categories...';
 
 export function SearchEventsCategory(props: SearchEventsCategoryProps) {
-    const {InputProps} = props;
+    const { InputProps } = props;
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();

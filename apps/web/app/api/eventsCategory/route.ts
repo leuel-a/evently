@@ -1,8 +1,8 @@
-import {revalidatePath} from 'next/cache';
-import {headers as nextHeaders} from 'next/headers';
-import {makeApiCall} from '@/config/api';
-import {API_ROUTES, APP_ROUTES} from '@/config/routes';
-import {CreateEventsCategoryApiResponse} from '@/types/eventsCategory';
+import { revalidatePath } from 'next/cache';
+import { headers as nextHeaders } from 'next/headers';
+import { makeApiCall } from '@/config/api';
+import { API_ROUTES, APP_ROUTES } from '@/config/routes';
+import { CreateEventsCategoryApiResponse } from '@/types/eventsCategory';
 
 export async function GET() {
     const headers = await nextHeaders();
@@ -27,5 +27,5 @@ export async function POST(request: Request) {
     });
 
     revalidatePath(APP_ROUTES.dashboard.eventsCategory.base);
-    return Response.json({...response});
+    return Response.json({ ...response });
 }

@@ -1,14 +1,14 @@
 'use client';
 
-import {useRouter, useSearchParams} from 'next/navigation';
-import {MultiSelectEventCategory} from '@/components/pages/Common/MultiSelectEventCategory';
-import {SearchEvents} from '../../Common/SearchEvents';
-import {IEventCategoryApiResponse} from '@/types/eventsCategory';
-import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
-import {EventTypeSelector} from '../../Dashboard/Events';
-import {removePropertyFromFilter, setValueToFilterParams} from '@/utils/filters';
-import {APP_ROUTES} from '@/config/routes';
-import {revalidateEventsPage} from '@/app/events/actions';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { MultiSelectEventCategory } from '@/components/pages/Common/MultiSelectEventCategory';
+import { SearchEvents } from '../../Common/SearchEvents';
+import { IEventCategoryApiResponse } from '@/types/eventsCategory';
+import { ClearFilters } from '@/components/blocks/Common/ClearFilters';
+import { EventTypeSelector } from '../../Dashboard/Events';
+import { removePropertyFromFilter, setValueToFilterParams } from '@/utils/filters';
+import { APP_ROUTES } from '@/config/routes';
+import { revalidateEventsPage } from '@/app/events/actions';
 
 interface EventsFilterTableProps {
     categories: Array<Pick<IEventCategoryApiResponse, 'id' | 'name'>>;
@@ -17,7 +17,7 @@ interface EventsFilterTableProps {
 export const SELECT_CATEGORIES_PLACEHOLDER = 'Select different categories...';
 export const EVENT_TYPE_FILTER_PARAM_KEY = 'type';
 
-export function FilterEvents({categories}: EventsFilterTableProps) {
+export function FilterEvents({ categories }: EventsFilterTableProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -36,12 +36,12 @@ export function FilterEvents({categories}: EventsFilterTableProps) {
                     <SearchEvents />
                     <div className="flex gap-6 items-center justify-end">
                         <EventTypeSelector
-                            SelectTriggerProps={{className: 'bg-white min-h-10 h-40'}}
+                            SelectTriggerProps={{ className: 'bg-white min-h-10 h-40' }}
                             onValueChange={handleEventTypeChange}
                         />
                         <div className="w-96">
                             <MultiSelectEventCategory
-                                MultiSelectProps={{placeholder: SELECT_CATEGORIES_PLACEHOLDER}}
+                                MultiSelectProps={{ placeholder: SELECT_CATEGORIES_PLACEHOLDER }}
                                 categories={categories}
                             />
                         </div>

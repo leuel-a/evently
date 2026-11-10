@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
-import {APP_ROUTES} from '@/config/routes';
-import {AuthFinePrint, AuthHeader, SignupForm} from '@/components/pages/Auth';
+import { APP_ROUTES } from '@/config/routes';
+import { AuthFinePrint, AuthHeader, SignupForm } from '@/components/pages/Auth';
 
 const SIGNUP_HEADER_TITLE = 'Sign up';
 const SIGNUP_HEADER_SUBTITLE = 'Set up your event HQ in under a minute.';

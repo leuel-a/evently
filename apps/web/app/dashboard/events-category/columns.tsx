@@ -1,14 +1,14 @@
 'use client';
 
-import type {ColumnDef} from '@tanstack/react-table';
-import {FileText, Clock} from 'lucide-react';
-import type {IEventCategoryApiResponse} from '@/types/eventsCategory';
+import type { ColumnDef } from '@tanstack/react-table';
+import { FileText, Clock } from 'lucide-react';
+import type { IEventCategoryApiResponse } from '@/types/eventsCategory';
 
 export const columns: ColumnDef<IEventCategoryApiResponse>[] = [
     {
         accessorKey: 'name',
         header: () => <div className="px-4">Category</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
             <div className="px-4 py-2 flex items-center gap-2">
                 <span className="font-medium text-gray-900">{row.getValue('name')}</span>
             </div>
@@ -17,7 +17,7 @@ export const columns: ColumnDef<IEventCategoryApiResponse>[] = [
     {
         accessorKey: 'description',
         header: () => <div>Description</div>,
-        cell: ({row}) => (
+        cell: ({ row }) => (
             <div className="flex items-center gap-2 text-gray-600 max-w-xs">
                 <FileText className="w-4 h-4 shrink-0 text-gray-400" />
                 <span className="line-clamp-2">{row.getValue('description')}</span>
@@ -27,7 +27,7 @@ export const columns: ColumnDef<IEventCategoryApiResponse>[] = [
     {
         accessorKey: 'createdAt',
         header: () => <div>Created At</div>,
-        cell: ({row}) => {
+        cell: ({ row }) => {
             const date = new Date(row.getValue<string>('createdAt'));
             return (
                 <div className="flex items-center gap-2 text-sm text-gray-600">

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {modelNames} from '../config';
+import { modelNames } from '../config';
 import UserModel from '.';
 
 /**
@@ -15,7 +15,7 @@ export async function getLinkedAccounts(this: typeof UserModel, id: string) {
         {
             $lookup: {
                 from: mongoose.model(modelNames.account).collection.name,
-                let: {userId: '$_id'},
+                let: { userId: '$_id' },
                 pipeline: [
                     {
                         $match: {

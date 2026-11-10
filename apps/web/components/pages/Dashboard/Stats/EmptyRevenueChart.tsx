@@ -1,9 +1,9 @@
 'use client';
 
 import NextLink from 'next/link';
-import {TrendingUp, ArrowRight} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {APP_ROUTES} from '@/config/routes';
+import { TrendingUp, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { APP_ROUTES } from '@/config/routes';
 
 const BARS = [28, 42, 35, 58, 50, 78, 65, 82, 70, 55, 44, 38];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -28,7 +28,7 @@ export function EmptyRevenueChart() {
     return (
         <div
             className="relative select-none overflow-hidden rounded-lg h-full"
-            style={{minHeight: '19rem'}}
+            style={{ minHeight: '19rem' }}
         >
             <div className="absolute inset-0 flex flex-col justify-between p-4">
                 <svg
@@ -82,7 +82,7 @@ export function EmptyRevenueChart() {
 
                 <div
                     className="absolute inset-x-4 bottom-8 flex items-end gap-0.75"
-                    style={{height: '7rem'}}
+                    style={{ height: '7rem' }}
                 >
                     {BARS.map((h, i) => (
                         <div
@@ -121,7 +121,7 @@ export function EmptyRevenueChart() {
                     <div
                         key={p}
                         className="absolute inset-x-4 border-t border-dashed border-indigo-100"
-                        style={{bottom: `calc(2rem + ${p * 0.65}%)`}}
+                        style={{ bottom: `calc(2rem + ${p * 0.65}%)` }}
                     />
                 ))}
             </div>

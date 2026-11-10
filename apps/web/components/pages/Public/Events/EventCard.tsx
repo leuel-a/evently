@@ -1,12 +1,12 @@
 'use client';
 
 import NextLink from 'next/link';
-import {Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight} from 'lucide-react';
-import {Badge} from '@/components/ui/badge';
-import {Button} from '@/components/ui/button';
-import {EVENT_STATUS} from '@evently/models/events';
-import {IEventApiResponse} from '@/types/events';
-import {APP_ROUTES} from '@/config/routes';
+import { Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { EVENT_STATUS } from '@evently/models/events/constants';
+import type { IEventApiResponse } from '@/types/events';
+import { APP_ROUTES } from '@/config/routes';
 
 interface EventCardProps {
     event: IEventApiResponse;
@@ -15,9 +15,9 @@ interface EventCardProps {
 function formatDate(date: Date) {
     const d = new Date(date);
     return {
-        day: d.toLocaleDateString('en-US', {weekday: 'short'}),
+        day: d.toLocaleDateString('en-US', { weekday: 'short' }),
         date: d.getDate(),
-        month: d.toLocaleDateString('en-US', {month: 'short'}),
+        month: d.toLocaleDateString('en-US', { month: 'short' }),
         year: d.getFullYear(),
         full: d.toLocaleDateString('en-US', {
             weekday: 'long',
@@ -37,7 +37,7 @@ function formatPrice(price: number, isFree: boolean) {
     }).format(price);
 }
 
-const statusConfig: Record<string, {label: string; className: string}> = {
+const statusConfig: Record<string, { label: string; className: string }> = {
     [EVENT_STATUS.ACTIVE]: {
         label: 'Active',
         className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -52,7 +52,7 @@ const statusConfig: Record<string, {label: string; className: string}> = {
     },
 };
 
-export function EventCard({event}: EventCardProps) {
+export function EventCard({ event }: EventCardProps) {
     const {
         title,
         description,

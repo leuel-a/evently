@@ -8,7 +8,7 @@ export function getPaginationValues(page: string = '1', limit: string = '10') {
     const parsedLimit = Number.parseInt(limit || '10', 10);
 
     const skip = parsedLimit * (parsedPage - 1);
-    return {limit: parsedLimit, skip};
+    return { limit: parsedLimit, skip };
 }
 
 /**

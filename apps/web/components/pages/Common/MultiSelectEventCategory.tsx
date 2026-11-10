@@ -1,17 +1,17 @@
 'use client';
 
-import {type ComponentProps, useRef} from 'react';
-import {useRouter, useSearchParams, usePathname} from 'next/navigation';
-import {MultiSelectRef} from '@/components/blocks/MultiSelect';
-import {revalidateDashboardEventsPage} from '@/app/dashboard/events/actions';
-import {MultiSelect} from '@/components/blocks/MultiSelect';
-import {cn} from '@/lib/utils';
+import { type ComponentProps, useRef } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { MultiSelectRef } from '@/components/blocks/MultiSelect';
+import { revalidateDashboardEventsPage } from '@/app/dashboard/events/actions';
+import { MultiSelect } from '@/components/blocks/MultiSelect';
+import { cn } from '@/lib/utils';
 import {
     getValueFromFilterParam,
     removePropertyFromFilter,
     setValueToFilterParams,
 } from '@/utils/filters';
-import {IEventCategoryApiResponse} from '@/types/eventsCategory';
+import { IEventCategoryApiResponse } from '@/types/eventsCategory';
 
 export const CATEGORIES_FILTER_PARAM_KEY = 'categories';
 export const CATEGORIES_FILTER_PLACEHOLDER = 'All';
@@ -31,9 +31,9 @@ export function MultiSelectEventCategory({
     const params = useSearchParams();
     const multiSelectRef = useRef<MultiSelectRef>(null);
 
-    const {className: multiSelectContainerClassName, ...restMultiSelectProps} = MultiSelectProps;
+    const { className: multiSelectContainerClassName, ...restMultiSelectProps } = MultiSelectProps;
     const selectedCategories = getValueFromFilterParam(params, CATEGORIES_FILTER_PARAM_KEY);
-    const options = categories.map((category) => ({value: category.name, label: category.name}));
+    const options = categories.map((category) => ({ value: category.name, label: category.name }));
 
     const handleValueChange = async (value: string[]) => {
         let newParams = new URLSearchParams(params.toString());

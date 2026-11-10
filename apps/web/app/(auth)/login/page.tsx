@@ -1,6 +1,6 @@
 import NextLink from 'next/link';
-import {APP_ROUTES} from '@/config/routes';
-import {LoginForm, AuthFinePrint, AuthHeader} from '@/components/pages/Auth';
+import { APP_ROUTES } from '@/config/routes';
+import { LoginForm, AuthFinePrint, AuthHeader } from '@/components/pages/Auth';
 
 const LOGIN_HEADER_TITLE = 'Sign in';
 const LOGIN_HEADER_SUBTITLE = 'Pick a method and jump back into your events.';

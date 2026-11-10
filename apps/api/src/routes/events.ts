@@ -1,7 +1,7 @@
 import express from 'express';
-import {getEventsHandler, getEventHandler} from '../handlers/events';
-import {getEventsValidator, getEventValidator} from '../validators/events';
-import {validateRequest} from '../middlewares/validateRequest';
+import { getEventsHandler, getEventHandler } from '../handlers/events';
+import { getEventsValidator, getEventValidator } from '../validators/events';
+import { validateRequest } from '../middlewares/validateRequest';
 
 const router: express.Router = express.Router();
 

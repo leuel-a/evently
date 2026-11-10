@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-import type {IResource} from './types';
+import type { IResource } from './types';
 
 const schema = new mongoose.Schema<IResource>(
     {
-        name: {type: String, required: true},
+        name: { type: String, required: true },
     },
-    {timestamps: true},
+    { timestamps: true },
 );
 
 export default schema;

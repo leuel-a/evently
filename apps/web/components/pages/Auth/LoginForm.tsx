@@ -1,28 +1,28 @@
 'use client';
 
 import NextLink from 'next/link';
-import {useRouter} from 'next/navigation';
-import {Controller, useForm} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Button} from '@/components/ui/button';
-import {Field, FieldLabel, FieldError} from '@/components/ui/field';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
-import {Input} from '@/components/ui/input';
-import {PasswordInput} from '@/components/blocks/Common';
-import {emailSigninSchema, EmailSigninSchemaType} from '@/lib/db/schema';
-import {emailSigninMutation} from '@/app/(auth)/queries';
-import {APP_ROUTES} from '@/config/routes';
-import {Separator} from '@/components/ui/separator';
-import {Mail, Lock} from 'lucide-react';
-import {GoogleSignIn} from './GoogleSignIn';
+import { useRouter } from 'next/navigation';
+import { Controller, useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel, FieldError } from '@/components/ui/field';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/blocks/Common';
+import { emailSigninSchema, EmailSigninSchemaType } from '@/lib/db/schema';
+import { emailSigninMutation } from '@/app/(auth)/queries';
+import { APP_ROUTES } from '@/config/routes';
+import { Separator } from '@/components/ui/separator';
+import { Mail, Lock } from 'lucide-react';
+import { GoogleSignIn } from './GoogleSignIn';
 
 interface LoginFormProps {
     isOrganizer: boolean;
 }
 
 export function LoginForm(props: LoginFormProps) {
-    const {isOrganizer} = props;
+    const { isOrganizer } = props;
 
     const router = useRouter();
     const form = useForm<EmailSigninSchemaType>({
@@ -34,7 +34,7 @@ export function LoginForm(props: LoginFormProps) {
     });
 
     const {
-        formState: {errors},
+        formState: { errors },
     } = form;
 
     const mutation = useMutation({
@@ -47,7 +47,7 @@ export function LoginForm(props: LoginFormProps) {
             }
         },
         onError: (error) => {
-            form.setError('root', {message: error?.message});
+            form.setError('root', { message: error?.message });
         },
     });
 
@@ -76,7 +76,7 @@ export function LoginForm(props: LoginFormProps) {
                     <Controller
                         control={form.control}
                         name="email"
-                        render={({field, fieldState}) => {
+                        render={({ field, fieldState }) => {
                             return (
                                 <Field>
                                     <div className="space-y-2">
@@ -116,7 +116,7 @@ export function LoginForm(props: LoginFormProps) {
                         <Controller
                             control={form.control}
                             name="password"
-                            render={({field, fieldState}) => {
+                            render={({ field, fieldState }) => {
                                 return (
                                     <Field>
                                         <div className="relative">

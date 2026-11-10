@@ -11,12 +11,12 @@ export function normalizeID(removeOriginalId: boolean = true) {
             },
         },
         {
-            $addFields: {id: '$_id'},
+            $addFields: { id: '$_id' },
         },
     ];
 
     if (removeOriginalId) {
-        stages.push({$unset: '_id'});
+        stages.push({ $unset: '_id' });
     }
 
     return stages;

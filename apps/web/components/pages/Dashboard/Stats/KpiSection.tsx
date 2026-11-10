@@ -1,7 +1,7 @@
-import {type ComponentProps} from 'react';
-import {GetDashboardPageDataResult} from '@/app/dashboard/actions';
-import {cn} from '@/lib/utils';
-import {KpiCard} from './KpiCard';
+import { type ComponentProps } from 'react';
+import { GetDashboardPageDataResult } from '@/app/dashboard/actions';
+import { cn } from '@/lib/utils';
+import { KpiCard } from './KpiCard';
 
 interface KpiSectionProps {
     ContainerProps?: ComponentProps<'div'>;
@@ -12,8 +12,8 @@ interface KpiSectionProps {
 }
 
 export function KpiSection(props: KpiSectionProps) {
-    const {totalCategories, totalEvents, categories, totalRevenue, ContainerProps = {}} = props;
-    const {className: customContainerClassName} = ContainerProps;
+    const { totalCategories, totalEvents, categories, totalRevenue, ContainerProps = {} } = props;
+    const { className: customContainerClassName } = ContainerProps;
     const average = Number.isNaN(totalEvents / totalCategories)
         ? 0
         : (totalEvents / totalCategories).toFixed(1);

@@ -1,7 +1,7 @@
 'use client';
 
-import {ClearFilters} from '@/components/blocks/Common/ClearFilters';
-import {SearchEventsCategory} from '@/components/pages/Common/SearchEventsCategory';
+import { ClearFilters } from '@/components/blocks/Common/ClearFilters';
+import { SearchEventsCategory } from '@/components/pages/Common/SearchEventsCategory';
 
 export function FilterEventsCategoryTable() {
     return (

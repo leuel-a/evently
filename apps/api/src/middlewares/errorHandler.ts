@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {type ErrorRequestHandler} from 'express';
-import createHttpError, {isHttpError} from 'http-errors';
-import {type InitializeChapaAcceptPaymentResponse} from '../handlers/payments';
+import { type ErrorRequestHandler } from 'express';
+import createHttpError, { isHttpError } from 'http-errors';
+import { type InitializeChapaAcceptPaymentResponse } from '../handlers/payments';
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     let error = err;
@@ -16,19 +16,19 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
                 cause: error,
             });
         } else {
-            error = createHttpError(500, error.message, {cause: error});
+            error = createHttpError(500, error.message, { cause: error });
         }
     }
 
-    const status = (error as {status?: number}).status ?? 500;
+    const status = (error as { status?: number }).status ?? 500;
     const isProduction = process.env.NODE_ENV === 'production';
 
     res.status(status).json({
         status,
         message: error.message,
         ...('details' in error && error.details
-            ? {details: error.details}
+            ? { details: error.details }
             : {}),
-        ...(isProduction ? {} : {stack: error.stack}),
+        ...(isProduction ? {} : { stack: error.stack }),
     });
 };
