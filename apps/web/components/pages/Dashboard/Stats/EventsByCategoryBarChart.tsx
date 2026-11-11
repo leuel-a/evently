@@ -38,6 +38,7 @@ export function EventsByCategoryBarChart(props: EventsByCategoryChartProps) {
     const chartHeight = (chartData?.length ?? 0) * 48 + 16;
 
     const CategoryBar = (props: BarShapeProps) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const count = (props as any).count as number;
         return (
             <Rectangle

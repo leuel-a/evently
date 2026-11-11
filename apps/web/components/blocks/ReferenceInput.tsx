@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import type { QueryFunction } from '@tanstack/react-query';
 import type { PropsWithChildren } from 'react';
 import { ChoicesProvider } from '@/context/ChoicesContext';
-import { checkIfRelativeLink as _ } from '@/utils/functions';
 import { IApiResponse } from '@/types/utils';
 import { makeApiCall } from '@/config/api';
 
@@ -25,8 +24,8 @@ export function ReferenceInput(props: ReferenceInputProps) {
 export type TGetChoicesQueryKey = [string, { resource: string }];
 
 export const getChoices =
-    (internal: boolean): QueryFunction<IApiResponse<Array<any>>, TGetChoicesQueryKey> =>
-    async (context) => {
-        const [, { resource: url }] = context.queryKey;
-        return makeApiCall<IApiResponse<Array<any>>>({ url, internal });
-    };
+    (internal: boolean): QueryFunction<IApiResponse<Array<unknown>>, TGetChoicesQueryKey> =>
+        async (context) => {
+            const [, { resource: url }] = context.queryKey;
+            return makeApiCall<IApiResponse<Array<unknown>>>({ url, internal });
+        };

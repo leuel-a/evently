@@ -7,25 +7,10 @@ import { Button } from '@/components/ui/button';
 import { EVENT_STATUS } from '@evently/models/events/constants';
 import type { IEventApiResponse } from '@/types/events';
 import { APP_ROUTES } from '@/config/routes';
+import { formatEventDate } from '@/utils/date';
 
 interface EventCardProps {
     event: IEventApiResponse;
-}
-
-function formatDate(date: Date) {
-    const d = new Date(date);
-    return {
-        day: d.toLocaleDateString('en-US', { weekday: 'short' }),
-        date: d.getDate(),
-        month: d.toLocaleDateString('en-US', { month: 'short' }),
-        year: d.getFullYear(),
-        full: d.toLocaleDateString('en-US', {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-        }),
-    };
 }
 
 function formatPrice(price: number, isFree: boolean) {
@@ -69,7 +54,7 @@ export function EventCard({ event }: EventCardProps) {
         status,
     } = event;
 
-    const formatted = formatDate(date);
+    const formatted = formatEventDate(date);
     const statusStyle = statusConfig[status] ?? {
         label: status,
         className: 'bg-zinc-100 text-zinc-500 border-zinc-200',
@@ -157,11 +142,7 @@ export function EventCard({ event }: EventCardProps) {
                     <p className="flex items-center justify-end gap-1 text-[11px] text-slate-400 mb-0.5">
                         <Ticket className="h-3 w-3" /> ticket
                     </p>
-                    <p
-                        className={`text-xl font-bold ${
-                            isFree ? 'text-emerald-600' : 'text-slate-900'
-                        }`}
-                    >
+                    <p className={`text-xl font-bold ${isFree ? 'text-emerald-600' : 'text-slate-900'}`}>
                         {formatPrice(ticketPrice, isFree)}
                     </p>
                 </div>
@@ -188,11 +169,7 @@ export function EventCard({ event }: EventCardProps) {
             </div>
 
             <div className="flex md:hidden items-center justify-between border-t border-slate-100 px-5 py-3">
-                <p
-                    className={`text-base font-bold ${
-                        isFree ? 'text-emerald-600' : 'text-slate-900'
-                    }`}
-                >
+                <p className={`text-base font-bold ${isFree ? 'text-emerald-600' : 'text-slate-900'}`}>
                     {formatPrice(ticketPrice, isFree)}
                 </p>
                 <Button

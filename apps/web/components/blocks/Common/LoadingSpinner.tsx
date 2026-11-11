@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
 
 interface LoadingSpinnerProps {
-    className: string | undefined;
-    spinClassName: string | undefined;
+    className?: string;
+    spinClassName?: string;
 }
 
 export function LoadingSpinner(props: LoadingSpinnerProps) {

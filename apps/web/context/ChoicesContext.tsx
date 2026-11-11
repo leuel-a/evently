@@ -1,8 +1,8 @@
 import { createContext, useContext, useMemo } from 'react';
 import type { PropsWithChildren } from 'react';
 
-export type ChoicesContextType<T = any> = { choices: Array<T> | undefined };
-export interface ChoicesProviderProps<T = any> extends PropsWithChildren {
+export type ChoicesContextType<T = unknown> = { choices: Array<T> | undefined };
+export interface ChoicesProviderProps<T = unknown> extends PropsWithChildren {
     choices: Array<T> | undefined;
 }
 
@@ -12,7 +12,7 @@ export const ChoicesProvider = <T,>({ choices, children }: ChoicesProviderProps<
     return <ChoicesContext.Provider value={value}>{children}</ChoicesContext.Provider>;
 };
 
-export function useChoicesContext<T = any>() {
+export function useChoicesContext<T = unknown>() {
     const context = useContext(ChoicesContext) as ChoicesContextType<T> | undefined;
 
     if (context === undefined) {
