@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { getDashboardPageData } from './actions';
-import { LoadingSpinner } from '@/components/blocks/Common/Loading';
+import { LoadingSpinner } from '@/components/blocks/Common';
 import {
     KpiSection,
     EventsByCategoryChart,

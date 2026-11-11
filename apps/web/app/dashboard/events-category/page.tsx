@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { getEventsCategoryPageData } from './actions';
-import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/blocks/Common';
 import { FilterEventsCategoryTable } from '@/components/pages/Dashboard/EventsCategory';
 import {
     DataTable as EventsCategoryTable,

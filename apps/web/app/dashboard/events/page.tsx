@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { DataTable as EventTable, TablePagination } from '@/components/pages/Dashboard/Common';
 import { FilterEventsTable } from '@/components/pages/Dashboard/Events/FilterEventsTable';
-import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/blocks/Common';
 import { getEventsPageData } from './actions';
 import { columns } from './columns';
 

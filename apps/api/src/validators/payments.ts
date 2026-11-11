@@ -8,7 +8,7 @@ const chapaFields = {
         },
     },
     phoneNumber: {
-        name: 'phone_number',
+        name: 'phoneNumber',
         isString: {
             message: 'Phone Number must be a string',
         },

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { LoadingSpinner } from '@/components/blocks/Common/LoadingSpinner';
+import { LoadingSpinner } from '@/components/blocks/Common';
 import { DataTable as TicketsTable, TablePagination } from '@/components/pages/Dashboard/Common';
 import { columns } from './columns';
 import { getTicketsPageData } from './actions';

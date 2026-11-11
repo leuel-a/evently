@@ -4,9 +4,14 @@ import { CheckoutSchemaType } from '@/lib/db/schema';
 import { makeApiCall } from '@/config/api';
 import { API_ROUTES } from '@/config/routes';
 
+export interface InitializeChapaAcceptPaymentPayload
+    extends Omit<CheckoutSchemaType, 'quantity'> {
+    amount: number
+}
+
 export const initializeChapaAcceptPaymentMutation: MutationFunction<
     InitializeChapaAcceptPaymentApiResponse,
-    CheckoutSchemaType
+    InitializeChapaAcceptPaymentPayload
 > = (input) => {
     return makeApiCall({
         url: `${API_ROUTES.public.payments.chapa.initializeAcceptPayment}`,

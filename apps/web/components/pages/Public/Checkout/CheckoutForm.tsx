@@ -1,18 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { ArrowRight, Minus, Plus, ShieldCheck } from 'lucide-react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, type ControllerRenderProps } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { initializeChapaAcceptPaymentMutation } from '@/app/events/[id]/checkout/queries';
+import { initializeChapaAcceptPaymentMutation, InitializeChapaAcceptPaymentPayload } from '@/app/events/[id]/checkout/queries';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { GetEventPageResult } from '@/app/events/actions';
 import { checkoutSchema, CheckoutSchemaType } from '@/lib/db/schema';
 import { MouseEventHandler } from 'react';
+import { LoadingSpinner } from '@/components/blocks/Common';
+import { redirectToCheckout } from '@/app/events/[id]/checkout/actions';
 
 interface CheckoutFormProps {
     event: GetEventPageResult['data'];
@@ -21,11 +23,13 @@ interface CheckoutFormProps {
 }
 
 export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutFormProps) {
+    const [initializingChapaPayment, setInitializingChapaPayment] = useState<boolean>(false);
+
     const form = useForm<CheckoutSchemaType>({
         resolver: zodResolver(checkoutSchema),
         defaultValues: {
-            amount: quantity,
             phoneNumber: '',
+            quantity: 1,
             name: '',
             email: '',
         },
@@ -33,33 +37,42 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
 
     const mutation = useMutation({
         mutationFn: initializeChapaAcceptPaymentMutation,
-        onSuccess: (data) => {
-            console.log(data);
+        onSuccess: async (data) => {
+            // TODO: handle if response data is undefined
+            setInitializingChapaPayment(false);
+            if (data?.data && data?.data?.checkout_url) {
+                await redirectToCheckout(data?.data?.checkout_url);
+            }
         },
         onError: (error) => {
+            setInitializingChapaPayment(false);
             console.log(error);
         },
     });
 
-    const isFree = Number(event.ticketPrice ?? 0) === 0;
+    const unitPrice = Number(event.ticketPrice ?? 0);
+    const isFree = unitPrice === 0;
     const disableDecreaseOrder = quantity == 1;
     const disableIncreaseOrder = quantity == 10;
 
-    const setQuantity = (delta: number) => {
-        onQuantityChange(Math.max(1, Math.min(10, quantity + delta)));
-    };
-
     const onSubmit = (values: CheckoutSchemaType) => {
-        values.phoneNumber = '0912345678'; // TODO: remove this later on production
-        mutation.mutate(values);
+        values.phoneNumber = '0900123456'; // TODO: remove this later on production
+        const payload: InitializeChapaAcceptPaymentPayload = {
+            ...values,
+            amount: quantity * unitPrice
+        }
+        setInitializingChapaPayment(true);
+        mutation.mutate(payload);
     };
 
     const handleQuantityChange =
-        (delta: number): MouseEventHandler<HTMLButtonElement> =>
-        () => {
-            form.setValue('amount', delta);
-            setQuantity(delta);
-        };
+        (delta: number, field: ControllerRenderProps<CheckoutSchemaType, 'quantity'>): MouseEventHandler<HTMLButtonElement> =>
+            () => {
+                // INFO: Ten is the max number of tickets that can be bought at once
+                const next = Math.max(1, Math.min(10, quantity + delta))
+                field.onChange(next);
+                onQuantityChange(next);
+            }
 
     return (
         <div className="flex flex-col col-span-2 gap-8 bg-white px-8 py-10 lg:px-10 lg:py-12">
@@ -82,7 +95,7 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" autoComplete="off">
                 <Controller
                     control={form.control}
-                    name="amount"
+                    name="quantity"
                     render={({ field, fieldState }) => {
                         return (
                             <Field>
@@ -93,7 +106,7 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        onClick={handleQuantityChange(-1)}
+                                        onClick={handleQuantityChange(-1, field)}
                                         disabled={disableDecreaseOrder}
                                         className="flex size-9 items-center justify-center rounded-lg border border-indigo-100 text-indigo-400 transition hover:border-indigo-300 hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
                                     >
@@ -105,7 +118,7 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        onClick={handleQuantityChange(1)}
+                                        onClick={handleQuantityChange(1, field)}
                                         disabled={disableIncreaseOrder}
                                         className="flex size-9 items-center justify-center rounded-lg border border-indigo-100 text-indigo-400 transition hover:border-indigo-300 hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
                                     >
@@ -130,6 +143,7 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
                             <Input
                                 {...field}
                                 type="text"
+                                // TODO: have a better placeholder
                                 placeholder="+(251) 9185488 | 0929185488"
                             />
                             {fieldState.error && <FieldError errors={[fieldState.error]} />}
@@ -158,7 +172,7 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
                         return (
                             <Field>
                                 <FieldLabel>Email address</FieldLabel>
-                                <Input {...field} type="email" placeholder="jane@gmail.com" />
+                                <Input {...field} type="email" placeholder="abebe.girma@gmail.com" />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                             </Field>
                         );
@@ -167,12 +181,12 @@ export function CheckoutForm({ event, onQuantityChange, quantity }: CheckoutForm
 
                 <div className="mt-auto space-y-3">
                     <Button
-                        size="lg"
+                        disabled={initializingChapaPayment}
                         type="submit"
-                        className="w-full bg-indigo-600 text-white shadow-md shadow-indigo-200 hover:bg-indigo-500 cursor-pointer"
+                        className="w-full h-12 rounded bg-indigo-600 text-white shadow-md shadow-indigo-200 hover:bg-indigo-500 cursor-pointer"
                     >
-                        {isFree ? 'Reserve free ticket' : 'Pay & get ticket'}
-                        <ArrowRight className="size-4" />
+                        {!initializingChapaPayment && (isFree ? 'Reserve free ticket' : 'Pay & get ticket')}
+                        {initializingChapaPayment ? <LoadingSpinner className="h-full" spinClassName="border-white h-8 w-8" /> : <ArrowRight className="size-4" />}
                     </Button>
 
                     <div className="flex items-center justify-center gap-1.5 text-xs text-indigo-950/35">

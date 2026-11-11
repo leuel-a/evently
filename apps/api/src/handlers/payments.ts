@@ -13,12 +13,17 @@ export interface InitializeChapaAcceptPaymentResponse {
     data: { checkout_url: string } | undefined;
 }
 
+export interface InitializeChapaAcceptPaymentRequest {
+    phoneNumber: string;
+    amount: string;
+}
+
 export const initializeChapaAcceptPaymentHandler: RequestHandler = async (
     req,
     res,
     next,
 ) => {
-    const data = matchedData(req, { locations: ['body'] });
+    const data = matchedData<InitializeChapaAcceptPaymentRequest>(req, { locations: ['body'] });
 
     const initalizeAcceptPaymentURL = `${env.CHAPA_BASE_API_URL}/transaction/initialize`;
     const initalizeAcceptPaymentHeaders = {
@@ -31,7 +36,7 @@ export const initializeChapaAcceptPaymentHandler: RequestHandler = async (
             await axios.request<InitializeChapaAcceptPaymentResponse>({
                 url: initalizeAcceptPaymentURL,
                 method: 'POST',
-                data,
+                data: santitizeChapaAcceptPaymentPayload(data),
                 headers: initalizeAcceptPaymentHeaders,
             });
 
@@ -44,3 +49,17 @@ export const initializeChapaAcceptPaymentHandler: RequestHandler = async (
         }
     }
 };
+
+export function santitizeChapaAcceptPaymentPayload(
+    body: InitializeChapaAcceptPaymentRequest
+) {
+    const {
+        amount,
+        phoneNumber
+    } = body;
+
+    return {
+        amount,
+        phone_number: phoneNumber
+    }
+}

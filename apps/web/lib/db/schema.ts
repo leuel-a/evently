@@ -81,6 +81,6 @@ export type CheckoutSchemaType = z.infer<typeof checkoutSchema>;
 export const checkoutSchema = z.object({
     name: z.string().min(1, { error: 'Full name can not be empty' }),
     email: z.email({ error: 'Provide a valid email' }),
-    amount: z.number().min(1, { error: 'Need to buy atleast one ticket.' }),
+    quantity: z.number().min(1, { error: 'Need to buy atleast one ticket.' }),
     phoneNumber: z.string().min(1, { error: "Phone Number Can't be empty" }),
 });
