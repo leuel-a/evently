@@ -8,7 +8,7 @@ export const modelNames = Object.freeze({
     account: 'account',
     verification: 'verification',
     user: 'user',
-    resource: 'resources',
+    resource: 'resource',
 });
 
 export const collectionNames = Object.freeze({

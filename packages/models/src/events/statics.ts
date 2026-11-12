@@ -115,6 +115,20 @@ export async function getEvent(
             },
         },
         {
+            $lookup: {
+                from: mongoose.model(modelNames.user).collection.name,
+                localField: 'user',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        {
+            $unwind: {
+                path: '$user',
+                preserveNullAndEmptyArrays: false
+            }
+        },
+        {
             $project: {
                 id: '$_id',
                 _id: 0,
@@ -132,7 +146,11 @@ export async function getEvent(
                     name: '$category.name',
                     description: '$category.description',
                 },
-                user: 1,
+                user: {
+                    id: '$user._id',
+                    name: '$user.name',
+                    email: '$user.email'
+                },
                 virtualUrl: 1,
                 isVirtual: {
                     $eq: ['$type', EVENT_TYPE.VIRTUAL],
@@ -285,6 +303,11 @@ export async function getEvents(
                             capacity: 1,
                             status: 1,
                             type: 1,
+                            user: {
+                                id: '$user._id',
+                                name: '$user.name',
+                                email: '$user.email'
+                            },
                             category: {
                                 id: '$category._id',
                                 name: '$category.name',

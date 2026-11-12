@@ -1,6 +1,15 @@
 import lodashIsEmpty from 'lodash/isEmpty';
 import { APP_ROUTES } from '@/config/routes';
 
+export function formatPrice(price: number, isFree: boolean) {
+    if (isFree) return 'Free';
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0,
+    }).format(price);
+}
+
 export function getInitials(name: string) {
     return name
         .trim()
@@ -18,7 +27,7 @@ export function checkIfRelativeLink(candidate: string) {
     return /^\/[^\s]*$/.test(candidate);
 }
 
-export function convertObjectToFormData(object: Object) {
+export function convertObjectToFormData(object: object) {
     const formData = new FormData();
     Object.entries(object).forEach(([key, value]) => {
         formData.append(key, String(value));

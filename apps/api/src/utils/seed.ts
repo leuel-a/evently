@@ -10,7 +10,7 @@ import type { TicketDocument } from '@evently/models/tickets/types';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const defaultUserId = '6aec3b427d828a7c9e90c819';
+const defaultUserId = '6af5bbaacf90e12f88c86ec2';
 const defaultResources = [{ name: 'events' }, { name: 'eventsCategory' }];
 
 const defaultPurchasers = [

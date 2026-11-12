@@ -14,8 +14,8 @@
   "author": "github.com/leuel-a",
   "packageManager": "npm@24.16.0",
   "dependencies": {
-    "@evently/models": "*",
     "@better-auth/mongo-adapter": "^1.5.4",
+    "@evently/models": "*",
     "@types/cors": "^2.8.19",
     "@types/morgan": "^1.9.10",
     "axios": "1.21.0",
@@ -46,6 +46,7 @@
     "prettier": "^3.7.1",
     "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.23.15",
     "typescript": "5.9.3",
     "vitest": "^4.0.16"
   }

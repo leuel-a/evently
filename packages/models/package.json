@@ -70,6 +70,14 @@
     "./accounts/constants": {
       "types": "./dist/accounts/constants.d.ts",
       "default": "./dist/accounts/constants.js"
+    },
+    "./users": {
+      "types": "./dist/users/index.d.ts",
+      "default": "./dist/users/index.js"
+    },
+    "./users/types": {
+      "types": "./dist/users/types.d.ts",
+      "default": "./dist/users/types.js"
     }
   },
   "dependencies": {

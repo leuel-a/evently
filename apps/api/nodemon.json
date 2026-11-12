@@ -1,6 +1,13 @@
 {
-    "watch": ["./src/**/*", "../../packages/models/src/**/*"],
+    "watch": [
+        "src",
+        "../../packages/models/src"
+    ],
     "ext": "js,json,ts",
-    "ignore": ["node_modules/", "dist/", "./src/utils/seed.ts"],
-    "exec": ["ts-node ./src/app.ts"]
+    "ignore": [
+        "node_modules/",
+        "dist/",
+        "src/utils/seed.ts"
+    ],
+    "exec": "tsx ./src/app.ts"
 }

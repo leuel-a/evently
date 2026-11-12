@@ -1,25 +1,24 @@
 'use client';
 
 import NextLink from 'next/link';
-import { Clock, Globe, MapPin, Monitor, Ticket, Users, ArrowRight } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { EVENT_STATUS } from '@evently/models/events/constants';
-import type { IEventApiResponse } from '@/types/events';
+import {
+    Clock,
+    Globe,
+    MapPin,
+    Monitor,
+    Ticket,
+    Users
+} from 'lucide-react';
 import { APP_ROUTES } from '@/config/routes';
+import { Badge } from '@/components/ui/badge';
+import { EVENT_STATUS } from '@evently/models/events/constants';
 import { formatEventDate } from '@/utils/date';
+import type { IEventApiResponse } from '@/types/events';
+import { formatPrice } from '@/utils/functions';
+import { EventActions } from './EventActions';
 
 interface EventCardProps {
     event: IEventApiResponse;
-}
-
-function formatPrice(price: number, isFree: boolean) {
-    if (isFree) return 'Free';
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        maximumFractionDigits: 0,
-    }).format(price);
 }
 
 const statusConfig: Record<string, { label: string; className: string }> = {
@@ -108,7 +107,12 @@ export function EventCard({ event }: EventCardProps) {
 
                 <div>
                     <h3 className="text-xl font-semibold text-slate-900 line-clamp-1 leading-snug">
-                        {title}
+                        <NextLink
+                            href={`${APP_ROUTES.events.base}/${event.id}`}
+                            className="hover:text-indigo-600 transition-colors"
+                        >
+                            {title}
+                        </NextLink>
                     </h3>
                     <p className="mt-1 text-sm text-slate-500 line-clamp-2 leading-relaxed">
                         {description}
@@ -146,43 +150,14 @@ export function EventCard({ event }: EventCardProps) {
                         {formatPrice(ticketPrice, isFree)}
                     </p>
                 </div>
-
-                <Button
-                    asChild
-                    size="sm"
-                    variant="link"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded gap-1"
-                >
-                    {isDisabled ? (
-                        status === EVENT_STATUS.CLOSED ? (
-                            'Closed'
-                        ) : (
-                            'Unavailable'
-                        )
-                    ) : (
-                        <NextLink href={`${APP_ROUTES.events.base}/${event.id}/checkout`}>
-                            Get Tickets
-                            <ArrowRight className="h-3 w-3" />
-                        </NextLink>
-                    )}
-                </Button>
+                <EventActions eventId={event.id} status={status} isDisabled={isDisabled} />
             </div>
 
             <div className="flex md:hidden items-center justify-between border-t border-slate-100 px-5 py-3">
                 <p className={`text-base font-bold ${isFree ? 'text-emerald-600' : 'text-slate-900'}`}>
                     {formatPrice(ticketPrice, isFree)}
                 </p>
-                <Button
-                    asChild
-                    size="sm"
-                    variant="link"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded gap-1"
-                >
-                    <NextLink href={`/${APP_ROUTES.events.base}/${event.id}/checkout`}>
-                        Get Tickets
-                        <ArrowRight className="h-3 w-3" />
-                    </NextLink>
-                </Button>
+                <EventActions eventId={event.id} status={status} isDisabled={isDisabled} />
             </div>
         </div>
     );
