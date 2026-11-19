@@ -1,25 +1,11 @@
-'use client';
+import { AccountConnectionsSection } from '@/components/pages/Dashboard/Settings';
+import { getLinkedAccounts } from './actions';
 
-import { useQuery, type QueryFunction } from '@tanstack/react-query';
-import { API_ROUTES } from '@/config/routes';
-import { AccountConnectionsSection } from '@/components/pages/Dashboard/Settings/Accounts/AccountConnectionsSection';
-import { LinkedAccountsResponse } from '@/components/pages/Dashboard/Settings/Accounts/types';
-
-const getMyLinkedAccounts: QueryFunction<LinkedAccountsResponse> = async () => {
-    const response = await fetch(API_ROUTES.users.linkedAccounts);
-    if (!response.ok) {
-        throw new Error('Failed to fetch events');
-    }
-    return response.json();
-};
-
-export default function Page() {
-    const { data: linkedAccountsData } = useQuery({
-        queryKey: ['user-accounts'],
-        queryFn: getMyLinkedAccounts,
-    });
-
-    async function handleConnect() {}
+export default async function Page() {
+    const {
+        success: getAccountsPageDataSuccess,
+        data: linkedAccountsData
+    } = await getLinkedAccounts();
 
     return (
         <div className="max-w-7xl space-y-6 p-6">
@@ -30,8 +16,10 @@ export default function Page() {
                 </p>
             </div>
 
-            {linkedAccountsData && (
-                <AccountConnectionsSection data={linkedAccountsData} onConnect={handleConnect} />
+            {(getAccountsPageDataSuccess && linkedAccountsData) && (
+                <AccountConnectionsSection
+                    linkedAccounts={linkedAccountsData.linkedAccounts.data}
+                />
             )}
         </div>
     );

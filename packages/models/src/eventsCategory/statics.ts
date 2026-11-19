@@ -124,28 +124,52 @@ export async function updateEventCategory(
 
 export type GetSettingsForDashboardParams = { userId: string };
 export type GetSettingsForDashboardResult = {
-    categories: Array<{ name: string; id: string }>;
+    colors: Array<string>,
+    identifiers: Array<{ name: string; id: string }>;
 };
 export async function getSettingsForDashboard(
     this: typeof EventsCategoryModel,
     params: GetSettingsForDashboardParams,
-) {
+): Promise<GetSettingsForDashboardResult> {
     const { userId } = params;
     const matchQuery = { user: new mongoose.Types.ObjectId(userId) };
 
-    const categories = await this.aggregate([
+    const result = await this.aggregate([
         {
             $match: matchQuery,
         },
         {
-            $project: {
-                _id: 0,
-                id: '$_id',
-                name: 1,
-            },
-        },
+            $facet: {
+                categoryColors: [
+                    {
+                        $group: {
+                            _id: null,
+                            colors: { $addToSet: '$color' }
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            colors: 1
+                        }
+                    }
+                ],
+                categories: [
+                    {
+                        $project: {
+                            _id: 0,
+                            id: '$_id',
+                            name: 1
+                        }
+                    }
+                ]
+            }
+        }
     ]);
 
-    const resultData = { categories };
-    return resultData;
+    const resultsData = result?.[0];
+    const colors = resultsData?.categoryColors?.[0]?.colors;
+    const categories = resultsData?.categories;
+
+    return { colors, identifiers: {...categories} };
 }

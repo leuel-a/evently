@@ -15,10 +15,11 @@ export const getSettingsHandler: RequestHandler = async (_req, res, next) => {
                     userId: user?.id,
                 }),
             ]);
+
         res.status(httpStatus.OK).json({
             resources,
             ...eventsSettings,
-            ...eventsCategorySettings,
+            categories: eventsCategorySettings,
         });
     } catch (error) {
         next(error);

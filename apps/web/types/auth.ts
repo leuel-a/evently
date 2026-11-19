@@ -1,4 +1,5 @@
 import { User, Session } from 'better-auth';
+import { IApiResponse } from './utils';
 
 export interface BaseUserResponse extends User {
     isOrganizer?: boolean;
@@ -15,3 +16,10 @@ export interface UserSigninResponse {
     token: string;
     user: BaseUserResponse;
 }
+
+export type LinkedAccountResponse = {
+    accountId: string,
+    providerId: string
+};
+
+export type GetLinkedAccountResponse = IApiResponse<LinkedAccountResponse[]>;

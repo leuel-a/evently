@@ -8,18 +8,10 @@ export type GetLinkedAccountsResult = {
 export async function getLinkedAccounts(this: IAccountModel, id: string) {
     const matchQuery = { userId: new mongoose.Types.ObjectId(id) };
 
-    const accounts = await this.aggregate([
-        {
-            $match: matchQuery,
-        },
-        {
-            $project: {
-                _id: 0,
-                accountId: 1,
-                providerId: 1,
-            },
-        },
-    ]).exec();
+    const linkedAccounts = await this.aggregate([
+        { $match: matchQuery },
+        { $project: { _id: 0, accountId: 1, providerId: 1 } },
+    ]);
 
-    return { data: accounts };
+    return linkedAccounts;
 }

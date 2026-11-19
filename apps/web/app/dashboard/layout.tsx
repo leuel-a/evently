@@ -11,15 +11,23 @@ interface DashboardLayoutProps {
 }
 
 export default async function DashboardLayout({ children }: DashboardLayoutProps) {
-    const { success: getSessionSuccess, error: getSessionError } = await getSession();
+    const {
+        success: getSessionSuccess,
+        error: getSessionError
+    } = await getSession();
+
     const { data: getDashboardSettingsData } = await getDashboardSettings();
+
 
     if (!getSessionSuccess || getSessionError) {
         return redirect(`${APP_ROUTES.auth.login}?organizer=true`);
     }
 
     return (
-        <DashboardProviders tickets={getDashboardSettingsData?.tickets}>
+        <DashboardProviders 
+            categories={getDashboardSettingsData?.categories}
+            tickets={getDashboardSettingsData?.tickets}
+        >
             <AppSidebar />
             <main className="w-full">
                 <SidebarTrigger />

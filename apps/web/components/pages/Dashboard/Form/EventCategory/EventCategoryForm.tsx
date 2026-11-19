@@ -1,37 +1,32 @@
-import type { FormHTMLAttributes, ComponentProps } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
 import NextLink from 'next/link';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel, FieldError } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { APP_ROUTES } from '@/config/routes';
 import { cn } from '@/lib/utils';
+import type { SubmitHandler } from 'react-hook-form';
+import type { EventCategorySchemaType } from '@/lib/db/schema';
+import type { FormHTMLAttributes, ComponentProps } from 'react';
+import { EventCategoryColorPicker } from './EventCategoryColorPicker';
 
-export type EventCategorySchemaType = {
-    name: string;
-    description: string;
-};
-
-export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
-
-export interface EventCategoryFormProps extends Omit<DefaultFormProps, 'onSubmit'> {
-    onSubmit?: SubmitHandler<EventCategorySchemaType>;
+export interface EventCategoryFormProps
+    extends Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
+    onSubmit: SubmitHandler<EventCategorySchemaType>;
     SubmitButtonProps?: ComponentProps<typeof Button>;
     defaultValues?: EventCategorySchemaType;
 }
 
 export function EventCategoryForm(props: EventCategoryFormProps) {
-    const formProps = sanitizeProps(props);
+    const { onSubmit, SubmitButtonProps = {} } = props;
     const form = useFormContext<EventCategorySchemaType>();
 
     return (
         <form
-            onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-10"
-            {...formProps}
         >
             <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
                 <div>
@@ -71,6 +66,12 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
                             </Field>
                         )}
                     />
+
+                    <Controller
+                        control={form.control}
+                        name="color"
+                        render={({ field, fieldState }) => <EventCategoryColorPicker fieldState={fieldState} field={field} />}
+                    />
                 </div>
             </div>
 
@@ -94,7 +95,7 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
                 <Button
                     type="submit"
                     className="h-12 w-80 cursor-pointer rounded bg-indigo-500 hover:bg-indigo-700/80"
-                    {...props.SubmitButtonProps}
+                    {...SubmitButtonProps}
                 >
                     Create
                 </Button>
@@ -102,8 +103,3 @@ export function EventCategoryForm(props: EventCategoryFormProps) {
         </form>
     );
 }
-
-export const sanitizeProps = (props: EventCategoryFormProps) => {
-    const { onSubmit, defaultValues, SubmitButtonProps, ...defaultFormProps } = props;
-    return defaultFormProps;
-};

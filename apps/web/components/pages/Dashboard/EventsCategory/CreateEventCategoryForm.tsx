@@ -11,6 +11,7 @@ import { eventCategorySchema, type EventCategorySchemaType } from '@/lib/db/sche
 import { APP_ROUTES } from '@/config/routes';
 import { revalidateEventCategories } from '@/app/dashboard/events-category/actions';
 
+// TODO: move this to another file
 const EVENT_CATEGORY_CREATED_SUCCESS_TITLE = 'Event category created';
 const EVENT_CATEGORY_CREATED_ERROR_TITLE = 'Failed to create event category';
 const EVENT_CATEGORY_CREATED_ERROR_DESCRIPTION = 'Something went wrong. Please try again.';
@@ -50,7 +51,7 @@ export function CreateEventCategoryForm() {
 
     return (
         <FormProvider {...form}>
-            <div className="flex flex-col gap-6 p-8 pl-4 w-7xl">
+            <div className="p-8 pl-4 w-full">
                 <EventCategoryForm onSubmit={handleSubmit} />
             </div>
         </FormProvider>

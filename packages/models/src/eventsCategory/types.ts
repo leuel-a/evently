@@ -14,6 +14,7 @@ import type {
 export interface IEventCategory {
     name: string;
     description: string;
+    color: string;
     isDeleted: boolean;
     user: mongoose.Types.ObjectId;
 }

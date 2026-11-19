@@ -20,7 +20,7 @@ export default async function Page(props: PageProps) {
             {error && <div>Error: {}</div>}
             {success && data && (
                 <div className="mx-auto py-10">
-                    <FilterEventsTable categories={data?.settings?.categories || []} />
+                    <FilterEventsTable categories={data?.settings?.categories?.identifiers || []} />
                     <EventTable data={data?.events?.data || []} columns={columns} />
                     <TablePagination
                         page={data?.events?.page}

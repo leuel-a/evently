@@ -1,6 +1,7 @@
 import { body, query, param } from 'express-validator';
 import { optionalize } from './utils';
 
+const HEX_COLOR_REGEX = /^#[0-9a-f]{6}$/i;
 const INVALID_EVENT_CATEGORY_ID_MESSAGE = 'Event Category ID is not valid';
 
 const fields = {
@@ -14,24 +15,42 @@ const fields = {
         isString: { message: 'Description must be a string' },
         notEmpty: { message: "Description can't be an empty string" },
     },
+    color: {
+        name: 'color',
+        isString: { message: 'Color must be a HEX string' },
+        notEmpty: { message: 'Color can\'t be an empty string' },
+        isHex: { message: 'Color must be a valid HEX color, e.g. #6366f1' },
+    }
 };
 
 const eventsCategoryFieldsValidators = {
     name: body(fields.name.name)
         .isString()
         .withMessage(fields.name.isString.message)
+        .bail()
         .notEmpty()
         .withMessage(fields.name.notEmpty.message),
     description: body(fields.description.name)
         .isString()
         .withMessage(fields.description.isString.message)
+        .bail()
         .notEmpty()
         .withMessage(fields.description.notEmpty.message),
+    color: body(fields.color.name)
+        .isString()
+        .withMessage(fields.color.isString.message)
+        .bail()
+        .notEmpty()
+        .withMessage(fields.color.notEmpty.message)
+        .bail()
+        .custom((value: string) => HEX_COLOR_REGEX.test(value))
+        .withMessage(fields.color.isHex.message),
 };
 
 export const createEventCategoryValidator = [
     eventsCategoryFieldsValidators.name,
     eventsCategoryFieldsValidators.description,
+    eventsCategoryFieldsValidators.color,
 ];
 
 export const getEventCategoriesValidator = [

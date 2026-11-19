@@ -55,12 +55,11 @@ export type EventCategorySchemaType = z.infer<typeof eventCategorySchema>;
 export const eventCategorySchema = z.object({
     name: z
         .string({ error: 'Required' })
-        .min(1, { message: "Name can't be an empty string" })
-        .refine((v) => typeof v === 'string', { message: 'Name must be a string' }),
+        .min(1, { message: "Name can't be an empty string" }),
     description: z
         .string({ error: 'Required' })
-        .min(1, { message: "Description can't be an empty string" })
-        .refine((v) => typeof v === 'string', { message: 'Description must be a string' }),
+        .min(1, { message: "Description can't be an empty string" }),
+    color: z.string({ error: 'Required' }),
 });
 
 export type EmailSignupSchemaType = z.infer<typeof emailSignupSchema>;

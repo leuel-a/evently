@@ -9,9 +9,9 @@ export const getLinkedAccountsHandler: RequestHandler = async (
 ) => {
     try {
         const user = res.locals.user;
-        const result = await AccountsModel.getLinkedAccounts(user.id);
+        const linkedAccounts = await AccountsModel.getLinkedAccounts(user.id);
 
-        res.json(result);
+        res.status(httpStatus.OK).json({ data: linkedAccounts });
     } catch (error) {
         next(error);
     }

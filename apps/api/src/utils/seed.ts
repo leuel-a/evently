@@ -10,7 +10,7 @@ import type { TicketDocument } from '@evently/models/tickets/types';
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const defaultUserId = '6af5bbaacf90e12f88c86ec2';
+const defaultUserId = '6afc68dae2960ff6f0fd909f';
 const defaultResources = [{ name: 'events' }, { name: 'eventsCategory' }];
 
 const defaultPurchasers = [
@@ -41,51 +41,61 @@ const seedEventsCategoryData = [
         user: defaultUserId,
         name: 'Technology',
         description: 'AI, software, and emerging tech.',
+        color: '#2563EB'
     },
     {
         user: defaultUserId,
         name: 'Business',
         description: 'Founders, strategy, and startups.',
+        color: '#B45309'
     },
     {
         user: defaultUserId,
         name: 'Education',
         description: 'Workshops, bootcamps, and training.',
+        color: '#7C3AED'
     },
     {
         user: defaultUserId,
         name: 'Health',
         description: 'Health and wellbeing events.',
+        color: '#059669'
     },
     {
         user: defaultUserId,
         name: 'Arts',
         description: 'Cultural and creative events.',
+        color: '#DB2777'
     },
     {
         user: defaultUserId,
         name: 'Music',
         description: 'Concerts and live shows.',
+        color: '#DC2626'
     },
     {
         user: defaultUserId,
         name: 'Sports',
         description: 'Sports and physical activities.',
+        color: '#EA580C'
     },
     {
         user: defaultUserId,
         name: 'Networking',
         description: 'Social and professional meetups.',
+        color: '#0891B2'
     },
     {
         user: defaultUserId,
         name: 'Science',
         description: 'Scientific talks and conferences.',
+        color: '#475569'
     },
     {
         user: defaultUserId,
         name: 'Lifestyle',
         description: 'Personal interests and hobbies.',
+        color: '#65A30D'
     },
 ];
 

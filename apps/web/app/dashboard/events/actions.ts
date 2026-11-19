@@ -7,11 +7,11 @@ import { API_ROUTES, APP_ROUTES } from '@/config/routes';
 import { ApiError } from '@/lib/error';
 import type { IActionResult } from '@/types/utils';
 import type { GetEventApiResponse, GetEventsApiResponse } from '@/types/events';
-import type { SettingsApiResponse } from '@/types/settings';
+import type { GetDashboardSettingsApiResponse } from '@/types/settings';
 
 export type GetEventsPageResultData = {
     events: GetEventsApiResponse;
-    settings: SettingsApiResponse;
+    settings: GetDashboardSettingsApiResponse;
 };
 
 export async function getEventsPageData(
@@ -26,7 +26,7 @@ export async function getEventsPageData(
                 url: `${API_ROUTES.dashboard.events.base}?${searchParams.toString()}`,
                 headers,
             }),
-            makeApiCall<SettingsApiResponse>({ url: API_ROUTES.dashboard.settings.base, headers }),
+            makeApiCall<GetDashboardSettingsApiResponse>({ url: API_ROUTES.dashboard.settings.base, headers }),
         ]);
 
         return { success: true, data: { events, settings } };

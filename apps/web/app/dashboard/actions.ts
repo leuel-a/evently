@@ -5,7 +5,7 @@ import { headers as nextHeaders } from 'next/headers';
 import { makeApiCall } from '@/config/api';
 import { API_ROUTES } from '@/config/routes';
 import type { IActionResult, IApiResponse } from '@/types/utils';
-import { SettingsApiResponse } from '@/types/settings';
+import { GetDashboardSettingsApiResponse } from '@/types/settings';
 
 export type GetSessionResult = {
     user: User;
@@ -48,7 +48,7 @@ export async function getDashboardPageData(): Promise<
     }
 }
 
-export type GetDashboardSettingsResult = SettingsApiResponse;
+export type GetDashboardSettingsResult = GetDashboardSettingsApiResponse;
 export async function getDashboardSettings(): Promise<IActionResult<GetDashboardSettingsResult>> {
     try {
         const headers = await nextHeaders();

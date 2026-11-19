@@ -7,6 +7,7 @@ const schema = new mongoose.Schema<IEventCategory>(
         name: { type: String, required: true, unique: true },
         description: { type: String, required: true },
         isDeleted: { type: Boolean, required: false, default: false },
+        color: { type: String, required: true },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: modelNames.user,
