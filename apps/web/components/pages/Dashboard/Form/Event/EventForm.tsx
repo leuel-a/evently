@@ -1,44 +1,33 @@
-import type { FormHTMLAttributes, ComponentProps } from 'react';
-import { useFormContext, Controller } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
-import lodashGet from 'lodash/get';
-import NextLink from 'next/link';
-import type { AddressAutofillInputProps } from '@/components/blocks/Common/AddressAutofillInput';
-import { FormDatepicker } from '@/components/blocks/Form/FormDatepicker';
-import { ReferenceInput } from '@/components/blocks/ReferenceInput';
+import { useFormContext } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import { Field, FieldLabel, FieldError } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { Textarea } from '@/components/ui/textarea';
-import { APP_ROUTES } from '@/config/routes';
+import { EventFormActions } from './EventFormActions';
+import { EventRootFormError } from './EventRootFormError';
+import { EventLocationController } from './EventLocationController';
+import { EventDateTimeController } from './EventDateTimeController';
+import { EventBasicInformationController } from './BasicInformationController';
+import { EventPricingAndCapacityController } from './EventPricingAndCapacityController';
+
+import type { SubmitHandler } from 'react-hook-form';
 import type { EventSchemaType } from '@/lib/db/schema';
-import { cn } from '@/lib/utils';
-import { EventCategoryInput } from './EventCategoryInput';
-import { EventLocationInput } from './EventLocationInput';
-import { EventIsVirtualInput } from './EventIsVirtualInput';
-import { EventIsFreeInput } from './EventIsFreeInput';
-import { EventTicketPriceInput } from './EventTicketPriceInput';
-import { EventCapacityInput } from './EventCapacityInput';
-import { CountriesSelectInput } from '@/components/pages/Common/CountriesSelectInput';
-import { EndTimePicker, StartTimePicker } from '../../Events';
+import type { FormHTMLAttributes, ComponentProps } from 'react';
+import type { AddressAutofillInputProps } from '@/components/blocks/Common/AddressAutofillInput';
 
-export type DefaultFormProps = FormHTMLAttributes<HTMLFormElement>;
-
-export interface EventFormProps {
+interface EventFormProps extends Omit<FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
     CustomAddressAutofillInputProps?: AddressAutofillInputProps;
     onSubmit?: SubmitHandler<EventSchemaType>;
-    FormProps?: Omit<DefaultFormProps, 'onSubmit'>;
     SubmitButtonProps?: ComponentProps<typeof Button> & { label?: string };
     defaultValues?: EventSchemaType;
     isUpdateEvent?: boolean;
 }
 
-export const DEFAULT_SUBMIT_BUTTON_LABEL = 'Create';
+const DEFAULT_SUBMIT_BUTTON_LABEL = 'Create';
 
 export function EventForm(props: EventFormProps) {
-    const { FormProps = {}, SubmitButtonProps = { label: DEFAULT_SUBMIT_BUTTON_LABEL } } = props;
-    const { label: submitButtonLabel, ...submitButtonProps } = SubmitButtonProps;
+    const {
+        onSubmit,
+        SubmitButtonProps = { label: DEFAULT_SUBMIT_BUTTON_LABEL },
+        ...formProps
+    } = props
 
     const form = useFormContext<EventSchemaType>();
     const isVirtual = form.watch('isVirtual');
@@ -47,209 +36,16 @@ export function EventForm(props: EventFormProps) {
     return (
         <form
             autoComplete="off"
-            onSubmit={props.onSubmit ? form.handleSubmit(props.onSubmit) : undefined}
+            onSubmit={onSubmit ? form.handleSubmit(onSubmit) : undefined}
             className="space-y-10"
-            {...FormProps}
+            {...formProps}
         >
-            <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
-                <div>
-                    <span className="text-2xl font-medium">Basic Information</span>
-                    <p className="text-gray-500">Essential details about your event</p>
-                </div>
-                <Separator className="group-hover:bg-indigo-100" />
-                <div className="space-y-4">
-                    <Controller
-                        control={form.control}
-                        name="title"
-                        render={({ field, fieldState }) => (
-                            <Field>
-                                <FieldLabel>Title</FieldLabel>
-                                <Input
-                                    {...field}
-                                    className={cn('h-12 rounded border shadow-none')}
-                                    placeholder="Make the title slick 😉"
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                            </Field>
-                        )}
-                    />
-                    <Controller
-                        control={form.control}
-                        name="description"
-                        render={({ field, fieldState }) => (
-                            <Field>
-                                <FieldLabel>Description</FieldLabel>
-                                <Textarea
-                                    {...field}
-                                    className={cn('h-32 rounded shadow-none')}
-                                    placeholder="Describe your event in detail"
-                                    rows={20}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                            </Field>
-                        )}
-                    />
-                    <Controller
-                        control={form.control}
-                        name="category"
-                        render={({ field }) => (
-                            <ReferenceInput
-                                resource={APP_ROUTES.api.eventsCategory}
-                                internal={true}
-                            >
-                                <EventCategoryInput onChange={field.onChange} value={field.value} />
-                            </ReferenceInput>
-                        )}
-                    />
-                </div>
-            </div>
-            <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
-                <div>
-                    <span className="text-2xl font-medium">Location</span>
-                    <p className="text-gray-500">Where is your event taking place?</p>
-                </div>
-                <div className="space-y-4">
-                    <Controller
-                        control={form.control}
-                        name="isVirtual"
-                        render={({ field, fieldState }) => (
-                            <EventIsVirtualInput field={field} fieldState={fieldState} />
-                        )}
-                    />
-                    <div className="flex gap-2">
-                        <Controller
-                            control={form.control}
-                            name="location"
-                            render={({ field, fieldState }) => (
-                                <EventLocationInput
-                                    field={field}
-                                    fieldState={fieldState}
-                                    CustomAddressAutofillInputProps={{
-                                        InputProps: { disabled: isVirtual },
-                                    }}
-                                />
-                            )}
-                        />
-                        <Controller
-                            control={form.control}
-                            name="country"
-                            render={({ field, fieldState }) => (
-                                <CountriesSelectInput field={field} fieldState={fieldState} />
-                            )}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
-                <div>
-                    <span className="text-2xl font-medium">Date & Time</span>
-                    <p className="text-gray-500">When is your event happening?</p>
-                </div>
-                <Separator className="group-hover:bg-indigo-100" />
-                <div className="flex flex-col gap-4">
-                    <Controller
-                        control={form.control}
-                        name="date"
-                        render={({ field, fieldState }) => (
-                            <Field className="w-full xl:w-1/3">
-                                <FieldLabel>Date</FieldLabel>
-                                <FormDatepicker
-                                    source="date"
-                                    selected={field.value}
-                                    onSelect={field.onChange}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-                            </Field>
-                        )}
-                    />
-                    <div className="flex flex-row justify-between gap-2">
-                        <Controller
-                            control={form.control}
-                            name="startTime"
-                            render={({ field, fieldState }) => (
-                                <StartTimePicker field={field} fieldState={fieldState} />
-                            )}
-                        />
-                        <Controller
-                            control={form.control}
-                            name="endTime"
-                            render={({ field, fieldState }) => (
-                                <EndTimePicker field={field} fieldState={fieldState} />
-                            )}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div className="flex flex-col gap-4 border border-input group hover:border-indigo-100 px-8 py-4 rounded">
-                <div>
-                    <span className="text-2xl font-medium">Pricing & Capacity</span>
-                    <p className="text-gray-500">Ticket pricing and event capacity</p>
-                </div>
-                <div className="space-y-4">
-                    <Controller
-                        control={form.control}
-                        name="isFree"
-                        render={({ field, fieldState }) => (
-                            <EventIsFreeInput field={field} fieldState={fieldState} />
-                        )}
-                    />
-                    <div className="flex gap-2">
-                        <Controller
-                            control={form.control}
-                            name="ticketPrice"
-                            render={({ field, fieldState }) => (
-                                <EventTicketPriceInput
-                                    disabled={isFree}
-                                    field={field}
-                                    fieldState={fieldState}
-                                />
-                            )}
-                        />
-                        <Controller
-                            control={form.control}
-                            name="capacity"
-                            render={({ field, fieldState }) => (
-                                <EventCapacityInput field={field} fieldState={fieldState} />
-                            )}
-                        />
-                    </div>
-                </div>
-            </div>
-            <div>
-                {form.formState.errors?.root && (
-                    <div className="text-sm">
-                        {lodashGet(form.formState?.errors, 'root.serverError.message', '')}
-                    </div>
-                )}
-            </div>
-            <div className="flex gap-4 justify-end">
-                <Button
-                    type="button"
-                    variant="secondary"
-                    className="h-12 w-80 rounded cursor-pointer"
-                    asChild
-                >
-                    <NextLink href={APP_ROUTES.dashboard.events.base}>Cancel</NextLink>
-                </Button>
-                <Button
-                    type="submit"
-                    className="h-12 w-80 cursor-pointer rounded bg-indigo-500 hover:bg-indigo-700/80"
-                    {...submitButtonProps}
-                >
-                    {submitButtonLabel}
-                </Button>
-            </div>
+            <EventBasicInformationController formControl={form.control} />
+            <EventDateTimeController formControl={form.control} />
+            <EventLocationController formControl={form.control} disabled={isVirtual} />
+            <EventPricingAndCapacityController formControl={form.control} disabled={isFree} />
+            <EventRootFormError form={form} />
+            <EventFormActions SubmitButtonProps={SubmitButtonProps} />
         </form>
     );
 }
-
-export const sanitizeProps = (props: EventFormProps) => {
-    const {
-        CustomAddressAutofillInputProps,
-        onSubmit,
-        defaultValues,
-        SubmitButtonProps,
-        ...defaultFormProps
-    } = props;
-    return defaultFormProps;
-};
