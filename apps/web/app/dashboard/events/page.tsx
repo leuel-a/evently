@@ -13,8 +13,6 @@ export default async function Page(props: PageProps) {
     const params = await props.searchParams;
     const { success, data, error } = await getEventsPageData(params);
 
-    // TODO: create a common component to show errors
-
     return (
         <Suspense fallback={<LoadingSpinner />}>
             {error && <div>Error: {}</div>}

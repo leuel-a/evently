@@ -171,5 +171,5 @@ export async function getSettingsForDashboard(
     const colors = resultsData?.categoryColors?.[0]?.colors;
     const categories = resultsData?.categories;
 
-    return { colors, identifiers: {...categories} };
+    return { colors, identifiers: categories };
 }
